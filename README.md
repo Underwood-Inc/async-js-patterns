@@ -103,6 +103,13 @@ We welcome contributions! Please see our
 - Pull Request Process
 - Coding Standards
 
+## 🔄 CI/CD
+
+Our repository uses GitHub Actions for continuous integration and deployment. The workflows are documented in [.github/workflows/README.md](.github/workflows/README.md):
+
+- **Documentation Deployment**: Automatically builds and deploys documentation to GitHub Pages
+- **Continuous Integration**: Runs tests and linting on pull requests
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
