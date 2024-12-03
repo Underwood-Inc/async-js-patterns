@@ -82,13 +82,13 @@ class TimerManager {
   getActiveTimerCount(): { timeouts: number; intervals: number } {
     return {
       timeouts: this.timeouts.size,
-      intervals: this.intervals.size
+      intervals: this.intervals.size,
     };
   }
 
   clearTimersByGroup(groupId: string): void {
     const groupPattern = new RegExp(`^${groupId}`);
-    
+
     // Clear matching timeouts
     this.timeouts.forEach((_, id) => {
       if (groupPattern.test(String(id))) {
@@ -180,24 +180,22 @@ timerManager.clearTimersByGroup(groupId);
 // Test timer cleanup
 const cleanupTest = async () => {
   const manager = TimerManager.getInstance();
-  
+
   // Create multiple timers
   manager.setTimeout(() => {}, 1000);
   manager.setInterval(() => {}, 1000);
-  
+
   const beforeCount = manager.getActiveTimerCount();
   manager.clearAllTimers();
   const afterCount = manager.getActiveTimerCount();
-  
+
   console.assert(
-    beforeCount.timeouts === 1 &&
-    beforeCount.intervals === 1,
+    beforeCount.timeouts === 1 && beforeCount.intervals === 1,
     'Should track active timers'
   );
-  
+
   console.assert(
-    afterCount.timeouts === 0 &&
-    afterCount.intervals === 0,
+    afterCount.timeouts === 0 && afterCount.intervals === 0,
     'Should clear all timers'
   );
 };
@@ -207,18 +205,15 @@ const groupTest = () => {
   const manager = TimerManager.getInstance();
   const group1 = 'group1';
   const group2 = 'group2';
-  
+
   manager.setTimeout(() => {}, 1000); // group1
   manager.setTimeout(() => {}, 1000); // group1
   manager.setTimeout(() => {}, 1000); // group2
-  
+
   manager.clearTimersByGroup(group1);
-  
+
   const remaining = manager.getActiveTimerCount();
-  console.assert(
-    remaining.timeouts === 1,
-    'Should only clear group timers'
-  );
+  console.assert(remaining.timeouts === 1, 'Should only clear group timers');
 };
 ```
 
@@ -228,7 +223,7 @@ const groupTest = () => {
 // With automatic cleanup
 class AutoCleanupTimerManager extends TimerManager {
   private cleanupInterval: number;
-  
+
   constructor(cleanupIntervalMs: number = 60000) {
     super();
     this.cleanupInterval = this.setInterval(() => {
@@ -238,7 +233,7 @@ class AutoCleanupTimerManager extends TimerManager {
 
   private cleanupStaleTimers(): void {
     const now = Date.now();
-    
+
     this.timeouts.forEach((timer, id) => {
       if ((timer as any).startTime + (timer as any).delay < now) {
         this.clearTimeout(id);

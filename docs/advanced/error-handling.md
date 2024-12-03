@@ -34,22 +34,14 @@ class AsyncOperationError extends Error {
       );
     }
 
-    return new AsyncOperationError(
-      String(error),
-      'UNKNOWN_ERROR',
-      operation
-    );
+    return new AsyncOperationError(String(error), 'UNKNOWN_ERROR', operation);
   }
 }
 
 // Specific error types
 class TimeoutError extends AsyncOperationError {
   constructor(operation: string, timeoutMs: number) {
-    super(
-      `Operation timed out after ${timeoutMs}ms`,
-      'TIMEOUT',
-      operation
-    );
+    super(`Operation timed out after ${timeoutMs}ms`, 'TIMEOUT', operation);
     this.name = 'TimeoutError';
   }
 }
@@ -85,7 +77,7 @@ const errorHandlers = {
             () => reject(new TimeoutError(operationName, timeoutMs)),
             timeoutMs
           )
-        )
+        ),
       ]);
       return result;
     } catch (error) {
@@ -128,11 +120,11 @@ const errorHandlers = {
     } catch (error) {
       throw AsyncOperationError.from(error, operationName);
     } finally {
-      await cleanup().catch(error => {
+      await cleanup().catch((error) => {
         console.error('Cleanup failed:', error);
       });
     }
-  }
+  },
 };
 
 // Error recovery strategies
@@ -161,7 +153,7 @@ const recoveryStrategies = {
     const { maxFailures, resetTimeoutMs, operationName } = options;
     const state = {
       failures: 0,
-      lastFailureTime: 0
+      lastFailureTime: 0,
     };
 
     if (
@@ -184,7 +176,7 @@ const recoveryStrategies = {
       state.lastFailureTime = Date.now();
       throw AsyncOperationError.from(error, operationName);
     }
-  }
+  },
 };
 ```
 
@@ -196,17 +188,14 @@ async function fetchWithSafety(url: string): Promise<Response> {
   return errorHandlers.withCleanup(
     async () => {
       return errorHandlers.withRetry(
-        () => errorHandlers.withTimeout(
-          () => fetch(url),
-          5000,
-          'fetchWithSafety'
-        ),
+        () =>
+          errorHandlers.withTimeout(() => fetch(url), 5000, 'fetchWithSafety'),
         {
           maxAttempts: 3,
           operationName: 'fetchWithSafety',
           onRetry: (error, attempt) => {
             console.warn(`Retry ${attempt} after error:`, error);
-          }
+          },
         }
       );
     },
@@ -224,14 +213,12 @@ async function fetchWithCircuitBreaker(
   fallbackUrl: string
 ): Promise<Response> {
   return recoveryStrategies.withFallback(
-    () => recoveryStrategies.withCircuitBreaker(
-      () => fetch(primaryUrl),
-      {
+    () =>
+      recoveryStrategies.withCircuitBreaker(() => fetch(primaryUrl), {
         maxFailures: 5,
         resetTimeoutMs: 60000,
-        operationName: 'fetchWithCircuitBreaker'
-      }
-    ),
+        operationName: 'fetchWithCircuitBreaker',
+      }),
     () => fetch(fallbackUrl),
     'fetchWithCircuitBreaker'
   );

@@ -27,7 +27,7 @@ async function executeInParallel<T>(
 
   const executeBatch = async (): Promise<void> => {
     const batch: Promise<void>[] = [];
-    
+
     while (currentIndex < tasks.length && batch.length < concurrency) {
       batch.push(executeTask(currentIndex));
       currentIndex++;
@@ -55,7 +55,10 @@ async function executeInParallelWithProgress<T>(
   let completed = 0;
   const total = tasks.length;
 
-  const executeTask = async (task: AsyncTask<T>, index: number): Promise<void> => {
+  const executeTask = async (
+    task: AsyncTask<T>,
+    index: number
+  ): Promise<void> => {
     try {
       results[index] = await task();
       completed++;
@@ -66,7 +69,7 @@ async function executeInParallelWithProgress<T>(
   };
 
   const taskPromises = tasks.map((task, index) => executeTask(task, index));
-  
+
   // Execute tasks in batches based on concurrency
   for (let i = 0; i < taskPromises.length; i += concurrency) {
     const batch = taskPromises.slice(i, i + concurrency);
@@ -83,25 +86,25 @@ async function executeInParallelWithProgress<T>(
 // Example tasks
 const tasks: AsyncTask<number>[] = [
   async () => {
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     return 1;
   },
   async () => {
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 500));
     return 2;
   },
   async () => {
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     return 3;
-  }
+  },
 ];
 
 // Execute all tasks in parallel
 executeInParallel(tasks)
-  .then(results => {
+  .then((results) => {
     console.log(results); // [1, 2, 3] (after ~2000ms)
   })
-  .catch(error => {
+  .catch((error) => {
     console.error('Parallel execution failed:', error);
   });
 
@@ -112,10 +115,9 @@ executeInParallelWithProgress(
   (completed, total) => {
     console.log(`Progress: ${completed}/${total}`);
   }
-)
-  .then(results => {
-    console.log('All tasks completed:', results);
-  });
+).then((results) => {
+  console.log('All tasks completed:', results);
+});
 ```
 
 ## Key Concepts
@@ -154,61 +156,49 @@ executeInParallelWithProgress(
 // Test concurrent execution
 const timedTasks: AsyncTask<number>[] = [
   async () => {
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
     return 1;
   },
   async () => {
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
     return 2;
-  }
+  },
 ];
 
 const startTime = Date.now();
-const concurrencyTest = executeInParallel(timedTasks)
-  .then(results => {
-    const duration = Date.now() - startTime;
-    console.assert(
-      duration < 150,
-      'Tasks should execute concurrently'
-    );
-    console.assert(
-      results.length === 2,
-      'Should complete all tasks'
-    );
-  });
+const concurrencyTest = executeInParallel(timedTasks).then((results) => {
+  const duration = Date.now() - startTime;
+  console.assert(duration < 150, 'Tasks should execute concurrently');
+  console.assert(results.length === 2, 'Should complete all tasks');
+});
 
 // Test error handling
 const errorTasks: AsyncTask<number>[] = [
   async () => 1,
-  async () => { throw new Error('Task failed'); },
-  async () => 3
+  async () => {
+    throw new Error('Task failed');
+  },
+  async () => 3,
 ];
 
-const errorTest = executeInParallel(errorTasks)
-  .catch(error => {
-    console.assert(
-      error.message.includes('Task failed'),
-      'Should handle task errors'
-    );
-  });
+const errorTest = executeInParallel(errorTasks).catch((error) => {
+  console.assert(
+    error.message.includes('Task failed'),
+    'Should handle task errors'
+  );
+});
 
 // Test concurrency limit
-const concurrentTasks = Array.from(
-  { length: 5 },
-  (_, i) => async () => {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    return i;
-  }
-);
+const concurrentTasks = Array.from({ length: 5 }, (_, i) => async () => {
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  return i;
+});
 
 const limitTest = executeInParallelWithProgress(
   concurrentTasks,
   2,
   (completed, total) => {
-    console.assert(
-      completed <= total,
-      'Should respect concurrency limit'
-    );
+    console.assert(completed <= total, 'Should respect concurrency limit');
   }
 );
 ```
@@ -222,21 +212,18 @@ class ResourcePool<T> {
   private inUse: Set<T> = new Set();
 
   constructor(createResource: () => T, size: number) {
-    this.resources = Array.from(
-      { length: size },
-      () => createResource()
-    );
+    this.resources = Array.from({ length: size }, () => createResource());
   }
 
   async acquire(): Promise<T> {
-    const available = this.resources.find(r => !this.inUse.has(r));
+    const available = this.resources.find((r) => !this.inUse.has(r));
     if (available) {
       this.inUse.add(available);
       return available;
     }
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const interval = setInterval(() => {
-        const resource = this.resources.find(r => !this.inUse.has(r));
+        const resource = this.resources.find((r) => !this.inUse.has(r));
         if (resource) {
           clearInterval(interval);
           this.inUse.add(resource);
@@ -259,7 +246,7 @@ async function executeWithPool<T>(
   pool: ResourcePool<Worker>
 ): Promise<T[]> {
   return executeInParallel(
-    tasks.map(task => async () => {
+    tasks.map((task) => async () => {
       const worker = await pool.acquire();
       try {
         return await task();

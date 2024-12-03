@@ -26,16 +26,14 @@ function debounce<T extends (...args: any[]) => any>(
   func: T,
   options: number | DebounceOptions
 ): DebouncedFunction<T> {
-  const opts = typeof options === 'number' 
-    ? { wait: options } 
-    : options;
+  const opts = typeof options === 'number' ? { wait: options } : options;
 
   const {
     wait,
     immediate = false,
     maxWait = 0,
     leading = false,
-    trailing = true
+    trailing = true,
   } = opts;
 
   let timeout: NodeJS.Timeout | null = null;
@@ -74,9 +72,7 @@ function debounce<T extends (...args: any[]) => any>(
   };
 
   const shouldInvoke = (time: number) => {
-    const timeSinceLastCall = lastCallTime 
-      ? time - lastCallTime 
-      : 0;
+    const timeSinceLastCall = lastCallTime ? time - lastCallTime : 0;
     const timeSinceLastInvoke = time - lastInvokeTime;
 
     return (
@@ -120,13 +116,10 @@ function debounce<T extends (...args: any[]) => any>(
       return trailingEdge(time);
     }
 
-    timeout = setTimeout(
-      timerExpired,
-      remainingWait(time)
-    );
+    timeout = setTimeout(timerExpired, remainingWait(time));
   };
 
-  const debounced = function(
+  const debounced = function (
     this: any,
     ...args: Parameters<T>
   ): Promise<ReturnType<T>> {
@@ -188,27 +181,24 @@ function debounce<T extends (...args: any[]) => any>(
 
 ```typescript
 // Basic usage
-const debouncedSearch = debounce(
-  async (query: string) => {
-    const response = await fetch(`/api/search?q=${query}`);
-    return response.json();
-  },
-  300
-);
+const debouncedSearch = debounce(async (query: string) => {
+  const response = await fetch(`/api/search?q=${query}`);
+  return response.json();
+}, 300);
 
 // Advanced usage with options
 const debouncedSave = debounce(
   async (data: any) => {
     await fetch('/api/save', {
       method: 'POST',
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
   },
   {
     wait: 1000,
     maxWait: 5000,
     leading: true,
-    trailing: true
+    trailing: true,
   }
 );
 
@@ -219,7 +209,7 @@ const debouncedValidate = debounce(
   },
   {
     wait: 300,
-    immediate: true
+    immediate: true,
   }
 );
 
@@ -275,11 +265,8 @@ const basicTest = async () => {
   debounced();
   debounced();
 
-  await new Promise(resolve => setTimeout(resolve, 150));
-  console.assert(
-    callCount === 1,
-    'Should only execute once'
-  );
+  await new Promise((resolve) => setTimeout(resolve, 150));
+  console.assert(callCount === 1, 'Should only execute once');
 };
 
 // Test immediate execution
@@ -293,17 +280,11 @@ const immediateTest = async () => {
   );
 
   debounced();
-  console.assert(
-    callCount === 1,
-    'Should execute immediately'
-  );
+  console.assert(callCount === 1, 'Should execute immediately');
 
   debounced();
-  await new Promise(resolve => setTimeout(resolve, 150));
-  console.assert(
-    callCount === 2,
-    'Should execute trailing call'
-  );
+  await new Promise((resolve) => setTimeout(resolve, 150));
+  console.assert(callCount === 2, 'Should execute trailing call');
 };
 ```
 
@@ -333,7 +314,7 @@ const debouncedSearch = createDebouncedApi<SearchParams, SearchResult>(
   async ({ query, filters }) => {
     const response = await fetch('/api/search', {
       method: 'POST',
-      body: JSON.stringify({ query, filters })
+      body: JSON.stringify({ query, filters }),
     });
     return response.json();
   },

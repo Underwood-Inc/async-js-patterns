@@ -50,7 +50,7 @@ class PerformanceMonitor {
       operationName,
       startTime: Date.now(),
       success: false,
-      metadata
+      metadata,
     };
 
     const operationId = `${operationName}-${metrics.startTime}`;
@@ -72,9 +72,9 @@ class PerformanceMonitor {
 
   getMetrics(): PerformanceMetrics {
     const operations = Array.from(this.operations.values());
-    const completed = operations.filter(op => op.endTime);
-    const successful = completed.filter(op => op.success);
-    const durations = completed.map(op => op.duration!);
+    const completed = operations.filter((op) => op.endTime);
+    const successful = completed.filter((op) => op.success);
+    const durations = completed.map((op) => op.duration!);
 
     return {
       operations,
@@ -83,7 +83,7 @@ class PerformanceMonitor {
       failedOperations: completed.length - successful.length,
       averageDuration: durations.reduce((a, b) => a + b, 0) / durations.length,
       maxDuration: Math.max(...durations),
-      minDuration: Math.min(...durations)
+      minDuration: Math.min(...durations),
     };
   }
 
@@ -96,7 +96,7 @@ class PerformanceMonitor {
   }
 
   private notifyListeners(metrics: OperationMetrics): void {
-    this.listeners.forEach(listener => listener(metrics));
+    this.listeners.forEach((listener) => listener(metrics));
   }
 
   clearMetrics(): void {
@@ -191,13 +191,13 @@ const memoryMonitor = MemoryMonitor.getInstance();
 
 async function processLargeData() {
   memoryMonitor.takeSnapshot('start');
-  
+
   // Process data
   const data = new Array(1000000).fill(0);
   await someOperation(data);
-  
+
   memoryMonitor.takeSnapshot('end');
-  
+
   const memoryUsed = memoryMonitor.compareSnapshots('start', 'end');
   console.log(`Memory used: ${memoryUsed} bytes`);
 }

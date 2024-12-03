@@ -38,14 +38,14 @@ async function executeInRace<T>(
     // Execute each task
     const racingPromises = tasks.map((task, index) =>
       task()
-        .then(result => {
+        .then((result) => {
           if (!isResolved) {
             isResolved = true;
             onTaskComplete?.(result, index);
             resolve(result);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           errors.push(error);
           onTaskError?.(error, index);
           completedCount++;
@@ -74,17 +74,17 @@ async function executeInRace<T>(
 // Example tasks
 const tasks: AsyncTask<string>[] = [
   async () => {
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     return 'Fast API';
   },
   async () => {
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     return 'Slow API';
   },
   async () => {
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 500));
     throw new Error('Failed API');
-  }
+  },
 ];
 
 // Execute tasks in race
@@ -95,12 +95,12 @@ executeInRace(tasks, {
   },
   onTaskError: (error, index) => {
     console.log(`Task ${index} failed with: ${error.message}`);
-  }
+  },
 })
-  .then(result => {
+  .then((result) => {
     console.log('Winner:', result);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error instanceof AggregateError) {
       console.error('All tasks failed:', error.errors);
     } else {
@@ -145,49 +145,49 @@ executeInRace(tasks, {
 // Test first success wins
 const successTasks: AsyncTask<number>[] = [
   async () => {
-    await new Promise(resolve => setTimeout(resolve, 200));
+    await new Promise((resolve) => setTimeout(resolve, 200));
     return 1;
   },
   async () => {
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
     return 2;
-  }
+  },
 ];
 
-const raceTest = executeInRace(successTasks)
-  .then(result => {
-    console.assert(result === 2, 'Faster task should win');
-  });
+const raceTest = executeInRace(successTasks).then((result) => {
+  console.assert(result === 2, 'Faster task should win');
+});
 
 // Test timeout
 const timeoutTasks: AsyncTask<number>[] = [
   async () => {
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     return 1;
-  }
+  },
 ];
 
-const timeoutTest = executeInRace(timeoutTasks, { timeout: 500 })
-  .catch(error => {
+const timeoutTest = executeInRace(timeoutTasks, { timeout: 500 }).catch(
+  (error) => {
     console.assert(
       error.message === 'Race timeout',
       'Should timeout correctly'
     );
-  });
+  }
+);
 
 // Test all failures
 const failTasks: AsyncTask<number>[] = [
-  async () => { throw new Error('Error 1'); },
-  async () => { throw new Error('Error 2'); }
+  async () => {
+    throw new Error('Error 1');
+  },
+  async () => {
+    throw new Error('Error 2');
+  },
 ];
 
-const failTest = executeInRace(failTasks)
-  .catch(error => {
-    console.assert(
-      error instanceof AggregateError,
-      'Should collect all errors'
-    );
-  });
+const failTest = executeInRace(failTasks).catch((error) => {
+  console.assert(error instanceof AggregateError, 'Should collect all errors');
+});
 ```
 
 ## Advanced Usage
@@ -204,12 +204,12 @@ async function executeInRaceWithCancellation<T>(
   timeout?: number
 ): Promise<T> {
   const cleanup = () => {
-    tasks.forEach(task => task.cancel());
+    tasks.forEach((task) => task.cancel());
   };
 
   try {
     const result = await executeInRace(
-      tasks.map(task => task.execute),
+      tasks.map((task) => task.execute),
       { timeout }
     );
     cleanup();
@@ -223,10 +223,10 @@ async function executeInRaceWithCancellation<T>(
 // Example usage with fetch
 function createCancellableRequest(url: string): CancellableTask<Response> {
   const controller = new AbortController();
-  
+
   return {
     execute: () => fetch(url, { signal: controller.signal }),
-    cancel: () => controller.abort()
+    cancel: () => controller.abort(),
   };
 }
 
@@ -234,13 +234,13 @@ function createCancellableRequest(url: string): CancellableTask<Response> {
 const endpoints = [
   'https://api1.example.com',
   'https://api2.example.com',
-  'https://api3.example.com'
+  'https://api3.example.com',
 ];
 
-const tasks = endpoints.map(url => createCancellableRequest(url));
+const tasks = endpoints.map((url) => createCancellableRequest(url));
 
 executeInRaceWithCancellation(tasks, 5000)
-  .then(response => response.json())
-  .then(data => console.log('First response:', data))
-  .catch(error => console.error('All requests failed:', error));
+  .then((response) => response.json())
+  .then((data) => console.log('First response:', data))
+  .catch((error) => console.error('All requests failed:', error));
 ```

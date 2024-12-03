@@ -20,7 +20,10 @@ interface BatchOptions<T, R> {
 
 class BatchProcessor<T, R> {
   private queue: T[] = [];
-  private pending: Map<T, { resolve: (value: R) => void; reject: (error: Error) => void }> = new Map();
+  private pending: Map<
+    T,
+    { resolve: (value: R) => void; reject: (error: Error) => void }
+  > = new Map();
   private timeoutId: NodeJS.Timeout | null = null;
   private processing = false;
 
@@ -54,11 +57,11 @@ class BatchProcessor<T, R> {
 
     this.processing = true;
     const batch = this.queue.splice(0, this.options.maxBatchSize);
-    const pendingItems = batch.map(item => this.pending.get(item)!);
+    const pendingItems = batch.map((item) => this.pending.get(item)!);
 
     try {
       const results = await this.processWithRetry(batch);
-      
+
       // Resolve individual promises
       results.forEach((result, index) => {
         const item = batch[index];
@@ -69,7 +72,7 @@ class BatchProcessor<T, R> {
     } catch (error) {
       // Handle batch failure
       this.options.errorHandler?.(error as Error, batch);
-      batch.forEach(item => {
+      batch.forEach((item) => {
         const { reject } = this.pending.get(item)!;
         this.pending.delete(item);
         reject(error as Error);
@@ -83,7 +86,8 @@ class BatchProcessor<T, R> {
   }
 
   private async processWithRetry(batch: T[]): Promise<R[]> {
-    const { maxAttempts = 3, backoffMs = 1000 } = this.options.retryOptions || {};
+    const { maxAttempts = 3, backoffMs = 1000 } =
+      this.options.retryOptions || {};
     let attempt = 0;
 
     while (attempt < maxAttempts) {
@@ -92,7 +96,7 @@ class BatchProcessor<T, R> {
       } catch (error) {
         attempt++;
         if (attempt === maxAttempts) throw error;
-        await new Promise(resolve => 
+        await new Promise((resolve) =>
           setTimeout(resolve, backoffMs * Math.pow(2, attempt))
         );
       }
@@ -118,13 +122,13 @@ const batchProcessor = new BatchProcessor<number, User>({
   batchProcessor: async (ids: number[]) => {
     const response = await fetch('/api/users/batch', {
       method: 'POST',
-      body: JSON.stringify({ ids })
+      body: JSON.stringify({ ids }),
     });
     return response.json();
   },
   errorHandler: (error, items) => {
     console.error(`Batch processing failed for ${items.length} items:`, error);
-  }
+  },
 });
 
 // Individual calls get automatically batched
@@ -133,8 +137,9 @@ const user2Promise = batchProcessor.add(2);
 const user3Promise = batchProcessor.add(3);
 
 // All requests are combined into one API call
-Promise.all([user1Promise, user2Promise, user3Promise])
-  .then(users => console.log('Fetched users:', users));
+Promise.all([user1Promise, user2Promise, user3Promise]).then((users) =>
+  console.log('Fetched users:', users)
+);
 ```
 
 ## Key Concepts
@@ -179,15 +184,15 @@ const batchTest = async () => {
     maxWaitTime: 50,
     batchProcessor: async (items) => {
       batchCount++;
-      return items.map(x => x * 2);
-    }
+      return items.map((x) => x * 2);
+    },
   });
 
   const results = await Promise.all([
     processor.add(1),
     processor.add(2),
     processor.add(3),
-    processor.add(4)
+    processor.add(4),
   ]);
 
   console.assert(
@@ -211,7 +216,7 @@ const errorTest = async () => {
     },
     errorHandler: () => {
       errorHandled = true;
-    }
+    },
   });
 
   try {
@@ -244,7 +249,7 @@ class PriorityBatchProcessor<T, R> extends BatchProcessor<T, R> {
       0,
       this.options.maxBatchSize
     );
-    
+
     const remainingSpace = this.options.maxBatchSize - highPriorityBatch.length;
     const lowPriorityBatch = this.lowPriorityQueue.splice(0, remainingSpace);
 
@@ -260,10 +265,10 @@ const priorityProcessor = new PriorityBatchProcessor<number, User>({
   batchProcessor: async (ids) => {
     const response = await fetch('/api/users/batch', {
       method: 'POST',
-      body: JSON.stringify({ ids })
+      body: JSON.stringify({ ids }),
     });
     return response.json();
-  }
+  },
 });
 
 // High priority request

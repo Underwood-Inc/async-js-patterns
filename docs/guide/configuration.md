@@ -87,10 +87,10 @@ module.exports = {
         'perf',
         'test',
         'chore',
-        'revert'
-      ]
-    ]
-  }
+        'revert',
+      ],
+    ],
+  },
 };
 ```
 
@@ -107,9 +107,9 @@ module.exports = {
       branches: 80,
       functions: 80,
       lines: 80,
-      statements: 80
-    }
-  }
+      statements: 80,
+    },
+  },
 };
 ```
 
@@ -121,35 +121,35 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Lint
-      run: |
-        npm run lint
-        npm run type-check
-        
-    - name: Test
-      run: npm test -- --coverage
-      
-    - name: Build
-      run: npm run build
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: |
+          npm run lint
+          npm run type-check
+
+      - name: Test
+        run: npm test -- --coverage
+
+      - name: Build
+        run: npm run build
 ```
 
 ## Development Environment
@@ -199,3 +199,4 @@ jobs:
     "precommit": "lint-staged"
   }
 }
+```

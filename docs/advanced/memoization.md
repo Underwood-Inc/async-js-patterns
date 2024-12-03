@@ -31,7 +31,7 @@ class Memoizer<T> {
       maxAge: options.maxAge || 5 * 60 * 1000, // 5 minutes
       keyGenerator: options.keyGenerator || JSON.stringify,
       onEvict: options.onEvict || (() => {}),
-      shouldCache: options.shouldCache || (() => true)
+      shouldCache: options.shouldCache || (() => true),
     };
   }
 
@@ -40,7 +40,7 @@ class Memoizer<T> {
     ...args: any[]
   ): Promise<T> {
     const key = this.options.keyGenerator(...args);
-    
+
     // Check cache and validate age
     const cached = this.cache.get(key);
     if (cached) {
@@ -54,7 +54,7 @@ class Memoizer<T> {
 
     // Execute function and cache result
     const result = await fn(...args);
-    
+
     if (this.options.shouldCache(result)) {
       this.set(key, result);
     }
@@ -71,7 +71,7 @@ class Memoizer<T> {
     this.cache.set(key, {
       value,
       timestamp: Date.now(),
-      hits: 1
+      hits: 1,
     });
   }
 
@@ -109,12 +109,12 @@ class Memoizer<T> {
 
   getCacheStats(): { size: number; hits: number } {
     let totalHits = 0;
-    this.cache.forEach(entry => {
+    this.cache.forEach((entry) => {
       totalHits += entry.hits;
     });
     return {
       size: this.cache.size,
-      hits: totalHits
+      hits: totalHits,
     };
   }
 }
@@ -126,23 +126,20 @@ class Memoizer<T> {
 // Basic API caching
 const apiMemoizer = new Memoizer<any>({
   maxAge: 60000, // 1 minute cache
-  maxSize: 100,  // Max 100 cached responses
+  maxSize: 100, // Max 100 cached responses
 });
 
 const fetchUserData = async (userId: string) => {
-  return apiMemoizer.memoize(
-    async (id) => {
-      const response = await fetch(`/api/users/${id}`);
-      return response.json();
-    },
-    userId
-  );
+  return apiMemoizer.memoize(async (id) => {
+    const response = await fetch(`/api/users/${id}`);
+    return response.json();
+  }, userId);
 };
 
 // With custom key generation
 const searchMemoizer = new Memoizer<any>({
-  keyGenerator: (query, filters) => 
-    `${query}-${Object.entries(filters).sort().join('-')}`
+  keyGenerator: (query, filters) =>
+    `${query}-${Object.entries(filters).sort().join('-')}`,
 });
 
 const searchApi = async (query: string, filters: object) => {
@@ -150,7 +147,7 @@ const searchApi = async (query: string, filters: object) => {
     async (q, f) => {
       const response = await fetch('/api/search', {
         method: 'POST',
-        body: JSON.stringify({ query: q, filters: f })
+        body: JSON.stringify({ query: q, filters: f }),
       });
       return response.json();
     },
@@ -166,7 +163,7 @@ const dataMemoizer = new Memoizer<any>({
   },
   onEvict: (key, value) => {
     console.log(`Evicting cache for key: ${key}`);
-  }
+  },
 });
 ```
 
@@ -208,7 +205,7 @@ const dataMemoizer = new Memoizer<any>({
 const cachingTest = async () => {
   let callCount = 0;
   const memoizer = new Memoizer<number>();
-  
+
   const expensive = async (n: number) => {
     callCount++;
     return n * 2;
@@ -219,38 +216,23 @@ const cachingTest = async () => {
   // Second call (should use cache)
   const result2 = await memoizer.memoize(expensive, 5);
 
-  console.assert(
-    callCount === 1,
-    'Should only call function once'
-  );
-  console.assert(
-    result1 === result2,
-    'Should return same result'
-  );
+  console.assert(callCount === 1, 'Should only call function once');
+  console.assert(result1 === result2, 'Should return same result');
 };
 
 // Test cache expiration
 const expirationTest = async () => {
   const memoizer = new Memoizer<number>({
-    maxAge: 100 // 100ms cache
+    maxAge: 100, // 100ms cache
   });
 
-  const value = await memoizer.memoize(
-    async () => Date.now(),
-    'key'
-  );
+  const value = await memoizer.memoize(async () => Date.now(), 'key');
 
-  await new Promise(resolve => setTimeout(resolve, 150));
-  
-  const newValue = await memoizer.memoize(
-    async () => Date.now(),
-    'key'
-  );
+  await new Promise((resolve) => setTimeout(resolve, 150));
 
-  console.assert(
-    value !== newValue,
-    'Should refresh after expiration'
-  );
+  const newValue = await memoizer.memoize(async () => Date.now(), 'key');
+
+  console.assert(value !== newValue, 'Should refresh after expiration');
 };
 ```
 
@@ -263,9 +245,7 @@ class PreloadingMemoizer<T> extends Memoizer<T> {
     fn: (...args: any[]) => Promise<T>,
     argsList: any[][]
   ): Promise<void> {
-    await Promise.all(
-      argsList.map(args => this.memoize(fn, ...args))
-    );
+    await Promise.all(argsList.map((args) => this.memoize(fn, ...args)));
   }
 }
 
@@ -273,18 +253,14 @@ class PreloadingMemoizer<T> extends Memoizer<T> {
 const userMemoizer = new PreloadingMemoizer<any>();
 
 // Warm cache with common user IDs
-await userMemoizer.preload(
-  fetchUserData,
-  [['user1'], ['user2'], ['user3']]
-);
+await userMemoizer.preload(fetchUserData, [['user1'], ['user2'], ['user3']]);
 
 // With batch cache invalidation
 class BatchMemoizer<T> extends Memoizer<T> {
   private patterns: Map<string, RegExp> = new Map();
 
   invalidatePattern(pattern: string): void {
-    const regex = this.patterns.get(pattern) ||
-      new RegExp(pattern);
+    const regex = this.patterns.get(pattern) || new RegExp(pattern);
     this.patterns.set(pattern, regex);
 
     for (const key of this.cache.keys()) {
