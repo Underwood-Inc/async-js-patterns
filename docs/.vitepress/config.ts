@@ -2,7 +2,8 @@ import { defineConfig } from 'vitepress';
 
 export default defineConfig({
   title: 'Async JS Patterns',
-  description: 'A comprehensive guide to async JavaScript patterns with implementations',
+  description:
+    'A comprehensive guide to async JavaScript patterns with implementations',
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
@@ -16,10 +17,19 @@ export default defineConfig({
           { text: 'Promise.all()', link: '/implementations/promise-all' },
           { text: 'Promise.any()', link: '/implementations/promise-any' },
           { text: 'Promise.race()', link: '/implementations/promise-race' },
-          { text: 'Promise.allSettled()', link: '/implementations/promise-allsettled' },
-          { text: 'Promise.finally()', link: '/implementations/promise-finally' },
-          { text: 'Promise.resolve/reject', link: '/implementations/promise-resolve-reject' },
-        ]
+          {
+            text: 'Promise.allSettled()',
+            link: '/implementations/promise-allsettled',
+          },
+          {
+            text: 'Promise.finally()',
+            link: '/implementations/promise-finally',
+          },
+          {
+            text: 'Promise.resolve/reject',
+            link: '/implementations/promise-resolve-reject',
+          },
+        ],
       },
       {
         text: 'Async Task Patterns',
@@ -27,7 +37,7 @@ export default defineConfig({
           { text: 'Tasks in Series', link: '/patterns/tasks-series' },
           { text: 'Tasks in Parallel', link: '/patterns/tasks-parallel' },
           { text: 'Tasks Racing', link: '/patterns/tasks-race' },
-        ]
+        ],
       },
       {
         text: 'Timer Implementations',
@@ -35,7 +45,7 @@ export default defineConfig({
           { text: 'Custom setTimeout', link: '/timers/settimeout' },
           { text: 'Custom setInterval', link: '/timers/setinterval' },
           { text: 'Clear All Timers', link: '/timers/clear-timers' },
-        ]
+        ],
       },
       {
         text: 'Advanced Patterns',
@@ -46,11 +56,14 @@ export default defineConfig({
           { text: 'Debouncing', link: '/advanced/debouncing' },
           { text: 'Throttling', link: '/advanced/throttling' },
           { text: 'Memoization', link: '/advanced/memoization' },
-        ]
-      }
+        ],
+      },
     ],
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/yourusername/async-js-patterns' }
-    ]
-  }
-}); 
+      {
+        icon: 'github',
+        link: 'https://github.com/Underwood-Inc/async-js-patterns',
+      },
+    ],
+  },
+});
