@@ -5,6 +5,10 @@ export default defineConfig({
   description:
     'A comprehensive guide to async JavaScript patterns with implementations',
   base: '/async-js-patterns/',
+  ignoreDeadLinks: [
+    // Ignore LICENSE file link
+    /\/LICENSE/,
+  ],
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
