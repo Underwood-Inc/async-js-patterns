@@ -117,11 +117,19 @@ const fetchData = async (id: string) => {
 
 ## Contributing
 
-See [Contributing Guide](./CONTRIBUTING.md) for guidelines on contributing to
-this project.
+See [Contributing Guide](./CONTRIBUTING.md) for guidelines on contributing to this project.
 
 ## License
 
-This project is licensed under CC BY 4.0 (Creative Commons Attribution 4.0).
+This project is licensed under the OpenRAIL License. This license is specifically designed for AI-assisted content and promotes responsible AI development while maintaining open-source principles. See the [LICENSE](../LICENSE) file for details.
+
+### AI Content Disclosure
+
+This project contains content generated with AI assistance. Contributors should:
+
+- Document AI tool usage in commits
+- Note potential limitations or biases
+- Review and verify AI-generated content thoroughly
+- Maintain transparency about AI involvement
 
 ---
