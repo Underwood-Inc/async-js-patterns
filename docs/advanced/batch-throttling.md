@@ -1,6 +1,7 @@
 # Throttling API Calls by Batching
 
 ## Overview
+
 A batching system that groups multiple API calls into single requests to reduce server load and respect rate limits. This implementation includes request queuing, automatic batch processing, and configurable batch sizes and delays.
 
 ## Implementation
@@ -270,4 +271,4 @@ priorityProcessor.addWithPriority(1, true);
 
 // Low priority request
 priorityProcessor.addWithPriority(2, false);
-``` 
+```

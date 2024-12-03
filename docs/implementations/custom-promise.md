@@ -286,6 +286,7 @@ validateUser({ age: 16 })
    ```
 
 3. **Resource Cleanup**
+
    ```typescript
    // Use finally for cleanup operations
    const connection = await connect();

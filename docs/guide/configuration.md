@@ -3,6 +3,7 @@
 ## Code Quality Tools
 
 ### 1. ESLint Configuration
+
 ```json
 // .eslintrc.json
 {
@@ -22,6 +23,7 @@
 ```
 
 ### 2. Prettier Configuration
+
 ```json
 // .prettierrc
 {
@@ -34,6 +36,7 @@
 ```
 
 ### 3. Husky Setup
+
 ```bash
 npm install --save-dev husky lint-staged
 
@@ -66,6 +69,7 @@ npx husky add .husky/commit-msg 'npx --no -- commitlint --edit "$1"'
 ```
 
 ### 4. Commitlint Configuration
+
 ```javascript
 // commitlint.config.js
 module.exports = {
@@ -91,6 +95,7 @@ module.exports = {
 ```
 
 ### 5. Jest Configuration
+
 ```javascript
 // jest.config.js
 module.exports = {
@@ -109,6 +114,7 @@ module.exports = {
 ```
 
 ### 6. GitHub Actions Workflow
+
 ```yaml
 # .github/workflows/ci.yml
 name: CI
@@ -149,6 +155,7 @@ jobs:
 ## Development Environment
 
 ### VS Code Settings
+
 ```json
 // .vscode/settings.json
 {
@@ -162,6 +169,7 @@ jobs:
 ```
 
 ### VS Code Extensions
+
 ```json
 // .vscode/extensions.json
 {
@@ -175,6 +183,7 @@ jobs:
 ```
 
 ## Package Scripts
+
 ```json
 {
   "scripts": {
@@ -189,4 +198,4 @@ jobs:
     "docs": "typedoc --out docs/api src/",
     "precommit": "lint-staged"
   }
-} 
+}

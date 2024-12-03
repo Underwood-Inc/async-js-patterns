@@ -59,7 +59,7 @@ async function fetchUserData(userId: string) {
 
 ## Project Structure
 
-```
+```text
 async-patterns/
 ├── src/
 │   ├── implementations/    # Core Promise implementations
@@ -92,7 +92,7 @@ async-patterns/
 }
 ```
 
-2. **Testing Setup**
+1. **Testing Setup**
 
 ```typescript
 // tests/setup.ts
@@ -103,9 +103,7 @@ beforeEach(() => {
 });
 ```
 
-## Basic Usage Examples
-
-1. **Retry with Timeout**
+1. **Basic Usage Examples**
 
 ```typescript
 import { withRetry } from './patterns/auto-retry';
@@ -117,45 +115,6 @@ const fetchWithRetry = (url: string) =>
     5000,
     'fetchWithRetry'
   );
-```
-
-2. **Batch API Calls**
-
-```typescript
-import { BatchProcessor } from './patterns/batch-throttling';
-
-const batchProcessor = new BatchProcessor({
-  maxBatchSize: 50,
-  maxWaitTime: 100,
-  batchProcessor: async (ids: string[]) => {
-    const response = await fetch('/api/batch', {
-      method: 'POST',
-      body: JSON.stringify({ ids }),
-    });
-    return response.json();
-  },
-});
-```
-
-3. **Performance Monitoring**
-
-```typescript
-import { PerformanceMonitor } from './monitoring/performance';
-
-const monitor = PerformanceMonitor.getInstance();
-
-monitor.addListener((metrics) => {
-  console.log(`Operation ${metrics.operationName} took ${metrics.duration}ms`);
-});
-
-// Track operation
-await monitor.trackOperation(
-  'fetchData',
-  async () => {
-    // Your async operation here
-  },
-  { additionalInfo: 'some metadata' }
-);
 ```
 
 ## Next Steps

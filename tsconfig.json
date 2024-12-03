@@ -1,23 +1,26 @@
 {
   "compilerOptions": {
-    "strict": true,
     "target": "ES2020",
     "module": "ESNext",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "declaration": true,
-    "outDir": "./dist",
-    "rootDir": "./docs",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["docs/*"]
-    },
-    "types": ["jest", "node"],
+    "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["**/*.md, **/*.ts"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "docs/.vitepress/config.ts"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "docs/.vitepress/cache",
+    "docs/.vitepress/dist",
+    "docs/**/*.test.ts"
+  ]
 }

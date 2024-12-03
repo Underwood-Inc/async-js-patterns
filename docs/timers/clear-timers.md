@@ -1,6 +1,7 @@
 # Custom clearAllTimers Implementation
 
 ## Overview
+
 A comprehensive timer management system that can track and clear all types of timers (setTimeout, setInterval) in an application. This implementation helps prevent memory leaks and provides a clean way to reset timer state.
 
 ## Implementation
@@ -266,4 +267,4 @@ const autoCleanupManager = new AutoCleanupTimerManager(30000);
 autoCleanupManager.setTimeout(() => {
   console.log('This timer will be auto-cleaned if stale');
 }, 5000);
-``` 
+```

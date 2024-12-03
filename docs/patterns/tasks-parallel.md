@@ -1,6 +1,7 @@
 # Implementing N Async Tasks in Parallel
 
 ## Overview
+
 Running async tasks in parallel means executing multiple tasks simultaneously without waiting for each other. This pattern is useful when tasks are independent and you want to maximize throughput.
 
 ## Implementation
@@ -269,4 +270,4 @@ async function executeWithPool<T>(
     pool.size
   );
 }
-``` 
+```

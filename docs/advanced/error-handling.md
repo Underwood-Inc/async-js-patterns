@@ -1,6 +1,7 @@
 # Error Handling Strategies
 
 ## Overview
+
 Comprehensive error handling strategies for async JavaScript patterns, including error types, error propagation, and recovery mechanisms.
 
 ## Implementation
@@ -235,4 +236,4 @@ async function fetchWithCircuitBreaker(
     'fetchWithCircuitBreaker'
   );
 }
-``` 
+```

@@ -1,7 +1,11 @@
 # Throttling Rate Limiting Implementation
 
 ## Overview
-Throttling limits the rate at which a function can be called, ensuring it executes at most once within a specified time window. This implementation includes both basic throttling and advanced features like leading/trailing calls and async support.
+
+Throttling limits the rate at which a function can be called. It ensures the function
+executes at most once within a specified time window. This implementation includes
+both basic throttling and advanced features like leading/trailing calls and async
+support.
 
 ## Implementation
 
@@ -23,11 +27,7 @@ function throttle<T extends (...args: any[]) => any>(
   wait: number,
   options: ThrottleOptions = {}
 ): ThrottledFunction<T> {
-  const {
-    leading = true,
-    trailing = true,
-    maxWait = wait
-  } = options;
+  const { leading = true, trailing = true, maxWait = wait } = options;
 
   let timeout: NodeJS.Timeout | null = null;
   let lastArgs: Parameters<T> | null = null;
@@ -47,9 +47,7 @@ function throttle<T extends (...args: any[]) => any>(
   };
 
   const shouldInvoke = (time: number) => {
-    const timeSinceLastCall = lastCallTime 
-      ? time - lastCallTime 
-      : 0;
+    const timeSinceLastCall = lastCallTime ? time - lastCallTime : 0;
     const timeSinceLastExecute = time - lastExecuteTime;
 
     return (
@@ -86,7 +84,7 @@ function throttle<T extends (...args: any[]) => any>(
     timeout = setTimeout(timerExpired, timeWaiting);
   };
 
-  const throttled = function(
+  const throttled = function (
     this: any,
     ...args: Parameters<T>
   ): Promise<ReturnType<T>> {
@@ -145,7 +143,7 @@ const throttledApi = throttle(
   async (data: any) => {
     const response = await fetch('/api/endpoint', {
       method: 'POST',
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
     return response.json();
   },
@@ -168,7 +166,7 @@ const throttledUpdate = throttle(
   async (value: string) => {
     await fetch('/api/update', {
       method: 'POST',
-      body: JSON.stringify({ value })
+      body: JSON.stringify({ value }),
     });
   },
   2000,
@@ -227,40 +225,24 @@ const timingTest = async () => {
   throttled();
   throttled();
 
-  await new Promise(resolve => setTimeout(resolve, 50));
-  console.assert(
-    callCount === 1,
-    'Should execute immediately once'
-  );
+  await new Promise((resolve) => setTimeout(resolve, 50));
+  console.assert(callCount === 1, 'Should execute immediately once');
 
-  await new Promise(resolve => setTimeout(resolve, 100));
-  console.assert(
-    callCount === 2,
-    'Should execute trailing call'
-  );
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  console.assert(callCount === 2, 'Should execute trailing call');
 };
 
 // Test with promises
 const promiseTest = async () => {
   const results: number[] = [];
-  const throttled = throttle(
-    async (n: number) => {
-      results.push(n);
-      return n;
-    },
-    100
-  );
+  const throttled = throttle(async (n: number) => {
+    results.push(n);
+    return n;
+  }, 100);
 
-  await Promise.all([
-    throttled(1),
-    throttled(2),
-    throttled(3)
-  ]);
+  await Promise.all([throttled(1), throttled(2), throttled(3)]);
 
-  console.assert(
-    results.length === 2,
-    'Should throttle async calls'
-  );
+  console.assert(results.length === 2, 'Should throttle async calls');
 };
 ```
 
@@ -294,9 +276,7 @@ class ThrottledQueue<T> {
       } catch (error) {
         console.error('Processing error:', error);
       }
-      await new Promise(resolve => 
-        setTimeout(resolve, this.interval)
-      );
+      await new Promise((resolve) => setTimeout(resolve, this.interval));
     }
 
     this.processing = false;
@@ -314,4 +294,4 @@ const requestQueue = new ThrottledQueue(
 // Add requests to queue
 requestQueue.add(new Request('/api/endpoint1'));
 requestQueue.add(new Request('/api/endpoint2'));
-``` 
+```

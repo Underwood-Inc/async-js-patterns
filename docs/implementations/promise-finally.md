@@ -180,6 +180,7 @@ async function robustOperation() {
    ```
 
 3. **Async Cleanup**
+
    ```typescript
    // Handle async cleanup properly
    async function withAsyncCleanup() {

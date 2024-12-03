@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   extends: ['@commitlint/config-conventional'],
   rules: {
     'body-max-line-length': [2, 'always', 100],
@@ -8,4 +8,4 @@ module.exports = {
       ['sentence-case', 'start-case', 'pascal-case', 'upper-case'],
     ],
   },
-}; 
+};

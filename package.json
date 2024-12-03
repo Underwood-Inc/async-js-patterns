@@ -10,9 +10,9 @@
     "docs:preview": "vitepress preview docs",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "eslint . --ext .js,.vue,.ts,.md",
-    "lint:fix": "eslint . --ext .js,.vue,.ts,.md --fix",
-    "format": "prettier --write \"src/**/*.ts\" \"docs/**/*.md\"",
+    "lint": "eslint . && markdownlint \"**/*.md\" --ignore node_modules",
+    "lint:fix": "eslint . --fix && markdownlint \"**/*.md\" --ignore node_modules --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md}\"",
     "commit": "git-cz",
     "type-check": "tsc --noEmit",
     "prepare": "husky",
@@ -22,14 +22,14 @@
     "postinstall": "npm run prepare"
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
+    "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
-      "prettier --write",
-      "jest --findRelatedTests"
+      "prettier --write"
     ],
     "*.md": [
-      "prettier --write",
-      "eslint --fix"
+      "eslint --fix",
+      "markdownlint --fix",
+      "prettier --write"
     ]
   },
   "keywords": [
@@ -42,31 +42,32 @@
   ],
   "author": "Underwood Inc. - Michael Seaward",
   "license": "CC-BY-4.0",
+  "type": "module",
   "devDependencies": {
-    "@commitlint/cli": "^19.6.0",
-    "@commitlint/config-conventional": "^19.6.0",
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
+    "@eslint/js": "^8.56.0",
     "@types/jest": "^29.0.0",
     "@types/node": "^18.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.17.0",
-    "@typescript-eslint/parser": "^8.17.0",
-    "commitizen": "^4.3.1",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint-config-prettier": "^8.0.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint": "^9.16.0",
-    "husky": "^9.1.7",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-markdown": "^3.0.1",
+    "markdownlint": "^0.33.0",
+    "markdownlint-cli": "^0.39.0",
+    "prettier": "^3.2.0",
+    "husky": "^9.0.0",
     "jest": "^29.0.0",
-    "lint-staged": "^13.0.0",
-    "prettier": "^3.4.1",
+    "lint-staged": "^15.2.0",
     "rimraf": "^5.0.0",
     "ts-jest": "^29.0.0",
-    "typedoc": "^0.24.0",
-    "typescript": "^5.0.0",
-    "vitepress": "^1.5.0",
-    "vue": "^3.5.13"
-  },
-  "directories": {
-    "doc": "docs"
+    "typedoc": "^0.25.0",
+    "typescript": "~5.5.0",
+    "vitepress": "^1.0.0",
+    "vue": "^3.4.0"
   },
   "config": {
     "commitizen": {

@@ -1,6 +1,7 @@
 # Implementing N Async Tasks in Race
 
 ## Overview
+
 Running async tasks in race means executing multiple tasks simultaneously and taking the result of the first task that completes successfully. This pattern is useful when you have multiple ways to accomplish the same goal and want the fastest result.
 
 ## Implementation
@@ -242,4 +243,4 @@ executeInRaceWithCancellation(tasks, 5000)
   .then(response => response.json())
   .then(data => console.log('First response:', data))
   .catch(error => console.error('All requests failed:', error));
-``` 
+```

@@ -186,6 +186,7 @@ manager
    ```
 
 3. **Error Handling**
+
    ```typescript
    const safeRace = async (promises: Promise<any>[]) => {
      try {

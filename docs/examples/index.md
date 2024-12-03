@@ -2,7 +2,9 @@
 title: Examples
 ---
 
-# Examples
+## Overview
+
+This section provides practical examples of using the async patterns library.
 
 ## Basic Examples
 

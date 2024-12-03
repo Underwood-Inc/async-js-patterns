@@ -239,6 +239,7 @@ processor.processBatch(items, (item) =>
    ```
 
 3. **Progress Tracking**
+
    ```typescript
    function withProgress<T>(promises: Promise<T>[]) {
      let completed = 0;

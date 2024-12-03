@@ -205,6 +205,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
    ```
 
 3. **Type Safety**
+
    ```typescript
    // Type-safe promise creation
    function createTypedPromise<T>(

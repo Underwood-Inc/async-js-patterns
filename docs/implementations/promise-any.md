@@ -201,6 +201,7 @@ const fetchWithRetry = withRetry(
    ```
 
 3. **Validation**
+
    ```typescript
    const validateResult = <T>(
      promises: Promise<T>[],

@@ -38,7 +38,7 @@ and TypeScript applications.
 - [Performance Profiling](./performance-profiling.md) - Profile and optimize
   async code
 
-## Error Handling
+## Error Management
 
 - [Error Handling Strategies](./error-handling.md) - Robust error handling for
   async operations
@@ -61,7 +61,7 @@ and TypeScript applications.
 - Optimize memory usage
 - Profile and benchmark critical paths
 
-### Error Handling
+### Exception Handling
 
 - Implement proper error recovery
 - Use circuit breakers for external services

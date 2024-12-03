@@ -1,6 +1,7 @@
 # Debouncing Rate Limiting Implementation
 
 ## Overview
+
 Debouncing delays the execution of a function until after a period of inactivity. This implementation includes both basic debouncing and advanced features like cancellation, immediate execution options, and TypeScript support.
 
 ## Implementation
@@ -355,4 +356,4 @@ function useDebouncedCallback<T extends (...args: any[]) => any>(
 
   return debouncedFn;
 }
-``` 
+```
