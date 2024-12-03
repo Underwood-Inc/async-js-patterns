@@ -74,6 +74,8 @@ To use this workflow:
 2. Ensure your VitePress configuration has the correct base URL:
 
    ```js
+   import { defineConfig } from 'vitepress';
+
    export default defineConfig({
      base: '/repository-name/',
    });
