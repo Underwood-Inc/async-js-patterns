@@ -4,6 +4,7 @@ export default defineConfig({
   title: 'Async JS Patterns',
   description:
     'A comprehensive guide to async JavaScript patterns with implementations',
+  base: '/async-js-patterns/',
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
