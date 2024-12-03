@@ -121,7 +121,7 @@ See [Contributing Guide](./CONTRIBUTING.md) for guidelines on contributing to th
 
 ## License
 
-This project is licensed under the OpenRAIL License. This license is specifically designed for AI-assisted content and promotes responsible AI development while maintaining open-source principles. See the [LICENSE](../LICENSE) file for details.
+This project is licensed under the OpenRAIL License. This license is specifically designed for AI-assisted content and promotes responsible AI development while maintaining open-source principles. See the [LICENSE](/LICENSE) file for details.
 
 ### AI Content Disclosure
 
