@@ -112,8 +112,7 @@ Our repository uses GitHub Actions for continuous integration and deployment. Th
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
-for details.
+This project is licensed under the OpenRAIL License - see the [LICENSE](LICENSE) file for details. This license is specifically designed for AI-assisted content and promotes responsible AI development while maintaining open-source principles.
 
 ## 🙏 Acknowledgments
 
