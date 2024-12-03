@@ -27,12 +27,20 @@ accept pull requests.
 2. Update the docs with any new patterns or modifications to existing ones.
 3. The PR will be merged once you have the sign-off of at least one maintainer.
 
-## Any Contributions You Make Will Be Under the CC BY 4.0 License
+## Any Contributions You Make Will Be Under the OpenRAIL License
 
-In short, when you submit code changes, your submissions are understood to be
-under the same
-[CC BY 4.0 License](http://choosealicense.com/licenses/cc-by-4.0/) that covers
-the project. Feel free to contact the maintainers if that's a concern.
+In short, when you submit code changes, your submissions are understood to be under the same
+[OpenRAIL License](LICENSE) that covers the project. This includes specific provisions for
+AI-assisted content.
+
+### AI Content Guidelines
+
+When contributing AI-assisted content:
+
+1. Document any AI tools used in your commit messages
+2. Note potential limitations or biases in AI-generated content
+3. Review and verify AI-generated code thoroughly
+4. Maintain transparency about AI involvement
 
 ## Report Bugs Using GitHub's [Issue Tracker](https://github.com/Underwood-Inc/async-js-patterns/issues)
 
