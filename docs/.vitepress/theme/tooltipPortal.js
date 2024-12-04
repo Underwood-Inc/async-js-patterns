@@ -37,7 +37,7 @@ export function showTooltip(tooltipContainer, content, x, y) {
     line-height: 1.5;
     white-space: pre-wrap;
     border-radius: 6px;
-    border: 1px solid var(--vp-c-divider);
+    border: 1px dashed var(--vp-c-brand);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     opacity: 1;
     visibility: visible;
