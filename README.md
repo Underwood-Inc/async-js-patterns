@@ -55,7 +55,7 @@ git clone https://github.com/Underwood-Inc/async-js-patterns.git
 cd async-js-patterns
 ```
 
-1. Install dependencies:
+2. Install dependencies:
 
 ```bash
 npm install
@@ -71,7 +71,7 @@ Visit our documentation site to explore the implementations and examples:
 npm run docs:dev
 ```
 
-1. Build the documentation:
+2. Build the documentation:
 
 ```bash
 npm run docs:build
@@ -96,7 +96,7 @@ npm test
 ## 🤝 Contributing
 
 We welcome contributions! Please see our
-[Contributing Guide](docs/CONTRIBUTING.md) for details on:
+[Contributing Guide](CONTRIBUTING.md) for details on:
 
 - Code of Conduct
 - Development Process
