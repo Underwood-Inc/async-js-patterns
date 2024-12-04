@@ -41,7 +41,7 @@
     "vitepress"
   ],
   "author": "Underwood Inc. - Michael Seaward",
-  "license": "CC-BY-4.0",
+  "license": "OpenRAIL License",
   "type": "module",
   "devDependencies": {
     "@commitlint/cli": "^19.0.0",
