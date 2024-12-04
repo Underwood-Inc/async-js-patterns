@@ -1,8 +1,6 @@
 import type { MarkdownRenderer } from 'vitepress';
 
 export function codePreviewPlugin(md: MarkdownRenderer) {
-  console.log('CodePreview plugin initialized');
-
   // Store the original fence renderer
   const originalFence = md.renderer.rules.fence!;
 
@@ -10,17 +8,6 @@ export function codePreviewPlugin(md: MarkdownRenderer) {
     const [tokens, idx, options, env, self] = args;
     const token = tokens[idx];
     const rawLang = token.info.trim();
-
-    // Log the token info for debugging
-    console.log('Processing code block:', {
-      rawLang,
-      info: token.info,
-      options: {
-        highlight: options?.highlight,
-        langPrefix: options?.langPrefix,
-      },
-      env: typeof env,
-    });
 
     // Get the base language and check for preview flag
     const [lang, ...flags] = rawLang.split(':');
@@ -83,13 +70,10 @@ export function codePreviewPlugin(md: MarkdownRenderer) {
 
     // Process the code using regex during SSR
     let modifiedCode = highlightedCode;
-    let tooltipsAdded = 0;
 
     Object.entries(typeInfo).forEach(([term, info]) => {
       // First, check if the term exists in the raw content
       if (token.content.includes(term)) {
-        console.log(`Processing term "${term}"`);
-
         // Updated regex to match terms within Shiki spans more precisely
         const termPattern = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape regex special chars
         const regex = new RegExp(
@@ -100,24 +84,15 @@ export function codePreviewPlugin(md: MarkdownRenderer) {
           ? `${info.type}\\n${info.description}`
           : info.description;
 
-        // Count matches before replacement
-        const matches = modifiedCode.match(regex);
-        if (matches) {
-          console.log(`Found ${matches.length} matches for "${term}"`);
-
-          modifiedCode = modifiedCode.replace(
-            regex,
-            (match, spanStart, style, before, term, after, spanEnd) => {
-              tooltipsAdded++;
-              // Preserve Shiki's style in the tooltip span
-              return `${spanStart}${before}<span class="tooltip" style="${style}" data-tooltip="${tooltip}">${term}</span>${after}${spanEnd}`;
-            }
-          );
-        }
+        modifiedCode = modifiedCode.replace(
+          regex,
+          (match, spanStart, style, before, term, after, spanEnd) => {
+            // Preserve Shiki's style in the tooltip span
+            return `${spanStart}${before}<span class="tooltip" style="${style}" data-tooltip="${tooltip}">${term}</span>${after}${spanEnd}`;
+          }
+        );
       }
     });
-
-    console.log(`Added ${tooltipsAdded} tooltips total`);
 
     // Return the modified code with tooltips
     return `<div class="code-preview">${modifiedCode}</div>`;
