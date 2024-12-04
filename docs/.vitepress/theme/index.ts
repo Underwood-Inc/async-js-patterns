@@ -1,8 +1,20 @@
+import { useRouter } from 'vitepress';
 import Theme from 'vitepress/theme';
+import { onMounted, watch } from 'vue';
+import TooltipLoader from './components/TooltipLoader.vue';
 import { codePreviewPlugin } from './markdown/codePreview';
 import './styles/code.scss';
 import './styles/custom.scss';
 import { createTooltipPortal, hideTooltip, showTooltip } from './tooltipPortal';
+
+declare global {
+  interface Window {
+    tooltipLoader?: {
+      updateProgress: (processed: number, total: number) => void;
+      hideLoader: () => void;
+    };
+  }
+}
 
 // Create the style content string
 const tooltipStyles = `
@@ -44,67 +56,111 @@ const tooltipStyles = `
 // Track processed tooltips to avoid duplicate handlers
 const processedTooltips = new WeakSet();
 
-export default {
-  extends: Theme,
-  async enhanceApp({ app, router }) {
-    // Only run client-side code in browser environment
-    if (typeof window === 'undefined') {
+// Function to handle tooltip initialization
+function initializeTooltips(tooltipContainer: HTMLElement | null) {
+  if (!tooltipContainer) return;
+
+  const tooltips = document.querySelectorAll('.tooltip');
+  const unprocessedCount = Array.from(tooltips).filter(
+    (t) => !processedTooltips.has(t)
+  ).length;
+
+  if (unprocessedCount > 0 && window.tooltipLoader) {
+    window.tooltipLoader.updateProgress(0, unprocessedCount);
+  }
+
+  let processed = 0;
+  tooltips.forEach((tooltip) => {
+    // Skip if already processed
+    if (processedTooltips.has(tooltip)) {
       return;
     }
 
-    // Add styles
-    const style = document.createElement('style');
-    style.textContent = tooltipStyles;
-    document.head.appendChild(style);
+    let currentTooltipEl: HTMLElement | null = null;
 
-    // Initialize tooltip portal
-    const tooltipContainer = createTooltipPortal();
-
-    // Add a MutationObserver to handle dynamically added tooltips
-    const observer = new MutationObserver((mutations) => {
-      requestAnimationFrame(() => {
-        const tooltips = document.querySelectorAll('.tooltip');
-        tooltips.forEach((tooltip) => {
-          // Skip if already processed
-          if (processedTooltips.has(tooltip)) {
-            return;
+    tooltip.addEventListener('mouseenter', (event) => {
+      const tooltipContent = tooltip.getAttribute('data-tooltip');
+      const rect = tooltip.getBoundingClientRect();
+      if (tooltipContent) {
+        currentTooltipEl = showTooltip(
+          tooltipContainer,
+          tooltipContent,
+          rect.left + rect.width / 2,
+          rect.top
+        );
+        processed++;
+        if (window.tooltipLoader) {
+          window.tooltipLoader.updateProgress(processed, unprocessedCount);
+          if (processed === unprocessedCount) {
+            window.tooltipLoader.hideLoader();
           }
-
-          let currentTooltipEl: HTMLElement | null = null;
-
-          tooltip.addEventListener('mouseenter', (event) => {
-            const tooltipContent = tooltip.getAttribute('data-tooltip');
-            const rect = tooltip.getBoundingClientRect();
-            if (tooltipContent) {
-              currentTooltipEl = showTooltip(
-                tooltipContainer,
-                tooltipContent,
-                rect.left + rect.width / 2,
-                rect.top
-              );
-            }
-          });
-
-          tooltip.addEventListener('mouseleave', () => {
-            hideTooltip(currentTooltipEl);
-            currentTooltipEl = null;
-          });
-
-          // Mark as processed
-          processedTooltips.add(tooltip);
-        });
-      });
+        }
+      }
     });
 
-    // Start observing the document with the configured parameters
-    observer.observe(document.body, { childList: true, subtree: true });
+    tooltip.addEventListener('mouseleave', () => {
+      hideTooltip(currentTooltipEl);
+      currentTooltipEl = null;
+    });
 
-    // Add route change handler to reinitialize tooltips
-    router.onAfterRouteChanged = () => {
-      const tooltips = document.querySelectorAll('.tooltip');
-      if (tooltips.length > 0) {
+    // Mark as processed
+    processedTooltips.add(tooltip);
+  });
+}
+
+export default {
+  extends: Theme,
+  enhanceApp({ app }) {
+    // Register the TooltipLoader component
+    app.component('TooltipLoader', TooltipLoader);
+  },
+  setup() {
+    let tooltipContainer: HTMLElement | null = null;
+    let observer: MutationObserver | null = null;
+
+    onMounted(() => {
+      if (typeof window === 'undefined') return;
+
+      // Add styles
+      const style = document.createElement('style');
+      style.textContent = tooltipStyles;
+      document.head.appendChild(style);
+
+      // Initialize tooltip portal
+      tooltipContainer = createTooltipPortal();
+
+      // Create observer
+      observer = new MutationObserver(() => {
+        requestAnimationFrame(() => {
+          initializeTooltips(tooltipContainer);
+        });
+      });
+
+      // Start observing
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      // Initial tooltip check
+      initializeTooltips(tooltipContainer);
+
+      // Watch for route changes
+      const router = useRouter();
+      watch(
+        () => router.route.path,
+        () => {
+          // Reset and reinitialize on route change
+          if (observer) {
+            observer.disconnect();
+            observer.observe(document.body, { childList: true, subtree: true });
+          }
+          initializeTooltips(tooltipContainer);
+        }
+      );
+    });
+
+    // Cleanup
+    return () => {
+      if (observer) {
         observer.disconnect();
-        observer.observe(document.body, { childList: true, subtree: true });
       }
     };
   },
