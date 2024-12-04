@@ -6,6 +6,7 @@ export default defineConfig({
   description:
     'A comprehensive guide to async JavaScript patterns with implementations',
   base: '/async-mastery/',
+  cleanUrls: true,
   ignoreDeadLinks: [
     // Ignore LICENSE file link
     /\/LICENSE/,
