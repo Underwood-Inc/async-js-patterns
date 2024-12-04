@@ -60,7 +60,7 @@ Think of promisifying like modernizing an old factory:
 
 ## Implementation
 
-```typescript
+```typescript:preview
 type Callback<T> = (error: Error | null, result?: T) => void;
 type AsyncFunction<T> = (callback: Callback<T>) => void;
 
@@ -98,7 +98,7 @@ function promisifyWithParams<T, P extends any[]>(
 
 ## Usage Example
 
-```typescript
+```typescript:preview
 // Example with simple callback
 function readFileCallback(callback: Callback<string>) {
   setTimeout(() => {
@@ -164,7 +164,7 @@ queryDatabase('SELECT * FROM users WHERE id = ?', [1])
 
 ## Testing
 
-```typescript
+```typescript:preview
 // Test successful case
 const successFn = (callback: Callback<number>) => {
   setTimeout(() => callback(null, 42), 100);
@@ -198,7 +198,7 @@ promiseParam(2, 3).then((result) => {
 
 ## Advanced Usage
 
-```typescript
+```typescript:preview
 // With cancellation support
 interface CancellablePromise<T> extends Promise<T> {
   cancel: () => void;
@@ -250,7 +250,7 @@ setTimeout(() => {
 
 ## Utility Functions
 
-```typescript
+```typescript:preview
 // Promisify all methods of an object
 function promisifyAll<T extends object>(obj: T): PromisifiedObject<T> {
   const result: any = {};

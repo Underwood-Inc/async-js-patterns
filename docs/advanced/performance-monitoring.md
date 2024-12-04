@@ -18,7 +18,7 @@ Visualizing performance data over time provides insights into application behavi
 
 Consider a web application that experiences slow response times. Performance monitoring can help identify the root cause and guide optimization efforts.
 
-```typescript
+```typescript:preview
 class PerformanceMonitor {
   private metrics: any[] = [];
 
@@ -36,7 +36,7 @@ class PerformanceMonitor {
 
 1. **Ignoring Performance Data**
 
-```typescript
+```typescript:preview
 // ❌ Bad: Performance data collected but not analyzed
 monitor.logMetric('responseTime', responseTime);
 
@@ -47,7 +47,7 @@ analyzeMetrics(metrics);
 
 2. **Overhead from Monitoring**
 
-```typescript
+```typescript:preview
 // ❌ Bad: Monitoring introduces significant overhead
 function processData() {
   const start = performance.now();

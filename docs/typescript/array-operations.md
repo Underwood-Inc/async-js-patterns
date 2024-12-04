@@ -10,7 +10,7 @@ TypeScript provides powerful type checking for array operations. This guide cove
 
 ### Filter with Type Predicates
 
-```typescript
+```typescript:preview
 // Type predicate for non-null values
 function isNonNull<T>(value: T | null | undefined): value is T {
   return value !== null && value !== undefined;
@@ -23,7 +23,7 @@ const nonNullItems: string[] = items.filter(isNonNull);
 
 ### Map with Type Inference
 
-```typescript
+```typescript:preview
 // Type-safe mapper
 function mapToNumbers<T>(array: T[], mapper: (item: T) => number): number[] {
   return array.map(mapper);
@@ -36,7 +36,7 @@ const numbers = mapToNumbers(strings, (str) => parseInt(str, 10));
 
 ### Reduce with Accumulator Types
 
-```typescript
+```typescript:preview
 interface GroupedItems<T> {
   [key: string]: T[];
 }
@@ -56,7 +56,7 @@ function groupBy<T>(items: T[], keyFn: (item: T) => string): GroupedItems<T> {
 
 ### Safe Array Access
 
-```typescript
+```typescript:preview
 function safeGet<T>(array: T[], index: number, defaultValue: T): T {
   return index >= 0 && index < array.length ? array[index] : defaultValue;
 }
@@ -68,7 +68,7 @@ const value = safeGet(arr, 5, 0); // Returns 0
 
 ### Chunk Array
 
-```typescript
+```typescript:preview
 function chunk<T>(array: T[], size: number): T[][] {
   return array.reduce((chunks, item, index) => {
     const chunkIndex = Math.floor(index / size);
@@ -89,7 +89,7 @@ const chunks = chunk(items, 2); // [[1, 2], [3, 4], [5]]
 
 ### Unique Values
 
-```typescript
+```typescript:preview
 function unique<T>(array: T[]): T[] {
   return Array.from(new Set(array));
 }
@@ -107,7 +107,7 @@ function uniqueBy<T>(array: T[], comparator: (a: T, b: T) => boolean): T[] {
 
 ### Tuple Types
 
-```typescript
+```typescript:preview
 type Tuple<T, N extends number> = N extends N
   ? number extends N
     ? T[]
@@ -133,7 +133,7 @@ const tuple = createTuple('x', 3); // type is [string, string, string]
 
 ### Array Element Types
 
-```typescript
+```typescript:preview
 type ArrayElement<T> = T extends (infer U)[] ? U : never;
 
 // Usage
@@ -148,7 +148,7 @@ type MixedElement = ArrayElement<Mixed>; // type is string | number
 
 1. Type Guards with Arrays:
 
-   ```typescript
+   ```typescript:preview
    function isArrayOfType<T>(
      value: unknown,
      typeGuard: (item: unknown) => item is T
@@ -159,14 +159,14 @@ type MixedElement = ArrayElement<Mixed>; // type is string | number
 
 2. Immutable Array Operations:
 
-   ```typescript
+   ```typescript:preview
    function insertAt<T>(array: readonly T[], index: number, item: T): T[] {
      return [...array.slice(0, index), item, ...array.slice(index)];
    }
    ```
 
 3. Type-Safe Array Sorting:
-   ```typescript
+   ```typescript:preview
    function typeSafeSort<T>(
      array: T[],
      compareFn: (a: T, b: T) => number
@@ -177,7 +177,7 @@ type MixedElement = ArrayElement<Mixed>; // type is string | number
 
 ## Real-World Example
 
-```typescript
+```typescript:preview
 interface User {
   id: number;
   name: string;

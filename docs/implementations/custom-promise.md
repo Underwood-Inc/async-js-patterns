@@ -8,7 +8,7 @@ and error handling.
 
 ## Implementation
 
-```typescript
+```typescript:preview
 class CustomPromise<T> {
   private state: 'pending' | 'fulfilled' | 'rejected' = 'pending';
   private value: T | null = null;
@@ -164,7 +164,7 @@ class CustomPromise<T> {
 
 ### Basic Usage
 
-```typescript
+```typescript:preview
 const promise = new CustomPromise<string>((resolve, reject) => {
   setTimeout(() => {
     if (Math.random() > 0.5) {
@@ -191,7 +191,7 @@ promise
 
 ### Chaining Promises
 
-```typescript
+```typescript:preview
 const fetchUser = (id: string) =>
   new CustomPromise<{ id: string; name: string }>((resolve) => {
     setTimeout(() => {
@@ -221,7 +221,7 @@ fetchUser('123')
 
 ### Error Handling
 
-```typescript
+```typescript:preview
 const validateUser = (user: { age: number }) =>
   new CustomPromise<string>((resolve, reject) => {
     if (user.age < 18) {
@@ -271,14 +271,14 @@ validateUser({ age: 16 })
 
 1. **Error Handling**
 
-   ```typescript
+   ```typescript:preview
    // Always catch potential errors
    promise.then(handleSuccess).catch(handleError).finally(cleanup);
    ```
 
 2. **Type Safety**
 
-   ```typescript
+   ```typescript:preview
    // Use TypeScript generics for type safety
    const promise = new CustomPromise<number>((resolve) => {
      resolve(42);
@@ -287,7 +287,7 @@ validateUser({ age: 16 })
 
 3. **Resource Cleanup**
 
-   ```typescript
+   ```typescript:preview
    // Use finally for cleanup operations
    const connection = await connect();
    processData(connection).finally(() => {
@@ -299,7 +299,7 @@ validateUser({ age: 16 })
 
 1. **Forgetting Error Handling**
 
-   ```typescript
+   ```typescript:preview
    // Bad: No error handling
    promise.then(handleSuccess);
 
@@ -309,7 +309,7 @@ validateUser({ age: 16 })
 
 2. **Nested Promise Chains**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Promise nesting
    promise.then((result) => {
      return anotherPromise().then((newResult) => {
@@ -327,7 +327,7 @@ validateUser({ age: 16 })
 
 3. **Losing Error Context**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Error context lost
    promise.catch(() => 'Error occurred');
 

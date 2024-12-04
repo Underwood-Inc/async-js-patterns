@@ -17,7 +17,7 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 
 ### Basic Usage
 
-```css
+```css:preview
 /* Define spacing scale */
 :root {
   --space-unit: 8px;
@@ -50,7 +50,7 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 
 #### Article Layout
 
-```html
+```html:preview
 <article class="article">
   <h1 class="mb-md">Article Title</h1>
   <p class="mb-sm">First paragraph...</p>
@@ -65,7 +65,7 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 </article>
 ```
 
-```css
+```css:preview
 .article {
   max-width: 65ch;
   padding: var(--space-lg);
@@ -91,7 +91,7 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 
 #### Form Layout
 
-```html
+```html:preview
 <form class="form">
   <div class="form-group mb-md">
     <label class="mb-xs">Name</label>
@@ -105,7 +105,7 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 </form>
 ```
 
-```css
+```css:preview
 .form {
   padding: var(--space-lg);
 }
@@ -124,7 +124,7 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 
 ### Responsive Spacing
 
-```css
+```css:preview
 /* Base spacing */
 .mb-responsive {
   margin-bottom: var(--space-sm);
@@ -146,7 +146,7 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 
 ### Grid Systems
 
-```css
+```css:preview
 .grid {
   display: grid;
   gap: var(--space-md);
@@ -170,7 +170,7 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 
 ### Component Spacing
 
-```css
+```css:preview
 /* Card component */
 .card {
   padding: var(--space-md);
@@ -204,7 +204,7 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 - Define spacing variables at the root level
 - Use meaningful names for spacing values
 
-```css
+```css:preview
 :root {
   /* Base unit: 4px */
   --space-unit: 4px;
@@ -218,7 +218,7 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 
 ### 3. Exception Handling
 
-```css
+```css:preview
 /* Last child exceptions */
 .stack > *:not(:last-child) {
   margin-bottom: var(--space-md);
@@ -243,7 +243,7 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 
 ### 4. Documentation
 
-```css
+```css:preview
 /* Document spacing patterns */
 :root {
   /* Spacing Scale
@@ -260,7 +260,7 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 
 ### 1. Content Flow
 
-```css
+```css:preview
 /* Article content */
 .content > * {
   margin-bottom: var(--space-md);
@@ -277,7 +277,7 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 
 ### 2. Navigation
 
-```css
+```css:preview
 /* Vertical navigation */
 .nav-vertical .nav-item:not(:last-child) {
   margin-bottom: var(--space-xs);
@@ -291,7 +291,7 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 
 ### 3. Form Layout
 
-```css
+```css:preview
 .form-field:not(:last-child) {
   margin-bottom: var(--space-md);
 }

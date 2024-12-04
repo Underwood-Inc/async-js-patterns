@@ -10,7 +10,7 @@ TypeScript provides powerful features for string manipulation, including templat
 
 ### Basic Template Literals
 
-```typescript
+```typescript:preview
 type EventName<T extends string> = `${T}Changed`;
 
 // Usage
@@ -20,7 +20,7 @@ type DataEvents = EventName<'data'>; // type is 'dataChanged'
 
 ### Combining Template Literals
 
-```typescript
+```typescript:preview
 type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 type APIEndpoint = '/users' | '/posts' | '/comments';
 type APIRoute = `${HTTPMethod} ${APIEndpoint}`;
@@ -34,7 +34,7 @@ type APIRoute = `${HTTPMethod} ${APIEndpoint}`;
 
 ### Extracting String Parts
 
-```typescript
+```typescript:preview
 type ExtractEventName<T extends string> = T extends `${infer Name}Changed`
   ? Name
   : never;
@@ -48,7 +48,7 @@ type Name = ExtractEventName<Event>; // type is 'user'
 
 ### String Validation
 
-```typescript
+```typescript:preview
 type EmailString = string & { __brand: 'email' };
 type URLString = string & { __brand: 'url' };
 
@@ -79,7 +79,7 @@ if (validateEmail(email)) {
 
 ### String Transformations
 
-```typescript
+```typescript:preview
 type CamelCase<S extends string> =
   S extends `${infer P1}_${infer P2}${infer P3}`
     ? `${Lowercase<P1>}${Uppercase<P2>}${CamelCase<P3>}`
@@ -98,7 +98,7 @@ type APIKey = SnakeCase<'APIKey'>; // type is 'api_key'
 
 ### Safe Substring
 
-```typescript
+```typescript:preview
 function safeSubstring(str: string, start: number, end?: number): string {
   const normalizedStart = Math.max(0, start);
   const normalizedEnd =
@@ -114,7 +114,7 @@ const safe = safeSubstring(text, 0, 100); // No out-of-bounds error
 
 ### String Format
 
-```typescript
+```typescript:preview
 function format<T extends Record<string, unknown>>(
   template: string,
   params: T
@@ -134,7 +134,7 @@ const result = format(template, {
 
 1. Type-Safe String Literals:
 
-   ```typescript
+   ```typescript:preview
    type Direction = 'north' | 'south' | 'east' | 'west';
 
    function move(direction: Direction, steps: number) {
@@ -147,7 +147,7 @@ const result = format(template, {
 
 2. String Enum Alternatives:
 
-   ```typescript
+   ```typescript:preview
    const HttpStatus = {
      OK: 200,
      Created: 201,
@@ -160,7 +160,7 @@ const result = format(template, {
 
 3. String Pattern Matching:
 
-   ```typescript
+   ```typescript:preview
    type RouteParams<T extends string> =
      T extends `${string}:${infer Param}/${infer Rest}`
        ? Param | RouteParams<Rest>
@@ -175,7 +175,7 @@ const result = format(template, {
 
 ## Real-World Example
 
-```typescript
+```typescript:preview
 // API Route Builder
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE';
 type Version = 'v1' | 'v2';

@@ -9,7 +9,7 @@ implementation includes performance monitoring and enhanced error handling.
 
 ## Implementation
 
-```typescript
+```typescript:preview
 import { AsyncOperationError } from '../advanced/error-handling';
 import { PerformanceMonitor } from '../advanced/performance-monitoring';
 
@@ -66,7 +66,7 @@ function promiseAny<T>(promises: Array<Promise<T>>): Promise<T> {
 
 ### Basic Usage
 
-```typescript
+```typescript:preview
 const promises = [
   Promise.reject(new Error('First failure')),
   Promise.resolve('Success!'),
@@ -84,7 +84,7 @@ promiseAny(promises)
 
 ### Fallback Pattern
 
-```typescript
+```typescript:preview
 const fetchWithFallback = async (urls: string[]) => {
   try {
     const response = await promiseAny(
@@ -116,7 +116,7 @@ fetchWithFallback([
 
 ### Error Aggregation
 
-```typescript
+```typescript:preview
 class RetryError extends Error {
   constructor(public readonly attempts: Error[]) {
     super('All retry attempts failed');
@@ -178,7 +178,7 @@ const fetchWithRetry = withRetry(
 
 1. **Error Handling**
 
-   ```typescript
+   ```typescript:preview
    try {
      const result = await promiseAny(promises);
      console.log('First success:', result);
@@ -191,7 +191,7 @@ const fetchWithRetry = withRetry(
 
 2. **Resource Cleanup**
 
-   ```typescript
+   ```typescript:preview
    const withCleanup = (promises: Promise<any>[]) => {
      const cleanups = new Set<() => void>();
      return promiseAny(promises).finally(() =>
@@ -202,7 +202,7 @@ const fetchWithRetry = withRetry(
 
 3. **Validation**
 
-   ```typescript
+   ```typescript:preview
    const validateResult = <T>(
      promises: Promise<T>[],
      isValid: (result: T) => boolean
@@ -224,7 +224,7 @@ const fetchWithRetry = withRetry(
 
 1. **Not Handling AggregateError**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Generic error handling
    try {
      const result = await Promise.any(promises);
@@ -246,7 +246,7 @@ const fetchWithRetry = withRetry(
 
 2. **Assuming First Success is Best**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Taking first success without validation
    const result = await Promise.any([fetch('api1/data'), fetch('api2/data')]);
 
@@ -259,7 +259,7 @@ const fetchWithRetry = withRetry(
 
 3. **Not Handling Empty Arrays**
 
-   ```typescript
+   ```typescript:preview
    // Bad: No empty array check
    const result = await Promise.any([]); // AggregateError
 
@@ -272,7 +272,7 @@ const fetchWithRetry = withRetry(
 
 4. **Resource Cleanup**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Not cleaning up resources after first success
    const result = await Promise.any([
      expensiveOperation1(),
@@ -291,7 +291,7 @@ const fetchWithRetry = withRetry(
 
 5. **Ignoring Timing Issues**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Not considering timing of rejections
    const result = await Promise.any([slowOperation(), fastOperation()]);
 
@@ -341,7 +341,7 @@ const fetchWithRetry = withRetry(
 
 ## Testing
 
-```typescript
+```typescript:preview
 describe('Promise.any', () => {
   it('should resolve with first success', async () => {
     const result = await promiseAny([

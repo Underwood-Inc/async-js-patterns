@@ -8,7 +8,7 @@ The Lobotomized Owl Selector (`* + *`) is a powerful CSS technique for managing 
 
 The selector consists of a universal selector (`*`) followed by an adjacent sibling combinator (`+`) and another universal selector (`*`), targeting any element that follows another element.
 
-```css
+```css:preview
 * + * {
   margin-top: 1.5em;
 }
@@ -18,7 +18,7 @@ The selector consists of a universal selector (`*`) followed by an adjacent sibl
 
 ### Basic Usage
 
-```css
+```css:preview
 /* Add spacing between all adjacent siblings */
 .content * + * {
   margin-top: 1.5rem;
@@ -34,7 +34,7 @@ The selector consists of a universal selector (`*`) followed by an adjacent sibl
 
 #### Article Layout
 
-```html
+```html:preview
 <article class="article">
   <h1>Article Title</h1>
   <p>First paragraph...</p>
@@ -48,7 +48,7 @@ The selector consists of a universal selector (`*`) followed by an adjacent sibl
 </article>
 ```
 
-```css
+```css:preview
 .article > * + * {
   margin-top: 1.5rem;
 }
@@ -66,7 +66,7 @@ The selector consists of a universal selector (`*`) followed by an adjacent sibl
 
 #### Form Layout
 
-```html
+```html:preview
 <form class="form">
   <div class="form__field">
     <label>Name</label>
@@ -80,7 +80,7 @@ The selector consists of a universal selector (`*`) followed by an adjacent sibl
 </form>
 ```
 
-```css
+```css:preview
 .form > * + * {
   margin-top: 1.5rem;
 }
@@ -94,7 +94,7 @@ The selector consists of a universal selector (`*`) followed by an adjacent sibl
 
 ### Responsive Spacing
 
-```css
+```css:preview
 .content > * + * {
   margin-top: 1rem;
 }
@@ -114,7 +114,7 @@ The selector consists of a universal selector (`*`) followed by an adjacent sibl
 
 ### Component-Specific Spacing
 
-```css
+```css:preview
 /* Card component spacing */
 .card > * + * {
   margin-top: 1rem;
@@ -134,7 +134,7 @@ The selector consists of a universal selector (`*`) followed by an adjacent sibl
 
 ### Exception Handling
 
-```css
+```css:preview
 /* Apply general spacing */
 .content > * + * {
   margin-top: 1.5rem;
@@ -175,7 +175,7 @@ The selector consists of a universal selector (`*`) followed by an adjacent sibl
 - Document your spacing variables
 - Consider creating spacing mixins or utility classes
 
-```css
+```css:preview
 :root {
   --space-xs: 0.5rem;
   --space-sm: 1rem;
@@ -199,7 +199,7 @@ The selector consists of a universal selector (`*`) followed by an adjacent sibl
 
 ### 1. Typography
 
-```css
+```css:preview
 .typography > * + * {
   margin-top: 1em;
 }
@@ -211,7 +211,7 @@ The selector consists of a universal selector (`*`) followed by an adjacent sibl
 
 ### 2. Card Layouts
 
-```css
+```css:preview
 .card > * + * {
   margin-top: 1rem;
 }
@@ -223,7 +223,7 @@ The selector consists of a universal selector (`*`) followed by an adjacent sibl
 
 ### 3. Form Groups
 
-```css
+```css:preview
 .form-group > * + * {
   margin-top: 0.5rem;
 }

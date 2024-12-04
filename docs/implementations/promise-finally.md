@@ -8,7 +8,7 @@ includes proper resource cleanup, error handling, and performance monitoring.
 
 ## Implementation
 
-```typescript
+```typescript:preview
 import { AsyncOperationError } from '../advanced/error-handling';
 import { PerformanceMonitor } from '../advanced/performance-monitoring';
 
@@ -48,7 +48,7 @@ if (!Promise.prototype.finally) {
 
 ### Basic Usage
 
-```typescript
+```typescript:preview
 function fetchData() {
   let connection;
 
@@ -67,7 +67,7 @@ function fetchData() {
 
 ### Resource Cleanup
 
-```typescript
+```typescript:preview
 class ResourceManager {
   private resources: Set<{ cleanup: () => Promise<void> }> = new Set();
 
@@ -104,7 +104,7 @@ await manager.withCleanup(
 
 ### Error Handling
 
-```typescript
+```typescript:preview
 async function robustOperation() {
   let resource;
   try {
@@ -155,7 +155,7 @@ async function robustOperation() {
 
 1. **Error Handling**
 
-   ```typescript
+   ```typescript:preview
    // Always catch potential errors
    promise
      .then(handleSuccess)
@@ -171,7 +171,7 @@ async function robustOperation() {
 
 2. **Resource Cleanup**
 
-   ```typescript
+   ```typescript:preview
    // Use finally for cleanup operations
    const connection = await connect();
    processData(connection).finally(() => {
@@ -181,7 +181,7 @@ async function robustOperation() {
 
 3. **Async Cleanup**
 
-   ```typescript
+   ```typescript:preview
    // Handle async cleanup properly
    async function withAsyncCleanup() {
      const resource = await acquire();
@@ -197,7 +197,7 @@ async function robustOperation() {
 
 1. **Returning Values from Finally**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Trying to modify the result in finally
    promise
      .then((result) => result * 2)
@@ -216,7 +216,7 @@ async function robustOperation() {
 
 2. **Error Handling in Finally**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Swallowing errors in finally
    promise.finally(() => {
      try {
@@ -239,7 +239,7 @@ async function robustOperation() {
 
 3. **Async Operations in Finally**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Unhandled async operations
    promise.finally(async () => {
      await cleanup(); // This async operation is not waited for
@@ -257,7 +257,7 @@ async function robustOperation() {
 
 4. **Resource Cleanup Order**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Unclear cleanup order
    let resource;
    promise
@@ -286,7 +286,7 @@ async function robustOperation() {
 
 5. **Chain Breaking**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Breaking the promise chain
    promise
      .finally(() => {
@@ -344,7 +344,7 @@ async function robustOperation() {
 
 ## Testing
 
-```typescript
+```typescript:preview
 describe('Promise.finally', () => {
   it('should execute cleanup on success', async () => {
     let cleaned = false;

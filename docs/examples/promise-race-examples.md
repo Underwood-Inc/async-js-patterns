@@ -4,7 +4,7 @@ This page demonstrates practical examples of using `Promise.race` for competitiv
 
 ## Basic Usage
 
-```typescript
+```typescript:preview
 // Basic timeout example
 async function fetchWithTimeout<T>(url: string, timeout: number): Promise<T> {
   return Promise.race([
@@ -30,7 +30,7 @@ try {
 
 ## Multiple Data Sources
 
-```typescript
+```typescript:preview
 // Fetching from multiple sources, using the fastest response
 async function fetchFromMirrors<T>(urls: string[]): Promise<T> {
   const fetchPromises = urls.map(async (url) => {
@@ -71,7 +71,7 @@ try {
 
 ## Resource Management
 
-```typescript
+```typescript:preview
 // Managing resource allocation with timeouts
 class ResourcePool {
   private resources: Set<Resource> = new Set();
@@ -118,7 +118,7 @@ class ResourcePool {
 
 ## User Interaction Timeouts
 
-```typescript
+```typescript:preview
 // Handling user interaction with timeouts
 class UserInteractionHandler {
   async waitForUserAction(prompt: string, timeoutMs: number): Promise<boolean> {
@@ -154,7 +154,7 @@ class UserInteractionHandler {
 
 ## Real-World Example: Service Discovery
 
-```typescript
+```typescript:preview
 class ServiceDiscovery {
   private registries: string[];
   private cache: Map<string, ServiceInfo> = new Map();
@@ -238,7 +238,7 @@ try {
 
 1. Always include timeouts:
 
-   ```typescript
+   ```typescript:preview
    function withTimeout<T>(
      promise: Promise<T>,
      ms: number,
@@ -253,7 +253,7 @@ try {
 
 2. Handle errors appropriately:
 
-   ```typescript
+   ```typescript:preview
    Promise.race(promises)
      .then(handleSuccess)
      .catch((error) => {
@@ -267,7 +267,7 @@ try {
 
 3. Clean up resources:
 
-   ```typescript
+   ```typescript:preview
    let cleanup: (() => void) | null = null;
 
    try {
@@ -286,7 +286,7 @@ try {
 
 4. Consider cancellation:
 
-   ```typescript
+   ```typescript:preview
    class CancellableOperation {
      private abortController = new AbortController();
 

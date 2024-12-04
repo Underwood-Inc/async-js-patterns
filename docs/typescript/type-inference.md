@@ -10,7 +10,7 @@ Type inference is TypeScript's ability to automatically determine types based on
 
 ### Variable Initialization
 
-```typescript
+```typescript:preview
 // Type: string
 let name = 'John';
 
@@ -32,7 +32,7 @@ let person = {
 
 ### Function Return Types
 
-```typescript
+```typescript:preview
 // Return type: number
 function add(a: number, b: number) {
   return a + b;
@@ -53,7 +53,7 @@ function isEven(num: number) {
 
 ### Generic Type Inference
 
-```typescript
+```typescript:preview
 // Type parameter T is inferred
 function identity<T>(value: T): T {
   return value;
@@ -71,7 +71,7 @@ const obj = identity({ name: 'John' });
 
 ### Array Method Inference
 
-```typescript
+```typescript:preview
 const numbers = [1, 2, 3, 4, 5];
 
 // Type: number[]
@@ -91,7 +91,7 @@ const objects = numbers.map((n) => ({ value: n }));
 
 ### Event Handlers
 
-```typescript
+```typescript:preview
 const button = document.querySelector('button');
 
 button?.addEventListener('click', (event) => {
@@ -107,7 +107,7 @@ window.addEventListener('keydown', (event) => {
 
 ### Promise Callbacks
 
-```typescript
+```typescript:preview
 async function fetchUser(id: string) {
   const response = await fetch(`/api/users/${id}`);
   // result is inferred as any
@@ -126,7 +126,7 @@ async function fetchData<T>(url: string): Promise<T> {
 
 ## Real-World Example
 
-```typescript
+```typescript:preview
 // Domain types
 interface User {
   id: string;

@@ -4,7 +4,7 @@ This page demonstrates practical examples of managing memory efficiently in asyn
 
 ## Object Pool
 
-```typescript
+```typescript:preview
 // Generic object pool implementation
 class ObjectPool<T> {
   private available: T[] = [];
@@ -81,7 +81,7 @@ async function processData(data: Buffer): Promise<void> {
 
 ## WeakRef Cache
 
-```typescript
+```typescript:preview
 class WeakCache<K extends object, V> {
   private cache = new Map<
     WeakRef<K>,
@@ -147,7 +147,7 @@ async function processResource(
 
 ## Real-World Example: Memory-Efficient Data Processing
 
-```typescript
+```typescript:preview
 class DataProcessor {
   private bufferPool: ObjectPool<Buffer>;
   private cache: WeakCache<DataChunk, ProcessedResult>;
@@ -261,7 +261,7 @@ console.log('Processing metrics:', processor.getMetrics());
 
 1. Memory monitoring:
 
-   ```typescript
+   ```typescript:preview
    class MemoryMonitor {
      private samples: MemorySample[] = [];
      private readonly maxSamples: number;
@@ -349,7 +349,7 @@ console.log('Processing metrics:', processor.getMetrics());
 
 2. Garbage collection hooks:
 
-   ```typescript
+   ```typescript:preview
    class GCHooks {
      private listeners = new Set<(stats: GCStats) => void>();
 
@@ -403,7 +403,7 @@ console.log('Processing metrics:', processor.getMetrics());
 
 3. Memory leak detection:
 
-   ```typescript
+   ```typescript:preview
    class LeakDetector {
      private snapshots: HeapSnapshot[] = [];
      private growing = new Set<string>();
@@ -463,7 +463,7 @@ console.log('Processing metrics:', processor.getMetrics());
 
 4. Resource limits:
 
-   ```typescript
+   ```typescript:preview
    class ResourceLimiter {
      private limits: Map<string, number> = new Map();
      private usage: Map<string, number> = new Map();

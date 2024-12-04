@@ -60,7 +60,7 @@ Think of debouncing like an elevator:
 
 ## Implementation
 
-```typescript
+```typescript:preview
 interface DebounceOptions {
   wait: number;
   immediate?: boolean;
@@ -233,7 +233,7 @@ function debounce<T extends (...args: any[]) => any>(
 
 ## Usage Example
 
-```typescript
+```typescript:preview
 // Basic usage
 const debouncedSearch = debounce(async (query: string) => {
   const response = await fetch(`/api/search?q=${query}`);
@@ -307,7 +307,7 @@ searchInput.addEventListener('input', async (e) => {
 
 ## Testing
 
-```typescript
+```typescript:preview
 // Test basic debouncing
 const basicTest = async () => {
   let callCount = 0;
@@ -344,7 +344,7 @@ const immediateTest = async () => {
 
 ## Advanced Usage
 
-```typescript
+```typescript:preview
 // With TypeScript generics
 function createDebouncedApi<T, R>(
   apiCall: (data: T) => Promise<R>,

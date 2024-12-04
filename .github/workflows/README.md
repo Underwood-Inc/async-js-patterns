@@ -19,7 +19,7 @@ The workflow consists of two main jobs:
 
 #### 1. Build Job
 
-```yaml
+```yaml:preview
 build:
   runs-on: ubuntu-latest
 ```
@@ -35,7 +35,7 @@ This job:
 
 #### 2. Deploy Job
 
-```yaml
+```yaml:preview
 deploy:
   environment:
     name: github-pages
@@ -49,7 +49,7 @@ This job:
 
 ### Required Permissions
 
-```yaml
+```yaml:preview
 permissions:
   contents: read
   pages: write
@@ -73,7 +73,7 @@ To use this workflow:
 
 2. Ensure your VitePress configuration has the correct base URL:
 
-   ```js
+   ```js:preview:preview
    import { defineConfig } from 'vitepress';
 
    export default defineConfig({

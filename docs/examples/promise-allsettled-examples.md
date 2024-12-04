@@ -4,7 +4,7 @@ This page demonstrates practical examples of using `Promise.allSettled` to handl
 
 ## Basic Usage
 
-```typescript
+```typescript:preview
 // Basic example with multiple API calls
 async function fetchAllUserData(userIds: string[]) {
   const promises = userIds.map((id) =>
@@ -36,7 +36,7 @@ console.log('Failed fetches:', results.failed);
 
 ## Batch Processing with Status
 
-```typescript
+```typescript:preview
 // Processing items in batches with status tracking
 class BatchProcessor {
   async processBatch<T, R>(
@@ -97,7 +97,7 @@ const results = await processor.processBatch(items, async (item) => {
 
 ## Data Validation System
 
-```typescript
+```typescript:preview
 // Validating multiple data sources
 class DataValidator {
   async validateDataSources(sources: DataSource[]) {
@@ -146,7 +146,7 @@ class DataValidator {
 
 ## Real-World Example: System Health Check
 
-```typescript
+```typescript:preview
 class SystemHealthChecker {
   private services: ServiceCheck[];
   private notifier: HealthNotifier;
@@ -280,7 +280,7 @@ console.log('Health Check Report:', JSON.stringify(report, null, 2));
 
 1. Type handling:
 
-   ```typescript
+   ```typescript:preview
    function isPromiseFulfilled<T>(
      result: PromiseSettledResult<T>
    ): result is PromiseFulfilledResult<T> {
@@ -301,7 +301,7 @@ console.log('Health Check Report:', JSON.stringify(report, null, 2));
 
 2. Error aggregation:
 
-   ```typescript
+   ```typescript:preview
    function aggregateErrors(results: PromiseSettledResult<unknown>[]) {
      return results
        .filter(isPromiseRejected)
@@ -321,7 +321,7 @@ console.log('Health Check Report:', JSON.stringify(report, null, 2));
 
 3. Progress tracking:
 
-   ```typescript
+   ```typescript:preview
    async function trackProgress<T>(
      promises: Promise<T>[],
      onProgress: (progress: ProgressInfo) => void
@@ -356,7 +356,8 @@ console.log('Health Check Report:', JSON.stringify(report, null, 2));
    ```
 
 4. Cleanup handling:
-   ```typescript
+
+   ```typescript:preview
    async function withCleanup<T>(
      operations: Array<() => Promise<T>>,
      cleanup: (results: PromiseSettledResult<T>[]) => Promise<void>

@@ -18,7 +18,7 @@ Use .catch() to handle errors in asynchronous operations.
 
 Consider a web application that fetches data from an API. Proper error handling ensures that network errors are gracefully managed.
 
-```typescript
+```typescript:preview
 async function fetchData(url: string) {
   try {
     const response = await fetch(url);
@@ -37,7 +37,7 @@ async function fetchData(url: string) {
 
 1. **Swallowing Errors**
 
-```typescript
+```typescript:preview
 // ❌ Bad: Errors are swallowed
 try {
   processData();
@@ -55,7 +55,7 @@ try {
 
 2. **Uncaught Promise Rejections**
 
-```typescript
+```typescript:preview
 // ❌ Bad: Uncaught promise rejection
 fetchData().then((data) => processData(data));
 

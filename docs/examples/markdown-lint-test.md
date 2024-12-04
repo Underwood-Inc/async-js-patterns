@@ -7,7 +7,7 @@ readability.
 - Consistent spacing
   - Correct indentation
 
-```javascript
+```javascript:preview
 // Code block with language specified
 const x = 1;
 ```

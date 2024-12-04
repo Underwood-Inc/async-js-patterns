@@ -18,7 +18,7 @@ Properly managing resources such as file handles and network connections prevent
 
 Consider a Node.js application that handles multiple I/O operations. Optimizing resource handling ensures efficient throughput.
 
-```typescript
+```typescript:preview
 class ResourceHandler {
   private resources: any[] = [];
 
@@ -42,7 +42,7 @@ class ResourceHandler {
 
 1. **Blocking the Event Loop**
 
-```typescript
+```typescript:preview
 // ❌ Bad: Blocking the event loop with synchronous operations
 function processData() {
   const data = readFileSync('data.txt');
@@ -60,7 +60,7 @@ function processData() {
 
 2. **Resource Leaks**
 
-```typescript
+```typescript:preview
 // ❌ Bad: Resources not released
 const resource = acquireResource();
 // Use resource

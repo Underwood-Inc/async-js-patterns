@@ -10,7 +10,7 @@ Template literal types combine literal types and string manipulation to create p
 
 ### String Literals
 
-```typescript
+```typescript:preview
 type Greeting = 'Hello';
 type Name = 'World';
 type Message = `${Greeting}, ${Name}!`; // type is "Hello, World!"
@@ -26,7 +26,7 @@ let status: Status = 'true_status'; // OK
 
 ### Union Types in Template Literals
 
-```typescript
+```typescript:preview
 type Color = 'red' | 'blue' | 'green';
 type Size = 'small' | 'medium' | 'large';
 type ColorSize = `${Color}-${Size}`; // All combinations
@@ -44,7 +44,7 @@ type EventName = `on${Capitalize<Status>}`; // "onSuccess" | "onError" | "onPend
 
 ### Intrinsic String Manipulation Types
 
-```typescript
+```typescript:preview
 type Greeting = 'hello world';
 
 type Caps = Uppercase<Greeting>; // "HELLO WORLD"
@@ -61,7 +61,7 @@ type MouseHandlers = EventHandler<MouseEvents>;
 
 ### Pattern Matching with Template Literals
 
-```typescript
+```typescript:preview
 type PropEventSource<Type> = {
   on<Key extends string & keyof Type>(
     eventName: `${Key}Changed`,
@@ -96,7 +96,7 @@ person.on('ageChanged', (newAge) => {
 
 ## Real-World Example
 
-```typescript
+```typescript:preview
 // API Route Type Generator
 type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 type Version = 'v1' | 'v2';

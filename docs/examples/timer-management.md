@@ -4,7 +4,7 @@ This page demonstrates practical examples of managing multiple timers, including
 
 ## Timer Registry
 
-```typescript
+```typescript:preview
 class TimerRegistry {
   private timeouts: Map<string, NodeJS.Timeout> = new Map();
   private intervals: Map<string, NodeJS.Timeout> = new Map();
@@ -102,7 +102,7 @@ registry.clearAll();
 
 ## Timer Group Management
 
-```typescript
+```typescript:preview
 class TimerGroup {
   private registry = new TimerRegistry();
   private groupTimers: Map<string, Set<string>> = new Map();
@@ -186,7 +186,7 @@ timerGroup.clearGroup('polling');
 
 ## Real-World Example: Task Scheduler
 
-```typescript
+```typescript:preview
 class TaskScheduler {
   private registry = new TimerRegistry();
   private tasks = new Map<string, ScheduledTask>();
@@ -328,7 +328,7 @@ scheduler.cancelTask(taskId);
 
 1. Resource cleanup:
 
-   ```typescript
+   ```typescript:preview
    class ResourceTimer {
      private resources = new WeakMap<object, Resource>();
      private registry = new TimerRegistry();
@@ -359,7 +359,7 @@ scheduler.cancelTask(taskId);
 
 2. Error boundaries:
 
-   ```typescript
+   ```typescript:preview
    class SafeTimer {
      private registry = new TimerRegistry();
 
@@ -396,7 +396,7 @@ scheduler.cancelTask(taskId);
 
 3. Performance tracking:
 
-   ```typescript
+   ```typescript:preview
    class MetricsTimer {
      private metrics = {
        totalExecutions: 0,
@@ -452,7 +452,7 @@ scheduler.cancelTask(taskId);
 
 4. Memory management:
 
-   ```typescript
+   ```typescript:preview
    class MemoryAwareTimer {
      private registry = new TimerRegistry();
      private memoryThreshold = 0.9; // 90% of available memory

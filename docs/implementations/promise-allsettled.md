@@ -9,7 +9,7 @@ monitoring and enhanced error handling.
 
 ## Implementation
 
-```typescript
+```typescript:preview
 import { AsyncOperationError } from '../advanced/error-handling';
 import { PerformanceMonitor } from '../advanced/performance-monitoring';
 
@@ -81,7 +81,7 @@ function promiseAllSettled<T>(
 
 ### Basic Usage
 
-```typescript
+```typescript:preview
 const promises = [
   Promise.resolve(1),
   Promise.reject('Error'),
@@ -101,7 +101,7 @@ promiseAllSettled(promises).then((results) => {
 
 ### Error Analysis
 
-```typescript
+```typescript:preview
 async function analyzeOperations(operations: Array<Promise<any>>) {
   const results = await promiseAllSettled(operations);
 
@@ -135,7 +135,7 @@ analyzeOperations([
 
 ### Batch Processing
 
-```typescript
+```typescript:preview
 class BatchProcessor {
   async processBatch<T>(
     items: T[],
@@ -201,7 +201,7 @@ processor.processBatch(items, (item) =>
 
 1. **Type Safety**
 
-   ```typescript
+   ```typescript:preview
    type Result<T> = SettledResult<T>;
 
    function processResults<T>(results: Result<T>[]) {
@@ -224,7 +224,7 @@ processor.processBatch(items, (item) =>
 
 2. **Resource Management**
 
-   ```typescript
+   ```typescript:preview
    async function withResources<T>(
      promises: Promise<T>[],
      cleanup: (results: SettledResult<T>[]) => void
@@ -240,7 +240,7 @@ processor.processBatch(items, (item) =>
 
 3. **Progress Tracking**
 
-   ```typescript
+   ```typescript:preview
    function withProgress<T>(promises: Promise<T>[]) {
      let completed = 0;
      const total = promises.length;
@@ -260,7 +260,7 @@ processor.processBatch(items, (item) =>
 
 1. **Not Checking Result Status**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Assuming all results are fulfilled
    const results = await Promise.allSettled(promises);
    results.forEach((result) => console.log(result.value));
@@ -278,7 +278,7 @@ processor.processBatch(items, (item) =>
 
 2. **Memory Management with Large Arrays**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Processing all results at once
    const results = await Promise.allSettled(largeArrayOfPromises);
    const processedResults = results.map(processResult);
@@ -293,7 +293,7 @@ processor.processBatch(items, (item) =>
 
 3. **Not Handling Empty Arrays**
 
-   ```typescript
+   ```typescript:preview
    // Bad: No validation for empty input
    const results = await Promise.allSettled([]);
 
@@ -307,7 +307,7 @@ processor.processBatch(items, (item) =>
 
 4. **Incorrect Error Aggregation**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Lost error context
    const results = await Promise.allSettled(promises);
    const errors = results
@@ -327,7 +327,7 @@ processor.processBatch(items, (item) =>
 
 5. **Resource Management**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Not cleaning up resources
    const results = await Promise.allSettled([fetch(url1), fetch(url2)]);
 
@@ -374,7 +374,7 @@ processor.processBatch(items, (item) =>
 
 ## Testing
 
-```typescript
+```typescript:preview
 describe('Promise.allSettled', () => {
   it('should handle mixed success and failure', async () => {
     const results = await promiseAllSettled([

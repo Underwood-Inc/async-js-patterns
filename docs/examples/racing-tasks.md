@@ -4,7 +4,7 @@ This page demonstrates practical examples of executing tasks in a racing pattern
 
 ## Basic Racing Pattern
 
-```typescript
+```typescript:preview
 // Basic racing pattern with timeout
 async function raceWithTimeout<T>(
   task: () => Promise<T>,
@@ -35,7 +35,7 @@ try {
 
 ## Multiple Data Sources
 
-```typescript
+```typescript:preview
 class RedundantDataFetcher {
   private sources: DataSource[];
 
@@ -87,7 +87,7 @@ const data = await fetcher.fetch('/api/critical-data');
 
 ## Service Discovery
 
-```typescript
+```typescript:preview
 class ServiceDiscovery {
   private registries: ServiceRegistry[];
   private cache: Map<string, ServiceInfo>;
@@ -143,7 +143,7 @@ class ServiceDiscovery {
 
 ## Real-World Example: Load Balancer
 
-```typescript
+```typescript:preview
 class LoadBalancer {
   private servers: ServerInstance[];
   private healthChecks: Map<string, HealthStatus>;
@@ -257,7 +257,7 @@ try {
 
 1. Timeout handling:
 
-   ```typescript
+   ```typescript:preview
    function withTimeout<T>(
      promise: Promise<T>,
      timeoutMs: number,
@@ -279,7 +279,7 @@ try {
 
 2. Cancellation support:
 
-   ```typescript
+   ```typescript:preview
    class RaceController {
      private abortController = new AbortController();
 
@@ -313,7 +313,7 @@ try {
 
 3. Error handling:
 
-   ```typescript
+   ```typescript:preview
    async function raceWithErrorBoundary<T>(
      tasks: Array<() => Promise<T>>,
      options: {
@@ -354,7 +354,7 @@ try {
 
 4. Resource cleanup:
 
-   ```typescript
+   ```typescript:preview
    class ResourceManager {
      private resources: Set<Resource> = new Set();
 

@@ -4,7 +4,7 @@ This page demonstrates practical examples of optimizing asynchronous operations 
 
 ## Stream Processing
 
-```typescript
+```typescript:preview
 // Efficient stream processing
 import { Transform, pipeline } from 'stream';
 import { promisify } from 'util';
@@ -66,7 +66,7 @@ await processLargeFile(inputStream, outputStream, async (record) => {
 
 ## Worker Threads Pool
 
-```typescript
+```typescript:preview
 import { Worker } from 'worker_threads';
 import { cpus } from 'os';
 
@@ -201,7 +201,7 @@ await pool.shutdown();
 
 ## Real-World Example: Batch Processing Service
 
-```typescript
+```typescript:preview
 class BatchProcessor {
   private workerPool: WorkerPool;
   private streamProcessor: ChunkProcessor;
@@ -322,7 +322,7 @@ await processor.shutdown();
 
 1. Memory management:
 
-   ```typescript
+   ```typescript:preview
    class MemoryManager {
      private readonly maxHeapSize: number;
      private readonly threshold: number;
@@ -363,7 +363,7 @@ await processor.shutdown();
 
 2. Event loop monitoring:
 
-   ```typescript
+   ```typescript:preview
    class EventLoopMonitor {
      private samples: number[] = [];
      private timer?: NodeJS.Timer;
@@ -420,7 +420,7 @@ await processor.shutdown();
 
 3. Resource pooling:
 
-   ```typescript
+   ```typescript:preview
    class ResourcePool<T> {
      private available: T[] = [];
      private inUse = new Set<T>();
@@ -525,7 +525,7 @@ await processor.shutdown();
 
 4. Graceful shutdown:
 
-   ```typescript
+   ```typescript:preview
    class ShutdownManager {
      private handlers: Set<() => Promise<void>> = new Set();
      private shuttingDown = false;

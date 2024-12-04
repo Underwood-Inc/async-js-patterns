@@ -10,7 +10,7 @@ Mapped types allow you to create new types based on existing ones by transformin
 
 ### Property Modifiers
 
-```typescript
+```typescript:preview
 interface User {
   id: string;
   name: string;
@@ -35,7 +35,7 @@ type NullableUser = {
 
 ### Generic Mapped Types
 
-```typescript
+```typescript:preview
 // Generic partial type
 type Partial<T> = {
   [P in keyof T]?: T[P];
@@ -56,7 +56,7 @@ type Nullable<T> = {
 
 ### Property Remapping
 
-```typescript
+```typescript:preview
 // Add prefix to property names
 type Prefixed<T, P extends string> = {
   [K in keyof T as `${P}${string & K}`]: T[K];
@@ -96,7 +96,7 @@ type StringProps = PickByValueType<Form, string>;
 
 ### Conditional Type Mapping
 
-```typescript
+```typescript:preview
 // Map types based on conditions
 type ConditionalMap<T> = {
   [K in keyof T]: T[K] extends Function
@@ -124,7 +124,7 @@ type SafeApiConfig = ConditionalMap<ApiConfig>;
 
 ## Real-World Example
 
-```typescript
+```typescript:preview
 // Domain types
 interface Product {
   id: string;

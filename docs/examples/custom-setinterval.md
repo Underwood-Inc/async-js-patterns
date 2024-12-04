@@ -4,7 +4,7 @@ This page demonstrates practical examples of implementing and using custom setIn
 
 ## Basic Implementation
 
-```typescript
+```typescript:preview
 // Basic custom setInterval with cleanup
 class IntervalTimer {
   private intervals: Map<string, NodeJS.Timeout> = new Map();
@@ -43,7 +43,7 @@ cleanup();
 
 ## Pausable Interval
 
-```typescript
+```typescript:preview
 class PausableInterval {
   private intervalId: NodeJS.Timeout | null = null;
   private lastExecutionTime: number = 0;
@@ -112,7 +112,7 @@ interval.stop(); // Stop completely
 
 ## Dynamic Interval
 
-```typescript
+```typescript:preview
 class DynamicInterval {
   private intervalId: NodeJS.Timeout | null = null;
   private currentInterval: number;
@@ -178,7 +178,7 @@ setTimeout(() => {
 
 ## Real-World Example: Polling Service
 
-```typescript
+```typescript:preview
 class PollingService {
   private interval: DynamicInterval;
   private retryCount: number = 0;
@@ -276,7 +276,7 @@ pollingService.start();
 
 1. Memory leak prevention:
 
-   ```typescript
+   ```typescript:preview
    class SafeInterval {
      private intervals = new WeakMap<object, NodeJS.Timeout>();
 
@@ -298,7 +298,7 @@ pollingService.start();
 
 2. Error handling:
 
-   ```typescript
+   ```typescript:preview
    class ResilientInterval {
      setInterval(
        callback: () => void,
@@ -320,7 +320,7 @@ pollingService.start();
 
 3. Performance monitoring:
 
-   ```typescript
+   ```typescript:preview
    class MonitoredInterval {
      private metrics = {
        executionCount: 0,
@@ -358,7 +358,7 @@ pollingService.start();
 
 4. Resource management:
 
-   ```typescript
+   ```typescript:preview
    class ResourceAwareInterval {
      private resources = new Set<Resource>();
 

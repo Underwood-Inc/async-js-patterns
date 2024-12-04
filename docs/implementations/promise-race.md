@@ -8,7 +8,7 @@ monitoring, proper resource cleanup, and enhanced error handling.
 
 ## Implementation
 
-```typescript
+```typescript:preview
 import { AsyncOperationError } from '../advanced/error-handling';
 import { PerformanceMonitor } from '../advanced/performance-monitoring';
 
@@ -55,7 +55,7 @@ function promiseRace<T>(promises: Array<Promise<T>>): Promise<T> {
 
 ### Basic Usage
 
-```typescript
+```typescript:preview
 const fast = new Promise((resolve) => setTimeout(() => resolve('fast'), 100));
 const slow = new Promise((resolve) => setTimeout(() => resolve('slow'), 500));
 
@@ -66,7 +66,7 @@ promiseRace([fast, slow])
 
 ### Timeout Pattern
 
-```typescript
+```typescript:preview
 function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   const timeout = new Promise<never>((_, reject) => {
     setTimeout(
@@ -93,7 +93,7 @@ withTimeout(apiCall, 5000)
 
 ### Resource Cleanup
 
-```typescript
+```typescript:preview
 class ResourceManager {
   private cleanupFunctions: Array<() => void> = [];
 
@@ -166,7 +166,7 @@ manager
 
 1. **Timeout Implementation**
 
-   ```typescript
+   ```typescript:preview
    const raceWithTimeout = (promise: Promise<any>, ms: number) =>
      promiseRace([
        promise,
@@ -178,7 +178,7 @@ manager
 
 2. **Resource Cleanup**
 
-   ```typescript
+   ```typescript:preview
    const raceWithCleanup = (promises: Promise<any>[]) => {
      const cleanup = new Set<() => void>();
      return promiseRace(promises).finally(() => cleanup.forEach((fn) => fn()));
@@ -187,7 +187,7 @@ manager
 
 3. **Error Handling**
 
-   ```typescript
+   ```typescript:preview
    const safeRace = async (promises: Promise<any>[]) => {
      try {
        return await promiseRace(promises);
@@ -202,7 +202,7 @@ manager
 
 1. **Not Handling Empty Arrays**
 
-   ```typescript
+   ```typescript:preview
    // Bad: No handling for empty arrays
    const result = await Promise.race([]); // Will never resolve
 
@@ -216,7 +216,7 @@ manager
 
 2. **Forgetting About Losing Promises**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Not cleaning up losing promises
    const result = await Promise.race([
      fetch('/api/data'),
@@ -235,7 +235,7 @@ manager
 
 3. **Race Conditions with Timeouts**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Race condition between timeout and operation
    const result = await Promise.race([
      operation(),
@@ -259,7 +259,7 @@ manager
 
 4. **Ignoring Error Types**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Not distinguishing between error types
    try {
      const result = await Promise.race(promises);
@@ -283,7 +283,7 @@ manager
 
 5. **Memory Leaks in Long-Running Operations**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Not cleaning up resources
    while (true) {
      const result = await Promise.race([
@@ -337,7 +337,7 @@ manager
 
 ## Testing
 
-```typescript
+```typescript:preview
 describe('Promise.race', () => {
   it('should resolve with first fulfilled promise', async () => {
     const result = await promiseRace([

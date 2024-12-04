@@ -9,7 +9,7 @@ order.
 
 ## Implementation
 
-```typescript
+```typescript:preview
 type AsyncTask<T, R> = (input: T) => Promise<R>;
 
 async function executeInSeries<T, R>(
@@ -53,7 +53,7 @@ async function executeInSeriesWithTransform<T, R, U>(
 
 ## Usage Example
 
-```typescript
+```typescript:preview
 // Example tasks
 const tasks: AsyncTask<number, number>[] = [
   async (n: number) => {
@@ -125,7 +125,7 @@ executeInSeriesWithTransform(tasksWithTransform, '1', (result) =>
 
 ## Testing
 
-```typescript
+```typescript:preview
 // Test successful series
 const successTasks: AsyncTask<number, number>[] = [
   async (n) => n + 1,
@@ -163,7 +163,7 @@ const emptyTest = executeInSeries([], 1).then((results) => {
 
 ## Advanced Usage
 
-```typescript
+```typescript:preview
 // With progress tracking
 async function executeInSeriesWithProgress<T, R>(
   tasks: AsyncTask<T, R>[],

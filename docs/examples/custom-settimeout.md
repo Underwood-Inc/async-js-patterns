@@ -4,7 +4,7 @@ This page demonstrates practical examples of implementing and using custom setTi
 
 ## Basic Implementation
 
-```typescript
+```typescript:preview
 // Basic custom setTimeout with cleanup
 class Timer {
   private timers: Map<string, NodeJS.Timeout> = new Map();
@@ -47,7 +47,7 @@ cleanup();
 
 ## Promise-based Timer
 
-```typescript
+```typescript:preview
 class PromiseTimer {
   private timers: Map<
     string,
@@ -120,7 +120,7 @@ try {
 
 ## Retry Timer
 
-```typescript
+```typescript:preview
 class RetryTimer {
   async withRetry<T>(
     operation: () => Promise<T>,
@@ -188,7 +188,7 @@ try {
 
 ## Real-World Example: Rate Limited API Client
 
-```typescript
+```typescript:preview
 class RateLimitedApiClient {
   private queue: Array<{
     operation: () => Promise<any>;
@@ -270,7 +270,7 @@ const results = await Promise.all(userIds.map((id) => fetchUserData(id)));
 
 1. Cleanup handling:
 
-   ```typescript
+   ```typescript:preview
    class CleanupTimer {
      private cleanupFns: Set<() => void> = new Set();
 
@@ -310,7 +310,7 @@ const results = await Promise.all(userIds.map((id) => fetchUserData(id)));
 
 2. Error handling:
 
-   ```typescript
+   ```typescript:preview
    class SafeTimer {
      setTimeout<T>(
        operation: () => Promise<T>,
@@ -339,7 +339,7 @@ const results = await Promise.all(userIds.map((id) => fetchUserData(id)));
 
 3. Resource management:
 
-   ```typescript
+   ```typescript:preview
    class ResourceTimer {
      private resources: Set<Resource> = new Set();
 
@@ -367,7 +367,7 @@ const results = await Promise.all(userIds.map((id) => fetchUserData(id)));
 
 4. Debounce utility:
 
-   ```typescript
+   ```typescript:preview
    function createDebouncedTimer(delay: number) {
      let timeoutId: NodeJS.Timeout;
      let cleanup: (() => void) | null = null;

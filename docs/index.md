@@ -61,40 +61,6 @@ footer: OpenRAIL Licensed | Copyright © 2024-present Underwood Inc.
 
 A comprehensive guide to async JavaScript, TypeScript patterns, and modern styling practices. This repository serves as a reference for implementing common patterns and best practices in web development.
 
-## Quick Example
-
-```typescript:preview
-// Hover over Promise, Array methods, or the interface properties
-interface User {
-  id: string; // Hover over 'string' to see type info
-  name: string;
-  age: number; // Hover over 'number' to see type info
-}
-
-// Hover over Promise to see its type definition
-const fetchUser = async (id: string): Promise<User> => {
-  // Hover over 'map' to see Array method documentation
-  const users: User[] = await Promise.all(
-    [
-      { id: '1', name: 'John', age: 30 },
-      { id: '2', name: 'Jane', age: 25 },
-    ].map((user) => ({
-      ...user,
-      age: user.age + 1, // Hover over 'age' to see property info
-    }))
-  );
-
-  // Hover over 'find' to see Array method documentation
-  return (
-    users.find((user) => user.id === id) ?? {
-      id: '0',
-      name: 'Unknown',
-      age: 0,
-    }
-  );
-};
-```
-
 ## Features
 
 - Async JavaScript patterns and best practices

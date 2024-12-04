@@ -4,7 +4,7 @@ This page demonstrates practical examples of converting callback-based APIs to P
 
 ## Basic Promisification
 
-```typescript
+```typescript:preview
 // Basic promisify implementation
 function promisify<T>(
   fn: (...args: any[]) => void
@@ -37,7 +37,7 @@ try {
 
 ## Advanced Promisification
 
-```typescript
+```typescript:preview
 class Promisifier {
   private static defaultOptions: PromisifyOptions = {
     multiArgs: false,
@@ -155,7 +155,7 @@ try {
 
 ## Real-World Example: Legacy API Wrapper
 
-```typescript
+```typescript:preview
 class LegacyApiWrapper {
   private api: LegacyApi;
   private promisified: Map<string, Function> = new Map();
@@ -314,7 +314,7 @@ async function getUserData(userId: number) {
 
 1. Error handling:
 
-   ```typescript
+   ```typescript:preview
    class PromiseError extends Error {
      constructor(
        message: string,
@@ -364,7 +364,7 @@ async function getUserData(userId: number) {
 
 2. Timeout handling:
 
-   ```typescript
+   ```typescript:preview
    function promisifyWithTimeout<T>(
      fn: Function,
      timeout: number
@@ -390,7 +390,7 @@ async function getUserData(userId: number) {
 
 3. Resource cleanup:
 
-   ```typescript
+   ```typescript:preview
    function promisifyWithCleanup<T>(
      fn: Function,
      cleanup: () => void
@@ -417,7 +417,7 @@ async function getUserData(userId: number) {
 
 4. Event handling:
 
-   ```typescript
+   ```typescript:preview
    function promisifyEvent<T>(
      emitter: EventEmitter,
      eventName: string

@@ -97,7 +97,7 @@ Think of async testing like:
 
 ### 1. Promise Testing
 
-```typescript
+```typescript:preview
 describe('Promise Operations', () => {
   it('should resolve with correct value', async () => {
     const result = await someAsyncOperation();
@@ -114,7 +114,7 @@ describe('Promise Operations', () => {
 
 ### 2. Timer Mocking
 
-```typescript
+```typescript:preview
 describe('Timer Operations', () => {
   beforeEach(() => {
     jest.useFakeTimers();
@@ -140,7 +140,7 @@ describe('Timer Operations', () => {
 
 ### 1. API Testing
 
-```typescript
+```typescript:preview
 class APITester {
   private baseURL: string;
 
@@ -167,7 +167,7 @@ class APITester {
 
 ### 2. Mock Services
 
-```typescript
+```typescript:preview
 class MockService {
   private responses: Map<string, any> = new Map();
 
@@ -189,7 +189,7 @@ class MockService {
 
 ### 1. Load Testing
 
-```typescript
+```typescript:preview
 class LoadTester {
   async runConcurrent(operation: () => Promise<any>, concurrency: number) {
     const start = Date.now();
@@ -211,7 +211,7 @@ class LoadTester {
 
 ### 2. Memory Leak Testing
 
-```typescript
+```typescript:preview
 class MemoryTester {
   private snapshots: any[] = [];
 
@@ -247,7 +247,7 @@ class MemoryTester {
 
 ### 1. Network Mocking
 
-```typescript
+```typescript:preview
 class NetworkMocker {
   private interceptors: Map<string, Function> = new Map();
 
@@ -267,7 +267,7 @@ class NetworkMocker {
 
 ### 2. Time Control
 
-```typescript
+```typescript:preview
 class TimeController {
   private currentTime: number = Date.now();
 

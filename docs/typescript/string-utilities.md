@@ -10,7 +10,7 @@ String utilities help you manipulate and validate strings in a type-safe manner 
 
 ### String Validation
 
-```typescript
+```typescript:preview
 function isNonEmpty(str: string): boolean {
   return str.length > 0;
 }
@@ -41,7 +41,7 @@ console.log(isURL('https://example.com')); // true
 
 ### String Transformation
 
-```typescript
+```typescript:preview
 function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -77,7 +77,7 @@ console.log(snakeCase('helloWorld')); // 'hello_world'
 
 ### String Templates
 
-```typescript
+```typescript:preview
 function template(
   str: string,
   params: Record<string, string | number>
@@ -102,7 +102,7 @@ const message = interpolate`Hello, ${'John'}! You have ${2} messages.`;
 
 ### String Manipulation
 
-```typescript
+```typescript:preview
 function truncate(str: string, length: number, suffix: string = '...'): string {
   if (str.length <= length) return str;
   return str.slice(0, length - suffix.length) + suffix;
@@ -139,7 +139,7 @@ console.log(wordWrap('Hello world, how are you?', 10));
 
 ## Real-World Example
 
-```typescript
+```typescript:preview
 // String utility class with common operations
 class StringUtils {
   // Validation methods

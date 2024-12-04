@@ -4,7 +4,7 @@ This page demonstrates practical examples of using `Promise.all` for parallel ex
 
 ## Basic Usage
 
-```typescript
+```typescript:preview
 // Basic Promise.all with multiple fetch requests
 const fetchMultipleUsers = async (userIds: string[]) => {
   const promises = userIds.map((id) =>
@@ -23,7 +23,7 @@ const fetchMultipleUsers = async (userIds: string[]) => {
 
 ## Error Handling
 
-```typescript
+```typescript:preview
 // Handling errors in Promise.all
 const validateUsers = async (users: User[]) => {
   try {
@@ -51,7 +51,7 @@ const validateUsers = async (users: User[]) => {
 
 ## Data Aggregation
 
-```typescript
+```typescript:preview
 // Aggregating data from multiple sources
 interface UserData {
   user: User;
@@ -72,7 +72,7 @@ async function getUserData(userId: string): Promise<UserData> {
 
 ## Batch Processing
 
-```typescript
+```typescript:preview
 // Processing data in batches
 async function processBatch<T>(
   items: T[],
@@ -99,7 +99,7 @@ await processBatch(users, 5, processUser);
 
 ## Resource Management
 
-```typescript
+```typescript:preview
 // Managing multiple resources
 class ResourceManager {
   private connections: Map<string, Connection> = new Map();
@@ -133,7 +133,7 @@ class ResourceManager {
 
 ## Real-World Example: Data Synchronization
 
-```typescript
+```typescript:preview
 class DataSynchronizer {
   private api: APIClient;
   private db: Database;
@@ -212,7 +212,7 @@ const result = await syncer.syncData([
 
 1. Error handling:
 
-   ```typescript
+   ```typescript:preview
    Promise.all(promises)
      .then(handleSuccess)
      .catch((error) => {
@@ -223,7 +223,7 @@ const result = await syncer.syncData([
 
 2. Progress tracking:
 
-   ```typescript
+   ```typescript:preview
    async function trackProgress<T>(
      promises: Promise<T>[],
      onProgress: (completed: number, total: number) => void
@@ -244,7 +244,7 @@ const result = await syncer.syncData([
 
 3. Resource cleanup:
 
-   ```typescript
+   ```typescript:preview
    try {
      const results = await Promise.all(operations);
      return results;
@@ -257,7 +257,7 @@ const result = await syncer.syncData([
 
 4. Timeout handling:
 
-   ```typescript
+   ```typescript:preview
    function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
      const timeout = new Promise<never>((_, reject) =>
        setTimeout(() => reject(new Error('Timeout')), ms)

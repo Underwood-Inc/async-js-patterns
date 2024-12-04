@@ -4,7 +4,7 @@ This page demonstrates practical examples of implementing and using debouncing p
 
 ## Basic Debouncing
 
-```typescript
+```typescript:preview
 // Basic debounce implementation
 function debounce<T extends (...args: any[]) => any>(
   func: T,
@@ -57,7 +57,7 @@ handleSearch('apple');
 
 ## Advanced Debouncing
 
-```typescript
+```typescript:preview
 class DebouncedFunction<T extends (...args: any[]) => any> {
   private timeoutId?: NodeJS.Timeout;
   private lastArgs?: Parameters<T>;
@@ -175,7 +175,7 @@ async function handleSearchInput(event: InputEvent): Promise<void> {
 
 ## Real-World Example: Form Validation
 
-```typescript
+```typescript:preview
 class FormValidator {
   private validators: Map<string, DebouncedFunction<any>> = new Map();
   private formState: Map<string, any> = new Map();
@@ -311,7 +311,7 @@ form?.addEventListener('submit', async (event) => {
 
 1. Cancellable debounce:
 
-   ```typescript
+   ```typescript:preview
    class CancellableDebounce<T extends (...args: any[]) => any> {
      private controller = new AbortController();
 
@@ -349,7 +349,7 @@ form?.addEventListener('submit', async (event) => {
 
 2. Resource cleanup:
 
-   ```typescript
+   ```typescript:preview
    class ResourceAwareDebounce<T extends (...args: any[]) => any> {
      private cleanup?: () => void;
 
@@ -394,7 +394,7 @@ form?.addEventListener('submit', async (event) => {
 
 3. Performance monitoring:
 
-   ```typescript
+   ```typescript:preview
    class MonitoredDebounce<T extends (...args: any[]) => any> {
      private metrics = {
        calls: 0,
@@ -443,7 +443,7 @@ form?.addEventListener('submit', async (event) => {
 
 4. Error boundaries:
 
-   ```typescript
+   ```typescript:preview
    class ErrorBoundaryDebounce<T extends (...args: any[]) => any> {
      private errorHandler?: (error: Error) => void;
      private retryCount = 0;

@@ -4,7 +4,7 @@ This page demonstrates practical examples of implementing and using performance 
 
 ## Basic Performance Monitoring
 
-```typescript
+```typescript:preview
 // Basic performance monitoring
 class PerformanceMonitor {
   private metrics: Map<
@@ -75,7 +75,7 @@ console.log('Metrics:', monitor.getMetrics('fetchUserData'));
 
 ## Advanced Performance Monitoring
 
-```typescript
+```typescript:preview
 class AdvancedPerformanceMonitor {
   private metrics: Map<string, OperationMetrics> = new Map();
   private thresholds: Map<string, number> = new Map();
@@ -285,7 +285,7 @@ try {
 
 ## Real-World Example: API Performance Monitoring
 
-```typescript
+```typescript:preview
 class ApiPerformanceMonitor {
   private monitor: AdvancedPerformanceMonitor;
   private endpoints: Map<string, EndpointStats> = new Map();
@@ -462,7 +462,7 @@ console.log('Performance report:', report);
 
 1. Memory monitoring:
 
-   ```typescript
+   ```typescript:preview
    class MemoryMonitor {
      private samples: number[] = [];
      private readonly maxSamples: number;
@@ -535,7 +535,7 @@ console.log('Performance report:', report);
 
 2. CPU profiling:
 
-   ```typescript
+   ```typescript:preview
    class CpuProfiler {
      private profiling = false;
      private profile: any = null;
@@ -579,7 +579,7 @@ console.log('Performance report:', report);
 
 3. Event loop monitoring:
 
-   ```typescript
+   ```typescript:preview
    class EventLoopMonitor {
      private samples: number[] = [];
      private timer?: NodeJS.Timer;
@@ -635,7 +635,7 @@ console.log('Performance report:', report);
 
 4. Resource utilization:
 
-   ```typescript
+   ```typescript:preview
    class ResourceMonitor {
      private readonly monitors: Map<string, Monitor> = new Map();
      private aggregator: MetricsAggregator;

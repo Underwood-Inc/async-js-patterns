@@ -4,7 +4,7 @@ This page demonstrates practical examples of using `Promise.any` to handle multi
 
 ## Basic Usage
 
-```typescript
+```typescript:preview
 // Basic example with multiple API endpoints
 async function fetchFromAnyEndpoint<T>(endpoints: string[]): Promise<T> {
   try {
@@ -43,7 +43,7 @@ try {
 
 ## Fallback Mechanisms
 
-```typescript
+```typescript:preview
 // Implementing fallback mechanisms
 class ServiceWithFallback {
   private primaryEndpoint: string;
@@ -95,7 +95,7 @@ class ServiceWithFallback {
 
 ## Authentication System
 
-```typescript
+```typescript:preview
 // Multiple authentication providers
 class MultiAuthSystem {
   private providers: AuthProvider[];
@@ -147,7 +147,7 @@ try {
 
 ## Resource Loading
 
-```typescript
+```typescript:preview
 // Loading resources from multiple sources
 class ResourceLoader {
   async loadResource(
@@ -206,7 +206,7 @@ class ResourceLoader {
 
 ## Real-World Example: Service Discovery
 
-```typescript
+```typescript:preview
 class ServiceDiscoveryClient {
   private registries: string[];
   private cache: Map<string, ServiceInfo>;
@@ -289,7 +289,7 @@ try {
 
 1. Always handle AggregateError:
 
-   ```typescript
+   ```typescript:preview
    try {
      const result = await Promise.any(promises);
      return result;
@@ -305,7 +305,7 @@ try {
 
 2. Implement proper logging:
 
-   ```typescript
+   ```typescript:preview
    const promises = endpoints.map(async (endpoint, index) => {
      try {
        const result = await fetch(endpoint);
@@ -320,7 +320,7 @@ try {
 
 3. Consider timeouts:
 
-   ```typescript
+   ```typescript:preview
    function withTimeout(promise: Promise<any>, ms: number) {
      return Promise.race([
        promise,
@@ -335,7 +335,7 @@ try {
    ```
 
 4. Implement fallback mechanisms:
-   ```typescript
+   ```typescript:preview
    async function withFallback<T>(
      primary: Promise<T>,
      fallbacks: Promise<T>[]

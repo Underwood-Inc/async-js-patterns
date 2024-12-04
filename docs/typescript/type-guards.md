@@ -10,7 +10,7 @@ Type guards are expressions that perform runtime checks to guarantee the type of
 
 ### typeof Type Guard
 
-```typescript
+```typescript:preview
 function processValue(value: string | number) {
   if (typeof value === 'string') {
     // TypeScript knows value is a string here
@@ -24,7 +24,7 @@ function processValue(value: string | number) {
 
 ### instanceof Type Guard
 
-```typescript
+```typescript:preview
 class ApiError extends Error {
   statusCode: number;
   constructor(message: string, statusCode: number) {
@@ -59,7 +59,7 @@ function handleError(error: Error) {
 
 ### User-Defined Type Guards
 
-```typescript
+```typescript:preview
 interface User {
   id: string;
   name: string;
@@ -88,7 +88,7 @@ function handleUser(user: User) {
 
 ### Array Type Guards
 
-```typescript
+```typescript:preview
 function isNonEmpty<T>(arr: T[]): arr is [T, ...T[]] {
   return arr.length > 0;
 }
@@ -115,7 +115,7 @@ function processItems<T>(items: T[]) {
 
 ### Discriminated Unions
 
-```typescript
+```typescript:preview
 type Result<T> =
   | { type: 'success'; data: T }
   | { type: 'error'; error: Error }
@@ -141,7 +141,7 @@ function handleResult<T>(result: Result<T>) {
 
 ### Assertion Functions
 
-```typescript
+```typescript:preview
 function assertIsString(value: unknown): asserts value is string {
   if (typeof value !== 'string') {
     throw new Error('Value must be a string');
@@ -169,7 +169,7 @@ function getUserName(user: { name: string } | null) {
 
 ## Real-World Example
 
-```typescript
+```typescript:preview
 // API Response types
 type ApiResponse<T> =
   | { status: 'success'; data: T }

@@ -60,7 +60,7 @@ Think of auto-retry like trying to make a phone call in an area with poor recept
 
 ## Implementation
 
-```typescript
+```typescript:preview
 interface RetryOptions {
   maxAttempts: number;
   initialDelay: number;
@@ -143,7 +143,7 @@ async function withRetry<T>(
 
 ## Usage Example
 
-```typescript
+```typescript:preview
 // Basic usage
 const fetchWithRetry = async (url: string) => {
   return withRetry(() => fetch(url), {
@@ -215,7 +215,7 @@ const customRetry = async () => {
 
 ## Testing
 
-```typescript
+```typescript:preview
 // Test successful retry
 const successTest = async () => {
   let attempts = 0;
@@ -276,7 +276,7 @@ const backoffTest = async () => {
 
 ## Advanced Usage
 
-```typescript
+```typescript:preview
 // With circuit breaker pattern
 class CircuitBreaker {
   private failures = 0;

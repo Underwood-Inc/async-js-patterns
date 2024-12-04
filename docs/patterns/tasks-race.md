@@ -6,7 +6,7 @@ Running async tasks in race means executing multiple tasks simultaneously and ta
 
 ## Implementation
 
-```typescript
+```typescript:preview
 type AsyncTask<T> = () => Promise<T>;
 
 async function executeInRace<T>(
@@ -70,7 +70,7 @@ async function executeInRace<T>(
 
 ## Usage Example
 
-```typescript
+```typescript:preview
 // Example tasks
 const tasks: AsyncTask<string>[] = [
   async () => {
@@ -141,7 +141,7 @@ executeInRace(tasks, {
 
 ## Testing
 
-```typescript
+```typescript:preview
 // Test first success wins
 const successTasks: AsyncTask<number>[] = [
   async () => {
@@ -192,7 +192,7 @@ const failTest = executeInRace(failTasks).catch((error) => {
 
 ## Advanced Usage
 
-```typescript
+```typescript:preview
 // With cancellation support
 interface CancellableTask<T> {
   execute: () => Promise<T>;

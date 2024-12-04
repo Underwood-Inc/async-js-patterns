@@ -10,7 +10,7 @@ Array utilities help you perform common array operations in a type-safe manner w
 
 ### Array Creation
 
-```typescript
+```typescript:preview
 function createArray<T>(length: number, defaultValue: T): T[] {
   return Array(length).fill(defaultValue);
 }
@@ -31,7 +31,7 @@ const uniqueValues = unique([1, 2, 2, 3, 3, 4]); // [1, 2, 3, 4]
 
 ### Array Manipulation
 
-```typescript
+```typescript:preview
 function chunk<T>(array: T[], size: number): T[][] {
   return array.reduce((chunks, item, index) => {
     const chunkIndex = Math.floor(index / size);
@@ -65,7 +65,7 @@ const rotated = rotate([1, 2, 3, 4, 5], 2); // [3, 4, 5, 1, 2]
 
 ### Array Type Checking
 
-```typescript
+```typescript:preview
 function isArrayOf<T>(
   array: unknown,
   typeGuard: (item: unknown) => item is T
@@ -98,7 +98,7 @@ console.log(isUnique([1, 2, 2, 3])); // false
 
 ### Array Transformations
 
-```typescript
+```typescript:preview
 function groupBy<T, K extends string | number | symbol>(
   array: T[],
   getKey: (item: T) => K
@@ -149,7 +149,7 @@ const pairs = zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]
 
 ## Real-World Example
 
-```typescript
+```typescript:preview
 // Array utility class with common operations
 class ArrayUtils<T> {
   constructor(private readonly items: T[]) {}

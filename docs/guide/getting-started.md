@@ -7,7 +7,7 @@ with TypeScript support and best practices.
 
 ## Installation
 
-```bash
+```bash:preview
 git clone https://github.com/Underwood-Inc/async-mastery.git
 cd async-mastery
 npm install
@@ -15,7 +15,7 @@ npm install
 
 ## Quick Start
 
-```typescript
+```typescript:preview
 import { withRetry } from './patterns/auto-retry';
 import { Memoizer } from './patterns/memoization';
 

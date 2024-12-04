@@ -59,7 +59,7 @@ Think of memoization like a chef's mise en place (prepared ingredients):
 
 ## Implementation
 
-```typescript
+```typescript:preview
 interface MemoizeOptions<T> {
   maxSize?: number;
   maxAge?: number;
@@ -175,7 +175,7 @@ class Memoizer<T> {
 
 ## Usage Example
 
-```typescript
+```typescript:preview
 // Basic API caching
 const apiMemoizer = new Memoizer<any>({
   maxAge: 60000, // 1 minute cache
@@ -253,7 +253,7 @@ const dataMemoizer = new Memoizer<any>({
 
 ## Testing
 
-```typescript
+```typescript:preview
 // Test basic caching
 const cachingTest = async () => {
   let callCount = 0;
@@ -291,7 +291,7 @@ const expirationTest = async () => {
 
 ## Advanced Usage
 
-```typescript
+```typescript:preview
 // With cache warming
 class PreloadingMemoizer<T> extends Memoizer<T> {
   async preload(

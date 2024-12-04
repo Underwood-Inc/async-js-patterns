@@ -4,7 +4,7 @@
 
 ### 1. ESLint Configuration
 
-```json
+```json:preview
 // .eslintrc.json
 {
   "parser": "@typescript-eslint/parser",
@@ -24,7 +24,7 @@
 
 ### 2. Prettier Configuration
 
-```json
+```json:preview
 // .prettierrc
 {
   "semi": true,
@@ -37,14 +37,14 @@
 
 ### 3. Husky Setup
 
-```bash
+```bash:preview
 npm install --save-dev husky lint-staged
 
 # Initialize Husky
 npx husky install
 ```
 
-```json
+```json:preview
 // package.json
 {
   "scripts": {
@@ -60,7 +60,7 @@ npx husky install
 }
 ```
 
-```bash
+```bash:preview
 # Add pre-commit hook
 npx husky add .husky/pre-commit "npx lint-staged"
 
@@ -70,7 +70,7 @@ npx husky add .husky/commit-msg 'npx --no -- commitlint --edit "$1"'
 
 ### 4. Commitlint Configuration
 
-```javascript
+```javascript:preview
 // commitlint.config.js
 module.exports = {
   extends: ['@commitlint/config-conventional'],
@@ -96,7 +96,7 @@ module.exports = {
 
 ### 5. Jest Configuration
 
-```javascript
+```javascript:preview
 // jest.config.js
 module.exports = {
   preset: 'ts-jest',
@@ -115,7 +115,7 @@ module.exports = {
 
 ### 6. GitHub Actions Workflow
 
-```yaml
+```yaml:preview
 # .github/workflows/ci.yml
 name: CI
 
@@ -156,7 +156,7 @@ jobs:
 
 ### VS Code Settings
 
-```json
+```json:preview
 // .vscode/settings.json
 {
   "editor.formatOnSave": true,
@@ -170,7 +170,7 @@ jobs:
 
 ### VS Code Extensions
 
-```json
+```json:preview
 // .vscode/extensions.json
 {
   "recommendations": [
@@ -184,7 +184,7 @@ jobs:
 
 ## Package Scripts
 
-```json
+```json:preview
 {
   "scripts": {
     "build": "tsc",

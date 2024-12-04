@@ -4,7 +4,7 @@ This example shows some common TypeScript/JavaScript linting issues.
 
 ## Bad Code Example
 
-```typescript
+```typescript:preview
 // Example with linting issues
 function badExample(x: any) {
   console.log('This uses double quotes');
@@ -17,7 +17,7 @@ const result = badExample(123);
 
 ## Good Code Example
 
-```typescript
+```typescript:preview
 // Properly formatted code
 function goodExample(x: number): number {
   // Proper logging with single quotes

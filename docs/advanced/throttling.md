@@ -60,7 +60,7 @@ Think of throttling like a water faucet with a flow restrictor:
 
 ## Implementation
 
-```typescript
+```typescript:preview
 interface ThrottleOptions {
   leading?: boolean;
   trailing?: boolean;
@@ -188,7 +188,7 @@ function throttle<T extends (...args: any[]) => any>(
 
 ## Usage Example
 
-```typescript
+```typescript:preview
 // Basic API rate limiting
 const throttledApi = throttle(
   async (data: any) => {
@@ -263,7 +263,7 @@ input.addEventListener('input', (e) => {
 
 ## Testing
 
-```typescript
+```typescript:preview
 // Test throttle timing
 const timingTest = async () => {
   let callCount = 0;
@@ -299,7 +299,7 @@ const promiseTest = async () => {
 
 ## Advanced Usage
 
-```typescript
+```typescript:preview
 // With request queue
 class ThrottledQueue<T> {
   private queue: T[] = [];

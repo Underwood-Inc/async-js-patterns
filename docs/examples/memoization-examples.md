@@ -4,7 +4,7 @@ This page demonstrates practical examples of implementing and using memoization 
 
 ## Basic Memoization
 
-```typescript
+```typescript:preview
 // Basic memoize implementation
 function memoize<T extends (...args: any[]) => any>(
   func: T,
@@ -65,7 +65,7 @@ console.log(expensiveOperation(5)); // Uses cache
 
 ## Advanced Memoization
 
-```typescript
+```typescript:preview
 class MemoizedFunction<T extends (...args: any[]) => any> {
   private cache: Map<
     string,
@@ -182,7 +182,7 @@ console.log(memoizedFib.getCacheStats());
 
 ## Real-World Example: API Response Caching
 
-```typescript
+```typescript:preview
 class CachedApiClient {
   private memoizedRequests: Map<string, MemoizedFunction<any>> = new Map();
 
@@ -313,7 +313,7 @@ console.log('Cache stats:', apiClient.getCacheStats());
 
 1. Async memoization:
 
-   ```typescript
+   ```typescript:preview
    class AsyncMemoized<T extends (...args: any[]) => Promise<any>> {
      private cache = new Map<string, Promise<ReturnType<T>>>();
      private pending = new Set<string>();
@@ -355,7 +355,7 @@ console.log('Cache stats:', apiClient.getCacheStats());
 
 2. Weak reference caching:
 
-   ```typescript
+   ```typescript:preview
    class WeakMemoized<T extends (...args: any[]) => any> {
      private cache = new WeakMap<object, ReturnType<T>>();
 
@@ -373,7 +373,7 @@ console.log('Cache stats:', apiClient.getCacheStats());
 
 3. Composite key generation:
 
-   ```typescript
+   ```typescript:preview
    class CompositeKeyMemoized<T extends (...args: any[]) => any> {
      private cache = new Map<string, ReturnType<T>>();
 
@@ -400,7 +400,7 @@ console.log('Cache stats:', apiClient.getCacheStats());
 
 4. Selective caching:
 
-   ```typescript
+   ```typescript:preview
    class SelectiveMemoized<T extends (...args: any[]) => any> {
      private cache = new Map<string, ReturnType<T>>();
 

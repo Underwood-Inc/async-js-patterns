@@ -4,7 +4,7 @@ This page demonstrates practical examples of using our custom Promise implementa
 
 ## Basic Usage
 
-```typescript
+```typescript:preview
 // Creating and using a custom Promise
 const myPromise = new CustomPromise<string>((resolve, reject) => {
   setTimeout(() => {
@@ -24,7 +24,7 @@ myPromise
 
 ## Chaining Operations
 
-```typescript
+```typescript:preview
 // Example of promise chaining
 const fetchUserData = (userId: string) =>
   new CustomPromise<User>((resolve) => {
@@ -52,7 +52,7 @@ fetchUserData('123')
 
 ## Error Handling
 
-```typescript
+```typescript:preview
 // Demonstrating error propagation
 const validateUser = (user: User) =>
   new CustomPromise<User>((resolve, reject) => {
@@ -79,7 +79,7 @@ const processUser = (user: User) =>
 
 ## Async/Await Usage
 
-```typescript
+```typescript:preview
 // Using custom Promise with async/await
 async function processUserData(userId: string) {
   try {
@@ -96,7 +96,7 @@ async function processUserData(userId: string) {
 
 ## Real-World Example: API Client
 
-```typescript
+```typescript:preview
 class APIClient {
   private baseUrl: string;
 
@@ -153,7 +153,7 @@ async function example() {
 
 ## Testing Custom Promises
 
-```typescript
+```typescript:preview
 // Example of testing promise behavior
 describe('CustomPromise', () => {
   it('should resolve with correct value', (done) => {
@@ -185,13 +185,13 @@ describe('CustomPromise', () => {
 
 1. Always handle rejections:
 
-   ```typescript
+   ```typescript:preview
    myPromise.then(handleSuccess).catch(handleError).finally(cleanup);
    ```
 
 2. Use TypeScript for better type safety:
 
-   ```typescript
+   ```typescript:preview
    const typedPromise = new CustomPromise<User>((resolve) => {
      resolve({ id: '1', name: 'John' });
    });
@@ -199,7 +199,7 @@ describe('CustomPromise', () => {
 
 3. Chain promises appropriately:
 
-   ```typescript
+   ```typescript:preview
    // Good
    return promise.then(transform1).then(transform2);
 
@@ -210,7 +210,7 @@ describe('CustomPromise', () => {
    ```
 
 4. Proper error propagation:
-   ```typescript
+   ```typescript:preview
    promise
      .then((value) => {
        if (!value) throw new Error('Invalid value');

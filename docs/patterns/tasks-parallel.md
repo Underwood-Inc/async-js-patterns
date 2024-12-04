@@ -6,7 +6,7 @@ Running async tasks in parallel means executing multiple tasks simultaneously wi
 
 ## Implementation
 
-```typescript
+```typescript:preview
 type AsyncTask<T> = () => Promise<T>;
 
 async function executeInParallel<T>(
@@ -82,7 +82,7 @@ async function executeInParallelWithProgress<T>(
 
 ## Usage Example
 
-```typescript
+```typescript:preview
 // Example tasks
 const tasks: AsyncTask<number>[] = [
   async () => {
@@ -152,7 +152,7 @@ executeInParallelWithProgress(
 
 ## Testing
 
-```typescript
+```typescript:preview
 // Test concurrent execution
 const timedTasks: AsyncTask<number>[] = [
   async () => {
@@ -205,7 +205,7 @@ const limitTest = executeInParallelWithProgress(
 
 ## Advanced Usage
 
-```typescript
+```typescript:preview
 // With resource pool
 class ResourcePool<T> {
   private resources: T[];

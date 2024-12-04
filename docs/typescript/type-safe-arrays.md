@@ -10,7 +10,7 @@ Type-safe arrays ensure that array operations maintain type safety and prevent r
 
 ### Array Type Declarations
 
-```typescript
+```typescript:preview
 // Array type syntax
 const numbers: number[] = [1, 2, 3];
 const strings: Array<string> = ['a', 'b', 'c'];
@@ -26,7 +26,7 @@ const namedTuple: [name: string, age: number] = ['John', 30];
 
 ### Array Type Inference
 
-```typescript
+```typescript:preview
 // Inferred array types
 const inferredNumbers = [1, 2, 3]; // number[]
 const inferredStrings = ['a', 'b', 'c']; // string[]
@@ -41,7 +41,7 @@ const constTuple = ['name', 42] as const; // readonly ['name', 42]
 
 ### Type-Safe Array Operations
 
-```typescript
+```typescript:preview
 // Type-safe array methods
 function typeSafeMap<T, U>(
   array: ReadonlyArray<T>,
@@ -68,7 +68,7 @@ function typeSafeReduce<T, U>(
 
 ### Array Type Guards
 
-```typescript
+```typescript:preview
 function isNonEmpty<T>(arr: T[]): arr is [T, ...T[]] {
   return arr.length > 0;
 }
@@ -92,7 +92,7 @@ function processNumbers(arr: unknown) {
 
 ## Real-World Example
 
-```typescript
+```typescript:preview
 // Domain types
 interface Task {
   id: string;

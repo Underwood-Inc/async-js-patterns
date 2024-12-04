@@ -6,7 +6,7 @@ This section provides comprehensive, practical examples of all async patterns an
 
 Learn how to use various Promise implementations:
 
-```typescript
+```typescript:preview
 // Custom Promise Example
 const myPromise = new CustomPromise((resolve, reject) => {
   setTimeout(() => resolve('Success!'), 1000);
@@ -32,7 +32,7 @@ const result = await Promise.race([
 
 Implement common async task patterns:
 
-```typescript
+```typescript:preview
 // Sequential Task Processing
 async function processInSeries(tasks: Array<() => Promise<any>>) {
   const results = [];
@@ -70,7 +70,7 @@ async function processInParallel(
 
 Enhanced timer implementations:
 
-```typescript
+```typescript:preview
 // Custom setTimeout with Cleanup
 const timer = new Timer();
 const cleanup = timer.setTimeout(() => {
@@ -94,7 +94,7 @@ interval.clear(); // Stop completely
 
 Sophisticated async patterns for real-world scenarios:
 
-```typescript
+```typescript:preview
 // Auto-Retry with Exponential Backoff
 const result = await withRetry(
   async () => {
@@ -129,7 +129,7 @@ const memoizedFetch = memoize(
 
 Optimize async operations:
 
-```typescript
+```typescript:preview
 // Memory-Efficient Stream Processing
 async function processLargeDataStream(stream: ReadableStream) {
   const reader = stream.getReader();
@@ -165,7 +165,7 @@ await monitor.track('fetchData', async () => {
 
 Complete implementations of common scenarios:
 
-```typescript
+```typescript:preview
 // API Client with Retries, Caching, and Rate Limiting
 class APIClient {
   private memoizer = new Memoizer({ maxAge: 60000 });

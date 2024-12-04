@@ -10,7 +10,7 @@ Observable state patterns allow for reactive state management where components c
 
 ### 1. Basic Observable
 
-```typescript
+```typescript:preview
 interface Observer<T> {
   update(value: T): void;
 }
@@ -46,7 +46,7 @@ class Observable<T> {
 
 ### 2. Event Emitter
 
-```typescript
+```typescript:preview
 type EventHandler<T> = (data: T) => void;
 
 class EventEmitter<T extends string> {
@@ -81,7 +81,7 @@ class EventEmitter<T extends string> {
 
 ### 1. Observable Store
 
-```typescript
+```typescript:preview
 type Subscriber<T> = (state: T) => void;
 type Selector<T, R> = (state: T) => R;
 
@@ -135,7 +135,7 @@ class Store<T extends object> {
 
 ### 2. Computed Observables
 
-```typescript
+```typescript:preview
 class ComputedObservable<T, R> implements Observer<T> {
   private value: R;
   private observers: Set<Observer<R>> = new Set();
@@ -178,7 +178,7 @@ class ComputedObservable<T, R> implements Observer<T> {
 
 ## Real-World Example
 
-```typescript
+```typescript:preview
 // Application state types
 interface User {
   id: string;

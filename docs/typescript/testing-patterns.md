@@ -10,7 +10,7 @@ TypeScript testing combines runtime behavior testing with compile-time type chec
 
 ### Unit Testing with Jest
 
-```typescript
+```typescript:preview
 // Function to test
 function add(a: number, b: number): number {
   return a + b;
@@ -34,7 +34,7 @@ describe('add function', () => {
 
 ### Async Testing
 
-```typescript
+```typescript:preview
 // Async function to test
 async function fetchUser(id: string): Promise<User> {
   const response = await fetch(`/api/users/${id}`);
@@ -61,7 +61,7 @@ describe('fetchUser', () => {
 
 ### Type Testing
 
-```typescript
+```typescript:preview
 import { expectType, expectError } from 'tsd';
 
 // Type definitions
@@ -103,7 +103,7 @@ describe('Result type', () => {
 
 ### Mock Testing
 
-```typescript
+```typescript:preview
 // Service to mock
 interface UserService {
   getUser(id: string): Promise<User>;
@@ -154,7 +154,7 @@ describe('UserService', () => {
 
 ## Real-World Example
 
-```typescript
+```typescript:preview
 // Domain types
 interface User {
   id: string;

@@ -10,7 +10,7 @@ Browser optimizations for async JavaScript focus on techniques to improve perfor
 
 When handling multiple DOM updates, batching operations is crucial for performance:
 
-```typescript
+```typescript:preview
 // Example: Efficient DOM batch updates with read/write separation
 class DOMBatchProcessor {
   private readQueue: Array<() => void> = [];
@@ -56,7 +56,7 @@ class DOMBatchProcessor {
 
 1. **Layout Thrashing**
 
-```typescript
+```typescript:preview
 // ❌ Bad: Causes layout thrashing
 elements.forEach((el) => {
   const height = el.offsetHeight;
@@ -72,7 +72,7 @@ elements.forEach((el, i) => {
 
 2. **Event Handler Proliferation**
 
-```typescript
+```typescript:preview
 // ❌ Bad: Attaches handlers to every element
 elements.forEach((el) => {
   el.addEventListener('click', handler);
@@ -90,7 +90,7 @@ parentElement.addEventListener('click', (e) => {
 
 Consider a web application that dynamically loads content as the user scrolls. Using IntersectionObserver and DOM batch processing, you can efficiently manage resource loading and DOM updates without blocking the main thread.
 
-```typescript
+```typescript:preview
 class LazyLoader {
   private observer: IntersectionObserver;
 
@@ -122,7 +122,7 @@ class LazyLoader {
 
 Efficient tracking of processed DOM elements using WeakSet
 
-```typescript
+```typescript:preview
 class DOMTracker {
   private processedElements = new WeakSet<Element>();
   private observer: MutationObserver;
@@ -177,7 +177,7 @@ This pattern is especially useful for:
 
 A common challenge in web applications is managing tooltips that need to break out of their containing elements, especially within scrollable or overflow-hidden containers.
 
-```typescript
+```typescript:preview
 class TooltipPortal {
   private portal: HTMLElement;
   private processedTooltips = new WeakSet<Element>();
@@ -272,7 +272,7 @@ Key optimizations in this example:
 
 Another common performance challenge is rendering large lists efficiently:
 
-```typescript
+```typescript:preview
 class VirtualScroller {
   private container: HTMLElement;
   private itemHeight: number;

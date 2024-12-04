@@ -4,7 +4,7 @@ This page demonstrates practical examples of optimizing asynchronous operations 
 
 ## DOM Batch Processing
 
-```typescript
+```typescript:preview
 // Efficient DOM batch updates
 class DOMBatchProcessor {
   private queue: Array<() => void> = [];
@@ -57,7 +57,7 @@ function updateElements(elements: HTMLElement[]): void {
 
 ## Intersection Observer
 
-```typescript
+```typescript:preview
 class LazyLoader {
   private observer: IntersectionObserver;
   private loadQueue: Map<Element, () => Promise<void>> = new Map();
@@ -145,7 +145,7 @@ document.querySelectorAll('[data-component]').forEach((element) => {
 
 ## Web Worker Task Queue
 
-```typescript
+```typescript:preview
 class WorkerTaskQueue {
   private worker: Worker;
   private tasks: Map<
@@ -261,7 +261,7 @@ const filteredData = await taskQueue.execute<ImageData>(
 
 ## Real-World Example: Virtual Scrolling
 
-```typescript
+```typescript:preview
 class VirtualScroller {
   private container: HTMLElement;
   private itemHeight: number;
@@ -409,7 +409,7 @@ setTimeout(() => {
 
 1. Frame timing:
 
-   ```typescript
+   ```typescript:preview
    class FrameScheduler {
      private callbacks = new Set<() => void>();
      private running = false;
@@ -446,7 +446,7 @@ setTimeout(() => {
 
 2. Memory management:
 
-   ```typescript
+   ```typescript:preview
    class DOMRecycler<T> {
      private pool: HTMLElement[] = [];
      private inUse = new Set<HTMLElement>();
@@ -493,7 +493,7 @@ setTimeout(() => {
 
 3. Event delegation:
 
-   ```typescript
+   ```typescript:preview
    class EventDelegator {
      private handlers: Map<string, Map<string, Set<EventListener>>> = new Map();
 
@@ -554,7 +554,7 @@ setTimeout(() => {
 
 4. Idle scheduling:
 
-   ```typescript
+   ```typescript:preview
    class IdleTaskScheduler {
      private tasks: Array<{
        task: () => void;

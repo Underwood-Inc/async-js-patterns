@@ -9,7 +9,7 @@ handling.
 
 ## Implementation
 
-```typescript
+```typescript:preview
 import { AsyncOperationError } from '../advanced/error-handling';
 import { PerformanceMonitor } from '../advanced/performance-monitoring';
 
@@ -66,7 +66,7 @@ function promiseAll<T>(promises: Array<Promise<T>>): Promise<T[]> {
 
 ### Basic Usage
 
-```typescript
+```typescript:preview
 const promises = [
   Promise.resolve(1),
   Promise.resolve(2),
@@ -84,7 +84,7 @@ promiseAll(promises)
 
 ### Advanced Usage with Timeout
 
-```typescript
+```typescript:preview
 // With timeout wrapper
 function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   const timeout = new Promise<never>((_, reject) => {
@@ -104,7 +104,7 @@ promiseAll([
 
 ### Error Handling
 
-```typescript
+```typescript:preview
 // Testing different scenarios
 async function testPromiseAll() {
   try {
@@ -175,7 +175,7 @@ async function testPromiseAll() {
 
 1. **Not Handling Rejections**
 
-   ```typescript
+   ```typescript:preview
    // Bad: No error handling
    const results = await Promise.all(promises);
 
@@ -189,7 +189,7 @@ async function testPromiseAll() {
 
 2. **Memory Leaks with Large Arrays**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Loading too many promises into memory
    const promises = items.map((item) => fetchData(item));
    const results = await Promise.all(promises);
@@ -205,7 +205,7 @@ async function testPromiseAll() {
 
 3. **Mixing Sync and Async Operations**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Mixing sync and async operations
    const promises = items.map((item) => {
      if (item.cached) return item.data;
@@ -221,7 +221,7 @@ async function testPromiseAll() {
 
 4. **Not Considering Promise Order**
 
-   ```typescript
+   ```typescript:preview
    // Bad: Assuming results order matches completion order
    const [slow, fast] = await Promise.all([slowFetch(), fastFetch()]);
 
@@ -264,7 +264,7 @@ async function testPromiseAll() {
 
 ## Testing
 
-```typescript
+```typescript:preview
 // Test successful case
 const successTest = promiseAll([
   Promise.resolve(1),

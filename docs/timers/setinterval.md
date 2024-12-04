@@ -8,7 +8,7 @@ implementation also includes drift correction and precise timing options.
 
 ## Implementation
 
-```typescript
+```typescript:preview
 interface IntervalTimer {
   id: number;
   delay: number;
@@ -132,7 +132,7 @@ class CustomInterval {
 
 ## Usage Example
 
-```typescript
+```typescript:preview
 const interval = new CustomInterval();
 
 // Basic usage
@@ -211,7 +211,7 @@ setTimeout(() => {
 
 ## Testing
 
-```typescript
+```typescript:preview
 // Test interval accuracy
 const accuracyTest = async () => {
   let count = 0;
@@ -259,7 +259,7 @@ const pauseTest = async () => {
 
 ## Advanced Usage
 
-```typescript
+```typescript:preview
 // With rate limiting
 class RateLimitedInterval extends CustomInterval {
   private maxExecutionsPerMinute: number;

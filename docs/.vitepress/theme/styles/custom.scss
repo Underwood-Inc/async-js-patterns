@@ -1,5 +1,5 @@
-@use "sass:color";
-@use "./variables" as *;
+@use 'sass:color';
+@use './variables' as *;
 
 :root {
   // Light theme colors
@@ -27,6 +27,13 @@
 
   // Remove code block colors from here
   --vp-code-block-border: #{$purple-brand};
+
+  // Light theme scrollbar
+  --scrollbar-track: var(--vp-c-bg-alt);
+  --scrollbar-thumb: var(--vp-c-brand-light);
+  --scrollbar-thumb-hover: var(--vp-c-brand);
+  --scrollbar-width: 12px;
+  --scrollbar-height: 12px;
 }
 
 .dark {
@@ -42,9 +49,89 @@
   --vp-code-line-highlight-color: #2d2b55;
   --vp-code-line-number-color: #5b5b8a;
   --vp-code-line-color: #2d2b55;
+
+  // Dark theme scrollbar
+  --scrollbar-track: var(--vp-c-bg-alt);
+  --scrollbar-thumb: var(--vp-c-brand-dark);
+  --scrollbar-thumb-hover: var(--vp-c-brand);
 }
 
 // Remove this block
 div[class*='language-'] {
   border: 1px solid var(--vp-code-block-border);
-} 
+}
+
+// Firefox
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-color);
+}
+
+/* Scrollbars - Webkit (Chrome, Safari, newer Edge) */
+::-webkit-scrollbar {
+  width: var(--space-sm);
+  height: var(--space-sm);
+  cursor: default;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-color);
+  border-radius: var(--radius-sm);
+  cursor: default;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
+  border-radius: var(--radius-sm);
+  cursor: default;
+
+  &:hover {
+    background: rgba(157, 140, 214, 0.5);
+    cursor: grab;
+  }
+
+  &:active {
+    cursor: grabbing;
+    background: rgba(157, 140, 214, 0.7);
+  }
+}
+
+/* Edge Legacy support */
+::-ms-scrollbar {
+  width: var(--space-sm);
+  height: var(--space-sm);
+  cursor: default;
+}
+
+::-ms-scrollbar-track {
+  background: var(--scrollbar-color);
+  border-radius: var(--radius-sm);
+  cursor: default;
+}
+
+::-ms-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
+  border-radius: var(--radius-sm);
+  cursor: default;
+
+  &:hover {
+    background: rgba(157, 140, 214, 0.5);
+    cursor: grab;
+  }
+
+  &:active {
+    cursor: grabbing;
+    background: rgba(157, 140, 214, 0.7);
+  }
+}
+
+/* Reset any inherited cursors */
+html,
+body {
+  cursor: default;
+}
+
+// For iOS momentum scrolling
+* {
+  -webkit-overflow-scrolling: touch;
+}

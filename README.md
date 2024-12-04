@@ -66,14 +66,14 @@ The guide covers:
 
 1. Clone the repository:
 
-```bash
+```bash:preview
 git clone https://github.com/Underwood-Inc/web-patterns.git
 cd web-patterns
 ```
 
 2. Install dependencies:
 
-```bash
+```bash:preview
 npm install
 ```
 
@@ -83,13 +83,13 @@ Visit our documentation site to explore the implementations and examples:
 
 1. Run the documentation locally:
 
-```bash
+```bash:preview
 npm run docs:dev
 ```
 
 2. Build the documentation:
 
-```bash
+```bash:preview
 npm run docs:build
 ```
 
@@ -107,7 +107,7 @@ The documentation is organized into the following sections:
 
 Run the test suite to verify implementations:
 
-```bash
+```bash:preview
 npm test
 ```
 

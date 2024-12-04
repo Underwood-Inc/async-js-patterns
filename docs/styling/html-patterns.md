@@ -8,7 +8,7 @@ Modern HTML layout patterns focusing on semantic structure, accessibility, and b
 
 ### Basic Page Layout
 
-```html
+```html:preview
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -53,7 +53,7 @@ Modern HTML layout patterns focusing on semantic structure, accessibility, and b
 
 ### Form Layout
 
-```html
+```html:preview
 <form role="form" aria-labelledby="form-title">
   <h2 id="form-title">Contact Form</h2>
 
@@ -88,7 +88,7 @@ Modern HTML layout patterns focusing on semantic structure, accessibility, and b
 
 ### Navigation Patterns
 
-```html
+```html:preview
 <nav aria-label="Main navigation">
   <button
     aria-expanded="false"
@@ -118,7 +118,7 @@ Modern HTML layout patterns focusing on semantic structure, accessibility, and b
 
 ### Article Structure
 
-```html
+```html:preview
 <article>
   <header>
     <h1>Article Title</h1>
@@ -147,7 +147,7 @@ Modern HTML layout patterns focusing on semantic structure, accessibility, and b
 
 ### Card Components
 
-```html
+```html:preview
 <div class="card" role="article">
   <div class="card-media">
     <img src="image.jpg" alt="" aria-hidden="true" />
@@ -201,7 +201,7 @@ Modern HTML layout patterns focusing on semantic structure, accessibility, and b
 
 ### 5. Performance Considerations
 
-```html
+```html:preview
 <!-- Preload critical assets -->
 <link rel="preload" href="critical.css" as="style" />
 <link rel="preload" href="main.js" as="script" />

@@ -2,7 +2,7 @@
 
 ## TypeScript Example with Issues
 
-```typescript
+```typescript:preview
 // Extra spaces and missing types
 function add(a, b) {
   console.log('Adding numbers');
@@ -21,7 +21,7 @@ function processData(data: any) {
 
 ## JavaScript Example with Issues
 
-```javascript
+```javascript:preview
 // Using var and missing semicolons
 var x = 10;
 var y = 20;
@@ -36,7 +36,7 @@ const result = multiply(x, y);
 
 ## Good TypeScript Example
 
-```typescript
+```typescript:preview
 // Properly formatted code
 function add(a: number, b: number): number {
   const result = a + b;

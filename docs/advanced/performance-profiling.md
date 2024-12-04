@@ -68,7 +68,7 @@ Think of performance profiling like analyzing an athlete's training:
 
 ### 1. Async Operation Profiler
 
-```typescript
+```typescript:preview
 class AsyncProfiler {
   private traces: Map<
     string,
@@ -131,7 +131,7 @@ class AsyncProfiler {
 
 ### 2. Stack Sampling
 
-```typescript
+```typescript:preview
 class StackSampler {
   private samples: Array<{
     timestamp: number;
@@ -175,7 +175,7 @@ class StackSampler {
 
 ### 1. Heap Snapshot Analysis
 
-```typescript
+```typescript:preview
 class HeapAnalyzer {
   private snapshots: Array<{
     timestamp: number;
@@ -216,7 +216,7 @@ class HeapAnalyzer {
 
 ### 2. Memory Leak Detection
 
-```typescript
+```typescript:preview
 class LeakDetector {
   private samples: Array<{
     timestamp: number;
@@ -269,7 +269,7 @@ class LeakDetector {
 
 ### Request Analyzer
 
-```typescript
+```typescript:preview
 class NetworkProfiler {
   private requests: Map<
     string,

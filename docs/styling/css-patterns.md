@@ -8,7 +8,7 @@ Modern CSS patterns and best practices for building maintainable and performant 
 
 ### Custom Properties (Variables)
 
-```css
+```css:preview
 :root {
   --color-primary: #9d8cd6;
   --color-secondary: #6366f1;
@@ -25,7 +25,7 @@ Modern CSS patterns and best practices for building maintainable and performant 
 
 ### Container Queries
 
-```css
+```css:preview
 .card {
   container-type: inline-size;
 }
@@ -39,7 +39,7 @@ Modern CSS patterns and best practices for building maintainable and performant 
 
 ### Grid Layout
 
-```css
+```css:preview
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -49,7 +49,7 @@ Modern CSS patterns and best practices for building maintainable and performant 
 
 ### Flexbox Patterns
 
-```css
+```css:preview
 .flex-container {
   display: flex;
   flex-wrap: wrap;
@@ -63,7 +63,7 @@ Modern CSS patterns and best practices for building maintainable and performant 
 
 ### Holy Grail Layout
 
-```css
+```css:preview
 .layout {
   display: grid;
   grid-template-areas:
@@ -93,7 +93,7 @@ Modern CSS patterns and best practices for building maintainable and performant 
 
 ### Card Grid
 
-```css
+```css:preview
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -106,7 +106,7 @@ Modern CSS patterns and best practices for building maintainable and performant 
 
 ### Button System
 
-```css
+```css:preview
 .button {
   /* Base styles */
   padding: 0.5em 1em;
@@ -143,7 +143,7 @@ Modern CSS patterns and best practices for building maintainable and performant 
 
 ### Form Controls
 
-```css
+```css:preview
 .form-control {
   display: grid;
   gap: 0.5rem;
@@ -170,7 +170,7 @@ Modern CSS patterns and best practices for building maintainable and performant 
 
 ### Fluid Typography
 
-```css
+```css:preview
 :root {
   --fluid-min-width: 320;
   --fluid-max-width: 1140;
@@ -192,7 +192,7 @@ body {
 
 ### Responsive Images
 
-```css
+```css:preview
 .image {
   max-width: 100%;
   height: auto;
@@ -210,7 +210,7 @@ body {
 
 ### Content Visibility
 
-```css
+```css:preview
 .below-fold {
   content-visibility: auto;
   contain-intrinsic-size: 0 500px;
@@ -219,7 +219,7 @@ body {
 
 ### Will-Change
 
-```css
+```css:preview
 .animated {
   will-change: transform;
   transition: transform 0.3s ease;
@@ -234,7 +234,7 @@ body {
 
 ### Keyframe Animations
 
-```css
+```css:preview
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -253,7 +253,7 @@ body {
 
 ### Transitions
 
-```css
+```css:preview
 .button {
   transition: all 0.3s ease;
 
@@ -268,7 +268,7 @@ body {
 
 1. Use Logical Properties
 
-```css
+```css:preview
 .element {
   margin-block: 1rem;
   padding-inline: 2rem;
@@ -277,7 +277,7 @@ body {
 
 2. Progressive Enhancement
 
-```css
+```css:preview
 .grid {
   display: flex;
   flex-wrap: wrap;
@@ -291,7 +291,7 @@ body {
 
 3. Accessibility
 
-```css
+```css:preview
 .button:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;

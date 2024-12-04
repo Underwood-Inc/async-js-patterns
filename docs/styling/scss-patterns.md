@@ -8,7 +8,7 @@ This guide covers modern SCSS patterns and best practices for maintainable and s
 
 ### Module System
 
-```scss
+```scss:preview
 // Modern @use instead of @import
 @use 'sass:color';
 @use 'sass:math';
@@ -17,7 +17,7 @@ This guide covers modern SCSS patterns and best practices for maintainable and s
 
 ### Variables and Maps
 
-```scss
+```scss:preview
 // _variables.scss
 $colors: (
   'primary': #9d8cd6,
@@ -35,7 +35,7 @@ $breakpoints: (
 
 ### Color Functions
 
-```scss
+```scss:preview
 // Modern color manipulation
 .element {
   // Instead of darken()
@@ -51,7 +51,7 @@ $breakpoints: (
 
 ### Mixins and Functions
 
-```scss
+```scss:preview
 // Responsive mixins
 @mixin respond-to($breakpoint) {
   @if map.has-key($breakpoints, $breakpoint) {
@@ -120,7 +120,7 @@ styles/
 
 ### 1. Use Modern Module System
 
-```scss
+```scss:preview
 // ❌ Avoid @import
 @import 'variables';
 
@@ -130,7 +130,7 @@ styles/
 
 ### 2. Namespace Variables
 
-```scss
+```scss:preview
 // ❌ Global variables
 $color: blue;
 
@@ -143,7 +143,7 @@ $button: (
 
 ### 3. BEM Naming Convention
 
-```scss
+```scss:preview
 // Block
 .card {
   // Element
@@ -158,7 +158,7 @@ $button: (
 
 ### 4. Mobile-First Approach
 
-```scss
+```scss:preview
 .container {
   width: 100%; // Mobile first
 
@@ -174,7 +174,7 @@ $button: (
 
 ### 5. CSS Custom Properties Integration
 
-```scss
+```scss:preview
 :root {
   --color-primary: #{$primary-color};
   --spacing-unit: #{$spacing};
@@ -188,7 +188,7 @@ $button: (
 
 ### 6. Performance Considerations
 
-```scss
+```scss:preview
 // ❌ Avoid deep nesting
 .header {
   .nav {
@@ -215,7 +215,7 @@ $button: (
 
 ### Stylelint Configuration
 
-```json
+```json:preview
 {
   "extends": "stylelint-config-standard-scss",
   "rules": {

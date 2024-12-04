@@ -12,7 +12,7 @@ TypeScript provides several built-in utility types to facilitate common type tra
 
 Makes all properties in T optional:
 
-```typescript
+```typescript:preview
 interface User {
   id: number;
   name: string;
@@ -31,7 +31,7 @@ function updateUser(userId: number, updates: PartialUser) {
 
 Makes all properties in T required:
 
-```typescript
+```typescript:preview
 interface Config {
   cache?: boolean;
   timeout?: number;
@@ -50,7 +50,7 @@ function initializeWithConfig(config: RequiredConfig) {
 
 Creates a type by picking the specified properties K from T:
 
-```typescript
+```typescript:preview
 interface Article {
   id: number;
   title: string;
@@ -74,7 +74,7 @@ function renderPreview(preview: ArticlePreview) {
 
 Makes all properties in T optional recursively:
 
-```typescript
+```typescript:preview
 type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
@@ -109,7 +109,7 @@ function updateConfig(updates: PartialConfig) {
 
 Removes null and undefined from type T:
 
-```typescript
+```typescript:preview
 type NonNullable<T> = T extends null | undefined ? never : T;
 
 function processValue<T>(value: T): NonNullable<T> {
@@ -124,14 +124,14 @@ function processValue<T>(value: T): NonNullable<T> {
 
 1. Type Composition:
 
-```typescript
+```typescript:preview
 // Combine utility types for complex transformations
 type ReadonlyPartial<T> = Readonly<Partial<T>>;
 ```
 
 2. Type Guards with Utility Types:
 
-```typescript
+```typescript:preview
 function isNonNullable<T>(value: T): value is NonNullable<T> {
   return value !== null && value !== undefined;
 }
@@ -139,7 +139,7 @@ function isNonNullable<T>(value: T): value is NonNullable<T> {
 
 3. Conditional Types:
 
-```typescript
+```typescript:preview
 type NonEmptyArray<T> = T[] & { 0: T };
 
 function ensureNonEmpty<T>(arr: T[]): NonEmptyArray<T> {
@@ -152,7 +152,7 @@ function ensureNonEmpty<T>(arr: T[]): NonEmptyArray<T> {
 
 ## Real-World Example
 
-```typescript
+```typescript:preview
 // API Response Types
 interface ApiResponse<T> {
   data: T;

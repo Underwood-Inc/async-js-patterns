@@ -4,7 +4,7 @@ This page demonstrates practical examples of executing tasks in parallel while m
 
 ## Basic Parallel Execution
 
-```typescript
+```typescript:preview
 // Basic parallel task execution
 async function executeInParallel<T>(
   tasks: Array<() => Promise<T>>
@@ -34,7 +34,7 @@ console.log('All tasks completed:', results);
 
 ## Concurrent Task Queue
 
-```typescript
+```typescript:preview
 class TaskQueue {
   private queue: Array<() => Promise<any>> = [];
   private running = 0;
@@ -93,7 +93,7 @@ const results = await queue.run();
 
 ## Batch Processing with Concurrency
 
-```typescript
+```typescript:preview
 class BatchProcessor {
   constructor(private readonly concurrency: number = 3) {}
 
@@ -166,7 +166,7 @@ const results = await processor.processBatch(
 
 ## Real-World Example: Parallel Data Processing Pipeline
 
-```typescript
+```typescript:preview
 class DataProcessingPipeline {
   private readonly stages: ProcessingStage[];
   private readonly maxConcurrency: number;
@@ -317,7 +317,7 @@ try {
 
 1. Resource management:
 
-   ```typescript
+   ```typescript:preview
    class ResourcePool {
      private available: Resource[] = [];
      private inUse = new Set<Resource>();
@@ -352,7 +352,7 @@ try {
 
 2. Error handling:
 
-   ```typescript
+   ```typescript:preview
    async function executeWithErrorBoundary<T>(
      tasks: Array<() => Promise<T>>,
      options: {
@@ -388,7 +388,7 @@ try {
 
 3. Progress monitoring:
 
-   ```typescript
+   ```typescript:preview
    class ProgressTracker {
      private completed = 0;
      private readonly total: number;
@@ -416,7 +416,7 @@ try {
 
 4. Cancellation support:
 
-   ```typescript
+   ```typescript:preview
    class CancellableTaskRunner {
      private abortController = new AbortController();
 

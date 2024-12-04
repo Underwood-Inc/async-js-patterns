@@ -10,7 +10,7 @@ Conditional types help you create type definitions that depend on other types, s
 
 ### Type Conditions
 
-```typescript
+```typescript:preview
 type IsString<T> = T extends string ? true : false;
 type IsNumber<T> = T extends number ? true : false;
 
@@ -22,7 +22,7 @@ type ObjectCheck = IsNumber<{ x: number }>; // false
 
 ### Type Distribution
 
-```typescript
+```typescript:preview
 type ToArray<T> = T extends any ? T[] : never;
 
 // Distribution over union types
@@ -38,7 +38,7 @@ type ToArrayNonDistributive<T> = [T] extends [any] ? T[] : never;
 
 ### Type Inference in Conditional Types
 
-```typescript
+```typescript:preview
 type GetReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
 
 // Usage
@@ -67,7 +67,7 @@ type Second = SecondArgument<Func>; // number
 
 ### Recursive Conditional Types
 
-```typescript
+```typescript:preview
 type DeepReadonly<T> = T extends object
   ? {
       readonly [P in keyof T]: DeepReadonly<T[P]>;
@@ -91,7 +91,7 @@ type ReadonlyNested = DeepReadonly<NestedObject>;
 
 ## Real-World Example
 
-```typescript
+```typescript:preview
 // API Response handling with conditional types
 type ApiResponse<T> = {
   data: T;

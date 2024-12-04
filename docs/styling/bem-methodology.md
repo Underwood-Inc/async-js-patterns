@@ -28,7 +28,7 @@ A standalone entity that is meaningful on its own.
 
 A part of a block that has no standalone meaning and is semantically tied to its block.
 
-```css
+```css:preview
 .block__element {
   /* styles */
 }
@@ -46,7 +46,7 @@ A part of a block that has no standalone meaning and is semantically tied to its
 
 A flag on a block or element that changes appearance or behavior.
 
-```css
+```css:preview
 .block--modifier {
   /* styles */
 }
@@ -68,7 +68,7 @@ A flag on a block or element that changes appearance or behavior.
 
 ### Basic Structure
 
-```html
+```html:preview
 <nav class="menu">
   <ul class="menu__list">
     <li class="menu__item">
@@ -81,7 +81,7 @@ A flag on a block or element that changes appearance or behavior.
 </nav>
 ```
 
-```css
+```css:preview
 .menu {
   background: #fff;
 }
@@ -108,7 +108,7 @@ A flag on a block or element that changes appearance or behavior.
 
 ### Complex Component
 
-```html
+```html:preview
 <form class="search-form search-form--dark">
   <div class="search-form__field">
     <input class="search-form__input" type="text" />
@@ -125,7 +125,7 @@ A flag on a block or element that changes appearance or behavior.
 </form>
 ```
 
-```css
+```css:preview
 .search-form {
   padding: 1rem;
 }
@@ -186,7 +186,7 @@ A flag on a block or element that changes appearance or behavior.
 - Use key-value modifiers when a value is needed
 - Keep modifier names short but descriptive
 
-```css
+```css:preview
 /* Boolean modifier */
 .button--disabled {
 }
@@ -219,7 +219,7 @@ styles/
 
 Combining multiple BEM entities on a single DOM node.
 
-```html
+```html:preview
 <div class="header__logo logo">
   <!-- logo is a block, header__logo is an element -->
 </div>
@@ -229,7 +229,7 @@ Combining multiple BEM entities on a single DOM node.
 
 Using modifiers to represent element states.
 
-```css
+```css:preview
 .form__input--invalid {
   border-color: red;
 }
@@ -243,7 +243,7 @@ Using modifiers to represent element states.
 
 Using modifiers for responsive variations.
 
-```css
+```css:preview
 .grid {
   display: grid;
 }

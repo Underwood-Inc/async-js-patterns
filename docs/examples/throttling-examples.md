@@ -4,7 +4,7 @@ This page demonstrates practical examples of implementing and using throttling p
 
 ## Basic Throttling
 
-```typescript
+```typescript:preview
 // Basic throttle implementation
 function throttle<T extends (...args: any[]) => any>(
   func: T,
@@ -54,7 +54,7 @@ window.addEventListener('scroll', handleScroll);
 
 ## Advanced Throttling
 
-```typescript
+```typescript:preview
 class ThrottledFunction<T extends (...args: any[]) => any> {
   private timeoutId?: NodeJS.Timeout;
   private lastArgs?: Parameters<T>;
@@ -163,7 +163,7 @@ async function handleDataUpdate(data: any): Promise<void> {
 
 ## Real-World Example: Rate Limited API Client
 
-```typescript
+```typescript:preview
 class RateLimitedClient {
   private throttledRequests: Map<string, ThrottledFunction<any>> = new Map();
   private rateLimits: Map<string, RateLimit> = new Map();
@@ -301,7 +301,7 @@ try {
 
 1. Window-based throttling:
 
-   ```typescript
+   ```typescript:preview
    class WindowThrottle<T extends (...args: any[]) => any> {
      private window: Array<{
        timestamp: number;
@@ -349,7 +349,7 @@ try {
 
 2. Resource-aware throttling:
 
-   ```typescript
+   ```typescript:preview
    class ResourceThrottle<T extends (...args: any[]) => any> {
      private resourceUsage: number = 0;
      private readonly maxResources: number;
@@ -398,7 +398,7 @@ try {
 
 3. Priority throttling:
 
-   ```typescript
+   ```typescript:preview
    class PriorityThrottle<T extends (...args: any[]) => any> {
      private queues: Map<
        Priority,
@@ -470,7 +470,7 @@ try {
 
 4. Adaptive throttling:
 
-   ```typescript
+   ```typescript:preview
    class AdaptiveThrottle<T extends (...args: any[]) => any> {
      private metrics: {
        successCount: number;

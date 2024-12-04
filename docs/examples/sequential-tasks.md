@@ -4,7 +4,7 @@ This page demonstrates practical examples of executing tasks in sequence, ensuri
 
 ## Basic Sequential Execution
 
-```typescript
+```typescript:preview
 // Basic sequential task execution
 async function executeSequentially<T>(
   tasks: Array<() => Promise<T>>
@@ -41,7 +41,7 @@ console.log('Results:', results);
 
 ## Data Pipeline Processing
 
-```typescript
+```typescript:preview
 // Sequential data pipeline
 class DataPipeline<T> {
   private steps: Array<(data: T) => Promise<T>> = [];
@@ -104,7 +104,7 @@ const enrichedUser = await pipeline.process({
 
 ## Dependency Resolution
 
-```typescript
+```typescript:preview
 // Sequential dependency resolver
 class DependencyResolver {
   private dependencies = new Map<string, string[]>();
@@ -150,7 +150,7 @@ console.log('Load order:', loadOrder);
 
 ## Real-World Example: User Registration Flow
 
-```typescript
+```typescript:preview
 class UserRegistrationFlow {
   private steps: RegistrationStep[] = [];
   private rollbackSteps: Map<string, () => Promise<void>> = new Map();
@@ -272,7 +272,7 @@ try {
 
 1. Error handling with partial completion:
 
-   ```typescript
+   ```typescript:preview
    async function executeWithRollback<T>(
      tasks: Array<{
        execute: () => Promise<T>;
@@ -304,7 +304,7 @@ try {
 
 2. Progress tracking:
 
-   ```typescript
+   ```typescript:preview
    async function executeWithProgress<T>(
      tasks: Array<() => Promise<T>>,
      onProgress: (completed: number, total: number) => void
@@ -323,7 +323,7 @@ try {
 
 3. Timeout handling:
 
-   ```typescript
+   ```typescript:preview
    async function executeWithTimeout<T>(
      task: () => Promise<T>,
      timeout: number
@@ -347,7 +347,7 @@ try {
 
 4. Resource management:
 
-   ```typescript
+   ```typescript:preview
    class ResourceManager {
      private resources: Resource[] = [];
 
