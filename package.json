@@ -1,7 +1,7 @@
 {
-  "name": "async-mastery",
+  "name": "web-patterns",
   "version": "1.0.0",
-  "description": "A comprehensive guide to async JavaScript patterns with implementations",
+  "description": "A comprehensive guide to async JavaScript, TypeScript patterns, and modern styling",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -38,10 +38,13 @@
     "async",
     "promises",
     "patterns",
-    "vitepress"
+    "vitepress",
+    "css",
+    "scss",
+    "styling"
   ],
   "author": "Underwood Inc. - Michael Seaward",
-  "license": "OpenRAIL License",
+  "license": "MIT",
   "type": "module",
   "devDependencies": {
     "@commitlint/cli": "^19.0.0",

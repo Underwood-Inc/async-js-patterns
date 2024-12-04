@@ -2,304 +2,73 @@
 
 ## Overview
 
-Performance monitoring in async JavaScript involves tracking, measuring, and analyzing the behavior and efficiency of asynchronous operations. This practice helps identify bottlenecks, optimize code execution, and ensure reliable application performance under various conditions.
+Performance monitoring involves tracking and analyzing application performance to identify bottlenecks and optimize resource usage. This section covers tools and techniques for effective performance monitoring.
 
-### Real-World Analogy
+## Key Concepts
 
-Think of performance monitoring like:
+### 1. Metrics Collection
 
-1. **Car Dashboard**
+Collecting metrics such as response times, memory usage, and CPU load helps identify performance issues.
 
-   - The speedometer (execution time) shows how fast operations complete
-   - The tachometer (CPU usage) indicates how hard the system is working
-   - Warning lights (errors/thresholds) alert you to potential problems
-   - The trip computer (metrics) tracks long-term performance patterns
-   - The fuel gauge (memory usage) monitors resource consumption
+### 2. Performance Timeline
 
-2. **Hospital Patient Monitoring**
+Visualizing performance data over time provides insights into application behavior and resource usage.
 
-   - Vital signs (key metrics) are continuously tracked
-   - Alert systems (thresholds) warn of critical conditions
-   - Patient history (performance trends) guides decisions
-   - Medical tests (profiling) diagnose issues
-   - Treatment plans (optimizations) improve health
+### Real-World Example
 
-3. **Factory Production Line**
-
-   - Production rate (throughput) measures efficiency
-   - Quality control (error rates) ensures reliability
-   - Resource usage (memory/CPU) is tracked
-   - Maintenance schedules (optimization) prevent issues
-   - Performance reports (metrics) guide improvements
-
-4. **Weather Station**
-
-   - Real-time measurements (current performance)
-   - Historical data (performance trends)
-   - Weather patterns (usage patterns)
-   - Early warning systems (alerts)
-   - Forecast models (performance predictions)
-
-5. **Athletic Training**
-   - Heart rate monitoring (CPU usage)
-   - Distance covered (throughput)
-   - Energy expenditure (resource usage)
-   - Recovery time (latency)
-   - Performance statistics (metrics)
-
-### Common Use Cases
-
-1. **API Performance Tracking**
-
-   - Problem: Unknown or inconsistent API response times
-   - Solution: Monitor and log request/response metrics
-   - Benefit: Early detection of API performance issues
-
-2. **Resource Usage Monitoring**
-
-   - Problem: Memory leaks and CPU spikes
-   - Solution: Track memory allocation and CPU utilization
-   - Benefit: Proactive resource management
-
-3. **User Experience Metrics**
-   - Problem: Unclear impact of performance on users
-   - Solution: Track key user-centric performance metrics
-   - Benefit: Data-driven optimization decisions
-
-### How It Works
-
-1. **Metric Collection**
-
-   - Time measurement
-   - Resource usage tracking
-   - Error rate monitoring
-   - Custom metric gathering
-
-2. **Data Processing**
-
-   - Metric aggregation
-   - Statistical analysis
-   - Threshold checking
-   - Pattern recognition
-
-3. **Reporting**
-
-   - Real-time alerts
-   - Performance dashboards
-   - Trend analysis
-   - Anomaly detection
-
-4. **Optimization**
-   - Bottleneck identification
-   - Performance recommendations
-   - Resource optimization
-   - Code improvements
-
-## Implementation
+Consider a web application that experiences slow response times. Performance monitoring can help identify the root cause and guide optimization efforts.
 
 ```typescript
-interface OperationMetrics {
-  operationName: string;
-  startTime: number;
-  endTime?: number;
-  duration?: number;
-  success: boolean;
-  error?: Error;
-  metadata?: Record<string, any>;
-}
-
-interface PerformanceMetrics {
-  operations: OperationMetrics[];
-  totalOperations: number;
-  successfulOperations: number;
-  failedOperations: number;
-  averageDuration: number;
-  maxDuration: number;
-  minDuration: number;
-}
-
 class PerformanceMonitor {
-  private static instance: PerformanceMonitor;
-  private operations: Map<string, OperationMetrics> = new Map();
-  private listeners: Set<(metrics: OperationMetrics) => void> = new Set();
+  private metrics: any[] = [];
 
-  private constructor() {}
-
-  static getInstance(): PerformanceMonitor {
-    if (!this.instance) {
-      this.instance = new PerformanceMonitor();
-    }
-    return this.instance;
+  logMetric(name: string, value: number) {
+    this.metrics.push({ name, value, timestamp: Date.now() });
   }
 
-  async trackOperation<T>(
-    operationName: string,
-    operation: () => Promise<T>,
-    metadata?: Record<string, any>
-  ): Promise<T> {
-    const metrics: OperationMetrics = {
-      operationName,
-      startTime: Date.now(),
-      success: false,
-      metadata,
-    };
-
-    const operationId = `${operationName}-${metrics.startTime}`;
-    this.operations.set(operationId, metrics);
-
-    try {
-      const result = await operation();
-      metrics.success = true;
-      return result;
-    } catch (error) {
-      metrics.error = error as Error;
-      throw error;
-    } finally {
-      metrics.endTime = Date.now();
-      metrics.duration = metrics.endTime - metrics.startTime;
-      this.notifyListeners(metrics);
-    }
-  }
-
-  getMetrics(): PerformanceMetrics {
-    const operations = Array.from(this.operations.values());
-    const completed = operations.filter((op) => op.endTime);
-    const successful = completed.filter((op) => op.success);
-    const durations = completed.map((op) => op.duration!);
-
-    return {
-      operations,
-      totalOperations: operations.length,
-      successfulOperations: successful.length,
-      failedOperations: completed.length - successful.length,
-      averageDuration: durations.reduce((a, b) => a + b, 0) / durations.length,
-      maxDuration: Math.max(...durations),
-      minDuration: Math.min(...durations),
-    };
-  }
-
-  addListener(listener: (metrics: OperationMetrics) => void): void {
-    this.listeners.add(listener);
-  }
-
-  removeListener(listener: (metrics: OperationMetrics) => void): void {
-    this.listeners.delete(listener);
-  }
-
-  private notifyListeners(metrics: OperationMetrics): void {
-    this.listeners.forEach((listener) => listener(metrics));
-  }
-
-  clearMetrics(): void {
-    this.operations.clear();
-  }
-}
-
-// Performance decorators
-function monitored(operationName?: string) {
-  return function (
-    target: any,
-    propertyKey: string,
-    descriptor: PropertyDescriptor
-  ) {
-    const originalMethod = descriptor.value;
-    const monitor = PerformanceMonitor.getInstance();
-
-    descriptor.value = function (...args: any[]) {
-      const name = operationName || `${target.constructor.name}.${propertyKey}`;
-      return monitor.trackOperation(
-        name,
-        () => originalMethod.apply(this, args),
-        { args }
-      );
-    };
-
-    return descriptor;
-  };
-}
-
-// Memory usage tracking
-class MemoryMonitor {
-  private static instance: MemoryMonitor;
-  private snapshots: Map<string, number> = new Map();
-
-  static getInstance(): MemoryMonitor {
-    if (!this.instance) {
-      this.instance = new MemoryMonitor();
-    }
-    return this.instance;
-  }
-
-  takeSnapshot(label: string): void {
-    if (typeof process !== 'undefined') {
-      // Node.js
-      this.snapshots.set(label, process.memoryUsage().heapUsed);
-    } else if (typeof window !== 'undefined' && window.performance) {
-      // Browser
-      this.snapshots.set(
-        label,
-        (window.performance as any).memory?.usedJSHeapSize || 0
-      );
-    }
-  }
-
-  compareSnapshots(label1: string, label2: string): number {
-    const snapshot1 = this.snapshots.get(label1) || 0;
-    const snapshot2 = this.snapshots.get(label2) || 0;
-    return snapshot2 - snapshot1;
+  getMetrics() {
+    return this.metrics;
   }
 }
 ```
 
-## Usage Example
+### Common Pitfalls
+
+1. **Ignoring Performance Data**
 
 ```typescript
-// Basic operation tracking
-const monitor = PerformanceMonitor.getInstance();
+// ❌ Bad: Performance data collected but not analyzed
+monitor.logMetric('responseTime', responseTime);
 
-async function fetchData() {
-  return monitor.trackOperation(
-    'fetchData',
-    async () => {
-      const response = await fetch('/api/data');
-      return response.json();
-    },
-    { endpoint: '/api/data' }
-  );
-}
-
-// Using decorator
-class DataService {
-  @monitored('fetchUserData')
-  async fetchUser(id: string) {
-    const response = await fetch(`/api/users/${id}`);
-    return response.json();
-  }
-}
-
-// Memory tracking
-const memoryMonitor = MemoryMonitor.getInstance();
-
-async function processLargeData() {
-  memoryMonitor.takeSnapshot('start');
-
-  // Process data
-  const data = new Array(1000000).fill(0);
-  await someOperation(data);
-
-  memoryMonitor.takeSnapshot('end');
-
-  const memoryUsed = memoryMonitor.compareSnapshots('start', 'end');
-  console.log(`Memory used: ${memoryUsed} bytes`);
-}
-
-// Performance metrics listener
-monitor.addListener((metrics) => {
-  if (metrics.duration! > 1000) {
-    console.warn(
-      `Slow operation detected: ${metrics.operationName}`,
-      `took ${metrics.duration}ms`
-    );
-  }
-});
+// ✅ Good: Regularly analyze performance data
+const metrics = monitor.getMetrics();
+analyzeMetrics(metrics);
 ```
+
+2. **Overhead from Monitoring**
+
+```typescript
+// ❌ Bad: Monitoring introduces significant overhead
+function processData() {
+  const start = performance.now();
+  // Process data
+  const end = performance.now();
+  monitor.logMetric('processTime', end - start);
+}
+
+// ✅ Good: Minimize monitoring overhead
+function processData() {
+  const start = performance.now();
+  // Process data
+  const end = performance.now();
+  if (end - start > threshold) {
+    monitor.logMetric('processTime', end - start);
+  }
+}
+```
+
+## Best Practices
+
+1. Use tools like Chrome DevTools and Lighthouse for performance analysis.
+2. Regularly review and optimize performance metrics.
+3. Automate performance monitoring in CI/CD pipelines.

@@ -27,7 +27,7 @@ function updateUser(userId: number, updates: PartialUser) {
 }
 ```
 
-### Required<T>
+### Required\<T>
 
 Makes all properties in T required:
 
@@ -46,7 +46,7 @@ function initializeWithConfig(config: RequiredConfig) {
 }
 ```
 
-### Pick<T, K>
+### Pick\<T, K>
 
 Creates a type by picking the specified properties K from T:
 
@@ -70,7 +70,7 @@ function renderPreview(preview: ArticlePreview) {
 
 ## Custom Utility Types
 
-### DeepPartial<T>
+### DeepPartial\<T>
 
 Makes all properties in T optional recursively:
 
@@ -105,7 +105,7 @@ function updateConfig(updates: PartialConfig) {
 }
 ```
 
-### NonNullable<T>
+### NonNullable\<T>
 
 Removes null and undefined from type T:
 
@@ -124,31 +124,31 @@ function processValue<T>(value: T): NonNullable<T> {
 
 1. Type Composition:
 
-   ```typescript
-   // Combine utility types for complex transformations
-   type ReadonlyPartial<T> = Readonly<Partial<T>>;
-   ```
+```typescript
+// Combine utility types for complex transformations
+type ReadonlyPartial<T> = Readonly<Partial<T>>;
+```
 
 2. Type Guards with Utility Types:
 
-   ```typescript
-   function isNonNullable<T>(value: T): value is NonNullable<T> {
-     return value !== null && value !== undefined;
-   }
-   ```
+```typescript
+function isNonNullable<T>(value: T): value is NonNullable<T> {
+  return value !== null && value !== undefined;
+}
+```
 
 3. Conditional Types:
 
-   ```typescript
-   type NonEmptyArray<T> = T[] & { 0: T };
+```typescript
+type NonEmptyArray<T> = T[] & { 0: T };
 
-   function ensureNonEmpty<T>(arr: T[]): NonEmptyArray<T> {
-     if (arr.length === 0) {
-       throw new Error('Array cannot be empty');
-     }
-     return arr as NonEmptyArray<T>;
-   }
-   ```
+function ensureNonEmpty<T>(arr: T[]): NonEmptyArray<T> {
+  if (arr.length === 0) {
+    throw new Error('Array cannot be empty');
+  }
+  return arr as NonEmptyArray<T>;
+}
+```
 
 ## Real-World Example
 

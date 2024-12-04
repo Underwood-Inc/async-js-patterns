@@ -1,8 +1,8 @@
-# Async JavaScript Patterns
+# Modern Web Development Patterns
 
-This repository contains a comprehensive guide to async JavaScript patterns with
-implementations. It serves as both a learning resource and a reference for
-implementing various async patterns in JavaScript.
+This repository contains a comprehensive guide to modern web development patterns,
+including async JavaScript patterns, TypeScript best practices, and modern styling
+approaches.
 
 ## 📚 Contents
 
@@ -39,6 +39,22 @@ The guide covers:
 - Throttling
 - Memoization
 
+### TypeScript Patterns
+
+- Utility Types
+- State Management
+- Array Operations
+- String Manipulation
+- Testing Patterns
+
+### Styling Patterns
+
+- Modern CSS Patterns
+- SCSS Best Practices
+- Component Architecture
+- Responsive Design
+- Performance Optimization
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -51,8 +67,8 @@ The guide covers:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Underwood-Inc/async-mastery.git
-cd async-mastery
+git clone https://github.com/Underwood-Inc/web-patterns.git
+cd web-patterns
 ```
 
 2. Install dependencies:
@@ -84,6 +100,8 @@ The documentation is organized into the following sections:
 - **Async Task Patterns**: Common patterns for handling async tasks
 - **Timer Implementations**: Custom timer implementations and utilities
 - **Advanced Patterns**: Advanced async patterns for real-world scenarios
+- **TypeScript Patterns**: Comprehensive TypeScript patterns and best practices
+- **Styling Patterns**: Modern CSS and SCSS patterns for scalable applications
 
 ## 🧪 Running Tests
 
@@ -118,6 +136,8 @@ This project is licensed under the OpenRAIL License - see the [LICENSE](LICENSE)
 
 - JavaScript Promise specification
 - MDN Web Docs for async patterns reference
+- TypeScript documentation
+- Sass Guidelines
 - Contributors and maintainers
 
 ## 📬 Contact

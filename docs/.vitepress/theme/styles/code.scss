@@ -1,0 +1,77 @@
+@use 'sass:color';
+@use './variables' as *;
+
+:root {
+  --vp-code-block-bg: var(--vp-c-bg-soft);
+}
+
+.vp-doc {
+  position: relative;
+
+  div[class*='language-'] {
+    position: relative;
+  }
+
+  .tooltip {
+    position: relative;
+    z-index: auto;
+
+    &::before {
+      position: absolute;
+      z-index: 99999;
+      overflow: visible;
+    }
+  }
+}
+
+.vp-doc [class*='language-'] pre,
+.vp-doc [class*='language-'] code {
+  background: transparent;
+}
+
+.vp-doc [class*='language-'] code {
+  color: var(--vp-c-text-1);
+}
+
+// Light mode adjustments
+html:not(.dark) {
+  .vp-doc [class*='language-'] {
+    background-color: color.adjust($purple-light, $lightness: 3%);
+    border: 1px solid var(--vp-code-block-border);
+  }
+
+  .vp-doc [class*='language-'] code {
+    color: $purple-dark;
+  }
+
+  .tooltip {
+    color: $purple-dark !important;
+  }
+
+  .tooltip::before {
+    z-index: $z-index-tooltip; // Use variable for tooltip z-index
+  }
+}
+
+// Dark mode adjustments
+.dark {
+  --vp-code-block-bg: var(--vp-c-bg-soft);
+
+  .vp-doc [class*='language-'] {
+    background-color: color.adjust($purple-dark, $lightness: -5%);
+    border: 1px solid var(--vp-code-block-border);
+  }
+
+  .tooltip::before {
+    z-index: $z-index-tooltip; // Use variable for tooltip z-index
+  }
+}
+
+.vp-doc [class*='language-'] {
+  overflow: visible;
+}
+
+.vp-doc [class*='language-'] pre {
+  overflow-x: auto;
+  overflow-y: visible;
+}

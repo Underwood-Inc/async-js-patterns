@@ -1,268 +1,312 @@
-# CSS Patterns & Best Practices
-
-This section covers essential CSS patterns and best practices for maintainable, scalable styling.
+# CSS Patterns
 
 ## Overview
 
-Modern CSS development requires careful consideration of maintainability, performance, and scalability. This guide covers both fundamental and advanced patterns.
+Modern CSS patterns and best practices for building maintainable and performant web applications.
 
-## Units & Spacing
+## Modern CSS Features
 
-### Relative Units
-
-Use relative units for better accessibility and responsive design:
+### Custom Properties (Variables)
 
 ```css
-/* ❌ Avoid fixed units */
-.header {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-
-/* ✅ Use relative units */
 :root {
-  --space-unit: 0.25rem; /* 4px base unit */
+  --color-primary: #9d8cd6;
+  --color-secondary: #6366f1;
+  --spacing-unit: 1rem;
+  --border-radius: 4px;
 }
 
-.header {
-  font-size: 1rem; /* Relative to root font size */
-  margin-bottom: calc(var(--space-unit) * 5); /* 20px equivalent */
+.button {
+  background: var(--color-primary);
+  padding: var(--spacing-unit);
+  border-radius: var(--border-radius);
 }
 ```
 
-### Spacing Scale
-
-Create a consistent spacing scale:
+### Container Queries
 
 ```css
-:root {
-  /* Base spacing units */
-  --space-xs: calc(var(--space-unit) * 2); /* 8px */
-  --space-sm: calc(var(--space-unit) * 3); /* 12px */
-  --space-md: calc(var(--space-unit) * 4); /* 16px */
-  --space-lg: calc(var(--space-unit) * 6); /* 24px */
-  --space-xl: calc(var(--space-unit) * 8); /* 32px */
+.card {
+  container-type: inline-size;
+}
+
+@container (min-width: 400px) {
+  .card__title {
+    font-size: 2rem;
+  }
 }
 ```
 
-## Typography System
+### Grid Layout
 
-Create a scalable typography system:
+```css
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-unit);
+}
+```
+
+### Flexbox Patterns
+
+```css
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+```
+
+## Layout Patterns
+
+### Holy Grail Layout
+
+```css
+.layout {
+  display: grid;
+  grid-template-areas:
+    'header header header'
+    'nav main aside'
+    'footer footer footer';
+  grid-template-columns: 200px 1fr 200px;
+  min-height: 100vh;
+}
+
+.header {
+  grid-area: header;
+}
+.nav {
+  grid-area: nav;
+}
+.main {
+  grid-area: main;
+}
+.aside {
+  grid-area: aside;
+}
+.footer {
+  grid-area: footer;
+}
+```
+
+### Card Grid
+
+```css
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+```
+
+## Component Patterns
+
+### Button System
+
+```css
+.button {
+  /* Base styles */
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: var(--border-radius);
+  font: inherit;
+
+  /* Variants */
+  &--primary {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  &--secondary {
+    background: var(--color-secondary);
+    color: white;
+  }
+
+  /* States */
+  &:hover {
+    filter: brightness(1.1);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+```
+
+### Form Controls
+
+```css
+.form-control {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.input {
+  padding: 0.5em;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font: inherit;
+
+  &:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 1px;
+  }
+
+  &:invalid {
+    border-color: var(--color-error);
+  }
+}
+```
+
+## Responsive Patterns
+
+### Fluid Typography
 
 ```css
 :root {
-  /* Font sizes */
-  --font-size-xs: 0.75rem; /* 12px */
-  --font-size-sm: 0.875rem; /* 14px */
-  --font-size-md: 1rem; /* 16px */
-  --font-size-lg: 1.125rem; /* 18px */
-  --font-size-xl: 1.25rem; /* 20px */
+  --fluid-min-width: 320;
+  --fluid-max-width: 1140;
+  --fluid-min-size: 16;
+  --fluid-max-size: 24;
 
-  /* Line heights */
-  --line-height-tight: 1.2; /* 19.2px for 16px font */
-  --line-height-normal: 1.5; /* 24px for 16px font */
-  --line-height-relaxed: 1.75; /* 28px for 16px font */
+  --fluid-size: calc(
+    (var(--fluid-min-size) * 1px) +
+      (var(--fluid-max-size) - var(--fluid-min-size)) *
+      (100vw - (var(--fluid-min-width) * 1px)) /
+      (var(--fluid-max-width) - var(--fluid-min-width))
+  );
+}
 
-  /* Example calculations:
-   * line-height * font-size = final height
-   * 1.2 * 16px = 19.2px
-   * 1.5 * 16px = 24px
-   * 1.75 * 16px = 28px
-   */
+body {
+  font-size: var(--fluid-size);
+}
+```
+
+### Responsive Images
+
+```css
+.image {
+  max-width: 100%;
+  height: auto;
+
+  /* Modern image optimization */
+  object-fit: cover;
+  aspect-ratio: 16/9;
+
+  /* Lazy loading */
+  loading: lazy;
+}
+```
+
+## Performance Patterns
+
+### Content Visibility
+
+```css
+.below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+```
+
+### Will-Change
+
+```css
+.animated {
+  will-change: transform;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+```
+
+## Animation Patterns
+
+### Keyframe Animations
+
+```css
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fade-in 0.3s ease forwards;
+}
+```
+
+### Transitions
+
+```css
+.button {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
 }
 ```
 
 ## Best Practices
 
-1. **CSS Custom Properties**:
-
-   - Use for theme values
-   - Create semantic names
-   - Provide fallbacks
-
-2. **Selector Specificity**:
-
-   - Keep selectors as simple as possible
-   - Avoid ID selectors
-   - Use BEM naming convention
-
-3. **Media Queries**:
-
-   - Use mobile-first approach
-   - Create standard breakpoints
-   - Use relative units
-
-4. **Performance**:
-   - Minimize nesting (max 3 levels)
-   - Use efficient selectors
-   - Avoid universal selectors
-
-## Examples
-
-### Responsive Component Pattern
+1. Use Logical Properties
 
 ```css
-.card {
-  padding: var(--space-md);
-  margin: var(--space-sm);
+.element {
+  margin-block: 1rem;
+  padding-inline: 2rem;
+}
+```
 
-  @media (min-width: 768px) {
-    padding: var(--space-lg);
-    margin: var(--space-md);
+2. Progressive Enhancement
+
+```css
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+
+  @supports (display: grid) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 }
 ```
 
-### Theme Variables Pattern
+3. Accessibility
 
 ```css
-:root {
-  /* Light theme */
-  --color-bg: #ffffff;
-  --color-text: #2a2a2a;
-
-  @media (prefers-color-scheme: dark) {
-    /* Dark theme */
-    --color-bg: #2a2a2a;
-    --color-text: #ffffff;
-  }
-}
-```
-
-## CSS Units Guide
-
-### rem vs em
-
-The key difference between `rem` and `em` units lies in their reference point:
-
-```css
-/* rem = "root em" */
-.using-rem {
-  /* Always relative to ROOT font size (html element) */
-  font-size: 1.5rem; /* 24px if root is 16px */
-  padding: 1rem; /* 16px if root is 16px */
+.button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
-/* em = relative to parent */
-.parent {
-  font-size: 16px;
-
-  .using-em {
-    /* Relative to PARENT font size */
-    font-size: 1.5em; /* 24px (16px * 1.5) */
-    padding: 1em; /* 24px (based on element's font size) */
-  }
-}
-```
-
-#### When to Use rem
-
-- **Font sizes**: `rem` provides consistent sizing across the application
-- **Margins/Padding**: When you want spacing unaffected by component font size
-- **Media queries**: For consistent breakpoints
-- **Global components**: Elements that should maintain consistent sizing
-
-```css
-/* ✅ Good rem usage */
-.button {
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  margin: 1rem 0;
-  border-radius: 0.25rem;
-}
-```
-
-#### When to Use em
-
-- **Component-specific spacing**: When elements should scale with their parent
-- **Media queries**: When you want breakpoints relative to user's font size
-- **Typography**: For elements that should scale with their parent's font size
-- **Component padding**: When you want padding proportional to the element's font size
-
-```css
-/* ✅ Good em usage */
-.card-title {
-  font-size: 1.2em;
-  margin-bottom: 0.5em; /* Scales with title's font size */
-}
-
-/* Common pattern for buttons */
-.button {
-  font-size: 1rem; /* Base font size */
-  padding: 0.5em 1em; /* Padding scales with font size */
-}
-```
-
-#### Best Practices
-
-1. **Consistent Base**:
-
-```css
-:root {
-  /* Define base font size */
-  font-size: 16px; /* This makes 1rem = 16px */
-}
-```
-
-2. **Avoid Mixed Units**:
-
-```css
-/* ❌ Avoid mixing units */
-.mixed-units {
-  font-size: 1.2rem;
-  margin-bottom: 1em; /* Will be based on rem value */
-}
-
-/* ✅ Use consistent units */
-.consistent-units {
-  font-size: 1.2rem;
-  margin-bottom: 1.2rem;
-}
-```
-
-3. **Accessibility Considerations**:
-
-```css
-/* Support user font size preferences */
-html {
-  /* Default font size */
-  font-size: 16px;
-
-  /* Respect user preferences */
-  @media (prefers-reduced-motion: reduce) {
-    font-size: 100%; /* Use browser default */
-  }
-}
-```
-
-4. **Compound Calculations**:
-
-```css
-/* ❌ Avoid nested em calculations */
-.parent {
-  font-size: 1.2em;
-  .child {
-    font-size: 1.2em; /* Compounds with parent */
-    .grandchild {
-      font-size: 1.2em; /* Further compounds! */
-    }
-  }
-}
-
-/* ✅ Use rem for nested elements */
-.parent {
-  font-size: 1.2rem;
-  .child {
-    font-size: 1.2rem;
-    .grandchild {
-      font-size: 1.2rem;
-    }
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
 ```
 
 ## References
 
-- [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
-- [CSS Values and Units](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units)
-- [CSS Architecture](https://www.smashingmagazine.com/2016/06/battling-bem-extended-edition-common-problems-and-how-to-avoid-them/)
+- [MDN CSS Reference](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [CSS Tricks](https://css-tricks.com)
+- [Modern CSS Solutions](https://moderncss.dev)
