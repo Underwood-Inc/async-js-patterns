@@ -13,33 +13,33 @@ Master asynchronous programming in JavaScript with comprehensive patterns and ex
 
 ### Promise Patterns
 
-- [Custom Promises](./custom-promise-usage.md) - Creating custom Promise wrappers
-- [Promise.all](./promise-all-examples.md) - Parallel execution patterns
-- [Promise.race](./promise-race-examples.md) - Racing promises
-- [Promise.any](./promise-any-examples.md) - First success patterns
-- [Promise.allSettled](./promise-allsettled-examples.md) - Complete settlement patterns
-- [Promise.finally](./promise-finally-examples.md) - Cleanup patterns
-- [Promisifying](./promisifying-examples.md) - Converting callbacks to promises
+- [Custom Promises](/examples/async/promises/custom-promise-usage) - Creating custom Promise wrappers
+- [Promise.all](/examples/async/promises/promise-all) - Parallel execution patterns
+- [Promise.race](/examples/async/promises/promise-race) - Racing promises
+- [Promise.any](/examples/async/promises/promise-any) - First success patterns
+- [Promise.allSettled](/examples/async/promises/promise-allsettled) - Complete settlement patterns
+- [Promise.finally](/examples/async/promises/promise-finally) - Cleanup patterns
+- [Promisifying](/examples/async/promises/promisifying) - Converting callbacks to promises
 
 ### Task Management
 
-- [Parallel Tasks](./parallel-tasks.md) - Running tasks in parallel
-- [Sequential Tasks](./sequential-tasks.md) - Running tasks in sequence
-- [Racing Tasks](./racing-tasks.md) - Implementing task races
+- [Parallel Tasks](/examples/async/tasks/parallel) - Running tasks in parallel
+- [Sequential Tasks](/examples/async/tasks/sequential) - Running tasks in sequence
+- [Racing Tasks](/examples/async/tasks/racing) - Implementing task races
 
 ### Timer Patterns
 
-- [Timer Management](./timer-management.md) - Managing timers effectively
-- [Custom setTimeout](./custom-settimeout.md) - Custom timeout implementations
-- [Custom setInterval](./custom-setinterval.md) - Custom interval implementations
+- [Timer Management](/examples/async/control-flow/timer-management) - Managing timers effectively
+- [Custom setTimeout](/examples/async/control-flow/custom-settimeout) - Custom timeout implementations
+- [Custom setInterval](/examples/async/control-flow/custom-setinterval) - Custom interval implementations
 
 ### Performance
 
-- [Auto-Retry](./auto-retry-examples.md) - Implementing retry logic
-- [Batch Throttling](./batch-throttling-examples.md) - Batch processing
-- [Debouncing](./debouncing-examples.md) - Debounce implementations
-- [Throttling](./throttling-examples.md) - Throttle implementations
-- [Memoization](./memoization-examples.md) - Caching results
+- [Auto-Retry](/examples/async/performance/auto-retry) - Implementing retry logic
+- [Batch Throttling](/examples/async/performance/batch-throttling) - Batch processing
+- [Debouncing](/examples/async/performance/debouncing) - Debounce implementations
+- [Throttling](/examples/async/performance/throttling) - Throttle implementations
+- [Memoization](/examples/async/performance/memoization) - Caching results
 
 ## Quick Examples
 
