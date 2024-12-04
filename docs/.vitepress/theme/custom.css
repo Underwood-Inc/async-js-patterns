@@ -86,4 +86,13 @@ html.dark {
   --vp-code-color-comments: #8a7fa0;
   --vp-code-color-punctuation: #e8e4f0;
   --vp-code-color-types: #b4a6e5;
+}
+
+.reading-time {
+  font-size: 0.9em;
+  color: var(--vp-c-text-2);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 } 

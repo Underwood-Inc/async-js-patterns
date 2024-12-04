@@ -4,6 +4,7 @@
     "esbenp.prettier-vscode",
     "ms-vscode.vscode-typescript-tslint-plugin",
     "orta.vscode-jest",
-    "davidanson.vscode-markdownlint"
+    "davidanson.vscode-markdownlint",
+    "vue.volar"
   ]
 }

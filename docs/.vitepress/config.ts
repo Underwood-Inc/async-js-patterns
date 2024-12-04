@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress';
+import { readingTime } from './plugins/readingTime';
 
 export default defineConfig({
   title: 'Async Mastery',
@@ -15,6 +16,9 @@ export default defineConfig({
       dark: 'monokai',
     },
     lineNumbers: true,
+    config: (md) => {
+      md.use(readingTime);
+    },
   },
   themeConfig: {
     logo: '/logo.svg',
@@ -28,13 +32,6 @@ export default defineConfig({
       { text: 'Advanced', link: '/advanced/' },
       { text: 'Examples', link: '/examples/' },
     ],
-    appearance: true,
-    theme: {
-      vars: {
-        'c-brand': '#d4c4a8', // Beige color
-        'c-brand-light': '#e5dac8', // Lighter beige
-      },
-    },
     sidebar: {
       '/': [
         {
@@ -298,5 +295,14 @@ export default defineConfig({
         link: 'https://github.com/Underwood-Inc/async-mastery',
       },
     ],
+  },
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@import "./theme/custom.css";`,
+        },
+      },
+    },
   },
 });
