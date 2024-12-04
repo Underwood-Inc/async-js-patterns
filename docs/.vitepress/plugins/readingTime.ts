@@ -4,6 +4,17 @@ export function readingTime(md: MarkdownIt) {
   const render = md.render.bind(md);
   md.render = (...args) => {
     const html = render(...args);
+    const env = args[1] as any;
+
+    // Skip reading time for index/home page
+    if (
+      env?.path === '/index.md' ||
+      env?.path === 'index.md' ||
+      env?.relativePath === 'index.md'
+    ) {
+      return html;
+    }
+
     const words = html
       .replace(/<[^>]*>/g, '')
       .trim()
