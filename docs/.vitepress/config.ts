@@ -11,6 +11,50 @@ export default defineConfig({
     // Ignore LICENSE file link
     /\/LICENSE/,
   ],
+  head: [
+    ['meta', { name: 'theme-color', content: '#9d8cd6' }],
+    ['meta', { name: 'og:type', content: 'website' }],
+    ['meta', { name: 'og:title', content: 'Async Mastery' }],
+    [
+      'meta',
+      {
+        name: 'og:description',
+        content:
+          'A comprehensive guide to async JavaScript patterns with implementations',
+      },
+    ],
+    [
+      'meta',
+      {
+        name: 'og:image',
+        content: 'https://underwood-inc.github.io/async-mastery/logo.svg',
+      },
+    ],
+    ['meta', { name: 'twitter:card', content: 'summary' }],
+    ['meta', { name: 'twitter:title', content: 'Async Mastery' }],
+    [
+      'meta',
+      {
+        name: 'twitter:description',
+        content:
+          'A comprehensive guide to async JavaScript patterns with implementations',
+      },
+    ],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
+    [
+      'link',
+      { rel: 'alternate', type: 'application/rss+xml', href: '/feed.rss' },
+    ],
+    [
+      'meta',
+      {
+        name: 'keywords',
+        content:
+          'javascript, typescript, async, promises, patterns, performance, optimization',
+      },
+    ],
+  ],
+  lastUpdated: true,
   markdown: {
     theme: {
       light: 'monokai',
