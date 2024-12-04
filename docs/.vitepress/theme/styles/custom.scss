@@ -1,0 +1,151 @@
+@use "sass:color";
+@use "./variables" as *;
+
+// Root variables
+:root {
+  // Light theme - Soft Pastel Purple
+  --vp-c-bg: #{$purple-light};
+  --vp-c-bg-alt: #{color.adjust($purple-light, $lightness: -5%)};
+  --vp-c-bg-soft: #{color.adjust($purple-light, $lightness: -2%)};
+  --vp-c-text: #{color.adjust($purple-dark, $lightness: -10%)};
+  --vp-c-brand: #{$purple-brand};
+  --vp-c-brand-light: #{$purple-brand-light};
+  --vp-c-brand-dark: #{$purple-brand-dark};
+  --vp-sidebar-width: 280px;
+  --scrollbar-color: #{rgba($purple-brand, 0.2)};
+  --scrollbar-thumb-color: #{rgba($purple-brand, 0.3)};
+}
+
+// Dark theme
+html.dark {
+  --vp-c-bg: #{$purple-dark};
+  --vp-c-bg-alt: #{color.adjust($purple-dark, $lightness: -5%)};
+  --vp-c-bg-soft: #{color.adjust($purple-dark, $lightness: 5%)};
+  --vp-c-text: #{$purple-light};
+  --vp-c-brand: #{$purple-brand-light};
+  --vp-c-brand-light: #{color.adjust($purple-brand-light, $lightness: 5%)};
+  --vp-c-brand-dark: #{$purple-brand};
+}
+
+// Selection styles
+::selection {
+  background: rgba($purple-brand, 0.3);
+  color: inherit;
+}
+
+::-moz-selection {
+  background: rgba($purple-brand, 0.3);
+  color: inherit;
+}
+
+// Scrollbar styles
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+
+  &-track {
+    background: var(--scrollbar-color);
+    border-radius: $border-radius-base;
+  }
+
+  &-thumb {
+    background: var(--scrollbar-thumb-color);
+    border-radius: $border-radius-base;
+
+    &:hover {
+      background: rgba($purple-brand, 0.5);
+    }
+  }
+}
+
+// Code block styles
+.vp-doc {
+  div[class*='language-'] {
+    background-color: $purple-dark !important;
+    border: 2px solid $purple-brand !important;
+    border-radius: $border-radius-lg !important;
+    margin: $spacing-base 0;
+    box-shadow: $shadow-sm;
+  }
+}
+
+.shiki {
+  background-color: $purple-dark !important;
+  border-radius: $border-radius-base !important;
+}
+
+// Syntax highlighting colors
+:root {
+  --vp-code-block-bg: #{$purple-dark};
+  --vp-code-line-highlight-bg: #{rgba(white, 0.1)};
+  --vp-code-line-number-color: #{color.adjust($purple-dark, $lightness: 30%)};
+  --vp-code-copy-code-bg: #{rgba(white, 0.05)};
+  --vp-code-copy-code-hover-bg: #{rgba(white, 0.1)};
+  
+  --vp-code-color-keywords: #d183e8;
+  --vp-code-color-functions: #a6b8ff;
+  --vp-code-color-strings: #bde6a6;
+  --vp-code-color-numbers: #d7b7ff;
+  --vp-code-color-comments: #{color.adjust($purple-dark, $lightness: 30%)};
+  --vp-code-color-punctuation: #{$purple-light};
+  --vp-code-color-types: #{$purple-brand-light};
+
+  // TypeScript-specific syntax highlighting
+  --vp-code-typescript-class: #4ec9b0;
+  --vp-code-typescript-interface: #b8d7a3;
+  --vp-code-typescript-enum: #b8d7a3;
+  --vp-code-typescript-type: #569cd6;
+  --vp-code-typescript-decorator: #d7ba7d;
+}
+
+// Reading time styles
+.reading-time {
+  font-size: $font-size-sm;
+  color: var(--vp-c-text-2);
+  margin-bottom: $spacing-base;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+// TypeScript syntax highlighting
+.language-typescript {
+  .token {
+    &.keyword {
+      color: var(--vp-code-color-keywords);
+    }
+
+    &.class-name {
+      color: var(--vp-code-typescript-class);
+    }
+
+    &.interface-name {
+      color: var(--vp-code-typescript-interface);
+    }
+  }
+}
+
+// Navigation and title styles
+:root {
+  --vp-sidebar-width: 280px;
+}
+
+// Title styles
+.VPNavBarTitle {
+  .title {
+    font-size: $font-size-sm;
+    line-height: 1.2;
+    white-space: normal;
+    max-width: 260px;
+  }
+}
+
+// Mobile styles
+@media (max-width: $breakpoint-md) {
+  .VPNavBarTitle {
+    .title {
+      font-size: $font-size-xs;
+      max-width: 200px;
+    }
+  }
+}

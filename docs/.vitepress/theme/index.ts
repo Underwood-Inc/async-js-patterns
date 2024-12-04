@@ -1,6 +1,6 @@
 import DefaultTheme from 'vitepress/theme';
 import ReadingTime from './components/ReadingTime.vue';
-import './custom.css';
+import './styles/custom.scss';
 
 export default {
   ...DefaultTheme,

@@ -1,10 +1,27 @@
+import { resolve } from 'path';
+import type { LanguageInput } from 'shiki';
+import { fileURLToPath } from 'url';
 import { defineConfig } from 'vitepress';
 import { readingTime } from './plugins/readingTime';
+import { typescriptPlugin } from './plugins/typescript';
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+const languages: LanguageInput[] = [
+  'javascript',
+  'typescript',
+  'bash',
+  'json',
+  'markdown',
+  'css',
+  'html',
+  'vue',
+];
 
 export default defineConfig({
-  title: 'Async Mastery',
+  title: 'Async & TypeScript Patterns',
   description:
-    'A comprehensive guide to async JavaScript patterns with implementations',
+    'A comprehensive guide to async JavaScript and TypeScript patterns with implementations',
   base: '/async-mastery/',
   cleanUrls: true,
   ignoreDeadLinks: [
@@ -49,13 +66,13 @@ export default defineConfig({
     ['meta', { name: 'msapplication-TileColor', content: '#9d8cd6' }],
     // SEO
     ['meta', { name: 'og:type', content: 'website' }],
-    ['meta', { name: 'og:title', content: 'Async Mastery' }],
+    ['meta', { name: 'og:title', content: 'Async & TypeScript Patterns' }],
     [
       'meta',
       {
         name: 'og:description',
         content:
-          'A comprehensive guide to async JavaScript patterns with implementations',
+          'A comprehensive guide to async JavaScript and TypeScript patterns with implementations',
       },
     ],
     [
@@ -66,13 +83,13 @@ export default defineConfig({
       },
     ],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-    ['meta', { name: 'twitter:title', content: 'Async Mastery' }],
+    ['meta', { name: 'twitter:title', content: 'Async & TypeScript Patterns' }],
     [
       'meta',
       {
         name: 'twitter:description',
         content:
-          'A comprehensive guide to async JavaScript patterns with implementations',
+          'A comprehensive guide to async JavaScript and TypeScript patterns with implementations',
       },
     ],
     [
@@ -80,10 +97,19 @@ export default defineConfig({
       {
         name: 'keywords',
         content:
-          'javascript, typescript, async, promises, patterns, performance, optimization',
+          'javascript, typescript, async, promises, patterns, performance, optimization, utility types, array operations, string manipulation',
       },
     ],
   ],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          includePaths: [resolve(__dirname, 'theme/styles')],
+        },
+      },
+    },
+  },
   markdown: {
     theme: {
       light: 'monokai',
@@ -92,18 +118,44 @@ export default defineConfig({
     lineNumbers: true,
     config: (md) => {
       md.use(readingTime);
+      md.use(typescriptPlugin);
     },
+    languages,
+    async shikiSetup(shiki) {
+      await shiki.loadLanguage('typescript');
+    },
+    breaks: true,
+    langPrefix: 'language-',
+    html: false,
   },
   themeConfig: {
     logo: '/logo.svg',
-    siteTitle: 'Async Mastery',
+    siteTitle: 'Async & TypeScript Patterns',
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/getting-started' },
-      { text: 'Implementations', link: '/implementations/custom-promise' },
-      { text: 'Patterns', link: '/patterns/tasks-series' },
-      { text: 'Timers', link: '/timers/settimeout' },
-      { text: 'Advanced', link: '/advanced/' },
+      {
+        text: 'Async',
+        items: [
+          { text: 'Promise Patterns', link: '/implementations/custom-promise' },
+          { text: 'Task Management', link: '/patterns/tasks-series' },
+          { text: 'Timers', link: '/timers/settimeout' },
+          { text: 'Advanced', link: '/advanced/' },
+        ],
+      },
+      {
+        text: 'TypeScript',
+        items: [
+          { text: 'Utility Types', link: '/typescript/utility-types' },
+          { text: 'State Management', link: '/typescript/state-management' },
+          { text: 'Array Operations', link: '/typescript/array-operations' },
+          {
+            text: 'String Manipulation',
+            link: '/typescript/string-manipulation',
+          },
+          { text: 'Testing Patterns', link: '/typescript/testing-patterns' },
+        ],
+      },
       { text: 'Examples', link: '/examples/' },
     ],
     sidebar: {
@@ -156,6 +208,56 @@ export default defineConfig({
             { text: 'Tasks in Series', link: '/patterns/tasks-series' },
             { text: 'Tasks in Parallel', link: '/patterns/tasks-parallel' },
             { text: 'Tasks Racing', link: '/patterns/tasks-race' },
+          ],
+        },
+      ],
+      '/typescript/': [
+        {
+          text: 'Utility Types',
+          items: [
+            { text: 'Overview', link: '/typescript/utility-types' },
+            { text: 'Type Guards', link: '/typescript/type-guards' },
+            { text: 'Type Inference', link: '/typescript/type-inference' },
+            { text: 'Mapped Types', link: '/typescript/mapped-types' },
+            {
+              text: 'Conditional Types',
+              link: '/typescript/conditional-types',
+            },
+          ],
+        },
+        {
+          text: 'State Management',
+          items: [
+            { text: 'Overview', link: '/typescript/state-management' },
+            { text: 'Immutable State', link: '/typescript/immutable-state' },
+            { text: 'Observable State', link: '/typescript/observable-state' },
+          ],
+        },
+        {
+          text: 'Array Operations',
+          items: [
+            { text: 'Overview', link: '/typescript/array-operations' },
+            { text: 'Type-Safe Arrays', link: '/typescript/type-safe-arrays' },
+            { text: 'Array Utilities', link: '/typescript/array-utilities' },
+          ],
+        },
+        {
+          text: 'String Manipulation',
+          items: [
+            { text: 'Overview', link: '/typescript/string-manipulation' },
+            { text: 'String Utilities', link: '/typescript/string-utilities' },
+            {
+              text: 'Template Literals',
+              link: '/typescript/template-literals',
+            },
+          ],
+        },
+        {
+          text: 'Testing Patterns',
+          items: [
+            { text: 'Overview', link: '/typescript/testing-patterns' },
+            { text: 'Type Testing', link: '/typescript/type-testing' },
+            { text: 'Test Utilities', link: '/typescript/test-utilities' },
           ],
         },
       ],
@@ -369,14 +471,5 @@ export default defineConfig({
         link: 'https://github.com/Underwood-Inc/async-mastery',
       },
     ],
-  },
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `@import "./theme/custom.css";`,
-        },
-      },
-    },
   },
 });

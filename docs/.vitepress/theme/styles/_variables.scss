@@ -1,0 +1,41 @@
+// Colors
+$purple-light: #f3f0ff;
+$purple-dark: #2a2438;
+$purple-brand: #9d8cd6;
+$purple-brand-light: #b4a6e5;
+$purple-brand-dark: #7b68b8;
+
+// Typography
+$font-size-base: 16px;
+$font-size-sm: 0.9em;
+$font-size-xs: 0.8em;
+
+// Spacing
+$spacing-base: 1rem;
+$spacing-sm: 0.5rem;
+$spacing-lg: 1.5rem;
+
+// Borders
+$border-radius-base: 4px;
+$border-radius-lg: 8px;
+
+// Shadows
+$shadow-sm: 0 0 8px rgba($purple-brand, 0.2);
+
+// Transitions
+$transition-base: all 0.3s ease;
+
+// Breakpoints
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+
+// Z-indices
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070; 

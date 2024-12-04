@@ -2,12 +2,12 @@
 layout: home
 
 hero:
-  name: Async Mastery
-  text: Master asynchronous JavaScript
-  tagline: A friendly guide to async patterns in JavaScript and TypeScript
+  name: Async & TypeScript Patterns
+  text: Master Modern JavaScript & TypeScript
+  tagline: A comprehensive guide to async patterns and TypeScript best practices
   image:
     src: /logo.svg
-    alt: Async Mastery
+    alt: Async & TypeScript Patterns
   actions:
     - theme: brand
       text: Get Started
@@ -36,11 +36,23 @@ features:
     title: Performance
     details: Tips and tricks to make your async code fast and efficient.
   - icon: 🧪
-    title: Testing & Debugging
-    details: Make async code easier to test and debug.
+    title: TypeScript Types
+    details: Master utility types, type guards, and advanced type patterns.
+  - icon: 🧮
+    title: Array Operations
+    details: Type-safe array manipulations and transformations.
+  - icon: 📝
+    title: String Patterns
+    details: Template literals and type-safe string operations.
+  - icon: 💾
+    title: State Management
+    details: Type-safe state handling and immutable patterns.
+  - icon: 🧪
+    title: Testing Patterns
+    details: Best practices for testing TypeScript code.
   - icon: 📚
     title: Examples
-    details: Real-world examples to help you understand each pattern.
+    details: Real-world examples combining async and TypeScript patterns.
 
 footer: OpenRAIL Licensed | Copyright © 2024-present Underwood Inc.
 ---
