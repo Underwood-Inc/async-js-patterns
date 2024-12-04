@@ -30,6 +30,12 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
+      - name: Install Sharp
+        run: npm install sharp --save-dev
+
+      - name: Generate favicons
+        run: node scripts/generate-favicons.js
+
       - name: Build documentation
         run: npm run docs:build
 

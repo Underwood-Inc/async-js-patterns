@@ -12,7 +12,42 @@ export default defineConfig({
     /\/LICENSE/,
   ],
   head: [
+    // Favicons
+    [
+      'link',
+      { rel: 'icon', type: 'image/svg+xml', href: '/async-mastery/logo.svg' },
+    ],
+    [
+      'link',
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: '/async-mastery/favicon-32x32.png',
+      },
+    ],
+    [
+      'link',
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '16x16',
+        href: '/async-mastery/favicon-16x16.png',
+      },
+    ],
+    [
+      'link',
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/async-mastery/apple-touch-icon.png',
+      },
+    ],
+    ['link', { rel: 'manifest', href: '/async-mastery/site.webmanifest' }],
+    // Theme Colors
     ['meta', { name: 'theme-color', content: '#9d8cd6' }],
+    ['meta', { name: 'msapplication-TileColor', content: '#9d8cd6' }],
+    // SEO
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { name: 'og:title', content: 'Async Mastery' }],
     [
@@ -27,10 +62,10 @@ export default defineConfig({
       'meta',
       {
         name: 'og:image',
-        content: 'https://underwood-inc.github.io/async-mastery/logo.svg',
+        content: 'https://underwood-inc.github.io/async-mastery/og-image.png',
       },
     ],
-    ['meta', { name: 'twitter:card', content: 'summary' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:title', content: 'Async Mastery' }],
     [
       'meta',
@@ -39,11 +74,6 @@ export default defineConfig({
         content:
           'A comprehensive guide to async JavaScript patterns with implementations',
       },
-    ],
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
-    [
-      'link',
-      { rel: 'alternate', type: 'application/rss+xml', href: '/feed.rss' },
     ],
     [
       'meta',
@@ -54,7 +84,6 @@ export default defineConfig({
       },
     ],
   ],
-  lastUpdated: true,
   markdown: {
     theme: {
       light: 'monokai',
