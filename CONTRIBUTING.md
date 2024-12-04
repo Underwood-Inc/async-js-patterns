@@ -42,10 +42,10 @@ When contributing AI-assisted content:
 3. Review and verify AI-generated code thoroughly
 4. Maintain transparency about AI involvement
 
-## Report Bugs Using GitHub's [Issue Tracker](https://github.com/Underwood-Inc/async-js-patterns/issues)
+## Report Bugs Using GitHub's [Issue Tracker](https://github.com/Underwood-Inc/async-mastery/issues)
 
 We use GitHub issues to track public bugs. Report a bug by
-[opening a new issue](https://github.com/Underwood-Inc/async-js-patterns/issues/new);
+[opening a new issue](https://github.com/Underwood-Inc/async-mastery/issues/new);
 it's that easy!
 
 ## Write Bug Reports With Detail, Background, and Sample Code

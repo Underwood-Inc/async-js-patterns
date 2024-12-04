@@ -1,125 +1,108 @@
 # Getting Started
 
+## Overview
+
+A comprehensive collection of async JavaScript patterns and implementations,
+with TypeScript support and best practices.
+
 ## Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/your-org/async-patterns
-cd async-patterns
-
-# Install dependencies
+git clone https://github.com/Underwood-Inc/async-mastery.git
+cd async-mastery
 npm install
 ```
 
-## Quick Setup
+## Quick Start
 
 ```typescript
-// src/index.ts
 import { withRetry } from './patterns/auto-retry';
 import { Memoizer } from './patterns/memoization';
-import { PerformanceMonitor } from './monitoring/performance';
 
-// Initialize performance monitoring
-const monitor = PerformanceMonitor.getInstance();
-monitor.addListener((metrics) => {
-  if (metrics.duration! > 1000) {
-    console.warn(`Slow operation detected: ${metrics.operationName}`);
-  }
-});
-
-// Create a memoized API client with retry logic
+// Example: Fetch data with retry and caching
 const api = new Memoizer({
-  maxAge: 60000, // Cache for 1 minute
-  maxSize: 100, // Store max 100 responses
+  maxAge: 60000,
+  maxSize: 100,
 });
 
-// Example usage
-async function fetchUserData(userId: string) {
+const fetchData = async (id: string) => {
   return api.memoize(
     () =>
       withRetry(
         async () => {
-          const response = await fetch(`/api/users/${userId}`);
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-          }
+          const response = await fetch(`/api/data/${id}`);
           return response.json();
         },
-        {
-          maxAttempts: 3,
-          onRetry: (error, attempt) => {
-            console.warn(`Retry ${attempt} after error:`, error);
-          },
-        }
+        { maxAttempts: 3 }
       ),
-    userId
+    id
   );
-}
+};
 ```
 
-## Project Structure
+## Pattern Categories
 
-```text
-async-patterns/
-├── src/
-│   ├── implementations/    # Core Promise implementations
-│   ├── patterns/          # Async patterns
-│   ├── advanced/          # Advanced features
-│   ├── monitoring/        # Performance monitoring
-│   └── utils/            # Utility functions
-├── tests/                # Test files
-├── docs/                 # Documentation
-└── examples/            # Example usage
-```
+### Promise Implementations
 
-## Development Setup
+- [Custom Promise](../implementations/custom-promise.md) - Build your own Promise from scratch
+- [Promise.all()](../implementations/promise-all.md) - Parallel execution with all promises
+- [Promise.any()](../implementations/promise-any.md) - Race to first success
+- [Promise.race()](../implementations/promise-race.md) - Race to first completion
+- [Promise.allSettled()](../implementations/promise-allsettled.md) - Wait for all completions
+- [Promise.finally()](../implementations/promise-finally.md) - Guaranteed execution
+- [Promise.resolve/reject](../implementations/promise-resolve-reject.md) - Static promise creation
 
-1. **TypeScript Configuration**
+### Task Management
 
-```json
-{
-  "compilerOptions": {
-    "strict": true,
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "declaration": true,
-    "outDir": "./dist"
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "tests"]
-}
-```
+- [Tasks in Series](../patterns/tasks-series.md) - Sequential execution
+- [Tasks in Parallel](../patterns/tasks-parallel.md) - Concurrent execution
+- [Tasks Racing](../patterns/tasks-race.md) - Competitive execution
 
-1. **Testing Setup**
+### Timer Control
 
-```typescript
-// tests/setup.ts
-import { PerformanceMonitor } from '../src/monitoring/performance';
+- [Custom setTimeout](../timers/settimeout.md) - Enhanced timeout implementation
+- [Custom setInterval](../timers/setinterval.md) - Enhanced interval implementation
+- [Clear All Timers](../timers/clear-timers.md) - Timer management
 
-beforeEach(() => {
-  PerformanceMonitor.getInstance().clearMetrics();
-});
-```
+### Rate Control
 
-1. **Basic Usage Examples**
+- [Auto-Retry](../advanced/auto-retry.md) - Automatic failure recovery
+- [Batch Throttling](../advanced/batch-throttling.md) - Group API calls
+- [Debouncing](../advanced/debouncing.md) - Delay until settled
+- [Throttling](../advanced/throttling.md) - Rate limiting
+- [Memoization](../advanced/memoization.md) - Result caching
 
-```typescript
-import { withRetry } from './patterns/auto-retry';
-import { errorHandlers } from './advanced/error-handling';
+## Best Practices
 
-const fetchWithRetry = (url: string) =>
-  errorHandlers.withTimeout(
-    () => withRetry(() => fetch(url), { maxAttempts: 3 }),
-    5000,
-    'fetchWithRetry'
-  );
-```
+### Code Quality
 
-## Next Steps
+- TypeScript strict mode compatibility
+- Comprehensive error handling
+- Performance monitoring
+- Extensive testing
+- Environment-specific optimizations
 
-1. Check out the [API Documentation](../api/index.md)
-2. Explore the [Examples](../examples/index.md)
-3. Learn about [Advanced Patterns](../advanced/index.md)
-4. Review [Performance Monitoring](../advanced/performance-monitoring.md)
+### Pattern Selection Guide
+
+- When to use each pattern
+- Pattern combinations
+- Common pitfalls
+- Performance considerations
+- Error handling strategies
+
+## Contributing
+
+See [Contributing Guide](../CONTRIBUTING.md) for guidelines on contributing to this project.
+
+## License
+
+This project is licensed under the OpenRAIL License. This license is specifically designed for AI-assisted content and promotes responsible AI development while maintaining open-source principles. See the [LICENSE](../../LICENSE) file for details.
+
+### AI Content Disclosure
+
+This project contains content generated with AI assistance. Contributors should:
+
+- Document AI tool usage in commits
+- Note potential limitations or biases
+- Review and verify AI-generated content thoroughly
+- Maintain transparency about AI involvement

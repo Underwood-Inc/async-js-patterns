@@ -51,8 +51,8 @@ The guide covers:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Underwood-Inc/async-js-patterns.git
-cd async-js-patterns
+git clone https://github.com/Underwood-Inc/async-mastery.git
+cd async-mastery
 ```
 
 2. Install dependencies:

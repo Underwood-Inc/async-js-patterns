@@ -34,10 +34,10 @@ under the same
 [CC BY 4.0 License](http://choosealicense.com/licenses/cc-by-4.0/) that covers
 the project. Feel free to contact the maintainers if that's a concern.
 
-## Report Bugs Using GitHub's [Issue Tracker](https://github.com/Underwood-Inc/async-js-patterns/issues)
+## Report Bugs Using GitHub's [Issue Tracker](https://github.com/Underwood-Inc/async-mastery/issues)
 
 We use GitHub issues to track public bugs. Report a bug by
-[opening a new issue](https://github.com/Underwood-Inc/async-js-patterns/issues/new);
+[opening a new issue](https://github.com/Underwood-Inc/async-mastery/issues/new);
 it's that easy!
 
 ## Write Bug Reports With Detail, Background, and Sample Code

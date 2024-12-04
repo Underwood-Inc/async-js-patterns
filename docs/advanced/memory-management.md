@@ -4,6 +4,47 @@
 
 Memory management in async JavaScript involves strategies and patterns for efficiently allocating, using, and releasing memory resources in asynchronous operations. Proper memory management is crucial for maintaining application performance and preventing memory leaks, especially in long-running applications.
 
+### Memory Management Flow
+
+```mermaid
+graph TD
+    A[Memory Allocation] -->|Create Object| B[Active Memory]
+    B -->|Use Object| C[Reference Counting]
+    C -->|Zero References| D[Mark for GC]
+    C -->|Has References| B
+    D -->|Garbage Collection| E[Memory Released]
+    E --> A
+    B -->|WeakRef| F[Weak References]
+    F -->|Object Available| B
+    F -->|Object Collected| E
+```
+
+### Async Operation Memory Lifecycle
+
+```mermaid
+sequenceDiagram
+    participant App
+    participant Memory
+    participant GC as Garbage Collector
+
+    App->>Memory: Create Promise
+    Memory->>Memory: Allocate Memory
+    App->>Memory: Add Event Listeners
+
+    par Async Operation
+        App->>Memory: Start Operation
+        Memory->>Memory: Hold References
+    and Cleanup
+        GC->>Memory: Monitor References
+    end
+
+    App->>Memory: Operation Complete
+    Memory->>Memory: Remove Listeners
+    GC->>Memory: Detect Zero References
+    GC->>Memory: Collect Memory
+    Memory->>App: Memory Released
+```
+
 ### Real-World Analogy
 
 Think of memory management like:

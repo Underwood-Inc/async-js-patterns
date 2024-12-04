@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Glow effect -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Base circle -->
+  <circle cx="64" cy="64" r="60" fill="url(#bgGrad)" />
+
+  <!-- Async symbol (three curved arrows forming a cycle) -->
+  <g fill="none" stroke="white" stroke-width="6" stroke-linecap="round" filter="url(#glow)">
+    <!-- First arrow -->
+    <path d="M40,40 Q64,20 88,40" />
+    <path d="M82,36 L88,40 L94,34" />
+    
+    <!-- Second arrow -->
+    <path d="M88,88 Q64,108 40,88" />
+    <path d="M46,92 L40,88 L34,94" />
+    
+    <!-- Third arrow (connecting) -->
+    <path d="M64,44 L64,84" />
+    <path d="M58,78 L64,84 L70,78" />
+  </g>
+
+  <!-- Central dot -->
+  <circle cx="64" cy="64" r="4" fill="white" filter="url(#glow)" />
+</svg> 
