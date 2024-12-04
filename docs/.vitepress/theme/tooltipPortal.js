@@ -24,30 +24,47 @@ export function showTooltip(tooltipContainer, content, x, y) {
 
   const tooltipEl = document.createElement('div');
   tooltipEl.className = 'tooltip-content';
-  tooltipEl.textContent = content;
+
+  // Convert newlines to <br> tags and set as HTML
+  tooltipEl.innerHTML = content
+    .split('\n')
+    .map((line) =>
+      line.trim() ? `<p style="margin: 0; padding: 0;">${line}</p>` : '<br>'
+    )
+    .join('');
+
   tooltipEl.style.cssText = `
     position: fixed;
     left: ${x}px;
     top: ${y}px;
     transform: translate(-50%, -100%) translateY(-8px);
-    padding: 8px 12px;
+    padding: 10px 14px;
     background: var(--vp-c-bg-soft);
     color: var(--vp-c-text-1);
-    font-size: 13px;
-    line-height: 1.5;
-    white-space: pre-wrap;
-    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.6;
+    border-radius: 8px;
     border: 1px dashed var(--vp-c-brand);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     opacity: 1;
     visibility: visible;
     pointer-events: none;
-    max-width: 320px;
+    max-width: 360px;
     text-align: left;
     font-family: var(--vp-font-family-base);
-    font-weight: normal;
+    font-weight: 400;
     font-style: normal;
+    letter-spacing: 0.2px;
   `;
+
+  // Add styles for paragraph spacing
+  const paragraphs = tooltipEl.getElementsByTagName('p');
+  Array.from(paragraphs).forEach((p, index) => {
+    if (index < paragraphs.length - 1) {
+      p.style.marginBottom = '0.5em';
+    }
+  });
+
   tooltipContainer.appendChild(tooltipEl);
   return tooltipEl;
 }

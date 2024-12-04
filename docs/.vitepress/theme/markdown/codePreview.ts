@@ -81,7 +81,7 @@ export function codePreviewPlugin(md: MarkdownRenderer) {
           'g'
         );
         const tooltip = info.type
-          ? `${info.type}\\n${info.description}`
+          ? `${info.type}<br>${info.description}`
           : info.description;
 
         modifiedCode = modifiedCode.replace(
