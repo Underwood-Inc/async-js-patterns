@@ -1,8 +1,62 @@
-# Throttling API Calls by Batching
+# Batch Throttling
 
 ## Overview
 
-A batching system that groups multiple API calls into single requests to reduce server load and respect rate limits. This implementation includes request queuing, automatic batch processing, and configurable batch sizes and delays.
+Batch throttling is an advanced rate-limiting technique that groups multiple function calls or requests into batches and processes them together. This approach optimizes resource usage by reducing the total number of operations while still handling all requests efficiently.
+
+### Real-World Analogy
+
+Think of batch throttling like a postal service's mail sorting system:
+
+- Individual letters (requests) arrive continuously
+- The sorting facility (batch processor) collects letters for a period
+- When enough letters accumulate or time elapses, they're processed together
+- Each batch is delivered efficiently as one unit
+- Resources are optimized by handling multiple items at once
+
+### Common Use Cases
+
+1. **Bulk API Operations**
+
+   - Problem: Many individual API calls causing network congestion
+   - Solution: Group related calls into single batch request
+   - Benefit: Reduced network overhead and better throughput
+
+2. **Database Operations**
+
+   - Problem: High frequency of individual database writes
+   - Solution: Batch multiple writes into single transaction
+   - Benefit: Improved database performance and reduced load
+
+3. **Analytics Events**
+   - Problem: High volume of individual event tracking calls
+   - Solution: Collect events and send in batches
+   - Benefit: Efficient data transmission and processing
+
+### How It Works
+
+1. **Collection Phase**
+
+   - Incoming requests are queued
+   - Queue size is monitored
+   - Timer tracks collection period
+
+2. **Batch Processing**
+
+   - Triggered by size threshold
+   - Triggered by time threshold
+   - Process all queued items
+
+3. **Resource Management**
+
+   - Optimize batch size
+   - Handle timeouts
+   - Manage memory usage
+
+4. **Error Handling**
+   - Batch failure recovery
+   - Individual item retry
+   - Error reporting
 
 ## Implementation
 

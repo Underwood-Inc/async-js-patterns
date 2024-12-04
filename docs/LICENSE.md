@@ -42,4 +42,4 @@ Open RAIL-S v1.0
     b) You must pass on the same rights to recipients of Derivative Works
     c) You must include a copy of this license with any distribution
 
-For more information about OpenRAIL: https://www.licenses.ai/open-rail
+For more information about OpenRAIL, visit [the OpenRAIL website](https://www.licenses.ai/open-rail)

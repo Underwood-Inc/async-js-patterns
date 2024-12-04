@@ -1,10 +1,62 @@
-# Auto-Retry on Failure Implementation
+# Auto-Retry
 
 ## Overview
 
-A robust implementation of automatic retry logic for failed operations, with
-support for different retry strategies, backoff algorithms, and configurable
-retry policies.
+Auto-retry is a resilience pattern that automatically attempts to recover from failed operations by repeating them based on configurable strategies. This pattern helps applications handle transient failures gracefully and maintain reliability in unreliable environments.
+
+### Real-World Analogy
+
+Think of auto-retry like trying to make a phone call in an area with poor reception:
+
+- The first call attempt fails (operation failure)
+- You wait a moment before trying again (delay strategy)
+- Each subsequent attempt might wait longer (exponential backoff)
+- After several attempts, you might give up (maximum retries)
+- You might try alternative numbers (fallback mechanisms)
+
+### Common Use Cases
+
+1. **Network Requests**
+
+   - Problem: Temporary network connectivity issues
+   - Solution: Retry failed requests with increasing delays
+   - Benefit: Higher success rate for critical operations
+
+2. **Database Operations**
+
+   - Problem: Temporary database connection losses
+   - Solution: Automatic retry with connection pool refresh
+   - Benefit: Resilient data operations
+
+3. **Resource Access**
+   - Problem: Race conditions or temporary locks
+   - Solution: Retry with conflict resolution
+   - Benefit: Reliable resource acquisition
+
+### How It Works
+
+1. **Failure Detection**
+
+   - Identify retryable errors
+   - Capture error context
+   - Track attempt count
+
+2. **Retry Strategy**
+
+   - Calculate delay interval
+   - Apply backoff algorithm
+   - Consider jitter
+
+3. **Execution Control**
+
+   - Maximum attempts
+   - Timeout handling
+   - Success criteria
+
+4. **Recovery Mechanisms**
+   - Circuit breaking
+   - Fallback options
+   - State recovery
 
 ## Implementation
 

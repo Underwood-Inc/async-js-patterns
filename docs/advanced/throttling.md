@@ -1,11 +1,62 @@
-# Throttling Rate Limiting Implementation
+# Throttling
 
 ## Overview
 
-Throttling limits the rate at which a function can be called. It ensures the function
-executes at most once within a specified time window. This implementation includes
-both basic throttling and advanced features like leading/trailing calls and async
-support.
+Throttling is a rate-limiting technique that controls how many times a function can be called within a specified time period. Unlike debouncing which waits for a quiet period, throttling ensures a function executes at a regular interval, even if it's being called more frequently.
+
+### Real-World Analogy
+
+Think of throttling like a water faucet with a flow restrictor:
+
+- Water (function calls) constantly tries to flow through
+- The restrictor (throttle) limits the flow rate
+- No matter how much pressure (how many calls), the flow remains constant
+- Excess water (calls) is discarded
+- The flow rate (execution rate) remains steady and predictable
+
+### Common Use Cases
+
+1. **Scroll Event Handlers**
+
+   - Problem: Scroll events fire hundreds of times per second
+   - Solution: Limit processing to every X milliseconds
+   - Benefit: Smooth scrolling and better performance
+
+2. **Game Input Processing**
+
+   - Problem: Player actions happening too rapidly
+   - Solution: Enforce minimum time between actions
+   - Benefit: Fair gameplay and controlled response rate
+
+3. **API Rate Limiting**
+   - Problem: Too many API requests overwhelming servers
+   - Solution: Limit requests to X per second/minute
+   - Benefit: Server protection and fair resource usage
+
+### How It Works
+
+1. **Initial Call**
+
+   - Function is called
+   - Execution is allowed
+   - Timer starts
+
+2. **During Throttle Period**
+
+   - Additional calls are received
+   - Check if enough time has passed
+   - Block or allow based on timing
+
+3. **Timer Management**
+
+   - Track last execution time
+   - Calculate next allowed execution
+   - Handle edge cases
+
+4. **Options**
+   - Leading edge execution
+   - Trailing edge execution
+   - Maximum wait time
 
 ## Implementation
 

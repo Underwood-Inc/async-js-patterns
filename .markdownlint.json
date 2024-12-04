@@ -9,7 +9,7 @@
   "MD010": true,
   "MD011": true,
   "MD012": { "maximum": 1 },
-  "MD013": { "line_length": 250, "code_blocks": false, "tables": false },
+  "MD013": false,
   "MD014": false,
   "MD018": true,
   "MD019": true,

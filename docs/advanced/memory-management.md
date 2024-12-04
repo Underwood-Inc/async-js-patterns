@@ -2,129 +2,236 @@
 
 ## Overview
 
-Memory management is crucial for long-running JavaScript applications. This
-guide covers best practices and patterns for managing memory in async
-operations.
+Memory management in async JavaScript involves strategies and patterns for efficiently allocating, using, and releasing memory resources in asynchronous operations. Proper memory management is crucial for maintaining application performance and preventing memory leaks, especially in long-running applications.
 
-## Memory Leaks in Async Code
+### Real-World Analogy
 
-### Common Sources
+Think of memory management like organizing a workspace:
 
-- Uncancelled timers
-- Unresolved Promises
-- Event listeners
-- Closure references
+- Your desk (memory heap) has limited space
+- Documents (objects) need to be organized and accessible
+- Completed tasks (unused objects) should be cleared away
+- Important references must be maintained
+- Regular cleanup (garbage collection) keeps the space usable
 
-### Prevention Strategies
+### Common Use Cases
 
-1. Timer cleanup
-2. Promise cancellation
-3. Proper event listener removal
-4. WeakMap/WeakSet usage
+1. **Long-Running Operations**
 
-## Best Practices
+   - Problem: Memory accumulation during extended async operations
+   - Solution: Proper cleanup and reference management
+   - Benefit: Stable memory usage over time
 
-### 1. Timer Management
+2. **Event Handler Management**
+
+   - Problem: Forgotten event listeners causing memory leaks
+   - Solution: Systematic event listener cleanup
+   - Benefit: Prevented memory leaks and improved performance
+
+3. **Cache Management**
+   - Problem: Unbounded cache growth consuming memory
+   - Solution: Implement size limits and eviction policies
+   - Benefit: Controlled memory usage while maintaining performance
+
+### How It Works
+
+1. **Resource Tracking**
+
+   - Monitor object allocations
+   - Track reference counts
+   - Identify memory patterns
+
+2. **Cleanup Strategies**
+
+   - Explicit cleanup calls
+   - Reference nullification
+   - Weak references usage
+
+3. **Leak Prevention**
+
+   - Closure management
+   - Event listener cleanup
+   - Timer cancellation
+
+4. **Memory Optimization**
+   - Object pooling
+   - Data structure selection
+   - Resource sharing
+
+## Implementation
 
 ```typescript
-class Timer {
+// Base class for managing cleanable resources
+class ResourceManager {
+  private resources = new WeakMap<object, Set<() => void>>();
+
+  register(owner: object, cleanup: () => void) {
+    let cleanups = this.resources.get(owner);
+    if (!cleanups) {
+      cleanups = new Set();
+      this.resources.set(owner, cleanups);
+    }
+    cleanups.add(cleanup);
+  }
+
+  cleanup(owner: object) {
+    const cleanups = this.resources.get(owner);
+    if (cleanups) {
+      cleanups.forEach((cleanup) => cleanup());
+      cleanups.clear();
+      this.resources.delete(owner);
+    }
+  }
+}
+
+// Timer management example
+class TimerManager {
   private timers = new Set<number>();
 
-  setTimeout(fn: () => void, ms: number) {
+  setTimeout(callback: () => void, delay: number) {
     const id = window.setTimeout(() => {
       this.timers.delete(id);
-      fn();
-    }, ms);
+      callback();
+    }, delay);
     this.timers.add(id);
-    return () => {
-      window.clearTimeout(id);
-      this.timers.delete(id);
-    };
+    return id;
   }
 
   clearAll() {
-    this.timers.forEach((id) => {
-      window.clearTimeout(id);
-    });
+    this.timers.forEach((id) => window.clearTimeout(id));
     this.timers.clear();
   }
 }
-```
 
-### 2. Resource Cleanup
+// Event listener management
+class EventManager {
+  private listeners = new Map<EventTarget, Map<string, Set<EventListener>>>();
 
-```typescript
-class ResourceManager {
-  private resources = new WeakMap();
+  addEventListener(target: EventTarget, type: string, listener: EventListener) {
+    let targetListeners = this.listeners.get(target);
+    if (!targetListeners) {
+      targetListeners = new Map();
+      this.listeners.set(target, targetListeners);
+    }
 
-  acquire(key: object, resource: any) {
-    this.resources.set(key, resource);
+    let typeListeners = targetListeners.get(type);
+    if (!typeListeners) {
+      typeListeners = new Set();
+      targetListeners.set(type, typeListeners);
+    }
+
+    typeListeners.add(listener);
+    target.addEventListener(type, listener);
   }
 
-  release(key: object) {
-    this.resources.delete(key);
+  removeAllListeners() {
+    this.listeners.forEach((targetListeners, target) => {
+      targetListeners.forEach((listeners, type) => {
+        listeners.forEach((listener) => {
+          target.removeEventListener(type, listener);
+        });
+      });
+    });
+    this.listeners.clear();
+  }
+}
+
+// Cache with memory limits
+class MemoryLimitedCache<K, V> {
+  private cache = new Map<K, V>();
+  private maxEntries: number;
+
+  constructor(maxEntries: number) {
+    this.maxEntries = maxEntries;
+  }
+
+  set(key: K, value: V) {
+    if (this.cache.size >= this.maxEntries) {
+      const firstKey = this.cache.keys().next().value;
+      this.cache.delete(firstKey);
+    }
+    this.cache.set(key, value);
+  }
+
+  get(key: K): V | undefined {
+    return this.cache.get(key);
+  }
+
+  clear() {
+    this.cache.clear();
   }
 }
 ```
 
-### 3. Event Handler Management
+## Common Memory Leaks
+
+### 1. Event Listeners
 
 ```typescript
-class EventManager {
-  private handlers = new Map();
+class Component {
+  private eventManager = new EventManager();
 
-  on(event: string, handler: Function) {
-    if (!this.handlers.has(event)) {
-      this.handlers.set(event, new Set());
-    }
-    this.handlers.get(event).add(handler);
-
-    return () => {
-      this.handlers.get(event)?.delete(handler);
-    };
+  initialize() {
+    this.eventManager.addEventListener(
+      window,
+      'resize',
+      this.handleResize.bind(this)
+    );
   }
 
   cleanup() {
-    this.handlers.clear();
+    this.eventManager.removeAllListeners();
+  }
+
+  private handleResize() {
+    // Handle resize event
   }
 }
 ```
 
-## Memory Profiling
-
-### Using Chrome DevTools
-
-1. Take heap snapshots
-2. Compare snapshots
-3. Analyze retention paths
-4. Identify memory leaks
-
-### Automated Memory Monitoring
+### 2. Timer References
 
 ```typescript
-class MemoryMonitor {
-  private static instance: MemoryMonitor;
-  private warnings = new Set<string>();
+class AsyncOperation {
+  private timerManager = new TimerManager();
 
-  static getInstance() {
-    if (!this.instance) {
-      this.instance = new MemoryMonitor();
-    }
-    return this.instance;
+  start() {
+    this.timerManager.setTimeout(() => {
+      // Perform operation
+    }, 1000);
   }
 
-  trackMemoryUsage(operation: string) {
-    if (performance.memory) {
-      const { usedJSHeapSize, jsHeapSizeLimit } = performance.memory;
-      const usage = (usedJSHeapSize / jsHeapSizeLimit) * 100;
+  cleanup() {
+    this.timerManager.clearAll();
+  }
+}
+```
 
-      if (usage > 80 && !this.warnings.has(operation)) {
-        console.warn(
-          `High memory usage (${usage.toFixed(2)}%) in ${operation}`
-        );
-        this.warnings.add(operation);
-      }
+### 3. Closure References
+
+```typescript
+class DataProcessor {
+  private cache = new MemoryLimitedCache<string, object>(100);
+
+  process(data: object) {
+    const key = JSON.stringify(data);
+    let result = this.cache.get(key);
+
+    if (!result) {
+      result = this.computeResult(data);
+      this.cache.set(key, result);
     }
+
+    return result;
+  }
+
+  private computeResult(data: object): object {
+    // Compute result
+    return {};
+  }
+
+  cleanup() {
+    this.cache.clear();
   }
 }
 ```

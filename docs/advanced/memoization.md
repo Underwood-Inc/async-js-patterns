@@ -1,8 +1,61 @@
-# Memoize/Caching Identical APIs Implementation
+# Memoization
 
 ## Overview
 
-A robust memoization implementation for caching API calls and expensive computations. This implementation includes features like cache expiration, custom cache keys, and memory management.
+Memoization is an optimization technique that speeds up applications by storing the results of expensive function calls and returning the cached result when the same inputs occur again. This technique trades memory space for improved performance by eliminating redundant computations.
+
+### Real-World Analogy
+
+Think of memoization like a chef's mise en place (prepared ingredients):
+
+- Instead of chopping vegetables every time they're needed, the chef preps them once
+- The prepped ingredients (cached results) are stored and ready to use
+- When the same ingredient is needed again, it's immediately available
+- If a new ingredient is needed, it's prepared and added to the collection
+- Old, unused preparations might be discarded to save space (cache invalidation)
+
+### Common Use Cases
+
+1. **Complex Calculations**
+
+   - Problem: Expensive mathematical computations being repeated
+   - Solution: Cache results based on input parameters
+   - Benefit: Significant performance improvement for repeated calculations
+
+2. **API Response Caching**
+
+   - Problem: Frequent identical API calls wasting bandwidth
+   - Solution: Cache responses for a set period
+   - Benefit: Reduced server load and faster response times
+
+3. **UI Component Rendering**
+   - Problem: Expensive re-renders with same props
+   - Solution: Memoize component based on props
+   - Benefit: Smoother UI performance and reduced computation
+
+### How It Works
+
+1. **Function Call**
+
+   - Function receives arguments
+   - Cache key is generated from arguments
+
+2. **Cache Check**
+
+   - Check if result exists in cache
+   - If found, return cached result
+   - If not, execute function
+
+3. **Result Storage**
+
+   - Store new result in cache
+   - Associate with arguments key
+   - Handle cache size limits
+
+4. **Cache Management**
+   - Implement expiration strategy
+   - Handle cache invalidation
+   - Manage memory usage
 
 ## Implementation
 

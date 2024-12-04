@@ -1,10 +1,62 @@
-# Promisifying Async Callbacks
+# Promisifying
 
 ## Overview
 
-Promisification is the conversion of callback-based functions into promise-based
-ones. This pattern is useful when working with legacy APIs or Node.js-style
-callbacks that follow the error-first callback pattern.
+Promisifying is the process of converting callback-based functions into Promise-based ones, enabling better async flow control and error handling. This technique helps modernize legacy code and provides a more consistent async programming model.
+
+### Real-World Analogy
+
+Think of promisifying like modernizing an old factory:
+
+- Old machines (callbacks) work but are hard to coordinate
+- New control systems (promises) provide better oversight
+- The upgrade process (promisifying) maintains functionality
+- Modern interfaces (async/await) make operations smoother
+- Better error handling prevents production issues
+
+### Common Use Cases
+
+1. **Legacy API Integration**
+
+   - Problem: Callback-based APIs in modern async code
+   - Solution: Wrap callbacks in promises
+   - Benefit: Consistent async/await usage
+
+2. **Event to Promise Conversion**
+
+   - Problem: Event-based APIs needing promise interfaces
+   - Solution: Event wrapper promises
+   - Benefit: Simplified async flow control
+
+3. **Node.js API Modernization**
+   - Problem: Callback-style Node.js functions
+   - Solution: Util.promisify and custom wrappers
+   - Benefit: Modern async/await syntax
+
+### How It Works
+
+1. **Function Wrapping**
+
+   - Callback identification
+   - Promise creation
+   - Error handling setup
+
+2. **Parameter Handling**
+
+   - Argument processing
+   - Context preservation
+   - Type checking
+
+3. **Error Management**
+
+   - Error propagation
+   - Type conversion
+   - Stack trace preservation
+
+4. **Result Processing**
+   - Value transformation
+   - Type conversion
+   - Multi-value handling
 
 ## Implementation
 
