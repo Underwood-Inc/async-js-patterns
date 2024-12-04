@@ -11,6 +11,7 @@ const tooltipStyles = `
   border-bottom: 1px dashed var(--vp-c-brand) !important;
   cursor: help !important;
   display: inline !important;
+  z-index: 2 !important;
 }
 
 /* Dark theme adjustments */
@@ -28,7 +29,13 @@ const tooltipStyles = `
 /* Preserve Shiki syntax highlighting */
 .vp-code .tooltip[style] {
   color: inherit !important;
-}`;
+}
+
+/* Ensure tooltip portal is above everything */
+.tooltip-portal {
+  isolation: isolate;
+}
+`;
 
 // Track processed tooltips to avoid duplicate handlers
 const processedTooltips = new WeakSet();
@@ -37,66 +44,66 @@ export default {
   extends: Theme,
   async enhanceApp({ app, router }) {
     // Only run client-side code in browser environment
-    if (import.meta.env.SSR) {
+    if (typeof window === 'undefined') {
       return;
     }
 
     // Wait for the DOM to be ready
-    if (typeof window !== 'undefined') {
-      // Add styles
-      const style = document.createElement('style');
-      style.textContent = tooltipStyles;
-      document.head.appendChild(style);
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = tooltipStyles;
+    document.head.appendChild(style);
 
-      // Initialize tooltip portal
-      const tooltipContainer = createTooltipPortal();
+    // Initialize tooltip portal
+    const tooltipContainer = createTooltipPortal();
 
-      // Add a MutationObserver to handle dynamically added tooltips
-      const observer = new MutationObserver((mutations) => {
-        requestAnimationFrame(() => {
-          const tooltips = document.querySelectorAll('.tooltip');
-          tooltips.forEach((tooltip) => {
-            // Skip if already processed
-            if (processedTooltips.has(tooltip)) {
-              return;
-            }
+    // Add a MutationObserver to handle dynamically added tooltips
+    const observer = new MutationObserver((mutations) => {
+      requestAnimationFrame(() => {
+        const tooltips = document.querySelectorAll('.tooltip');
+        tooltips.forEach((tooltip) => {
+          // Skip if already processed
+          if (processedTooltips.has(tooltip)) {
+            return;
+          }
 
-            let currentTooltipEl = null;
+          let currentTooltipEl: HTMLElement | null = null;
 
-            tooltip.addEventListener('mouseenter', (event) => {
-              const tooltipContent = tooltip.getAttribute('data-tooltip');
-              const rect = tooltip.getBoundingClientRect();
+          tooltip.addEventListener('mouseenter', (event) => {
+            const tooltipContent = tooltip.getAttribute('data-tooltip');
+            const rect = tooltip.getBoundingClientRect();
+            if (tooltipContent) {
               currentTooltipEl = showTooltip(
                 tooltipContainer,
                 tooltipContent,
                 rect.left + rect.width / 2,
                 rect.top
               );
-            });
-
-            tooltip.addEventListener('mouseleave', () => {
-              hideTooltip(currentTooltipEl);
-              currentTooltipEl = null;
-            });
-
-            // Mark as processed
-            processedTooltips.add(tooltip);
+            }
           });
+
+          tooltip.addEventListener('mouseleave', () => {
+            hideTooltip(currentTooltipEl);
+            currentTooltipEl = null;
+          });
+
+          // Mark as processed
+          processedTooltips.add(tooltip);
         });
       });
+    });
 
-      // Start observing the document with the configured parameters
-      observer.observe(document.body, { childList: true, subtree: true });
+    // Start observing the document with the configured parameters
+    observer.observe(document.body, { childList: true, subtree: true });
 
-      // Add route change handler to reinitialize tooltips
-      router.onAfterRouteChanged = () => {
-        const tooltips = document.querySelectorAll('.tooltip');
-        if (tooltips.length > 0) {
-          observer.disconnect();
-          observer.observe(document.body, { childList: true, subtree: true });
-        }
-      };
-    }
+    // Add route change handler to reinitialize tooltips
+    router.onAfterRouteChanged = () => {
+      const tooltips = document.querySelectorAll('.tooltip');
+      if (tooltips.length > 0) {
+        observer.disconnect();
+        observer.observe(document.body, { childList: true, subtree: true });
+      }
+    };
   },
   markdown: {
     config: (md) => {
