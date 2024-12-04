@@ -1,4 +1,9 @@
+// Check if we're in a browser environment
+const isBrowser = typeof window !== 'undefined';
+
 export function createTooltipPortal() {
+  if (!isBrowser) return null;
+
   const tooltipContainer = document.createElement('div');
   tooltipContainer.className = 'tooltip-portal';
   tooltipContainer.style.cssText = `
@@ -15,6 +20,8 @@ export function createTooltipPortal() {
 }
 
 export function showTooltip(tooltipContainer, content, x, y) {
+  if (!isBrowser || !tooltipContainer) return null;
+
   const tooltipEl = document.createElement('div');
   tooltipEl.className = 'tooltip-content';
   tooltipEl.textContent = content;
@@ -47,7 +54,7 @@ export function showTooltip(tooltipContainer, content, x, y) {
 }
 
 export function hideTooltip(tooltipEl) {
-  if (tooltipEl) {
+  if (isBrowser && tooltipEl) {
     tooltipEl.remove();
   }
 }
