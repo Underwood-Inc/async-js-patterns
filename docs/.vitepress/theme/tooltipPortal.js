@@ -10,10 +10,10 @@ export function createTooltipPortal() {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    bottom: 0;
     pointer-events: none;
-    z-index: 100000;
+    z-index: 9999999;
   `;
   document.body.appendChild(tooltipContainer);
   return tooltipContainer;
@@ -26,7 +26,7 @@ export function showTooltip(tooltipContainer, content, x, y) {
   tooltipEl.className = 'tooltip-content';
   tooltipEl.textContent = content;
   tooltipEl.style.cssText = `
-    position: absolute;
+    position: fixed;
     left: ${x}px;
     top: ${y}px;
     transform: translate(-50%, -100%) translateY(-8px);
@@ -47,7 +47,6 @@ export function showTooltip(tooltipContainer, content, x, y) {
     font-family: var(--vp-font-family-base);
     font-weight: normal;
     font-style: normal;
-    z-index: 100001;
   `;
   tooltipContainer.appendChild(tooltipEl);
   return tooltipEl;

@@ -11,7 +11,6 @@ const tooltipStyles = `
   border-bottom: 1px dashed var(--vp-c-brand) !important;
   cursor: help !important;
   display: inline !important;
-  z-index: 2 !important;
 }
 
 /* Dark theme adjustments */
@@ -33,7 +32,12 @@ const tooltipStyles = `
 
 /* Ensure tooltip portal is above everything */
 .tooltip-portal {
-  isolation: isolate;
+  position: fixed !important;
+  z-index: 9999999 !important;
+}
+
+.tooltip-content {
+  z-index: 9999999 !important;
 }
 `;
 
@@ -48,7 +52,6 @@ export default {
       return;
     }
 
-    // Wait for the DOM to be ready
     // Add styles
     const style = document.createElement('style');
     style.textContent = tooltipStyles;
