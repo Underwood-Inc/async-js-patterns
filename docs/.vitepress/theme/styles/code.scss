@@ -12,7 +12,7 @@
     position: relative;
   }
 
-  .tooltip {
+  .has-tooltip {
     position: relative;
     z-index: auto;
 
@@ -44,11 +44,11 @@ html:not(.dark) {
     color: $purple-dark;
   }
 
-  .tooltip {
+  .has-tooltip {
     color: $purple-dark !important;
   }
 
-  .tooltip::before {
+  .has-tooltip::before {
     z-index: $z-index-tooltip; // Use variable for tooltip z-index
   }
 }
@@ -62,7 +62,7 @@ html:not(.dark) {
     border: 1px solid var(--vp-code-block-border);
   }
 
-  .tooltip::before {
+  .has-tooltip::before {
     z-index: $z-index-tooltip; // Use variable for tooltip z-index
   }
 }

@@ -87,7 +87,7 @@ export function codePreviewPlugin(md: MarkdownRenderer) {
           regex,
           (match, spanStart, style, before, term, after, spanEnd) => {
             // Preserve Shiki's style in the tooltip span
-            const tooltipSpan = `${spanStart}${before}<span class="tooltip" style="${style}" data-tooltip="${tooltip}">${term}</span>${after}${spanEnd}`;
+            const tooltipSpan = `${spanStart}${before}<span class="has-tooltip" style="${style}" data-tooltip="${tooltip}">${term}</span>${after}${spanEnd}`;
             return tooltipSpan;
           }
         );

@@ -293,7 +293,17 @@ mark[data-markjs='true'] {
 }
 
 // Add tooltip styles
-.tooltip {
+.tooltip-portal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 9999999;
+}
+
+.has-tooltip {
   border-bottom: 1px dotted var(--vp-c-brand);
   cursor: help;
   transition: border-color 0.25s;
@@ -301,4 +311,22 @@ mark[data-markjs='true'] {
   &:hover {
     border-bottom-color: var(--vp-c-brand-dark);
   }
+}
+
+.tooltip-content {
+  position: fixed;
+  padding: 10px 14px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  font-size: 14px;
+  line-height: 1.6;
+  border-radius: 8px;
+  border: 1px dashed var(--vp-c-brand);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  max-width: 360px;
+  text-align: left;
+  font-family: var(--vp-font-family-base);
+  backdrop-filter: blur(8px);
+  z-index: 9999999;
 }

@@ -10,10 +10,10 @@ export function setupTooltips() {
 
   document.addEventListener('mouseover', (e) => {
     const target = e.target as HTMLElement;
-    if (target.classList.contains('tooltip')) {
+    if (target.classList.contains('has-tooltip')) {
       const rect = target.getBoundingClientRect();
       const tooltip = target.getAttribute('data-tooltip');
-      if (tooltip) {
+      if (tooltip && tooltipPortal) {
         currentTooltip = showTooltip(
           tooltipPortal,
           tooltip,
@@ -26,7 +26,7 @@ export function setupTooltips() {
 
   document.addEventListener('mouseout', (e) => {
     const target = e.target as HTMLElement;
-    if (target.classList.contains('tooltip')) {
+    if (target.classList.contains('has-tooltip')) {
       hideTooltip(currentTooltip);
       currentTooltip = null;
     }
