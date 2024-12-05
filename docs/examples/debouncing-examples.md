@@ -1,3 +1,18 @@
+---
+title: Debouncing Examples
+description: Master debouncing techniques in JavaScript. Learn how to optimize event handling and control function execution frequency.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Debouncing
+  - Performance
+  - Event Handling
+  - Examples
+  - Best Practices
+image: /web-patterns/images/debouncing-examples-banner.png
+---
+
 # Debouncing Examples
 
 This page demonstrates practical examples of implementing and using debouncing patterns to handle rapid-fire events efficiently.

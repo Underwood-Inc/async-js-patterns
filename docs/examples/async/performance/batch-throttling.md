@@ -1,3 +1,19 @@
+---
+title: Batch Throttling Pattern Implementation
+description: Learn advanced batch throttling patterns for optimizing bulk operations. Master request batching, rate limiting, and efficient resource utilization.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Batch Processing
+  - Throttling
+  - Performance
+  - TypeScript
+  - Rate Limiting
+  - Resource Management
+category: examples
+image: /web-patterns/images/batch-throttling-banner.png
+---
+
 # Batch Throttling Examples
 
 Learn how to implement batch processing with throttling for better performance and resource management.

@@ -1,3 +1,19 @@
+---
+title: Racing Task Execution Patterns
+description: Master racing task execution patterns in TypeScript. Learn how to handle competitive task execution, timeouts, and cancellation strategies.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Racing Tasks
+  - Task Competition
+  - TypeScript
+  - Timeouts
+  - Cancellation
+  - Performance
+category: examples
+image: /web-patterns/images/racing-tasks-banner.png
+---
+
 # Racing Task Execution Examples
 
 Learn how to implement racing patterns for competitive task execution.

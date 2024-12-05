@@ -1,3 +1,5 @@
+import fs from 'fs';
+import matter from 'gray-matter';
 import { fileURLToPath, URL } from 'node:url';
 import { resolve } from 'path';
 import { defineConfig } from 'vitepress';
@@ -7,16 +9,142 @@ import { codePreviewPlugin } from './theme/markdown/codePreview';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
+// Site metadata
+const siteName = 'Web Patterns';
+const siteDescription =
+  'A comprehensive guide to async JavaScript, TypeScript patterns, and modern styling practices';
+const siteUrl = 'https://underwood-inc.github.io/web-patterns';
+const defaultImage = '/web-patterns/social-preview.png';
+const twitterHandle = 'tetrawhispers';
+const siteImage = defaultImage;
+
+// Function to extract content preview from markdown
+function extractContentPreview(filePath: string, maxLength = 200): string {
+  try {
+    const fullPath = resolve(__dirname, '../', filePath);
+    if (!fs.existsSync(fullPath)) return '';
+
+    const fileContent = fs.readFileSync(fullPath, 'utf-8');
+    const { content } = matter(fileContent);
+
+    // Remove markdown syntax and code blocks
+    const plainText = content
+      .replace(/```[\s\S]*?```/g, '') // Remove code blocks
+      .replace(/`.*?`/g, '') // Remove inline code
+      .replace(/\[([^\]]*)\]\(([^)]*)\)/g, '$1') // Replace links with text
+      .replace(/[#*_]/g, '') // Remove markdown syntax
+      .replace(/\n+/g, ' ') // Replace newlines with spaces
+      .trim();
+
+    // Get first paragraph or truncate to maxLength
+    const preview = plainText.split(/\n\n/)[0];
+    return preview.length > maxLength
+      ? preview.slice(0, maxLength).trim() + '...'
+      : preview;
+  } catch (error) {
+    console.warn(`Error extracting preview from ${filePath}:`, error);
+    return '';
+  }
+}
+
 export default defineConfig({
-  title: 'Web Patterns',
-  description:
-    'A comprehensive guide to async JavaScript, TypeScript patterns, and modern styling',
+  title: siteName,
+  description: siteDescription,
   base: '/web-patterns/',
   cleanUrls: true,
   ignoreDeadLinks: [
     // Ignore LICENSE file link
     /\/LICENSE/,
   ],
+
+  transformPageData(pageData) {
+    // Get content preview for the current page
+    const preview = extractContentPreview(pageData.relativePath);
+
+    // Construct page title
+    const pageTitle = pageData.frontmatter.title
+      ? `${pageData.frontmatter.title} | ${siteName}`
+      : siteName;
+
+    // Get page description
+    const pageDescription =
+      pageData.frontmatter.description || preview || siteDescription;
+
+    // Get page image
+    const pageImage = pageData.frontmatter.image || defaultImage;
+
+    // Update page metadata
+    pageData.frontmatter.head = [
+      // Open Graph / Facebook
+      ['meta', { property: 'og:type', content: 'article' }],
+      ['meta', { property: 'og:site_name', content: siteName }],
+      ['meta', { property: 'og:title', content: pageTitle }],
+      ['meta', { property: 'og:description', content: pageDescription }],
+      [
+        'meta',
+        {
+          property: 'og:url',
+          content: `${siteUrl}${pageData.relativePath.replace(/\.md$/, '')}`,
+        },
+      ],
+      ['meta', { property: 'og:image', content: `${siteUrl}${pageImage}` }],
+      ['meta', { property: 'og:image:alt', content: pageTitle }],
+      ['meta', { property: 'og:image:width', content: '1200' }],
+      ['meta', { property: 'og:image:height', content: '630' }],
+      [
+        'meta',
+        {
+          property: 'article:published_time',
+          content: pageData.frontmatter.date || new Date().toISOString(),
+        },
+      ],
+      [
+        'meta',
+        {
+          property: 'article:modified_time',
+          content: pageData.frontmatter.updated || new Date().toISOString(),
+        },
+      ],
+
+      // Twitter
+      ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+      ['meta', { name: 'twitter:site', content: twitterHandle }],
+      ['meta', { name: 'twitter:creator', content: twitterHandle }],
+      ['meta', { name: 'twitter:title', content: pageTitle }],
+      ['meta', { name: 'twitter:description', content: pageDescription }],
+      ['meta', { name: 'twitter:image', content: `${siteUrl}${pageImage}` }],
+      ['meta', { name: 'twitter:image:alt', content: pageTitle }],
+
+      // Additional SEO
+      ['meta', { name: 'description', content: pageDescription }],
+      [
+        'meta',
+        {
+          name: 'author',
+          content: pageData.frontmatter.author || 'Underwood Inc',
+        },
+      ],
+      [
+        'meta',
+        {
+          name: 'keywords',
+          content:
+            pageData.frontmatter.tags?.join(', ') ||
+            'JavaScript, TypeScript, Async Programming, Web Development',
+        },
+      ],
+
+      // Canonical URL
+      [
+        'link',
+        {
+          rel: 'canonical',
+          href: `${siteUrl}${pageData.relativePath.replace(/\.md$/, '')}`,
+        },
+      ],
+    ];
+  },
+
   head: [
     // Favicons
     [
@@ -49,7 +177,58 @@ export default defineConfig({
         href: '/web-patterns/apple-touch-icon.png',
       },
     ],
-    ['link', { rel: 'manifest', href: '/web-patterns/site.webmanifest' }],
+    // Open Graph / Facebook
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:site_name', content: siteName }],
+    ['meta', { property: 'og:title', content: siteName }],
+    ['meta', { property: 'og:description', content: siteDescription }],
+    ['meta', { property: 'og:url', content: siteUrl }],
+    ['meta', { property: 'og:image', content: siteImage }],
+    [
+      'meta',
+      { property: 'og:image:alt', content: `${siteName} - Visual Preview` },
+    ],
+    ['meta', { property: 'og:image:width', content: '1200' }],
+    ['meta', { property: 'og:image:height', content: '630' }],
+    // Twitter
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:site', content: twitterHandle }],
+    ['meta', { name: 'twitter:creator', content: twitterHandle }],
+    ['meta', { name: 'twitter:title', content: siteName }],
+    ['meta', { name: 'twitter:description', content: siteDescription }],
+    ['meta', { name: 'twitter:image', content: siteImage }],
+    [
+      'meta',
+      { name: 'twitter:image:alt', content: `${siteName} - Visual Preview` },
+    ],
+    // Additional SEO
+    ['meta', { name: 'author', content: 'Underwood Inc' }],
+    [
+      'meta',
+      {
+        name: 'keywords',
+        content:
+          'JavaScript, TypeScript, Async Programming, Web Development, Programming Patterns, Software Engineering, Frontend Development, Modern Web Development, Async/Await, Promises, Performance Optimization',
+      },
+    ],
+    // Canonical URL
+    ['link', { rel: 'canonical', href: siteUrl }],
+    // Color scheme
+    ['meta', { name: 'theme-color', content: '#646cff' }],
+    // Additional mobile optimization
+    ['meta', { name: 'format-detection', content: 'telephone=no' }],
+    ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
+    [
+      'meta',
+      { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
+    ],
+    // RSS feed
+    [
+      'link',
+      { rel: 'alternate', type: 'application/rss+xml', href: '/feed.xml' },
+    ],
+    // Manifest
+    ['link', { rel: 'manifest', href: '/web-patterns/manifest.json' }],
   ],
   markdown: {
     theme: {
@@ -61,6 +240,10 @@ export default defineConfig({
       md.use(readingTime);
       md.use(typescriptPlugin);
       md.use(codePreviewPlugin);
+    },
+    async buildEnd() {
+      const { buildSearchIndex } = await import('./buildSearchIndex.js');
+      await buildSearchIndex();
     },
   },
   vite: {
@@ -81,106 +264,10 @@ export default defineConfig({
     logo: '/logo.svg',
     siteTitle: false,
     nav: [
-      { text: 'Guide', link: '/guide/getting-started' },
-      {
-        text: 'Patterns',
-        items: [
-          {
-            text: 'Core',
-            items: [
-              { text: 'Async', link: '/async/' },
-              { text: 'TypeScript', link: '/typescript/utility-types' },
-              { text: 'Styling', link: '/styling/' },
-            ],
-          },
-          {
-            text: 'Advanced',
-            items: [
-              { text: 'Performance', link: '/async/performance' },
-              { text: 'Error Handling', link: '/async/error-handling' },
-              { text: 'Testing', link: '/typescript/testing-patterns' },
-            ],
-          },
-        ],
-      },
-      {
-        text: 'Examples',
-        items: [
-          {
-            text: 'Async',
-            items: [
-              { text: 'Promise Usage', link: '/examples/custom-promise-usage' },
-              { text: 'Parallel Tasks', link: '/examples/parallel-tasks' },
-              { text: 'Sequential Tasks', link: '/examples/sequential-tasks' },
-              { text: 'Promise.all', link: '/examples/promise-all-examples' },
-              { text: 'Promise.race', link: '/examples/promise-race-examples' },
-              { text: 'Promise.any', link: '/examples/promise-any-examples' },
-              {
-                text: 'Promise.allSettled',
-                link: '/examples/promise-allsettled-examples',
-              },
-              {
-                text: 'Promise.finally',
-                link: '/examples/promise-finally-examples',
-              },
-              { text: 'Promisifying', link: '/examples/promisifying-examples' },
-            ],
-          },
-          {
-            text: 'Performance',
-            items: [
-              { text: 'Auto-Retry', link: '/examples/auto-retry-examples' },
-              {
-                text: 'Batch Throttling',
-                link: '/examples/batch-throttling-examples',
-              },
-              { text: 'Debouncing', link: '/examples/debouncing-examples' },
-              { text: 'Throttling', link: '/examples/throttling-examples' },
-              { text: 'Memoization', link: '/examples/memoization-examples' },
-            ],
-          },
-          {
-            text: 'Optimization',
-            items: [
-              {
-                text: 'Browser',
-                link: '/examples/browser-optimization-examples',
-              },
-              {
-                text: 'Node.js',
-                link: '/examples/nodejs-optimization-examples',
-              },
-              { text: 'Memory', link: '/examples/memory-management-examples' },
-              {
-                text: 'Performance',
-                link: '/examples/performance-monitoring-examples',
-              },
-            ],
-          },
-          {
-            text: 'Timers',
-            items: [
-              { text: 'Timer Management', link: '/examples/timer-management' },
-              {
-                text: 'Custom setTimeout',
-                link: '/examples/custom-settimeout',
-              },
-              {
-                text: 'Custom setInterval',
-                link: '/examples/custom-setinterval',
-              },
-            ],
-          },
-          {
-            text: 'Development',
-            items: [
-              { text: 'Linting', link: '/examples/linting-example' },
-              { text: 'Lint Testing', link: '/examples/lint-test' },
-              { text: 'Markdown Lint', link: '/examples/markdown-lint-test' },
-            ],
-          },
-        ],
-      },
+      { text: 'Async', link: '/async/' },
+      { text: 'TypeScript', link: '/typescript/utility-types' },
+      { text: 'Styling', link: '/styling/' },
+      { text: 'Examples', link: '/examples/' },
     ],
     sidebar: {
       '/guide/': [
@@ -218,51 +305,40 @@ export default defineConfig({
           text: 'TypeScript Patterns',
           items: [
             { text: 'Utility Types', link: '/typescript/utility-types' },
-            { text: 'Type Guards', link: '/typescript/type-guards' },
-            { text: 'Type Inference', link: '/typescript/type-inference' },
-          ],
-        },
-        {
-          text: 'Type Operations',
-          items: [
+            { text: 'Array Operations', link: '/typescript/array-operations' },
+            { text: 'Array Utilities', link: '/typescript/array-utilities' },
             {
               text: 'Conditional Types',
               link: '/typescript/conditional-types',
             },
             { text: 'Mapped Types', link: '/typescript/mapped-types' },
             {
-              text: 'Template Literals',
-              link: '/typescript/template-literals',
-            },
-          ],
-        },
-        {
-          text: 'Data Structures',
-          items: [
-            { text: 'Array Operations', link: '/typescript/array-operations' },
-            { text: 'Array Utilities', link: '/typescript/array-utilities' },
-            { text: 'Type-Safe Arrays', link: '/typescript/type-safe-arrays' },
-            {
               text: 'String Manipulation',
               link: '/typescript/string-manipulation',
             },
             { text: 'String Utilities', link: '/typescript/string-utilities' },
+            {
+              text: 'Template Literals',
+              link: '/typescript/template-literals',
+            },
+            { text: 'Type Guards', link: '/typescript/type-guards' },
+            { text: 'Type Inference', link: '/typescript/type-inference' },
+            { text: 'Type Testing', link: '/typescript/type-testing' },
           ],
         },
         {
           text: 'State Management',
           items: [
-            { text: 'State Management', link: '/typescript/state-management' },
             { text: 'Immutable State', link: '/typescript/immutable-state' },
             { text: 'Observable State', link: '/typescript/observable-state' },
+            { text: 'State Management', link: '/typescript/state-management' },
           ],
         },
         {
           text: 'Testing',
           items: [
-            { text: 'Testing Patterns', link: '/typescript/testing-patterns' },
             { text: 'Test Utilities', link: '/typescript/test-utilities' },
-            { text: 'Type Testing', link: '/typescript/type-testing' },
+            { text: 'Testing Patterns', link: '/typescript/testing-patterns' },
           ],
         },
       ],
@@ -373,6 +449,23 @@ export default defineConfig({
       text: 'Updated at',
       formatOptions: {
         dateStyle: 'full',
+      },
+    },
+    search: {
+      provider: 'local',
+      options: {
+        detailedView: true,
+        miniSearch: {
+          searchOptions: {
+            fuzzy: 0.2,
+            prefix: true,
+            boost: {
+              title: 2,
+              text: 1,
+              titles: 1.5,
+            },
+          },
+        },
       },
     },
   },

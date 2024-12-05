@@ -1,3 +1,18 @@
+---
+title: Browser Optimization Examples
+description: Learn browser optimization techniques and patterns. Master performance tuning, memory management, and browser-specific optimizations.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Browser
+  - Performance
+  - Optimization
+  - Examples
+  - Best Practices
+image: /web-patterns/images/browser-optimization-examples-banner.png
+---
+
 # Browser Optimization Examples
 
 This page demonstrates practical examples of optimizing asynchronous operations in the browser environment.

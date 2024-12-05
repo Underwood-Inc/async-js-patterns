@@ -1,3 +1,18 @@
+---
+title: Promise.any Examples
+description: Master Promise.any patterns in JavaScript. Learn about racing promises and handling the first successful resolution.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Promises
+  - Async
+  - Race Conditions
+  - Examples
+  - Best Practices
+image: /web-patterns/images/promise-any-examples-banner.png
+---
+
 # Promise.any Examples
 
 This page demonstrates practical examples of using `Promise.any` to handle multiple promises and take the first successful result.
@@ -335,6 +350,7 @@ try {
    ```
 
 4. Implement fallback mechanisms:
+
    ```typescript:preview
    async function withFallback<T>(
      primary: Promise<T>,

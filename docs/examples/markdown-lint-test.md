@@ -1,4 +1,19 @@
-# Markdown Lint Test
+---
+title: Markdown Linting Examples
+description: Learn markdown linting patterns and best practices. Master document formatting and style consistency checks.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Markdown
+  - Linting
+  - Documentation
+  - Style Guide
+  - Examples
+  - Best Practices
+image: /web-patterns/images/markdown-lint-test-banner.png
+---
+
+# Markdown Linting Examples
 
 This line has been shortened to meet the 80-character line length limit for better
 readability.

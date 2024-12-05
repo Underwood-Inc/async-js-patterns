@@ -1,74 +1,85 @@
 ---
 layout: home
+title: Modern Web Development Patterns
+description: Master modern JavaScript & TypeScript with comprehensive patterns for async programming, type safety, and modern styling. Includes real-world examples and best practices.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - TypeScript
+  - Async Programming
+  - Web Development
+  - Programming Patterns
 
 hero:
-  name: Async & TypeScript Patterns
-  text: Master Modern JavaScript & TypeScript
-  tagline: A comprehensive guide to async patterns and TypeScript best practices
+  name: Web Patterns
+  text: Modern JavaScript & TypeScript Guide
+  tagline: Master async patterns, type safety, and modern web development
   image:
     src: /logo.svg
-    alt: Async & TypeScript Patterns
+    alt: Web Patterns Logo
   actions:
     - theme: brand
       text: Get Started
-      link: /guide/getting-started
+      link: /async/
+    - theme: alt
+      text: View Examples
+      link: /examples/
     - theme: alt
       text: View on GitHub
-      link: https://github.com/Underwood-Inc/async-mastery
+      link: https://github.com/Underwood-Inc/web-patterns
 
 features:
-  - icon: 🚀
-    title: Promise Patterns
-    details: Everything you need to know about Promises, from basics to advanced patterns.
-  - icon: ⚡
-    title: Task Management
-    details: Simple ways to handle multiple tasks in series, parallel, or racing.
-  - icon: ⏱️
-    title: Timer Patterns
-    details: Better ways to work with timeouts and intervals in JavaScript.
   - icon: 🔄
-    title: Control Flow
-    details: Smart patterns for handling events and API calls efficiently.
+    title: Async Patterns
+    details: Comprehensive guide to Promises, async/await, and modern async patterns
+    link: /async/
   - icon: 🛡️
-    title: Error Handling
-    details: Keep your async code reliable with proper error handling.
-  - icon: 📊
-    title: Performance
-    details: Tips and tricks to make your async code fast and efficient.
-  - icon: 🧪
-    title: TypeScript Types
-    details: Master utility types, type guards, and advanced type patterns.
-  - icon: 🧮
-    title: Array Operations
-    details: Type-safe array manipulations and transformations.
-  - icon: 📝
-    title: String Patterns
-    details: Template literals and type-safe string operations.
-  - icon: 💾
-    title: State Management
-    details: Type-safe state handling and immutable patterns.
-  - icon: 🧪
-    title: Testing Patterns
-    details: Best practices for testing TypeScript code.
-  - icon: 📚
-    title: Examples
-    details: Real-world examples combining async and TypeScript patterns.
+    title: TypeScript Patterns
+    details: Type-safe patterns and best practices for robust applications
+    link: /typescript/utility-types
+  - icon: 🎨
+    title: Modern Styling
+    details: CSS methodologies and SCSS patterns for maintainable styles
+    link: /styling/
 
-footer: OpenRAIL Licensed | Copyright © 2024-present Underwood Inc.
+customFeatures:
+  title: Why Choose This Guide?
+  items:
+    - title: Practical Examples
+      icon: 📚
+      details: Real-world code examples with interactive previews
+    - title: Best Practices
+      icon: ✨
+      details: Modern development patterns and industry standards
+    - title: Type Safety
+      icon: 🔒
+      details: Comprehensive TypeScript patterns and utilities
+    - title: Performance
+      icon: ⚡
+      details: Optimization techniques and performance patterns
+
+footer: MIT Licensed | Copyright © 2024-present Underwood Inc.
 ---
 
-# Modern Web Development Patterns
+## What's Inside?
 
-A comprehensive guide to async JavaScript, TypeScript patterns, and modern styling practices. This repository serves as a reference for implementing common patterns and best practices in web development.
+This guide provides a comprehensive collection of modern web development patterns, focusing on:
 
-## Features
-
-- Async JavaScript patterns and best practices
-- TypeScript utility types and patterns
-- Modern CSS methodologies and patterns
-- Comprehensive documentation and examples
-- Real-world use cases and implementations
+- **Async JavaScript**: Master Promises, async/await, and advanced control flow
+- **TypeScript Patterns**: Learn type-safe development and utility types
+- **Modern Styling**: Explore CSS methodologies and SCSS patterns
+- **Real Examples**: Practical, production-ready code samples
 
 ## Getting Started
 
-Visit our [Getting Started Guide](/guide/getting-started) to begin exploring the patterns and implementations.
+1. Browse the [Async Patterns](/async/) section for modern async JavaScript
+2. Explore [TypeScript Patterns](/typescript/utility-types) for type-safe development
+3. Learn [Modern Styling](/styling/) practices for maintainable CSS
+
+## Latest Updates
+
+- Added comprehensive async pattern examples
+- New TypeScript utility types and patterns
+- Modern styling methodologies and best practices
+- Improved performance optimization guides

@@ -1,3 +1,18 @@
+---
+title: SCSS Patterns Guide
+description: Master SCSS patterns and techniques. Learn about mixins, functions, variables, and advanced SCSS features for maintainable stylesheets.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - SCSS
+  - CSS
+  - Sass
+  - Mixins
+  - Variables
+  - Best Practices
+image: /web-patterns/images/scss-patterns-banner.png
+---
+
 # SCSS Patterns
 
 ## Overview

@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
+    "docs:build": "npm run generate:preview && vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -19,7 +19,8 @@
     "precommit": "lint-staged",
     "clean": "rimraf dist coverage docs/api",
     "prebuild": "npm run clean",
-    "postinstall": "npm run prepare"
+    "postinstall": "npm run prepare",
+    "generate:preview": "tsx docs/.vitepress/scripts/generatePreviewImage.ts"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -65,9 +66,11 @@
     "markdownlint": "^0.33.0",
     "markdownlint-cli": "^0.39.0",
     "prettier": "^3.2.0",
+    "puppeteer": "^23.10.1",
     "rimraf": "^5.0.0",
     "sass": "^1.82.0",
     "ts-jest": "^29.0.0",
+    "tsx": "^4.19.2",
     "typedoc": "^0.25.0",
     "typescript": "~5.5.0",
     "vitepress": "^1.0.0",
@@ -78,5 +81,9 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "dependencies": {
+    "fuse.js": "^7.0.0",
+    "gray-matter": "^4.0.3"
+  }
 }

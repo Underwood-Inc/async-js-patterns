@@ -1,3 +1,18 @@
+---
+title: Memory Management Examples
+description: Master memory management techniques in JavaScript. Learn about memory leaks, garbage collection, and efficient resource handling.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Memory Management
+  - Performance
+  - Resource Handling
+  - Examples
+  - Best Practices
+image: /web-patterns/images/memory-management-examples-banner.png
+---
+
 # Memory Management Examples
 
 This page demonstrates practical examples of managing memory efficiently in asynchronous operations.

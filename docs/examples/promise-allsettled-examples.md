@@ -1,3 +1,18 @@
+---
+title: Promise.allSettled Examples
+description: Learn Promise.allSettled patterns in JavaScript. Master handling multiple promises with mixed success and failure states.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Promises
+  - Async
+  - Error Handling
+  - Examples
+  - Best Practices
+image: /web-patterns/images/promise-allsettled-examples-banner.png
+---
+
 # Promise.allSettled Examples
 
 This page demonstrates practical examples of using `Promise.allSettled` to handle multiple promises and get all their results, regardless of success or failure.

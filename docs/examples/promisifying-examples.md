@@ -1,3 +1,18 @@
+---
+title: Promisifying Examples
+description: Learn how to convert callback-based APIs to Promises in JavaScript. Master promisification patterns and techniques.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Promises
+  - Async
+  - Callbacks
+  - Examples
+  - Best Practices
+image: /web-patterns/images/promisifying-examples-banner.png
+---
+
 # Promisifying Examples
 
 This page demonstrates practical examples of converting callback-based APIs to Promise-based APIs.

@@ -1,3 +1,19 @@
+---
+title: Promise.finally Pattern Examples
+description: Master Promise.finally patterns for proper cleanup and resource management in async operations. Learn TypeScript implementations and best practices.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Promise.finally
+  - Cleanup Patterns
+  - TypeScript
+  - Resource Management
+  - Error Handling
+  - Async Patterns
+category: examples
+image: /web-patterns/images/promise-finally-banner.png
+---
+
 # Promise.finally Examples
 
 Learn how to use `Promise.finally` for cleanup and resource management.

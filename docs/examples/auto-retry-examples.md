@@ -1,3 +1,18 @@
+---
+title: Auto-Retry Examples
+description: Learn how to implement automatic retry mechanisms in JavaScript. Explore exponential backoff, retry strategies, and error handling patterns.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Retry Patterns
+  - Error Handling
+  - Async
+  - Examples
+  - Best Practices
+image: /web-patterns/images/auto-retry-examples-banner.png
+---
+
 # Auto-Retry Examples
 
 This page demonstrates practical examples of implementing and using auto-retry patterns for handling transient failures.
@@ -401,6 +416,7 @@ try {
    ```
 
 4. Retry with fallback:
+
    ```typescript:preview
    async function retryWithFallback<T>(
      primary: () => Promise<T>,

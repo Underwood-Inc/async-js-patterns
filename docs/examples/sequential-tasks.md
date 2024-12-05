@@ -1,3 +1,18 @@
+---
+title: Sequential Tasks Examples
+description: Learn sequential task execution patterns in JavaScript. Master ordered task processing and dependency management.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Tasks
+  - Async
+  - Sequential Processing
+  - Examples
+  - Best Practices
+image: /web-patterns/images/sequential-tasks-banner.png
+---
+
 # Sequential Tasks Examples
 
 This page demonstrates practical examples of executing tasks in sequence, ensuring each task completes before the next begins.

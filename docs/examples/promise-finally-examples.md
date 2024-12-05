@@ -1,3 +1,18 @@
+---
+title: Promise.finally Examples
+description: Learn Promise.finally patterns in JavaScript. Master cleanup operations and guaranteed execution after promise resolution.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Promises
+  - Async
+  - Cleanup
+  - Examples
+  - Best Practices
+image: /web-patterns/images/promise-finally-examples-banner.png
+---
+
 # Promise.finally Examples
 
 This page demonstrates practical examples of using `Promise.finally` for cleanup and guaranteed execution scenarios.

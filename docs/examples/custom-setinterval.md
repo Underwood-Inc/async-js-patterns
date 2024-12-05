@@ -1,3 +1,18 @@
+---
+title: Custom setInterval Examples
+description: Implement custom interval timers in JavaScript. Learn about advanced timing patterns and interval management techniques.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Timers
+  - Intervals
+  - Custom Implementation
+  - Examples
+  - Best Practices
+image: /web-patterns/images/custom-setinterval-banner.png
+---
+
 # Custom setInterval Examples
 
 This page demonstrates practical examples of implementing and using custom setInterval functionality with enhanced features and better control.

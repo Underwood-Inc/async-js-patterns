@@ -1,0 +1,55 @@
+:root {
+  --vp-c-brand: #646cff;
+  --vp-c-brand-light: #747bff;
+  --vp-c-brand-lighter: #9499ff;
+  --vp-c-brand-dark: #5058df;
+  --vp-c-brand-darker: #4048bf;
+}
+
+.dark {
+  --vp-sidebar-bg-color: var(--vp-c-bg);
+  --vp-c-text-1: var(--vp-c-text-dark-1);
+  --vp-c-text-2: var(--vp-c-text-dark-2);
+  --vp-c-text-3: var(--vp-c-text-dark-3);
+}
+
+.VPSidebar {
+  background-color: var(--vp-sidebar-bg-color) !important;
+}
+
+.VPSidebarItem.level-0.is-link.is-active,
+.VPSidebarItem.level-1.is-link.is-active,
+.VPSidebarItem.level-2.is-link.is-active {
+  background: var(--vp-c-brand-dimm-1) !important;
+}
+
+.VPSidebarItem.level-0.is-link:hover,
+.VPSidebarItem.level-1.is-link:hover,
+.VPSidebarItem.level-2.is-link:hover {
+  background: var(--vp-c-bg-soft) !important;
+}
+
+.VPSidebarItem .text {
+  color: var(--vp-c-text-1) !important;
+}
+
+.VPSidebarItem.is-active .text {
+  color: var(--vp-c-brand) !important;
+  font-weight: 600;
+}
+
+.dark .VPSidebarItem .text {
+  color: var(--vp-c-text-dark-1) !important;
+}
+
+.dark .VPSidebarItem.is-active .text {
+  color: var(--vp-c-brand-lighter) !important;
+}
+
+.dark .VPSidebarItem.is-active {
+  background: var(--vp-c-bg-soft) !important;
+}
+
+.dark .VPSidebarItem:hover {
+  background: var(--vp-c-bg-soft) !important;
+} 

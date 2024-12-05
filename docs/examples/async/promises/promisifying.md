@@ -1,3 +1,19 @@
+---
+title: Promisifying Pattern Guide
+description: Learn how to convert callback-based APIs to Promises using promisification patterns. Master TypeScript implementations and async transformation techniques.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Promisification
+  - Callbacks
+  - TypeScript
+  - Async Patterns
+  - API Transformation
+  - Legacy Code
+category: examples
+image: /web-patterns/images/promisifying-banner.png
+---
+
 # Promisifying Examples
 
 Learn how to convert callback-based APIs into Promise-based ones.

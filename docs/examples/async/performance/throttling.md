@@ -1,3 +1,19 @@
+---
+title: Throttling Pattern Implementation
+description: Master throttling techniques for rate-limiting async operations. Learn how to control execution frequency and optimize performance.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Throttling
+  - Rate Limiting
+  - Performance
+  - TypeScript
+  - Event Handling
+  - Optimization
+category: examples
+image: /web-patterns/images/throttling-banner.png
+---
+
 # Throttling Examples
 
 Learn how to implement throttling patterns for rate limiting and performance optimization.

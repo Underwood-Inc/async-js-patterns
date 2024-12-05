@@ -1,3 +1,18 @@
+---
+title: TypeScript Type-Safe Arrays Guide
+description: Learn type-safe array patterns in TypeScript. Master array operations, type guards, and best practices for array manipulation.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - TypeScript
+  - Arrays
+  - Type Safety
+  - Data Structures
+  - Performance
+  - Best Practices
+image: /web-patterns/images/type-safe-arrays-banner.png
+---
+
 # Type-Safe Arrays in TypeScript
 
 This section explores patterns and best practices for working with arrays in a type-safe manner using TypeScript.

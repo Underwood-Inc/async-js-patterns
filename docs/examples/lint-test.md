@@ -1,4 +1,19 @@
-# Lint Test
+---
+title: Linting Test Examples
+description: Explore linting test patterns and configurations. Learn about code quality checks and automated testing setups.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Linting
+  - Testing
+  - Code Quality
+  - Examples
+  - Best Practices
+image: /web-patterns/images/lint-test-banner.png
+---
+
+# Linting Test Examples
 
 ## TypeScript Example with Issues
 

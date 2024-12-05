@@ -1,137 +1,261 @@
 @use 'sass:color';
-@use './variables' as *;
+
+// Purple theme variables
+$purple-light: #f8f7fc;
+$purple-dark: #2a2438;
+$purple-brand: #9d8cd6;
+$purple-brand-light: #b3a5e3;
+$purple-brand-dark: #7a69b3;
+$purple-gray-100: #f3f0ff;
+$purple-gray-200: #e9e4ff;
+$purple-gray-300: #d4ccf4;
+$purple-gray-400: #b4a6e5;
+$purple-gray-500: #9d8cd6;
+$purple-gray-600: #7a69b3;
+$purple-gray-700: #5d4d94;
+$purple-gray-800: #413369;
+$purple-gray-900: #2a2438;
+
+// Breakpoint mixins
+$breakpoints: (
+  'sm': 640px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+);
+
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "No breakpoint found for '#{$breakpoint}'";
+  }
+}
 
 :root {
-  // Light theme colors
+  // Light theme
   --vp-c-bg: #{$purple-light};
-  --vp-c-bg-alt: #{color.adjust($purple-light, $lightness: -5%)};
-  --vp-c-bg-soft: #{color.adjust($purple-light, $lightness: -2%)};
-  --vp-c-text: #{color.adjust($purple-dark, $lightness: -10%)};
+  --vp-c-bg-alt: #{$purple-gray-100};
+  --vp-c-bg-soft: #{$purple-gray-200};
+
   --vp-c-brand: #{$purple-brand};
   --vp-c-brand-light: #{$purple-brand-light};
+  --vp-c-brand-lighter: #{$purple-gray-300};
   --vp-c-brand-dark: #{$purple-brand-dark};
-  --vp-sidebar-width: 280px;
-  --scrollbar-color: #{rgba($purple-brand, 0.2)};
-  --scrollbar-thumb-color: #{rgba($purple-brand, 0.3)};
+  --vp-c-brand-darker: #{$purple-gray-700};
 
-  // Theme colors
-  --vp-c-default-1: var(--vp-c-gray-1);
-  --vp-c-default-2: var(--vp-c-gray-2);
-  --vp-c-default-3: var(--vp-c-gray-3);
-  --vp-c-default-soft: var(--vp-c-gray-soft);
+  // Text colors with proper contrast
+  --vp-c-text-1: #{$purple-gray-900};
+  --vp-c-text-2: #{$purple-gray-800};
+  --vp-c-text-3: #{$purple-gray-700};
 
-  --vp-c-brand-1: var(--vp-c-indigo-1);
-  --vp-c-brand-2: var(--vp-c-indigo-2);
-  --vp-c-brand-3: var(--vp-c-indigo-3);
-  --vp-c-brand-soft: var(--vp-c-indigo-soft);
+  // Sidebar and navigation - lighter sidebar
+  --vp-sidebar-bg-color: #{color.mix($purple-light, $purple-gray-100, 70%)}; // Lighter, more subtle sidebar
+  --vp-nav-bg-color: #{$purple-gray-200}; // Top navigation background
 
-  // Remove code block colors from here
-  --vp-code-block-border: #{$purple-brand};
-
-  // Light theme scrollbar
-  --scrollbar-track: var(--vp-c-bg-alt);
-  --scrollbar-thumb: var(--vp-c-brand-light);
-  --scrollbar-thumb-hover: var(--vp-c-brand);
-  --scrollbar-width: 12px;
-  --scrollbar-height: 12px;
+  // Light theme highlight
+  --vp-c-search-highlight: #{color.adjust($purple-brand, $alpha: -0.7)}; // More transparent
+  --vp-c-search-highlight-text: #{$purple-dark}; // Ensure text remains readable
 }
 
 .dark {
-  // Dark theme colors
+  // Dark theme
   --vp-c-bg: #{$purple-dark};
   --vp-c-bg-alt: #{color.adjust($purple-dark, $lightness: 5%)};
-  --vp-c-bg-soft: #{color.adjust($purple-dark, $lightness: 2%)};
-  --vp-c-text: #{color.adjust($purple-light, $lightness: 10%)};
+  --vp-c-bg-soft: #{color.adjust($purple-dark, $lightness: 3%)};
 
-  // Remove code block colors from here
-  --vp-code-block-bg: #1a1a2e;
-  --vp-code-block-border: #{color.adjust($purple-brand, $lightness: -10%)};
-  --vp-code-line-highlight-color: #2d2b55;
-  --vp-code-line-number-color: #5b5b8a;
-  --vp-code-line-color: #2d2b55;
+  // Text colors for dark mode
+  --vp-c-text-1: #{$purple-gray-100};
+  --vp-c-text-2: #{$purple-gray-200};
+  --vp-c-text-3: #{$purple-gray-300};
 
-  // Dark theme scrollbar
-  --scrollbar-track: var(--vp-c-bg-alt);
-  --scrollbar-thumb: var(--vp-c-brand-dark);
-  --scrollbar-thumb-hover: var(--vp-c-brand);
+  // Sidebar and navigation - adjusted for dark mode
+  --vp-sidebar-bg-color: #{color.adjust($purple-dark, $lightness: -3%)}; // Slightly darker than bg
+  --vp-nav-bg-color: #{color.adjust($purple-dark, $lightness: -5%)}; // Top navigation background
+
+  // Dark theme highlight
+  --vp-c-search-highlight: #{color.adjust($purple-brand-light, $alpha: -0.8)}; // More transparent
+  --vp-c-search-highlight-text: #{$purple-light}; // Light text for dark theme
 }
 
-// Remove this block
-div[class*='language-'] {
-  border: 1px solid var(--vp-code-block-border);
+// Sidebar styles with enhanced contrast for links
+.VPSidebar {
+  background-color: var(--vp-sidebar-bg-color) !important;
+
+  .VPSidebarItem.is-active .text {
+    color: var(--vp-c-brand-dark) !important; // Darker purple for active links
+  }
+
+  .VPSidebarItem .text {
+    color: var(--vp-c-text-2) !important; // Better contrast for regular links
+  }
 }
 
-// Firefox
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-color);
+// Top navigation styles
+.VPNavBar {
+  background-color: var(--vp-nav-bg-color) !important;
 }
 
-/* Scrollbars - Webkit (Chrome, Safari, newer Edge) */
+// Title container styles
+.VPNavBarTitle {
+  background-color: var(--vp-nav-bg-color) !important;
+}
+
+.VPSidebarItem.level-0.is-link.is-active,
+.VPSidebarItem.level-1.is-link.is-active,
+.VPSidebarItem.level-2.is-link.is-active {
+  background: var(--vp-c-brand-soft) !important;
+}
+
+.VPSidebarItem.level-0.is-link:hover,
+.VPSidebarItem.level-1.is-link:hover,
+.VPSidebarItem.level-2.is-link:hover {
+  background: var(--vp-c-bg-soft) !important;
+}
+
+.VPSidebarItem .text {
+  color: var(--vp-c-text) !important;
+}
+
+.VPSidebarItem.is-active .text {
+  color: var(--vp-c-brand) !important;
+  font-weight: 600;
+}
+
+// Hero section gradient text
+.name,
+.text {
+  background: -webkit-linear-gradient(
+    120deg,
+    var(--vp-c-brand-light) 30%,
+    var(--vp-c-brand)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark .name,
+.dark .text {
+  background: -webkit-linear-gradient(
+    120deg,
+    var(--vp-c-brand-light) 30%,
+    var(--vp-c-brand)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+// Code block styles
+.vp-doc {
+  div[class*='language-'] {
+    background-color: var(--vp-code-block-bg) !important;
+    border: 2px solid var(--vp-c-brand) !important;
+    border-radius: 8px !important;
+    margin: 1rem 0;
+    box-shadow: 0 0 8px rgba($purple-brand, 0.1);
+
+    // Dark mode adjustments
+    .dark & {
+      border-color: var(--vp-c-brand-dark) !important;
+      box-shadow: 0 0 8px rgba($purple-brand, 0.2);
+    }
+  }
+
+  pre,
+  code {
+    background: transparent;
+  }
+}
+
+// Add padding to left nav link items
+.VPLink.link.link {
+  padding: 0.5rem 1rem; // Add padding to create space around the text
+  border-radius: 4px; // Optional: Add border-radius for a smoother look
+
+  &:hover {
+    background-color: var(
+      --vp-c-bg-soft
+    ); // Ensure hover background color is consistent
+  }
+}
+
+// // Search result highlight styles for <mark> elements
+// mark[data-markjs='true'] {
+//   background-color: var(
+//     --vp-c-brand-light
+//   ); // Use a lighter purple for better contrast
+//   border-radius: 2px;
+//   padding: 0 2px;
+// }
+
+// .dark mark[data-markjs='true'] {
+//   background-color: var(--vp-c-brand-dark); // Use a darker purple for dark mode
+//   color: var(--vp-c-text-1); // Ensure text color is readable
+// }
+
+// Global highlight color
+::selection {
+  background-color: #{color.adjust($purple-brand, $alpha: -0.7)} !important;
+  color: #{color.adjust($purple-dark, $lightness: -20%)} !important;
+}
+
+.dark ::selection {
+  background-color: #{color.adjust($purple-brand, $alpha: -0.7)} !important;
+  color: #{color.adjust($purple-light, $lightness: -20%)} !important;
+}
+
+// Search result highlight override
+mark[data-markjs='true'] {
+  background-color: #{color.adjust($purple-brand, $alpha: -0.8)} !important;
+  color: #{color.adjust($purple-dark, $lightness: -40%)} !important;
+}
+
+.title .text mark[data-markjs='true'] {
+  background-color: #{color.adjust($purple-brand, $alpha: -0.85)} !important;
+}
+
+.dark mark[data-markjs='true'] {
+  background-color: #{color.adjust($purple-brand, $alpha: -0.8)} !important;
+  color: #{color.adjust($purple-light, $lightness: -20%)} !important;
+}
+
+// Modern, rounded scrollbar styles
 ::-webkit-scrollbar {
-  width: var(--space-sm);
-  height: var(--space-sm);
-  cursor: default;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--scrollbar-color);
-  border-radius: var(--radius-sm);
-  cursor: default;
+  background: #{color.adjust($purple-light, $lightness: -2%)};
+  border-radius: 10px; // More rounded track
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb-color);
-  border-radius: var(--radius-sm);
-  cursor: default;
+  background: #{color.adjust($purple-brand, $alpha: -0.5)};
+  border-radius: 10px; // More rounded thumb
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
 
   &:hover {
-    background: rgba(157, 140, 214, 0.5);
-    cursor: grab;
-  }
-
-  &:active {
-    cursor: grabbing;
-    background: rgba(157, 140, 214, 0.7);
+    background: #{color.adjust($purple-brand, $alpha: -0.3)};
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); // Enhanced shadow on hover
   }
 }
 
-/* Edge Legacy support */
-::-ms-scrollbar {
-  width: var(--space-sm);
-  height: var(--space-sm);
-  cursor: default;
-}
-
-::-ms-scrollbar-track {
-  background: var(--scrollbar-color);
-  border-radius: var(--radius-sm);
-  cursor: default;
-}
-
-::-ms-scrollbar-thumb {
-  background: var(--scrollbar-thumb-color);
-  border-radius: var(--radius-sm);
-  cursor: default;
-
-  &:hover {
-    background: rgba(157, 140, 214, 0.5);
-    cursor: grab;
+// Dark theme scrollbar
+.dark {
+  ::-webkit-scrollbar-track {
+    background: #{color.adjust($purple-dark, $lightness: 5%)};
   }
 
-  &:active {
-    cursor: grabbing;
-    background: rgba(157, 140, 214, 0.7);
+  ::-webkit-scrollbar-thumb {
+    background: #{color.adjust($purple-brand-dark, $alpha: -0.5)};
+
+    &:hover {
+      background: #{color.adjust($purple-brand-dark, $alpha: -0.3)};
+    }
   }
-}
-
-/* Reset any inherited cursors */
-html,
-body {
-  cursor: default;
-}
-
-// For iOS momentum scrolling
-* {
-  -webkit-overflow-scrolling: touch;
 }

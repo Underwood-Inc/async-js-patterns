@@ -1,3 +1,19 @@
+---
+title: Sequential Task Execution Patterns
+description: Learn how to implement sequential task execution patterns in TypeScript. Master ordered processing, dependencies, and workflow management.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Sequential Processing
+  - Task Dependencies
+  - TypeScript
+  - Workflow Management
+  - Error Handling
+  - State Management
+category: examples
+image: /web-patterns/images/sequential-tasks-banner.png
+---
+
 # Sequential Task Execution Examples
 
 Learn how to execute tasks in sequence with proper error handling and state management.

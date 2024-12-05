@@ -1,3 +1,19 @@
+---
+title: Custom Promise Implementation Guide
+description: Learn how to create and implement custom Promise wrappers. Master advanced Promise patterns with practical TypeScript examples.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Promises
+  - Custom Implementations
+  - TypeScript
+  - Async Programming
+  - Error Handling
+  - Advanced JavaScript
+category: examples
+image: /web-patterns/images/custom-promises-banner.png
+---
+
 # Custom Promise Usage Examples
 
 Learn how to create and use custom Promise wrappers for better control over asynchronous operations.

@@ -1,3 +1,18 @@
+---
+title: Error Handling Examples
+description: Learn robust error handling patterns in JavaScript. Master error recovery, graceful degradation, and error boundary implementation.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Error Handling
+  - Exception Handling
+  - Error Recovery
+  - Examples
+  - Best Practices
+image: /web-patterns/images/error-handling-examples-banner.png
+---
+
 # Error Handling Examples
 
 This page demonstrates practical examples of implementing and using error handling patterns for asynchronous operations.

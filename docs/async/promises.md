@@ -1,3 +1,20 @@
+---
+title: JavaScript Promise Patterns
+description: Deep dive into Promise patterns and best practices. Learn about Promise chaining, error handling, and advanced Promise combinators with practical examples.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Promises
+  - JavaScript
+  - Async Programming
+  - Error Handling
+  - Promise Chaining
+  - Promise Combinators
+  - Web Development
+  - Frontend Development
+image: /web-patterns/images/promises-banner.png
+---
+
 # Promise Patterns
 
 Learn how to effectively work with Promises in JavaScript.

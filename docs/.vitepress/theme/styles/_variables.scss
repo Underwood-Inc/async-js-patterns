@@ -1,9 +1,20 @@
-// Colors
-$purple-light: #f3f0ff;
-$purple-dark: #2a2438;
-$purple-brand: #9d8cd6;
-$purple-brand-light: #b4a6e5;
-$purple-brand-dark: #7b68b8;
+// Colors - Pastel Purple Theme
+$purple-light: #f8f7fc; // Very light purple for backgrounds
+$purple-dark: #2a2438; // Deep purple for dark mode
+$purple-brand: #9d8cd6; // Main purple brand color
+$purple-brand-light: #b3a5e3; // Lighter purple for hover states
+$purple-brand-dark: #7a69b3; // Darker purple for active states
+
+// Secondary Colors
+$purple-gray-100: #f3f0ff;
+$purple-gray-200: #e9e4ff;
+$purple-gray-300: #d4ccf4;
+$purple-gray-400: #b4a6e5;
+$purple-gray-500: #9d8cd6;
+$purple-gray-600: #7a69b3;
+$purple-gray-700: #5d4d94;
+$purple-gray-800: #413369;
+$purple-gray-900: #2a2438;
 
 // Typography
 $font-size-base: 16px;

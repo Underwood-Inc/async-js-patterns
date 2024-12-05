@@ -1,3 +1,19 @@
+---
+title: Promise.race Pattern Examples
+description: Implement timeout patterns and racing conditions with Promise.race. Learn advanced async competition patterns in TypeScript.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Promise.race
+  - Async Patterns
+  - Timeouts
+  - TypeScript
+  - Error Handling
+  - Competition Patterns
+category: examples
+image: /web-patterns/images/promise-race-banner.png
+---
+
 # Promise.race Examples
 
 Learn how to use `Promise.race` for implementing timeouts and racing conditions.

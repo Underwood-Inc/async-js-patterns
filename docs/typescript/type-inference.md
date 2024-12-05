@@ -1,3 +1,18 @@
+---
+title: TypeScript Type Inference Guide
+description: Master type inference in TypeScript. Learn about automatic type detection, contextual typing, and best practices for type inference.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - TypeScript
+  - Type Inference
+  - Type System
+  - Type Safety
+  - Code Quality
+  - Best Practices
+image: /web-patterns/images/type-inference-banner.png
+---
+
 # Type Inference in TypeScript
 
 This section explores TypeScript's type inference capabilities and best practices for leveraging them effectively.

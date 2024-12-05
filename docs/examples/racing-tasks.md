@@ -1,3 +1,18 @@
+---
+title: Racing Tasks Examples
+description: Master task racing patterns in JavaScript. Learn about competitive task execution and handling the first completion.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Tasks
+  - Async
+  - Race Conditions
+  - Examples
+  - Best Practices
+image: /web-patterns/images/racing-tasks-banner.png
+---
+
 # Racing Tasks Examples
 
 This page demonstrates practical examples of executing tasks in a racing pattern, where the first task to complete determines the outcome.

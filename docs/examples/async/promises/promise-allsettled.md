@@ -1,3 +1,19 @@
+---
+title: Promise.allSettled Pattern Examples
+description: Explore Promise.allSettled patterns for handling multiple async operations with comprehensive result tracking. Learn TypeScript implementations and error handling strategies.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Promise.allSettled
+  - Async Patterns
+  - TypeScript
+  - Error Handling
+  - Result Tracking
+  - Batch Processing
+category: examples
+image: /web-patterns/images/promise-allsettled-banner.png
+---
+
 # Promise.allSettled Examples
 
 Learn how to use `Promise.allSettled` for handling multiple promises regardless of their outcome.

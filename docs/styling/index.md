@@ -1,3 +1,19 @@
+---
+title: Modern CSS & SCSS Patterns
+description: Comprehensive guide to modern CSS methodologies and SCSS patterns. Learn about CSS architecture, responsive design, and maintainable styling practices.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - CSS
+  - SCSS
+  - Web Design
+  - Responsive Design
+  - CSS Architecture
+  - Frontend Development
+  - Styling Patterns
+image: /web-patterns/images/styling-banner.png
+---
+
 # Modern CSS & SCSS Patterns
 
 Learn modern CSS methodologies and SCSS patterns for scalable applications.

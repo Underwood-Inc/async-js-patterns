@@ -1,3 +1,18 @@
+---
+title: Code Examples
+description: Browse practical code examples demonstrating modern web development patterns, best practices, and implementation techniques.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Examples
+  - Code Samples
+  - Best Practices
+  - Web Development
+  - Implementation
+  - Patterns
+image: /web-patterns/images/examples-banner.png
+---
+
 # Examples Overview
 
 This section provides comprehensive, practical examples of all async patterns and implementations covered in this project. Each example is designed to demonstrate real-world usage and best practices.

@@ -1,3 +1,18 @@
+---
+title: TypeScript Utility Types Guide
+description: Comprehensive guide to TypeScript utility types. Learn about built-in type transformations, custom utility types, and advanced type manipulation.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - TypeScript
+  - Utility Types
+  - Type System
+  - Type Manipulation
+  - Type Safety
+  - Advanced TypeScript
+image: /web-patterns/images/utility-types-banner.png
+---
+
 # TypeScript Utility Types
 
 This section covers essential TypeScript utility types and their practical applications.

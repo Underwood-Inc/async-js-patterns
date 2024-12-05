@@ -1,3 +1,18 @@
+---
+title: TypeScript Mapped Types Guide
+description: Master mapped types in TypeScript. Learn about type transformations, property modifications, and advanced type mapping patterns.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - TypeScript
+  - Mapped Types
+  - Type System
+  - Type Transformations
+  - Advanced Types
+  - Type Manipulation
+image: /web-patterns/images/mapped-types-banner.png
+---
+
 # Mapped Types in TypeScript
 
 This section explores TypeScript's mapped types and their applications in type transformations.

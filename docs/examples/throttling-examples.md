@@ -1,3 +1,18 @@
+---
+title: Throttling Examples
+description: Master throttling techniques in JavaScript. Learn about rate limiting, performance optimization, and controlled execution.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Throttling
+  - Performance
+  - Rate Limiting
+  - Examples
+  - Best Practices
+image: /web-patterns/images/throttling-examples-banner.png
+---
+
 # Throttling Examples
 
 This page demonstrates practical examples of implementing and using throttling patterns to limit the rate of function execution.

@@ -1,0 +1,73 @@
+{
+  "name": "Web Patterns",
+  "short_name": "Web Patterns",
+  "description": "A comprehensive guide to async JavaScript, TypeScript patterns, and modern styling practices",
+  "start_url": "/web-patterns/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#646cff",
+  "icons": [
+    {
+      "src": "/web-patterns/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/web-patterns/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/web-patterns/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/web-patterns/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/web-patterns/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["education", "development", "programming"],
+  "screenshots": [
+    {
+      "src": "/web-patterns/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Desktop view of Web Patterns documentation"
+    },
+    {
+      "src": "/web-patterns/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Mobile view of Web Patterns documentation"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Async Patterns",
+      "url": "/web-patterns/async/",
+      "description": "Learn about async JavaScript patterns"
+    },
+    {
+      "name": "TypeScript Patterns",
+      "url": "/web-patterns/typescript/",
+      "description": "Explore TypeScript patterns and best practices"
+    },
+    {
+      "name": "Styling Patterns",
+      "url": "/web-patterns/styling/",
+      "description": "Discover modern CSS and SCSS patterns"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "orientation": "any"
+}

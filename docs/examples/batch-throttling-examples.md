@@ -1,3 +1,18 @@
+---
+title: Batch Throttling Examples
+description: Explore batch processing and throttling techniques in JavaScript. Learn how to optimize performance with batched operations and rate limiting.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Batch Processing
+  - Throttling
+  - Performance
+  - Examples
+  - Best Practices
+image: /web-patterns/images/batch-throttling-examples-banner.png
+---
+
 # Batch Throttling Examples
 
 This page demonstrates practical examples of implementing and using batch throttling patterns for efficient API calls and resource management.

@@ -1,3 +1,18 @@
+---
+title: Performance Monitoring Examples
+description: Learn how to implement performance monitoring in JavaScript applications. Master metrics collection, analysis, and optimization techniques.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Performance
+  - Monitoring
+  - Metrics
+  - Examples
+  - Best Practices
+image: /web-patterns/images/performance-monitoring-examples-banner.png
+---
+
 # Performance Monitoring Examples
 
 This page demonstrates practical examples of implementing and using performance monitoring patterns for tracking and analyzing application performance.

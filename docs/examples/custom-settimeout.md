@@ -1,3 +1,18 @@
+---
+title: Custom setTimeout Examples
+description: Create custom timeout implementations in JavaScript. Master advanced timing patterns and timeout management strategies.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Timers
+  - Timeouts
+  - Custom Implementation
+  - Examples
+  - Best Practices
+image: /web-patterns/images/custom-settimeout-banner.png
+---
+
 # Custom setTimeout Examples
 
 This page demonstrates practical examples of implementing and using custom setTimeout functionality with enhanced features and better control.

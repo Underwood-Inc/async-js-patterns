@@ -1,3 +1,18 @@
+---
+title: TypeScript Immutable State Guide
+description: Learn immutable state patterns and implementations in TypeScript. Master immutable data structures, state management, and performance optimization.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - TypeScript
+  - Immutability
+  - State Management
+  - Data Structures
+  - Performance
+  - Design Patterns
+image: /web-patterns/images/immutable-state-banner.png
+---
+
 # Immutable State in TypeScript
 
 This section explores patterns and best practices for implementing immutable state in TypeScript applications.

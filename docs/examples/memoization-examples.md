@@ -1,3 +1,18 @@
+---
+title: Memoization Examples
+description: Explore memoization techniques in JavaScript. Learn how to optimize performance with caching and function result memoization.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Memoization
+  - Performance
+  - Caching
+  - Examples
+  - Best Practices
+image: /web-patterns/images/memoization-examples-banner.png
+---
+
 # Memoization Examples
 
 This page demonstrates practical examples of implementing and using memoization patterns to cache function results for better performance.

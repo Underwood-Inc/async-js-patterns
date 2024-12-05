@@ -1,3 +1,19 @@
+---
+title: Promise.any Pattern Examples
+description: Learn how to use Promise.any for handling multiple async operations and selecting the first successful result. Includes TypeScript examples and best practices.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Promise.any
+  - Async Patterns
+  - TypeScript
+  - Error Handling
+  - Race Conditions
+  - Fallback Patterns
+category: examples
+image: /web-patterns/images/promise-any-banner.png
+---
+
 # Promise.any Examples
 
 Learn how to use `Promise.any` for handling the first successful promise resolution.

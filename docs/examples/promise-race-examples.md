@@ -1,3 +1,18 @@
+---
+title: Promise.race Examples
+description: Master Promise.race patterns in JavaScript. Learn about racing promises and handling the first resolution or rejection.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Promises
+  - Async
+  - Race Conditions
+  - Examples
+  - Best Practices
+image: /web-patterns/images/promise-race-examples-banner.png
+---
+
 # Promise.race Examples
 
 This page demonstrates practical examples of using `Promise.race` for competitive execution.

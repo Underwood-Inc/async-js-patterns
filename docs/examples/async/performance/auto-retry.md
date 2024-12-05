@@ -1,3 +1,19 @@
+---
+title: Auto-Retry Pattern Implementation
+description: Build robust retry mechanisms for async operations. Learn exponential backoff, retry strategies, and error recovery patterns.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Retry Patterns
+  - Error Recovery
+  - Exponential Backoff
+  - TypeScript
+  - Resilience
+  - Network Operations
+category: examples
+image: /web-patterns/images/auto-retry-banner.png
+---
+
 # Auto-Retry Examples
 
 Learn how to implement robust retry mechanisms for handling transient failures.

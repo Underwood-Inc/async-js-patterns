@@ -1,3 +1,18 @@
+---
+title: Promise.all Examples
+description: Master Promise.all usage in JavaScript. Learn about parallel promise execution, error handling, and performance optimization.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Promises
+  - Async
+  - Parallel Execution
+  - Examples
+  - Best Practices
+image: /web-patterns/images/promise-all-examples-banner.png
+---
+
 # Promise.all Examples
 
 This page demonstrates practical examples of using `Promise.all` for parallel execution.

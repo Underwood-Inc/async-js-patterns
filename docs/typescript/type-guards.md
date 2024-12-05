@@ -1,3 +1,18 @@
+---
+title: TypeScript Type Guards Guide
+description: Master type guards in TypeScript. Learn about type narrowing, custom type guards, assertion functions, and type safety patterns.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - TypeScript
+  - Type Guards
+  - Type Safety
+  - Type Narrowing
+  - Type System
+  - Error Handling
+image: /web-patterns/images/type-guards-banner.png
+---
+
 # Type Guards in TypeScript
 
 This section covers TypeScript type guards and their practical applications in type narrowing.

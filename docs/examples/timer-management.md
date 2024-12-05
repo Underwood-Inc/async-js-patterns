@@ -1,3 +1,18 @@
+---
+title: Timer Management Examples
+description: Learn timer management patterns in JavaScript. Master timeout handling, interval control, and timer optimization.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Timers
+  - Async
+  - Performance
+  - Examples
+  - Best Practices
+image: /web-patterns/images/timer-management-banner.png
+---
+
 # Timer Management Examples
 
 This page demonstrates practical examples of managing multiple timers, including cleanup, synchronization, and resource management.

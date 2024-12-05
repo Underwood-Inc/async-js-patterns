@@ -1,4 +1,19 @@
-# Linting Example
+---
+title: Linting Examples
+description: Master code linting practices and configurations. Learn about code style enforcement and quality control automation.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Linting
+  - Code Quality
+  - Style Guide
+  - Examples
+  - Best Practices
+image: /web-patterns/images/linting-example-banner.png
+---
+
+# Linting Examples
 
 This example shows some common TypeScript/JavaScript linting issues.
 

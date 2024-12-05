@@ -1,3 +1,19 @@
+---
+title: Custom setTimeout Implementation
+description: Build your own setTimeout implementation in TypeScript. Learn about timer internals, event loop interaction, and advanced timing patterns.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - setTimeout
+  - Timer Implementation
+  - TypeScript
+  - Event Loop
+  - Performance
+  - System Design
+category: examples
+image: /web-patterns/images/custom-settimeout-banner.png
+---
+
 # Custom setTimeout Examples
 
 Learn how to create and use custom setTimeout implementations with advanced features.

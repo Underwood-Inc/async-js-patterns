@@ -1,3 +1,19 @@
+---
+title: Debouncing Pattern Implementation
+description: Master debouncing patterns for handling high-frequency events. Learn about event throttling, timing control, and performance optimization.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Debouncing
+  - Event Handling
+  - Performance
+  - TypeScript
+  - User Input
+  - Optimization
+category: examples
+image: /web-patterns/images/debouncing-banner.png
+---
+
 # Debouncing Examples
 
 Learn how to implement debouncing patterns for rate limiting and performance optimization.

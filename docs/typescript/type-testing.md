@@ -1,3 +1,18 @@
+---
+title: TypeScript Type Testing Guide
+description: Learn type testing techniques in TypeScript. Master type assertions, type equality testing, and type-level correctness verification.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - TypeScript
+  - Type Testing
+  - Type System
+  - Type Safety
+  - Testing
+  - Code Quality
+image: /web-patterns/images/type-testing-banner.png
+---
+
 # Type Testing in TypeScript
 
 This section explores techniques and patterns for testing TypeScript types to ensure type-level correctness.

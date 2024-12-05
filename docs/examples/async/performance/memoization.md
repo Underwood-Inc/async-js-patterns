@@ -1,3 +1,19 @@
+---
+title: Memoization Pattern Implementation
+description: Learn advanced memoization patterns for optimizing async operations. Master caching strategies, cache invalidation, and memory management.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - Memoization
+  - Caching
+  - Performance
+  - TypeScript
+  - Memory Management
+  - Optimization
+category: examples
+image: /web-patterns/images/memoization-banner.png
+---
+
 # Memoization Examples
 
 Learn how to implement memoization patterns for caching and performance optimization.

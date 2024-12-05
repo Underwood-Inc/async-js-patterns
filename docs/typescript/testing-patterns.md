@@ -1,3 +1,18 @@
+---
+title: TypeScript Testing Patterns Guide
+description: Learn testing patterns and best practices in TypeScript. Master unit testing, type testing, mock testing, and test-driven development.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - TypeScript
+  - Testing
+  - Test Patterns
+  - Unit Testing
+  - Mock Testing
+  - Type Testing
+image: /web-patterns/images/testing-patterns-banner.png
+---
+
 # Testing Patterns in TypeScript
 
 This section explores patterns and best practices for testing TypeScript code, including type testing and test utilities.

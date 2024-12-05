@@ -1,3 +1,18 @@
+---
+title: TypeScript String Utilities Guide
+description: Explore comprehensive string utility functions in TypeScript. Learn about string validation, transformation, manipulation, and best practices.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - TypeScript
+  - String Utilities
+  - String Validation
+  - String Transformation
+  - Text Processing
+  - Code Organization
+image: /web-patterns/images/string-utilities-banner.png
+---
+
 # String Utilities in TypeScript
 
 This section provides a collection of type-safe string utility functions and patterns for common string operations.

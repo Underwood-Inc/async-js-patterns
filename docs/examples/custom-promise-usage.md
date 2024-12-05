@@ -1,3 +1,18 @@
+---
+title: Custom Promise Usage Examples
+description: Learn how to create and use custom Promise implementations. Explore advanced Promise patterns and custom async behavior.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - JavaScript
+  - Promises
+  - Async
+  - Custom Implementation
+  - Examples
+  - Best Practices
+image: /web-patterns/images/custom-promise-usage-banner.png
+---
+
 # Custom Promise Usage Examples
 
 This page demonstrates practical examples of using our custom Promise implementation.
@@ -210,6 +225,7 @@ describe('CustomPromise', () => {
    ```
 
 4. Proper error propagation:
+
    ```typescript:preview
    promise
      .then((value) => {

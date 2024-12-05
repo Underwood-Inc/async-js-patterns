@@ -1,3 +1,18 @@
+---
+title: TypeScript String Manipulation Guide
+description: Learn advanced string manipulation techniques in TypeScript. Master string transformations, pattern matching, and text processing.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - TypeScript
+  - String Manipulation
+  - Text Processing
+  - Pattern Matching
+  - Regular Expressions
+  - String Utilities
+image: /web-patterns/images/string-manipulation-banner.png
+---
+
 # String Manipulation in TypeScript
 
 This section covers type-safe string operations and template literal types.

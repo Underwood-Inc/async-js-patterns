@@ -1,3 +1,18 @@
+---
+title: TypeScript Array Operations Guide
+description: Master type-safe array operations in TypeScript. Learn about array manipulation, transformation patterns, and advanced array type utilities.
+date: 2024-01-01
+author: Underwood Inc
+tags:
+  - TypeScript
+  - Arrays
+  - Data Structures
+  - Type Safety
+  - Performance
+  - Algorithms
+image: /web-patterns/images/array-operations-banner.png
+---
+
 # Array Operations in TypeScript
 
 This section covers type-safe array operations and utility functions for array manipulation.
@@ -166,6 +181,7 @@ type MixedElement = ArrayElement<Mixed>; // type is string | number
    ```
 
 3. Type-Safe Array Sorting:
+
    ```typescript:preview
    function typeSafeSort<T>(
      array: T[],
