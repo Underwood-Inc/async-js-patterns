@@ -373,20 +373,20 @@ mark[data-markjs='true'] {
   text-decoration-style: dotted;
   text-decoration-color: var(--vp-c-brand);
   text-decoration-thickness: 1px;
-  cursor: pointer;
+  cursor: help !important;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 
   &:active {
     opacity: 0.7;
   }
-}
 
-// Error tooltip trigger
-.tooltip-trigger.has-error {
-  text-decoration-style: wavy;
-  text-decoration-color: rgba(255, 100, 100, 0.8);
-  text-decoration-thickness: 2px;
+  &.has-error {
+    text-decoration-style: wavy;
+    text-decoration-color: rgba(255, 100, 100, 0.8);
+    text-decoration-thickness: 2px;
+    cursor: help !important;
+  }
 }
 
 // Navigation z-index overrides
@@ -400,4 +400,13 @@ mark[data-markjs='true'] {
 
 .VPNavScreen {
   z-index: var(--vp-z-index-nav) !important;
+}
+
+// Add styles for tooltip triggers
+.tooltip-trigger {
+  cursor: help;
+
+  &.has-error {
+    cursor: help;
+  }
 }

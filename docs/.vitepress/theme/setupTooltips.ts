@@ -1,6 +1,7 @@
 import { inBrowser } from 'vitepress';
 import { createApp, h } from 'vue';
 import Tooltip from './components/Tooltip.vue';
+import TooltipLoader from './components/TooltipLoader.vue';
 import {
   createTooltipPortal,
   hideTooltip as importedHideTooltip,
@@ -50,6 +51,8 @@ const tooltipOpenTimes = new Map<string, number>();
 let closeTimeoutId: number | null = null;
 
 const DEBUG_HOVER_ZONES = false; // Toggle for visualization
+
+let loaderApp: any = null;
 
 function createDebugElement(rect: DOMRect, color: string): HTMLElement {
   const el = document.createElement('div');
@@ -679,4 +682,40 @@ function getDistanceFromTooltip(
   return Math.sqrt(
     Math.pow(mouseX - closestX, 2) + Math.pow(mouseY - closestY, 2)
   );
+}
+
+function showLoader() {
+  if (!inBrowser) return;
+
+  const loaderMount = document.createElement('div');
+  loaderApp = createApp(TooltipLoader);
+  loaderApp.mount(loaderMount);
+  document.body.appendChild(loaderMount);
+}
+
+export function initializeTooltips() {
+  if (!inBrowser || tooltipPortal) return;
+
+  showLoader();
+  tooltipPortal = createTooltipPortal();
+
+  // Process initial tooltips
+  const tooltips = document.querySelectorAll('[data-tooltip]');
+  const total = tooltips.length;
+  let processed = 0;
+
+  tooltips.forEach((tooltip, index) => {
+    processTooltip(tooltip as HTMLElement);
+    processed++;
+    if (window.tooltipLoader) {
+      window.tooltipLoader.updateProgress(processed, total);
+    }
+  });
+
+  // Hide loader when done
+  if (window.tooltipLoader) {
+    window.tooltipLoader.hideLoader();
+  }
+
+  // Rest of initialization...
 }
