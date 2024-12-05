@@ -31,20 +31,47 @@ export function showTooltip(
   if (!isBrowser || !tooltipContainer) return null;
 
   const tooltipMount = document.createElement('div');
-  tooltipMount.style.cssText = `
-    position: absolute;
-    transform: translate(${x}px, ${y}px);
-    width: auto;
-  `;
+  tooltipMount.style.position = 'fixed';
 
+  // Create the tooltip first to get its dimensions
   const app = createApp({
     render() {
       return h(Tooltip, {
         content,
-        x: 0,
-        y: 0,
+        position: 'above', // default position
         type,
-        showCloseButton: true,
+        onMounted: (el: HTMLElement) => {
+          const tooltipRect = el.getBoundingClientRect();
+          const viewportWidth = window.innerWidth;
+          const viewportHeight = window.innerHeight;
+
+          // Calculate available space
+          const spaceAbove = y;
+          const spaceBelow = viewportHeight - y;
+          const tooltipHeight = tooltipRect.height + 16; // Add padding
+
+          // Determine position (above or below)
+          const position =
+            spaceAbove > tooltipHeight || spaceAbove > spaceBelow
+              ? 'above'
+              : 'below';
+
+          // Calculate x position
+          let finalX = Math.min(
+            Math.max(x, tooltipRect.width / 2 + 10), // Don't go off left edge
+            viewportWidth - tooltipRect.width / 2 - 10 // Don't go off right edge
+          );
+
+          // Calculate y position
+          let finalY = position === 'above' ? y : y;
+
+          // Update tooltip position and props
+          tooltipMount.style.left = `${finalX}px`;
+          tooltipMount.style.top = `${finalY}px`;
+
+          // Update tooltip position prop
+          el.__vue__?.exposed?.updatePosition(position);
+        },
       });
     },
   });

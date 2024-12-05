@@ -1,9 +1,14 @@
 <template>
   <div
     class="tooltip-content"
-    :class="{ 'is-error': isErrorOnly, 'is-hovered': isHovered }"
+    :class="{
+      'is-error': isErrorOnly,
+      'is-hovered': isHovered,
+      'position-below': isPositionBelow,
+    }"
     :style="{
-      transform: `translate(-50%, -100%) translateY(-8px)`,
+      transform: transformStyle,
+      maxWidth: `${maxWidth}px`,
     }"
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
@@ -33,11 +38,21 @@ import ShimmerEffect from './ShimmerEffect.vue';
 
 const props = defineProps<{
   content: string;
-  x: number;
-  y: number;
-  type?: 'error' | 'default';
-  showCloseButton?: boolean;
+  position: 'above' | 'below';
+  maxWidth?: number;
 }>();
+
+const transformStyle = computed(() => {
+  return props.position === 'above'
+    ? 'translate(-50%, -100%) translateY(-8px)'
+    : 'translate(-50%, 0) translateY(8px)';
+});
+
+const maxWidth = computed(() => {
+  return props.maxWidth || Math.min(600, window.innerWidth * 0.5);
+});
+
+const isPositionBelow = computed(() => props.position === 'below');
 
 const messages = computed(() => props.content.split('|||'));
 
@@ -211,6 +226,16 @@ const isHovered = ref(false);
     border-radius: 4px;
     font-size: 0.9em;
   }
+
+  &.position-below {
+    .tooltip-pointer {
+      top: -6px;
+      bottom: auto;
+      transform: translateX(-50%) rotate(225deg);
+    }
+
+    animation: float-below 3s ease-in-out infinite;
+  }
 }
 
 .tooltip-content-inner {
@@ -322,5 +347,17 @@ const isHovered = ref(false);
 // Ensure tooltip has enough padding
 .tooltip-content {
   padding-right: 36px;
+}
+
+@keyframes float-below {
+  0% {
+    transform: translate(-50%, 0) translateY(8px);
+  }
+  50% {
+    transform: translate(-50%, 0) translateY(12px);
+  }
+  100% {
+    transform: translate(-50%, 0) translateY(8px);
+  }
 }
 </style>

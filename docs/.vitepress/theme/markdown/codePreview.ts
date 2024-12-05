@@ -98,7 +98,7 @@ export function codePreviewPlugin(md: MarkdownRenderer) {
       const info = term ? typeDefinitions[term] : undefined;
 
       if (!info) {
-        console.log('No type definition found for term:', term);
+        // console.log('No type definition found for term:', term);
         return;
       }
 
