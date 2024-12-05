@@ -1,3 +1,21 @@
+---
+title: Throttling
+description: Master the implementation of throttling patterns to control execution frequency in JavaScript and TypeScript applications.
+head:
+  - - meta
+    - name: keywords
+      content: throttling, rate limiting, performance optimization, JavaScript, TypeScript, async patterns, execution control, event handling
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Throttling | Advanced Async Patterns
+  - - meta
+    - property: og:description
+      content: Learn how to implement throttling patterns to optimize execution frequency and improve performance in modern web applications.
+---
+
 # Throttling
 
 ## Overview

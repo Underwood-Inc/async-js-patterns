@@ -1,3 +1,21 @@
+---
+title: Auto-Retry Pattern
+description: Learn how to implement automatic retry mechanisms with exponential backoff for handling transient failures in asynchronous operations.
+head:
+  - - meta
+    - name: keywords
+      content: auto-retry, exponential backoff, error recovery, resilience pattern, async operations, fault tolerance, TypeScript, JavaScript
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Auto-Retry Pattern | Advanced Async Patterns
+  - - meta
+    - property: og:description
+      content: Implement robust auto-retry mechanisms with exponential backoff to handle transient failures in your async operations.
+---
+
 # Auto-Retry
 
 ## Overview

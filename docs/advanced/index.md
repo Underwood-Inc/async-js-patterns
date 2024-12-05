@@ -1,3 +1,21 @@
+---
+title: Advanced Async Patterns
+description: Comprehensive guide to advanced asynchronous patterns and techniques for JavaScript and TypeScript applications, including performance optimization, error handling, and development tools.
+head:
+  - - meta
+    - name: keywords
+      content: async patterns, JavaScript, TypeScript, performance optimization, error handling, development tools, async programming
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Advanced Async Patterns | Modern Web Development
+  - - meta
+    - property: og:description
+      content: Learn advanced asynchronous patterns and techniques for JavaScript and TypeScript applications, including performance optimization, error handling, and development tools.
+---
+
 # Advanced Async Patterns
 
 ## Overview

@@ -1,3 +1,21 @@
+---
+title: Promise.all Implementation
+description: Learn how to implement Promise.all from scratch, understanding parallel promise execution and result aggregation.
+head:
+  - - meta
+    - name: keywords
+      content: Promise.all, promise implementation, parallel promises, JavaScript promises, TypeScript promises, async patterns, promise aggregation
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Promise.all Implementation | Modern Web Development
+  - - meta
+    - property: og:description
+      content: Deep dive into implementing Promise.all from scratch, mastering parallel promise execution and result handling.
+---
+
 # Promise.all Implementation
 
 ## Overview

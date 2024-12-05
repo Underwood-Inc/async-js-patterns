@@ -1,4 +1,22 @@
-# Implementing N Async Tasks in Parallel
+---
+title: Parallel Task Execution Patterns
+description: Learn how to implement efficient parallel task execution patterns in JavaScript and TypeScript applications.
+head:
+  - - meta
+    - name: keywords
+      content: parallel tasks, concurrent execution, async patterns, JavaScript, TypeScript, task management, performance optimization
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Parallel Task Execution Patterns | Modern Web Development
+  - - meta
+    - property: og:description
+      content: Master parallel task execution patterns to optimize performance and resource utilization in modern web applications.
+---
+
+# Parallel Task Execution Patterns
 
 ## Overview
 

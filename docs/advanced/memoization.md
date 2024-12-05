@@ -1,3 +1,21 @@
+---
+title: Memoization
+description: Learn how to implement efficient memoization patterns for caching expensive operations in JavaScript and TypeScript applications.
+head:
+  - - meta
+    - name: keywords
+      content: memoization, caching, performance optimization, JavaScript, TypeScript, function caching, computation optimization, async caching
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Memoization | Advanced Async Patterns
+  - - meta
+    - property: og:description
+      content: Master memoization techniques to optimize expensive computations and improve application performance in modern web development.
+---
+
 # Memoization
 
 ## Overview

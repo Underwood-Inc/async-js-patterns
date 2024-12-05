@@ -1,3 +1,21 @@
+---
+title: Performance Profiling
+description: Comprehensive guide to profiling and optimizing asynchronous code performance in JavaScript and TypeScript applications.
+head:
+  - - meta
+    - name: keywords
+      content: performance profiling, code optimization, async performance, JavaScript, TypeScript, profiling tools, benchmarking, metrics
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Performance Profiling | Advanced Async Patterns
+  - - meta
+    - property: og:description
+      content: Learn advanced techniques for profiling and optimizing asynchronous code performance in modern web applications.
+---
+
 # Performance Profiling
 
 ## Overview

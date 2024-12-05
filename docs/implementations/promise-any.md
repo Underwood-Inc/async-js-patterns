@@ -1,3 +1,21 @@
+---
+title: Promise.any Implementation
+description: Learn how to implement Promise.any from scratch, handling race conditions and aggregating rejection reasons.
+head:
+  - - meta
+    - name: keywords
+      content: Promise.any, promise implementation, promise racing, JavaScript promises, TypeScript promises, async patterns, AggregateError
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Promise.any Implementation | Modern Web Development
+  - - meta
+    - property: og:description
+      content: Deep dive into implementing Promise.any from scratch, mastering promise racing and error aggregation.
+---
+
 # Promise.any Implementation
 
 ## Overview

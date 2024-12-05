@@ -1,3 +1,21 @@
+---
+title: Custom Promise Implementation
+description: Learn how to implement a custom Promise class from scratch in JavaScript and TypeScript, understanding the internals of Promises.
+head:
+  - - meta
+    - name: keywords
+      content: custom promise, promise implementation, JavaScript promises, TypeScript promises, async patterns, promise internals, promise mechanics
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Custom Promise Implementation | Modern Web Development
+  - - meta
+    - property: og:description
+      content: Deep dive into implementing a custom Promise class from scratch, understanding Promise mechanics and internals.
+---
+
 # Custom Promise Implementation
 
 ## Overview

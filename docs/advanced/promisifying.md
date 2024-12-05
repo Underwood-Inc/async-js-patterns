@@ -1,3 +1,21 @@
+---
+title: Promisifying
+description: Learn how to convert callback-based APIs into Promise-based interfaces in JavaScript and TypeScript applications.
+head:
+  - - meta
+    - name: keywords
+      content: promisifying, promises, callbacks, async/await, JavaScript, TypeScript, API conversion, async patterns
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Promisifying | Advanced Async Patterns
+  - - meta
+    - property: og:description
+      content: Master the techniques of converting callback-based APIs into modern Promise-based interfaces for cleaner async code.
+---
+
 # Promisifying
 
 ## Overview

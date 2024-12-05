@@ -1,3 +1,21 @@
+---
+title: Getting Started
+description: Quick start guide for Modern Web Development Patterns, including installation, basic setup, and first steps with async patterns.
+head:
+  - - meta
+    - name: keywords
+      content: getting started, installation, setup, quick start, JavaScript, TypeScript, web development, async patterns
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Getting Started | Modern Web Development
+  - - meta
+    - property: og:description
+      content: Learn how to get started with Modern Web Development Patterns - installation, setup, and first steps with async patterns.
+---
+
 # Getting Started
 
 ## Overview

@@ -1,4 +1,22 @@
-# Implementing N Async Tasks in Race
+---
+title: Racing Task Patterns
+description: Learn how to implement racing task patterns for competitive execution in JavaScript and TypeScript applications.
+head:
+  - - meta
+    - name: keywords
+      content: racing tasks, competitive execution, async patterns, JavaScript, TypeScript, task management, performance optimization
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Racing Task Patterns | Modern Web Development
+  - - meta
+    - property: og:description
+      content: Master racing task patterns to implement competitive execution strategies in modern web applications.
+---
+
+# Racing Task Patterns
 
 ## Overview
 

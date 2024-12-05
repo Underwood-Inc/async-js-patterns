@@ -1,3 +1,21 @@
+---
+title: Promise.resolve and Promise.reject Implementation
+description: Learn how to implement Promise.resolve and Promise.reject from scratch, understanding immediate promise resolution and rejection.
+head:
+  - - meta
+    - name: keywords
+      content: Promise.resolve, Promise.reject, promise implementation, JavaScript promises, TypeScript promises, async patterns, promise states
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Promise.resolve and Promise.reject Implementation | Modern Web Development
+  - - meta
+    - property: og:description
+      content: Deep dive into implementing Promise.resolve and Promise.reject from scratch, mastering immediate promise resolution and rejection patterns.
+---
+
 # Promise.resolve and Promise.reject Implementation
 
 ## Overview

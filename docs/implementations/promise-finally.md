@@ -1,3 +1,21 @@
+---
+title: Promise.finally Implementation
+description: Learn how to implement Promise.finally from scratch, handling cleanup operations in promise chains.
+head:
+  - - meta
+    - name: keywords
+      content: Promise.finally, promise implementation, cleanup operations, JavaScript promises, TypeScript promises, async patterns, promise chains
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Promise.finally Implementation | Modern Web Development
+  - - meta
+    - property: og:description
+      content: Deep dive into implementing Promise.finally from scratch, mastering cleanup operations in promise chains.
+---
+
 # Promise.finally Implementation
 
 ## Overview

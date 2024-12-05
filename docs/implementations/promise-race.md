@@ -1,3 +1,21 @@
+---
+title: Promise.race Implementation
+description: Learn how to implement Promise.race from scratch, handling competitive promise execution and early resolution.
+head:
+  - - meta
+    - name: keywords
+      content: Promise.race, promise implementation, promise racing, JavaScript promises, TypeScript promises, async patterns, competitive execution
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Promise.race Implementation | Modern Web Development
+  - - meta
+    - property: og:description
+      content: Deep dive into implementing Promise.race from scratch, mastering competitive promise execution and early resolution patterns.
+---
+
 # Promise.race Implementation
 
 ## Overview

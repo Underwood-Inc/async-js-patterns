@@ -1,3 +1,21 @@
+---
+title: Memory Management
+description: Best practices and techniques for managing memory in asynchronous JavaScript and TypeScript applications.
+head:
+  - - meta
+    - name: keywords
+      content: memory management, memory leaks, garbage collection, JavaScript, TypeScript, performance optimization, resource management, async memory
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Memory Management | Advanced Async Patterns
+  - - meta
+    - property: og:description
+      content: Learn effective memory management techniques to prevent leaks and optimize resource usage in modern web applications.
+---
+
 # Memory Management
 
 ## Overview

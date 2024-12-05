@@ -1,3 +1,21 @@
+---
+title: Error Handling Strategies
+description: Comprehensive guide to implementing robust error handling patterns for asynchronous operations in JavaScript and TypeScript.
+head:
+  - - meta
+    - name: keywords
+      content: error handling, async errors, exception handling, JavaScript, TypeScript, error recovery, fault tolerance, error boundaries
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Error Handling Strategies | Advanced Async Patterns
+  - - meta
+    - property: og:description
+      content: Learn best practices for handling errors in asynchronous operations to build more resilient web applications.
+---
+
 # Error Handling
 
 ## Overview

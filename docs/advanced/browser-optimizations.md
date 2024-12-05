@@ -1,3 +1,21 @@
+---
+title: Browser Optimizations
+description: Comprehensive guide to optimizing asynchronous operations in browser environments, including performance patterns and best practices.
+head:
+  - - meta
+    - name: keywords
+      content: browser optimization, web performance, async patterns, JavaScript, TypeScript, client-side optimization, web workers, requestAnimationFrame
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Browser Optimizations | Advanced Async Patterns
+  - - meta
+    - property: og:description
+      content: Learn advanced techniques for optimizing asynchronous operations in browser environments to create faster, more responsive web applications.
+---
+
 # Browser Optimizations
 
 ## Overview

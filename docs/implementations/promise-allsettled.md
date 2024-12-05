@@ -1,3 +1,21 @@
+---
+title: Promise.allSettled Implementation
+description: Learn how to implement Promise.allSettled from scratch, handling both fulfilled and rejected promises in parallel execution.
+head:
+  - - meta
+    - name: keywords
+      content: Promise.allSettled, promise implementation, parallel promises, JavaScript promises, TypeScript promises, async patterns, promise status
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Promise.allSettled Implementation | Modern Web Development
+  - - meta
+    - property: og:description
+      content: Deep dive into implementing Promise.allSettled from scratch, mastering promise status handling and result aggregation.
+---
+
 # Promise.allSettled Implementation
 
 ## Overview

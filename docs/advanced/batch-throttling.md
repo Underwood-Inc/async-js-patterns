@@ -1,3 +1,21 @@
+---
+title: Batch Throttling
+description: Learn how to implement efficient batch processing with throttling for API calls and data operations in JavaScript and TypeScript applications.
+head:
+  - - meta
+    - name: keywords
+      content: batch processing, throttling, API optimization, performance patterns, async operations, TypeScript, JavaScript, rate limiting
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Batch Throttling | Advanced Async Patterns
+  - - meta
+    - property: og:description
+      content: Master batch processing techniques with throttling to optimize API calls and data operations in modern web applications.
+---
+
 # Batch Throttling
 
 ## Overview

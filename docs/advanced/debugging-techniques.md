@@ -1,4 +1,22 @@
-# Debugging Async Code
+---
+title: Debugging Techniques
+description: Advanced techniques and strategies for debugging asynchronous code in JavaScript and TypeScript applications.
+head:
+  - - meta
+    - name: keywords
+      content: debugging, async debugging, troubleshooting, JavaScript, TypeScript, development tools, error tracking, debugging techniques, console debugging, breakpoints
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Debugging Techniques | Advanced Async Patterns
+  - - meta
+    - property: og:description
+      content: Master advanced debugging techniques for asynchronous operations to efficiently troubleshoot and maintain modern web applications.
+---
+
+# Debugging Techniques
 
 ## Overview
 

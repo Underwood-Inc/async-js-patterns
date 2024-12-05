@@ -1,4 +1,22 @@
-# Implementing N Async Tasks in Series
+---
+title: Sequential Task Execution Patterns
+description: Learn how to implement sequential task execution patterns in JavaScript and TypeScript applications.
+head:
+  - - meta
+    - name: keywords
+      content: sequential tasks, series execution, async patterns, JavaScript, TypeScript, task management, control flow
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Sequential Task Execution Patterns | Modern Web Development
+  - - meta
+    - property: og:description
+      content: Master sequential task execution patterns to implement ordered processing in modern web applications.
+---
+
+# Sequential Task Execution Patterns
 
 ## Overview
 

@@ -1,3 +1,21 @@
+---
+title: Performance Monitoring
+description: Learn how to implement effective performance monitoring for asynchronous operations in modern web applications.
+head:
+  - - meta
+    - name: keywords
+      content: performance monitoring, metrics, async operations, JavaScript, TypeScript, performance tracking, analytics, optimization
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Performance Monitoring | Advanced Async Patterns
+  - - meta
+    - property: og:description
+      content: Master performance monitoring techniques to track and optimize asynchronous operations in your web applications.
+---
+
 # Performance Monitoring
 
 ## Overview

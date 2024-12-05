@@ -1,4 +1,22 @@
-# Testing Strategies for Async Code
+---
+title: Testing Strategies
+description: Comprehensive guide to testing asynchronous code in JavaScript and TypeScript applications effectively.
+head:
+  - - meta
+    - name: keywords
+      content: testing strategies, async testing, unit tests, integration tests, JavaScript, TypeScript, test automation, async patterns
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Testing Strategies | Advanced Async Patterns
+  - - meta
+    - property: og:description
+      content: Learn effective strategies for testing asynchronous code to ensure reliability and maintainability in modern web applications.
+---
+
+# Testing Strategies
 
 ## Overview
 

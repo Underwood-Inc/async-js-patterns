@@ -1,3 +1,21 @@
+---
+title: Configuration Guide
+description: Comprehensive configuration guide for Modern Web Development Patterns, including customization options and advanced settings.
+head:
+  - - meta
+    - name: keywords
+      content: configuration, settings, customization, JavaScript, TypeScript, web development, async patterns, setup options
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Configuration Guide | Modern Web Development
+  - - meta
+    - property: og:description
+      content: Learn how to configure and customize Modern Web Development Patterns for your specific needs and requirements.
+---
+
 # Configuration Guide
 
 ## Code Quality Tools

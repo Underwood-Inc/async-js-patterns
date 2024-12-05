@@ -1,3 +1,21 @@
+---
+title: Debouncing
+description: Master the debouncing pattern to optimize event handling and improve performance in JavaScript and TypeScript applications.
+head:
+  - - meta
+    - name: keywords
+      content: debouncing, event handling, performance optimization, JavaScript, TypeScript, rate limiting, input handling, async patterns
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: Debouncing | Advanced Async Patterns
+  - - meta
+    - property: og:description
+      content: Learn how to implement debouncing to optimize event handling and improve application performance in modern web development.
+---
+
 # Debouncing
 
 ## Overview

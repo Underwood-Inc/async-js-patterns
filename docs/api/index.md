@@ -1,6 +1,22 @@
 ---
-title: API Documentation
+title: API Reference
+description: Complete API reference documentation for Modern Web Development Patterns, including async operations, performance patterns, and utility functions.
+head:
+  - - meta
+    - name: keywords
+      content: API reference, JavaScript API, TypeScript API, async patterns, web development, documentation, function reference
+  - - meta
+    - name: author
+      content: Modern Web Development Patterns
+  - - meta
+    - property: og:title
+      content: API Reference | Modern Web Development
+  - - meta
+    - property: og:description
+      content: Comprehensive API reference documentation for Modern Web Development Patterns library, covering async operations and utility functions.
 ---
+
+# API Reference
 
 ## Overview
 
