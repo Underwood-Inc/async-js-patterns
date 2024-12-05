@@ -1,31 +1,28 @@
 <template>
   <button
-    class="tooltip-dev-toggle"
-    :class="{ 'is-active': isPersistent }"
-    @click="togglePersistence"
+    class="dev-button"
+    :class="{ 'is-active': isEnabled }"
+    @click="toggleDebug"
   >
-    <span class="icon">📌</span>
-    {{ isPersistent ? 'Unpin Tooltips' : 'Pin Tooltips' }}
+    <span class="icon">🐛</span>
+    {{ isEnabled ? 'Disable Debug' : 'Enable Debug' }}
   </button>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { toggleTooltipPersistence } from '../setupTooltips';
+import { toggleDebugLogging } from '../../markdown/codePreview';
 
-const isPersistent = ref(false);
+const isEnabled = ref(false);
 
-function togglePersistence() {
-  isPersistent.value = !isPersistent.value;
-  toggleTooltipPersistence(isPersistent.value);
+function toggleDebug() {
+  isEnabled.value = !isEnabled.value;
+  toggleDebugLogging(isEnabled.value);
 }
 </script>
 
 <style scoped>
-.tooltip-dev-toggle {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+.dev-button {
   padding: 8px 12px;
   background: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-border);
@@ -37,14 +34,14 @@ function togglePersistence() {
   align-items: center;
   gap: 6px;
   transition: all 0.2s ease;
-  z-index: 9999998;
+  width: 100%;
 }
 
-.tooltip-dev-toggle:hover {
+.dev-button:hover {
   background: var(--vp-c-bg-mute);
 }
 
-.tooltip-dev-toggle.is-active {
+.dev-button.is-active {
   background: var(--vp-c-brand);
   color: white;
   border-color: var(--vp-c-brand-dark);

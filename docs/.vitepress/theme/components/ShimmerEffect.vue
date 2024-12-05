@@ -7,9 +7,11 @@
 <style scoped>
 .shimmer-container {
   position: absolute;
-  inset: 0;
+  inset: -2px;
   overflow: hidden;
   pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
 }
 
 .shimmer-overlay {

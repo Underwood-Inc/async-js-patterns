@@ -15,7 +15,7 @@ export function createTooltipPortal(): HTMLDivElement | null {
     right: 0;
     bottom: 0;
     pointer-events: none;
-    z-index: 9999999;
+    z-index: var(--vp-z-index-tooltip);
   `;
   document.body.appendChild(tooltipContainer);
   return tooltipContainer;
@@ -25,18 +25,26 @@ export function showTooltip(
   tooltipContainer: HTMLDivElement | null,
   content: string,
   x: number,
-  y: number
+  y: number,
+  type: 'error' | 'default' = 'default'
 ): HTMLDivElement | null {
   if (!isBrowser || !tooltipContainer) return null;
 
   const tooltipMount = document.createElement('div');
+  tooltipMount.style.cssText = `
+    position: absolute;
+    transform: translate(${x}px, ${y}px);
+    width: auto;
+  `;
 
   const app = createApp({
     render() {
       return h(Tooltip, {
         content,
-        x,
-        y,
+        x: 0,
+        y: 0,
+        type,
+        showCloseButton: true,
       });
     },
   });

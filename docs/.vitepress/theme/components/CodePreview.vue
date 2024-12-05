@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useData } from 'vitepress';
+import { parse } from '@typescript-eslint/typescript-estree';
 
 const props = defineProps<{
   code: string;
@@ -14,19 +15,46 @@ const { isDark } = useData();
 onMounted(() => {
   if (!codeRef.value || !props.tooltips) return;
 
-  // Add tooltips to matching text
-  Object.entries(props.tooltips).forEach(([term, info]) => {
-    const text = codeRef.value!.innerHTML;
-    const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(`(${escapedTerm})(?![^<]*>|[^<>]*</)`, 'g');
-
-    codeRef.value!.innerHTML = text.replace(regex, (match) => {
-      const tooltip = info.type
-        ? `${info.type}\n\n${info.description}`
-        : info.description;
-      return `<span class="tooltip" data-tooltip="${tooltip}">${match}</span>`;
-    });
+  // Parse the code to get the AST
+  const ast = parse(props.code, {
+    loc: true,
+    range: true,
+    tokens: true,
+    comment: true,
   });
+
+  // Function to add tooltips to relevant nodes
+  function addTooltips(node: any) {
+    if (!node || !node.range) return;
+
+    const { range } = node;
+    const text = props.code.slice(range[0], range[1]);
+
+    if (props.tooltips[text]) {
+      const tooltip = props.tooltips[text].type
+        ? `${props.tooltips[text].type}\n\n${props.tooltips[text].description}`
+        : props.tooltips[text].description;
+
+      // Add tooltip span
+      const tooltipSpan = `<span class="tooltip" data-tooltip="${tooltip}">${text}</span>`;
+      codeRef.value!.innerHTML = codeRef.value!.innerHTML.replace(
+        text,
+        tooltipSpan
+      );
+    }
+  }
+
+  // Traverse the AST and add tooltips
+  function traverse(node: any) {
+    if (Array.isArray(node)) {
+      node.forEach(traverse);
+    } else if (node && typeof node === 'object') {
+      addTooltips(node);
+      Object.values(node).forEach(traverse);
+    }
+  }
+
+  traverse(ast);
 });
 </script>
 

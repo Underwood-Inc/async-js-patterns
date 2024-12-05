@@ -1,5 +1,5 @@
 @use 'sass:color';
-@use './variables' as *;
+@use './_variables.scss';
 
 :root {
   --vp-code-block-bg: var(--vp-c-bg-soft);
@@ -10,6 +10,7 @@
 
   div[class*='language-'] {
     position: relative;
+    z-index: $z-index-code-block;
   }
 
   .has-tooltip {
@@ -18,7 +19,7 @@
 
     &::before {
       position: absolute;
-      z-index: 99999;
+      z-index: $z-index-tooltip;
       overflow: visible;
     }
   }
@@ -49,7 +50,7 @@ html:not(.dark) {
   }
 
   .has-tooltip::before {
-    z-index: $z-index-tooltip; // Use variable for tooltip z-index
+    z-index: $z-index-tooltip;
   }
 }
 
@@ -63,7 +64,7 @@ html:not(.dark) {
   }
 
   .has-tooltip::before {
-    z-index: $z-index-tooltip; // Use variable for tooltip z-index
+    z-index: $z-index-tooltip;
   }
 }
 

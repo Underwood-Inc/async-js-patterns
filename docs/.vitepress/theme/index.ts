@@ -5,7 +5,7 @@ import { setupTooltips } from './setupTooltips';
 import './styles/custom.scss';
 
 export default {
-  extends: DefaultTheme,
+  ...DefaultTheme,
   Layout,
   enhanceApp({ app }) {
     if (inBrowser) {

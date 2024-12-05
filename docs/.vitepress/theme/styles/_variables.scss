@@ -1,3 +1,5 @@
+@use 'sass:map';
+
 // Colors - Pastel Purple Theme
 $purple-light: #f8f7fc; // Very light purple for backgrounds
 $purple-dark: #2a2438; // Deep purple for dark mode
@@ -43,13 +45,21 @@ $breakpoint-lg: 1024px;
 $breakpoint-xl: 1280px;
 
 // Z-indices
-$z-index-base: 1;
-$z-index-content: 10;
-$z-index-code-block: 20;
-$z-index-dropdown: 1000;
-$z-index-sticky: 1020;
-$z-index-fixed: 1030;
-$z-index-modal-backdrop: 1040;
-$z-index-modal: 1050;
-$z-index-popover: 1060;
-$z-index-tooltip: 1070;
+$z-index: (
+  'base': 1,
+  'content': 10,
+  'code-block': 20,
+  'dropdown': 1000,
+  'sticky': 1020,
+  'fixed': 1030,
+  'modal-backdrop': 1040,
+  'modal': 1050,
+  'popover': 1060,
+  'tooltip': 1070,
+  'nav': 1080,
+);
+
+// Function to get z-index
+@function get-z-index($key) {
+  @return map.get($z-index, $key);
+}
