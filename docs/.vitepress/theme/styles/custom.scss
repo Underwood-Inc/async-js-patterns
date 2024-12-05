@@ -16,6 +16,10 @@ $purple-gray-700: #5d4d94;
 $purple-gray-800: #413369;
 $purple-gray-900: #2a2438;
 
+// Update the code background variables
+$code-bg-light: #{color.adjust($purple-light, $lightness: -5%)}; // Much lighter background
+$code-bg-dark: #{color.adjust($purple-dark, $lightness: -5%)}; // Keep dark theme dark
+
 // Breakpoint mixins
 $breakpoints: (
   'sm': 640px,
@@ -150,14 +154,19 @@ $breakpoints: (
 // Code block styles
 .vp-doc {
   div[class*='language-'] {
-    background-color: var(--vp-code-block-bg) !important;
+    background-color: $code-bg-light !important;
     border: 2px solid var(--vp-c-brand) !important;
     border-radius: 8px !important;
     margin: 1rem 0;
     box-shadow: 0 0 8px rgba($purple-brand, 0.1);
 
+    code {
+      color: var(--vp-c-text-1);
+    }
+
     // Dark mode adjustments
     .dark & {
+      background-color: $code-bg-dark !important;
       border-color: var(--vp-c-brand-dark) !important;
       box-shadow: 0 0 8px rgba($purple-brand, 0.2);
     }
@@ -256,6 +265,29 @@ mark[data-markjs='true'] {
 
     &:hover {
       background: #{color.adjust($purple-brand-dark, $alpha: -0.3)};
+    }
+  }
+}
+
+// Add nav styles
+.VPNav {
+  .VPNavBarMenuLink {
+    height: var(--vp-nav-height);
+    line-height: var(--vp-nav-height);
+
+    &:hover {
+      background-color: var(--vp-c-bg-soft);
+    }
+  }
+
+  .VPNavBarMenuGroup {
+    .link {
+      height: var(--vp-nav-height);
+      line-height: var(--vp-nav-height);
+
+      &:hover {
+        background-color: var(--vp-c-bg-soft);
+      }
     }
   }
 }

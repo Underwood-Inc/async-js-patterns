@@ -247,12 +247,32 @@ export default defineConfig({
     },
   },
   vite: {
+    build: {
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            // Remove manualChunks for vitepress
+          },
+        },
+      },
+      minify: 'esbuild',
+      cssCodeSplit: true,
+      sourcemap: true,
+    },
     css: {
       preprocessorOptions: {
         scss: {
           includePaths: [resolve(__dirname, 'theme/styles')],
         },
       },
+    },
+    optimizeDeps: {
+      entries: [
+        'theme/tooltipPortal.ts',
+        'theme/markdown/codePreview.ts',
+        'theme/components/CodePreview.vue',
+      ],
     },
     server: {
       fs: {
@@ -466,6 +486,16 @@ export default defineConfig({
             },
           },
         },
+      },
+    },
+  },
+  locales: {
+    root: {
+      label: 'English',
+      lang: 'en',
+      docFooter: {
+        prev: 'Previous page',
+        next: 'Next page',
       },
     },
   },
