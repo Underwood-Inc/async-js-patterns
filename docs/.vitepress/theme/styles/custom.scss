@@ -190,20 +190,6 @@ $breakpoints: (
   }
 }
 
-// // Search result highlight styles for <mark> elements
-// mark[data-markjs='true'] {
-//   background-color: var(
-//     --vp-c-brand-light
-//   ); // Use a lighter purple for better contrast
-//   border-radius: 2px;
-//   padding: 0 2px;
-// }
-
-// .dark mark[data-markjs='true'] {
-//   background-color: var(--vp-c-brand-dark); // Use a darker purple for dark mode
-//   color: var(--vp-c-text-1); // Ensure text color is readable
-// }
-
 // Global highlight color
 ::selection {
   background-color: #{color.adjust($purple-brand, $alpha: -0.7)} !important;
@@ -315,18 +301,47 @@ mark[data-markjs='true'] {
 
 .tooltip-content {
   position: fixed;
-  padding: 10px 14px;
-  background: var(--vp-c-bg);
+  padding: 12px 16px;
+  background: linear-gradient(
+    45deg,
+    rgba(42, 36, 56, 0.95),
+    rgba(45, 39, 60, 0.95)
+  );
   color: var(--vp-c-text-1);
   font-size: 14px;
   line-height: 1.6;
-  border-radius: 8px;
-  border: 1px dashed var(--vp-c-brand);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  box-shadow:
+    0 0 15px rgba(157, 140, 214, 0.2),
+    0 0 30px rgba(157, 140, 214, 0.1);
   pointer-events: none;
   max-width: 360px;
   text-align: left;
   font-family: var(--vp-font-family-base);
   backdrop-filter: blur(8px);
   z-index: 9999999;
+  transform: translate(-50%, -100%) translateY(-8px);
+  animation: float 3s ease-in-out infinite;
+  overflow: visible;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(-50%, -100%) translateY(-8px);
+  }
+  50% {
+    transform: translate(-50%, -100%) translateY(-12px);
+  }
+}
+
+.dark .tooltip-content {
+  background: linear-gradient(
+    45deg,
+    rgba(32, 26, 46, 0.95),
+    rgba(35, 29, 50, 0.95)
+  );
+  box-shadow:
+    0 0 20px rgba(157, 140, 214, 0.15),
+    0 0 40px rgba(157, 140, 214, 0.1);
 }
