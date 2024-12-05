@@ -1,8 +1,6 @@
 import type { MarkdownRenderer } from 'vitepress';
-import { initializeTooltips } from '../tooltipPortal';
 
 export function codePreviewPlugin(md: MarkdownRenderer) {
-  // Store the original fence renderer
   const originalFence = md.renderer.rules.fence!;
 
   md.renderer.rules.fence = (...args) => {
@@ -72,19 +70,6 @@ export function codePreviewPlugin(md: MarkdownRenderer) {
     // Process the code using regex during SSR
     let modifiedCode = highlightedCode;
 
-    // Count potential tooltips
-    const tooltipCount = Object.entries(typeInfo).reduce((count, [term, _]) => {
-      const matches = (
-        token.content.match(new RegExp(`\\b${term}\\b`, 'g')) || []
-      ).length;
-      return count + matches;
-    }, 0);
-
-    // Initialize tooltip processing if we have tooltips to process
-    if (tooltipCount > 0 && typeof window !== 'undefined') {
-      initializeTooltips(tooltipCount);
-    }
-
     Object.entries(typeInfo).forEach(([term, info]) => {
       // First, check if the term exists in the raw content
       if (token.content.includes(term)) {
@@ -102,7 +87,7 @@ export function codePreviewPlugin(md: MarkdownRenderer) {
           regex,
           (match, spanStart, style, before, term, after, spanEnd) => {
             // Preserve Shiki's style in the tooltip span
-            const tooltipSpan = `${spanStart}${before}<span class="tooltip" style="${style}" data-tooltip="${tooltip}" onmouseenter="window.incrementProcessedTooltips && window.incrementProcessedTooltips()">${term}</span>${after}${spanEnd}`;
+            const tooltipSpan = `${spanStart}${before}<span class="tooltip" style="${style}" data-tooltip="${tooltip}">${term}</span>${after}${spanEnd}`;
             return tooltipSpan;
           }
         );

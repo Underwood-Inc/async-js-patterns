@@ -291,3 +291,14 @@ mark[data-markjs='true'] {
     }
   }
 }
+
+// Add tooltip styles
+.tooltip {
+  border-bottom: 1px dotted var(--vp-c-brand);
+  cursor: help;
+  transition: border-color 0.25s;
+
+  &:hover {
+    border-bottom-color: var(--vp-c-brand-dark);
+  }
+}

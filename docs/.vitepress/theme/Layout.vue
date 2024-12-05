@@ -1,9 +1,5 @@
 <template>
-  <Layout>
-    <template #layout-bottom>
-      <TooltipLoader />
-    </template>
-  </Layout>
+  <Layout />
 </template>
 
 <script setup>
