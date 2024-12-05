@@ -1,9 +1,6 @@
 <template>
   <div class="tooltip-content" :style="{ left: x + 'px', top: y + 'px' }">
-    <div class="tooltip-pointer">
-      <div class="pointer-bg"></div>
-      <ShimmerEffect class="tooltip-pointer-shimmer" />
-    </div>
+    <div class="tooltip-pointer"></div>
 
     <div class="tooltip-background">
       <div class="tooltip-bg-content"></div>
@@ -59,14 +56,6 @@ const contentLines = computed(() => props.content.split('<br>'));
   -webkit-mask: linear-gradient(#fff 0 0);
 }
 
-.tooltip-pointer-shimmer {
-  position: absolute;
-  inset: -100%;
-  z-index: 1;
-  transform: rotate(-45deg);
-  animation-delay: -1.5s;
-}
-
 .tooltip-background {
   position: absolute;
   inset: 0;
@@ -74,6 +63,7 @@ const contentLines = computed(() => props.content.split('<br>'));
   overflow: hidden;
   pointer-events: none;
   z-index: 3;
+  border: 2px solid #b3a5e3;
 }
 
 .tooltip-bg-content {
@@ -102,17 +92,7 @@ const contentLines = computed(() => props.content.split('<br>'));
   overflow: hidden;
   pointer-events: none;
   z-index: 1;
-}
-
-.pointer-bg {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    45deg,
-    rgba(42, 36, 56, 0.95),
-    rgba(45, 39, 60, 0.95)
-  );
-  backdrop-filter: blur(8px);
+  background: #b3a5e3;
 }
 
 .tooltip-content-inner {

@@ -21,7 +21,7 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.08) 50%,
     transparent 100%
   );
   animation: shimmer 3s infinite linear;
