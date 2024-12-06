@@ -1,8 +1,8 @@
 <template>
   <Layout>
-    <template #nav-bar-content-after>
+    <!-- <template #nav-bar-content-after>
       <FavoritesMenu />
-    </template>
+    </template> -->
     <template #doc-before>
       <FavoriteButton
         :path="page.relativePath"
@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import DefaultTheme from 'vitepress/theme';
 import { useData } from 'vitepress';
-import FavoritesMenu from './components/FavoritesMenu.vue';
+// import FavoritesMenu from './components/FavoritesMenu.vue';
 import FavoriteButton from './components/FavoriteButton.vue';
 import './styles/favorites.scss';
 
