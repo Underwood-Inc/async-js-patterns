@@ -20,7 +20,7 @@ Learn how to effectively manage timers in asynchronous JavaScript applications.
 
 ## Basic Usage
 
-```typescript
+```typescript:preview
 // Basic timer wrapper
 class Timer {
   private timerId: NodeJS.Timeout | null = null;
@@ -65,7 +65,7 @@ const cancellableDelay = (ms: number) => {
 
 ### Timer Manager
 
-```typescript
+```typescript:preview
 class TimerManager {
   private timers = new Map<string, NodeJS.Timeout>();
 
@@ -105,7 +105,7 @@ class TimerManager {
 
 ### Interval Manager
 
-```typescript
+```typescript:preview
 class IntervalManager {
   private intervals = new Map<string, NodeJS.Timeout>();
   private counters = new Map<string, number>();
@@ -157,7 +157,7 @@ class IntervalManager {
 
 ### Debounced Timer
 
-```typescript
+```typescript:preview
 class DebouncedTimer {
   private timerId: NodeJS.Timeout | null = null;
   private lastArgs: any[] = [];
@@ -199,7 +199,7 @@ class DebouncedTimer {
 
 ### Progressive Timer
 
-```typescript
+```typescript:preview
 interface ProgressiveTimerOptions {
   initialDelay: number;
   maxDelay: number;

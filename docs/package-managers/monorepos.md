@@ -11,7 +11,7 @@ Monorepos allow you to manage multiple packages in a single repository. This gui
 
 ### npm Workspaces
 
-```json
+```json:preview
 // package.json
 {
   "name": "my-monorepo",
@@ -22,7 +22,7 @@ Monorepos allow you to manage multiple packages in a single repository. This gui
 
 ### Yarn Workspaces
 
-```yaml
+```yaml:preview
 # .yarnrc.yml
 nodeLinker: node-modules
 plugins:
@@ -32,7 +32,7 @@ plugins:
 
 ### pnpm Workspaces
 
-```yaml
+```yaml:preview
 # pnpm-workspace.yaml
 packages:
   - 'packages/*'
@@ -42,7 +42,7 @@ packages:
 
 ## Project Structure
 
-```bash
+```bash:preview
 monorepo/
 ├── package.json
 ├── packages/
@@ -55,7 +55,7 @@ monorepo/
 ├── apps/
 │   ├── web/
 │   │   ├── package.json
-│   │   └─�� src/
+│   │   └─ src/
 │   └── api/
 │       ├── package.json
 │       └── src/
@@ -67,7 +67,7 @@ monorepo/
 
 ### Local Dependencies
 
-```json
+```json:preview
 // packages/web/package.json
 {
   "name": "@myorg/web",
@@ -80,7 +80,7 @@ monorepo/
 
 ### Installation Commands
 
-```bash
+```bash:preview
 # npm
 npm install
 npm install --workspace=web
@@ -101,7 +101,7 @@ pnpm --filter web add lodash
 
 ### Running Scripts
 
-```bash
+```bash:preview
 # npm
 npm run test --workspaces
 npm run build --workspace=web
@@ -117,7 +117,7 @@ pnpm --filter web run build
 
 ### Parallel Execution
 
-```bash
+```bash:preview
 # npm
 npm run test --workspaces --parallel
 
@@ -132,7 +132,7 @@ pnpm -r --parallel run test
 
 ### Independent Versions
 
-```json
+```json:preview
 // lerna.json
 {
   "version": "independent",
@@ -147,7 +147,7 @@ pnpm -r --parallel run test
 
 ### Fixed Versions
 
-```json
+```json:preview
 // lerna.json
 {
   "version": "1.0.0",
@@ -164,7 +164,7 @@ pnpm -r --parallel run test
 
 ### Turborepo
 
-```json
+```json:preview
 // turbo.json
 {
   "pipeline": {
@@ -182,7 +182,7 @@ pnpm -r --parallel run test
 
 ### Nx
 
-```json
+```json:preview
 // nx.json
 {
   "tasksRunnerOptions": {
@@ -200,7 +200,7 @@ pnpm -r --parallel run test
 
 ### Shared Dependencies
 
-```json
+```json:preview
 // package.json (root)
 {
   "dependencies": {
@@ -216,7 +216,7 @@ pnpm -r --parallel run test
 
 ### Dependency Hoisting
 
-```json
+```json:preview
 // .npmrc
 hoist=true
 shamefully-hoist=true
@@ -229,7 +229,7 @@ nodeLinker: node-modules
 
 ### Git Hooks
 
-```json
+```json:preview
 // package.json
 {
   "scripts": {
@@ -244,7 +244,7 @@ nodeLinker: node-modules
 
 ### Task Running
 
-```json
+```json:preview
 // package.json
 {
   "scripts": {
@@ -260,7 +260,7 @@ nodeLinker: node-modules
 
 ### GitHub Actions
 
-```yaml
+```yaml:preview
 name: CI
 on: [push]
 jobs:
@@ -281,7 +281,7 @@ jobs:
 
 ### CircleCI
 
-```yaml
+```yaml:preview
 version: 2.1
 jobs:
   build:
@@ -334,7 +334,7 @@ jobs:
 
 ### Shared Configurations
 
-```json
+```json:preview
 // packages/tsconfig/base.json
 {
   "compilerOptions": {
@@ -356,7 +356,7 @@ jobs:
 
 ### Package Aliases
 
-```json
+```json:preview
 // tsconfig.json
 {
   "compilerOptions": {
@@ -369,7 +369,7 @@ jobs:
 
 ### Shared ESLint Config
 
-```javascript
+```javascript:preview
 // packages/eslint-config/index.js
 module.exports = {
   extends: ['airbnb', 'prettier'],

@@ -20,7 +20,7 @@ Learn how to use `Promise.any` for handling the first successful promise resolut
 
 ## Basic Usage
 
-```typescript
+```typescript:preview
 // Basic first success pattern
 async function fetchFirstAvailable(urls: string[]) {
   try {
@@ -52,7 +52,7 @@ async function validateWithMultipleSchemas<T>(
 
 ### Service Discovery
 
-```typescript
+```typescript:preview
 interface ServiceEndpoint {
   url: string;
   priority: number;
@@ -85,7 +85,7 @@ async function discoverService(endpoints: ServiceEndpoint[]) {
 
 ### Resource Loading with Fallbacks
 
-```typescript
+```typescript:preview
 interface Resource {
   type: 'cdn' | 'local' | 'backup';
   url: string;
@@ -120,7 +120,7 @@ async function loadResourceWithFallback(resources: Resource[]) {
 
 ### Authentication with Multiple Providers
 
-```typescript
+```typescript:preview
 interface AuthProvider {
   name: string;
   authenticate: () => Promise<string>; // Returns auth token

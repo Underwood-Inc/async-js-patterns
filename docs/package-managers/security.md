@@ -11,7 +11,7 @@ Security is crucial when working with package managers. This guide covers best p
 
 ### Running Security Audits
 
-```bash
+```bash:preview
 # npm
 npm audit
 npm audit fix
@@ -30,7 +30,7 @@ bun run security
 
 ### Audit Configuration
 
-```json
+```json:preview
 {
   "scripts": {
     "security": "npm audit && snyk test",
@@ -44,7 +44,7 @@ bun run security
 
 ### Registry Security
 
-```ini
+```ini:preview
 # .npmrc
 registry=https://registry.npmjs.org/
 always-auth=true
@@ -54,7 +54,7 @@ strict-ssl=true
 
 ### Package Signing
 
-```bash
+```bash:preview
 # Sign your packages
 npm publish --sign
 
@@ -64,7 +64,7 @@ npm verify --signatures
 
 ### Trusted Publishers
 
-```bash
+```bash:preview
 # Add trusted publisher
 npm access grant read-write username:package-name
 
@@ -76,7 +76,7 @@ npm access ls-collaborators package-name
 
 ### Version Pinning
 
-```json
+```json:preview
 {
   "dependencies": {
     "critical-package": "1.2.3",
@@ -90,7 +90,7 @@ npm access ls-collaborators package-name
 
 ### Lock File Security
 
-```bash
+```bash:preview
 # Verify lock file integrity
 npm ci
 yarn install --frozen-lockfile
@@ -105,7 +105,7 @@ yarn upgrade --pattern "vulnerable-*"
 
 ### Registry Authentication
 
-```ini
+```ini:preview
 # .npmrc
 //registry.npmjs.org/:_authToken=${NPM_TOKEN}
 //registry.company.com/:_authToken=${COMPANY_NPM_TOKEN}
@@ -113,7 +113,7 @@ yarn upgrade --pattern "vulnerable-*"
 
 ### Access Control
 
-```bash
+```bash:preview
 # Scope access
 npm access restricted @myorg/package
 
@@ -128,7 +128,7 @@ npm access revoke username [@scope/]package
 
 ### Environment Variables
 
-```yaml
+```yaml:preview
 # GitHub Actions
 jobs:
   build:
@@ -144,7 +144,7 @@ jobs:
 
 ### Security Checks
 
-```yaml
+```yaml:preview
 # GitLab CI
 security:
   script:
@@ -189,7 +189,7 @@ security:
 
 ### Built-in Tools
 
-```bash
+```bash:preview
 # npm audit
 npm audit
 npm audit fix
@@ -207,7 +207,7 @@ pnpm audit fix
 
 ### Third-party Tools
 
-```bash
+```bash:preview
 # Snyk
 npm install -g snyk
 snyk test
@@ -224,7 +224,7 @@ dependency-check --project "My Project" --scan ./
 
 ### 1. Malicious Packages
 
-```bash
+```bash:preview
 # Check package reputation
 npm view package-name
 npm view package-name maintainers
@@ -236,7 +236,7 @@ tar -xzf package-name-*.tgz
 
 ### 2. Dependency Confusion
 
-```ini
+```ini:preview
 # .npmrc
 @company:registry=https://registry.company.com/
 always-auth=true
@@ -244,7 +244,7 @@ always-auth=true
 
 ### 3. Outdated Dependencies
 
-```bash
+```bash:preview
 # Check outdated packages
 npm outdated
 npm audit
@@ -257,7 +257,7 @@ npm update --depth 1
 
 ### package.json
 
-```json
+```json:preview
 {
   "engines": {
     "node": ">=14.0.0"
@@ -271,7 +271,7 @@ npm update --depth 1
 
 ### .npmrc
 
-```ini
+```ini:preview
 audit=true
 fund=false
 package-lock=true
@@ -282,7 +282,7 @@ save-exact=true
 
 ### Security Issue Detection
 
-```bash
+```bash:preview
 # Check for known vulnerabilities
 npm audit
 
@@ -295,7 +295,7 @@ npm audit fix --force
 
 ### Rollback Procedures
 
-```bash
+```bash:preview
 # Revert to last known good state
 git checkout package-lock.json@{yesterday}
 npm ci
@@ -306,7 +306,7 @@ npm install package@1.2.3 --save-exact
 
 ### Reporting
 
-```bash
+```bash:preview
 # Generate security reports
 npm audit --json
 npm ls --json

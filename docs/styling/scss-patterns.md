@@ -95,7 +95,7 @@ $breakpoints: (
 
 ### 7-1 Pattern
 
-```plaintext
+```plaintext:preview
 styles/
 |– abstracts/
 |   |– _variables.scss    # Variables

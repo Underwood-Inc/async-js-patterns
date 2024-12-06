@@ -11,7 +11,7 @@ This guide covers the process of migrating your project from npm to pnpm, includ
 
 1. Install pnpm:
 
-```bash
+```bash:preview
 # Using npm
 npm install -g pnpm
 
@@ -24,7 +24,7 @@ iwr https://get.pnpm.io/install.ps1 -useb | iex
 
 2. Verify installation:
 
-```bash
+```bash:preview
 pnpm --version
 ```
 
@@ -32,7 +32,7 @@ pnpm --version
 
 ### 1. Generate pnpm-lock.yaml
 
-```bash
+```bash:preview
 # Remove npm's lock file
 rm package-lock.json
 
@@ -44,7 +44,7 @@ pnpm install
 
 #### GitHub Actions
 
-```yaml
+```yaml:preview
 # Before (npm)
 steps:
   - uses: actions/setup-node@v3
@@ -69,7 +69,7 @@ steps:
 
 #### package.json
 
-```json
+```json:preview
 {
   "scripts": {
     // Before (npm)
@@ -111,7 +111,7 @@ steps:
 
 ### 1. Package Manager Settings
 
-```json
+```json:preview
 // package.json
 {
   "packageManager": "pnpm@8.0.0"
@@ -120,7 +120,7 @@ steps:
 
 ### 2. pnpm Configuration
 
-```ini
+```ini:preview
 # .npmrc
 strict-peer-dependencies=true
 auto-install-peers=true
@@ -131,7 +131,7 @@ registry=https://registry.npmjs.org/
 
 ### 3. Git Configuration
 
-```gitignore
+```gitignore:preview
 # .gitignore
 node_modules
 .pnpm-store/
@@ -142,7 +142,7 @@ node_modules
 
 ### 1. Update Workspace Configuration
 
-```yaml
+```yaml:preview
 # pnpm-workspace.yaml
 packages:
   - 'packages/*'
@@ -152,7 +152,7 @@ packages:
 
 ### 2. Update Workspace Commands
 
-```bash
+```bash:preview
 # Before (npm)
 npm install --workspace=package-name
 npm run test --workspaces
@@ -166,7 +166,7 @@ pnpm -r run test
 
 ### Understanding pnpm's Store
 
-```bash
+```bash:preview
 # Global store location
 ~/.pnpm-store/
 
@@ -214,7 +214,7 @@ node_modules/.pnpm/
 
 ### 1. Hoisting Problems
 
-```ini
+```ini:preview
 # .npmrc
 shamefully-hoist=true
 node-linker=hoisted
@@ -222,14 +222,14 @@ node-linker=hoisted
 
 ### 2. Peer Dependencies
 
-```bash
+```bash:preview
 # Handle peer dependencies
 pnpm install --no-strict-peer-dependencies
 ```
 
 ### 3. Store Issues
 
-```bash
+```bash:preview
 # Verify store
 pnpm store verify
 
@@ -241,7 +241,7 @@ pnpm store prune
 
 If migration issues occur:
 
-```bash
+```bash:preview
 # 1. Remove pnpm files
 rm pnpm-lock.yaml
 rm -rf node_modules
@@ -257,7 +257,7 @@ npm ci
 
 ## Verification Steps
 
-```bash
+```bash:preview
 # 1. Clean install
 rm -rf node_modules
 pnpm install
@@ -279,7 +279,7 @@ pnpm audit
 
 ### Filtering in Monorepos
 
-```bash
+```bash:preview
 # Run in packages that depend on another
 pnpm --filter ...package-name command
 
@@ -292,7 +292,7 @@ pnpm --filter "package-a...package-b" command
 
 ### Custom Configs
 
-```js
+```js:preview
 // .pnpmfile.cjs
 module.exports = {
   hooks: {
@@ -306,7 +306,7 @@ module.exports = {
 
 ### Publishing
 
-```bash
+```bash:preview
 # Publish package
 pnpm publish
 

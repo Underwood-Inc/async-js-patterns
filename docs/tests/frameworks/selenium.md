@@ -251,7 +251,7 @@ class LoginPage:
 
 ### Data-Driven Testing
 
-```python
+```python:preview
 import pytest
 import csv
 
@@ -278,7 +278,7 @@ def test_login(driver, test_data):
 
 ### API Integration
 
-```python
+```python:preview
 import requests
 
 class TestUserFlow:
@@ -306,7 +306,7 @@ class TestUserFlow:
 
 ### Screenshot Capture
 
-```python
+```python:preview
 import os
 from datetime import datetime
 
@@ -335,7 +335,7 @@ def test_with_screenshot(driver):
 
 ### 1. Element Location
 
-```python
+```python:preview
 # ❌ Avoid
 driver.find_element(By.CSS_SELECTOR, 'button:nth-child(2)')
 driver.find_element(By.XPATH, '//div[contains(@class, "btn")][2]')
@@ -348,7 +348,7 @@ driver.find_element(By.CSS_SELECTOR, '[data-testid="submit"]')
 
 ### 2. Waits
 
-```python
+```python:preview
 # ❌ Avoid
 import time
 time.sleep(5)
@@ -361,7 +361,7 @@ wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'modal')))
 
 ### 3. Error Handling
 
-```python
+```python:preview
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 try:
@@ -378,7 +378,7 @@ except NoSuchElementException as e:
 
 ### 4. Resource Management
 
-```python
+```python:preview
 class TestBase:
     @classmethod
     def setup_class(cls):

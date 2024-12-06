@@ -22,7 +22,7 @@ Learn how to effectively work with timers and intervals in JavaScript.
 
 Create a delay using Promises:
 
-```ts
+```$1:preview
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Usage
@@ -37,7 +37,7 @@ async function example() {
 
 Create a cancellable timer:
 
-```ts
+```$1:preview
 interface Timer {
   promise: Promise<void>;
   cancel: () => void;
@@ -66,7 +66,7 @@ timer.cancel();
 
 Create a manageable interval:
 
-```ts
+```$1:preview
 interface IntervalHandler {
   start: () => void;
   stop: () => void;
@@ -103,7 +103,7 @@ ticker.stop(); // Stop ticking
 
 Implement a debounce function:
 
-```ts
+```$1:preview
 function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number
@@ -131,7 +131,7 @@ searchInput.addEventListener('input', (e) => {
 
 Implement a throttle function:
 
-```ts
+```$1:preview
 function throttle<T extends (...args: any[]) => any>(
   func: T,
   limit: number

@@ -19,7 +19,7 @@ Effective dependency management is crucial for maintaining healthy JavaScript pr
 
 ### Version Ranges
 
-```json
+```json:preview
 {
   "dependencies": {
     "exact": "1.0.0", // Exact version
@@ -41,7 +41,7 @@ Effective dependency management is crucial for maintaining healthy JavaScript pr
 - `pnpm-lock.yaml` (pnpm)
 - `bun.lockb` (Bun)
 
-```bash
+```bash:preview
 # Always commit lock files
 git add package-lock.json
 git commit -m "Update dependencies"
@@ -49,7 +49,7 @@ git commit -m "Update dependencies"
 
 ### Updating Dependencies
 
-```bash
+```bash:preview
 # Check outdated packages
 npm outdated
 yarn outdated
@@ -70,7 +70,7 @@ pnpm update --latest
 
 ### Auditing Dependencies
 
-```bash
+```bash:preview
 # Run security audit
 npm audit
 yarn audit
@@ -84,7 +84,7 @@ pnpm audit fix
 
 ### Version Pinning
 
-```json
+```json:preview
 {
   "dependencies": {
     "critical-package": "1.2.3", // Pinned version
@@ -97,7 +97,7 @@ pnpm audit fix
 
 ### Dependency Analysis
 
-```bash
+```bash:preview
 # Analyze dependencies
 npm ls
 yarn why package-name
@@ -111,7 +111,7 @@ pnpm dedupe
 
 ### Bundle Size Optimization
 
-```bash
+```bash:preview
 # Analyze bundle size
 npm install -g source-map-explorer
 source-map-explorer dist/bundle.js
@@ -126,7 +126,7 @@ vite-bundle-visualizer
 
 ### Workspace Configuration
 
-```json
+```json:preview
 // package.json
 {
   "workspaces": ["packages/*"]
@@ -135,7 +135,7 @@ vite-bundle-visualizer
 
 ### Shared Dependencies
 
-```json
+```json:preview
 // packages/shared/package.json
 {
   "name": "@myorg/shared",
@@ -188,7 +188,7 @@ vite-bundle-visualizer
 
 ### Peer Dependencies
 
-```json
+```json:preview
 {
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
@@ -199,7 +199,7 @@ vite-bundle-visualizer
 
 ### Optional Dependencies
 
-```json
+```json:preview
 {
   "optionalDependencies": {
     "image-optimizer": "^2.0.0"
@@ -209,7 +209,7 @@ vite-bundle-visualizer
 
 ### Development Tools
 
-```json
+```json:preview
 {
   "devDependencies": {
     "typescript": "^5.0.0",
@@ -226,7 +226,7 @@ vite-bundle-visualizer
 
 1. **Version Conflicts**
 
-```bash
+```bash:preview
 # Clear dependency cache
 npm cache clean --force
 yarn cache clean
@@ -239,7 +239,7 @@ npm install
 
 2. **Peer Dependency Issues**
 
-```bash
+```bash:preview
 # Install peer dependencies
 npm install --legacy-peer-deps
 yarn install --ignore-peer-dependencies
@@ -247,7 +247,7 @@ yarn install --ignore-peer-dependencies
 
 3. **Hoisting Problems**
 
-```bash
+```bash:preview
 # Flatten dependency tree
 npm dedupe
 yarn dedupe
@@ -258,7 +258,7 @@ pnpm dedupe
 
 #### npm
 
-```json
+```json:preview
 {
   "overrides": {
     "dependency-name": "1.2.3"
@@ -268,7 +268,7 @@ pnpm dedupe
 
 #### Yarn
 
-```json
+```json:preview
 {
   "resolutions": {
     "dependency-name": "1.2.3"
@@ -278,7 +278,7 @@ pnpm dedupe
 
 #### pnpm
 
-```json
+```json:preview
 {
   "pnpm": {
     "overrides": {

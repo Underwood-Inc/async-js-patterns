@@ -20,7 +20,7 @@ Learn how to implement racing patterns for competitive task execution.
 
 ## Basic Usage
 
-```typescript
+```typescript:preview
 // Simple racing with timeout
 async function executeWithTimeout<T>(
   task: () => Promise<T>,
@@ -43,7 +43,7 @@ async function executeUntilSuccess<T>(tasks: (() => Promise<T>)[]): Promise<T> {
 
 ### Race with Cleanup
 
-```typescript
+```typescript:preview
 interface RaceResult<T> {
   result: T;
   winner: number;
@@ -93,7 +93,7 @@ const result = await raceWithCleanup([
 
 ### Progressive Racing
 
-```typescript
+```typescript:preview
 interface ProgressiveRaceOptions<T> {
   tasks: (() => Promise<T>)[];
   validateResult: (result: T) => boolean;
@@ -140,7 +140,7 @@ async function progressiveRace<T>({
 
 ### Competitive Racing
 
-```typescript
+```typescript:preview
 interface Competitor<T> {
   execute: () => Promise<T>;
   priority: number;

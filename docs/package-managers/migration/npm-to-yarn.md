@@ -11,7 +11,7 @@ This guide covers the process of migrating your project from npm to Yarn, includ
 
 1. Install Yarn:
 
-```bash
+```bash:preview
 # Using npm
 npm install -g yarn
 
@@ -22,7 +22,7 @@ corepack prepare yarn@stable --activate
 
 2. Verify installation:
 
-```bash
+```bash:preview
 yarn --version
 ```
 
@@ -30,7 +30,7 @@ yarn --version
 
 ### 1. Generate yarn.lock
 
-```bash
+```bash:preview
 # Remove npm's lock file
 rm package-lock.json
 
@@ -42,7 +42,7 @@ yarn
 
 #### GitHub Actions
 
-```yaml
+```yaml:preview
 # Before (npm)
 steps:
   - uses: actions/setup-node@v3
@@ -64,7 +64,7 @@ steps:
 
 #### package.json
 
-```json
+```json:preview
 {
   "scripts": {
     // Before (npm)
@@ -106,7 +106,7 @@ steps:
 
 ### 1. Package Manager Settings
 
-```json
+```json:preview
 // package.json
 {
   "packageManager": "yarn@3.6.0"
@@ -115,7 +115,7 @@ steps:
 
 ### 2. Yarn Configuration
 
-```yaml
+```yaml:preview
 # .yarnrc.yml
 nodeLinker: node-modules
 enableGlobalCache: true
@@ -125,7 +125,7 @@ npmRegistryServer: 'https://registry.npmjs.org'
 
 ### 3. Git Configuration
 
-```gitignore
+```gitignore:preview
 # .gitignore
 .yarn/*
 !.yarn/patches
@@ -142,7 +142,7 @@ npmRegistryServer: 'https://registry.npmjs.org'
 
 ### 1. Update Workspace Configuration
 
-```json
+```json:preview
 // Before (npm)
 {
   "workspaces": [
@@ -161,7 +161,7 @@ npmRegistryServer: 'https://registry.npmjs.org'
 
 ### 2. Update Workspace Commands
 
-```bash
+```bash:preview
 # Before (npm)
 npm install --workspace=package-name
 npm run test --workspaces
@@ -205,14 +205,14 @@ yarn workspaces foreach run test
 
 ### 1. Peer Dependencies
 
-```bash
+```bash:preview
 # Handle peer dependency warnings
 yarn install --ignore-peer-dependencies
 ```
 
 ### 2. Node Version
 
-```json
+```json:preview
 // package.json
 {
   "engines": {
@@ -223,7 +223,7 @@ yarn install --ignore-peer-dependencies
 
 ### 3. Script Execution
 
-```bash
+```bash:preview
 # Run scripts with arguments
 yarn build --watch
 
@@ -235,7 +235,7 @@ yarn build && yarn test
 
 If migration issues occur:
 
-```bash
+```bash:preview
 # 1. Remove Yarn files
 rm yarn.lock
 rm -rf .yarn
@@ -251,7 +251,7 @@ npm ci
 
 ## Verification Steps
 
-```bash
+```bash:preview
 # 1. Clean install
 rm -rf node_modules
 yarn install

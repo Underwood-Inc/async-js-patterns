@@ -20,7 +20,7 @@ Learn how to implement robust retry mechanisms for handling transient failures.
 
 ## Basic Usage
 
-```typescript
+```typescript:preview
 // Simple retry with fixed delay
 async function retryWithDelay<T>(
   operation: () => Promise<T>,
@@ -61,7 +61,7 @@ async function retryWithBackoff<T>(
 
 ### Configurable Retry Strategy
 
-```typescript
+```typescript:preview
 interface RetryOptions {
   maxRetries: number;
   baseDelay: number;
@@ -138,7 +138,7 @@ class RetryStrategy {
 
 ### Circuit Breaker with Retry
 
-```typescript
+```typescript:preview
 interface CircuitBreakerOptions {
   failureThreshold: number;
   resetTimeout: number;
@@ -209,7 +209,7 @@ class CircuitBreaker {
 
 ### Retry Queue
 
-```typescript
+```typescript:preview
 interface QueuedRetryOptions<T> {
   operation: () => Promise<T>;
   maxRetries: number;

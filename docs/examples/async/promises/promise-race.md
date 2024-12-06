@@ -20,7 +20,7 @@ Learn how to use `Promise.race` for implementing timeouts and racing conditions.
 
 ## Basic Usage
 
-```typescript
+```typescript:preview
 // Basic timeout pattern
 async function fetchWithTimeout(url: string, timeoutMs: number) {
   return Promise.race([
@@ -41,7 +41,7 @@ async function fetchFromMultipleEndpoints(urls: string[]) {
 
 ### Timeout with Cleanup
 
-```typescript
+```typescript:preview
 async function fetchWithTimeoutAndCleanup(url: string, timeoutMs: number) {
   const controller = new AbortController();
   const { signal } = controller;
@@ -59,7 +59,7 @@ async function fetchWithTimeoutAndCleanup(url: string, timeoutMs: number) {
 
 ### Race with Fallback
 
-```typescript
+```typescript:preview
 async function fetchWithFallback<T>(
   primaryFetch: () => Promise<T>,
   fallbackFetch: () => Promise<T>,
@@ -96,7 +96,7 @@ async function fetchWithFallback<T>(
 
 ### Race with Progress Updates
 
-```typescript
+```typescript:preview
 interface ProgressUpdate {
   type: 'progress';
   percent: number;

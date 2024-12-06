@@ -19,14 +19,14 @@ Jest is a delightful JavaScript testing framework with a focus on simplicity and
 
 ## Getting Started
 
-```bash
+```bash:preview
 # Install Jest
 npm install --save-dev jest
 ```
 
 ## Basic Test Structure
 
-```javascript
+```javascript:preview
 describe('string utilities', () => {
   test('concatenates strings correctly', () => {
     expect('Hello' + ' ' + 'World').toBe('Hello World');
@@ -40,7 +40,7 @@ describe('string utilities', () => {
 
 ## Common Matchers
 
-```javascript
+```javascript:preview
 // Exact equality
 expect(2 + 2).toBe(4);
 
@@ -67,7 +67,7 @@ expect(['apple', 'banana']).toContain('apple');
 
 ### Jest Configuration File
 
-```javascript
+```javascript:preview
 // jest.config.js
 module.exports = {
   testEnvironment: 'node',
@@ -85,7 +85,7 @@ module.exports = {
 
 ### Mock Functions
 
-```javascript
+```javascript:preview
 test('mock implementation', () => {
   const mock = jest
     .fn()
@@ -109,7 +109,7 @@ jest.mock('./math', () => ({
 
 ### Async Testing
 
-```javascript
+```javascript:preview
 // Promises
 test('resolves to user', () => {
   return expect(fetchUser(1)).resolves.toEqual({
@@ -140,7 +140,7 @@ test('callbacks', (done) => {
 
 ### Snapshot Testing
 
-```javascript
+```javascript:preview
 test('renders correctly', () => {
   const tree = renderer.create(<Component />).toJSON();
   expect(tree).toMatchSnapshot();
@@ -160,7 +160,7 @@ test('inline snapshot', () => {
 
 ### Component Testing
 
-```javascript
+```javascript:preview
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -185,7 +185,7 @@ test('form submission', async () => {
 
 ### Custom Hooks Testing
 
-```javascript
+```javascript:preview
 import { renderHook, act } from '@testing-library/react-hooks';
 
 test('useCounter', () => {
@@ -203,7 +203,7 @@ test('useCounter', () => {
 
 ### Test Suites
 
-```javascript
+```javascript:preview
 describe('Calculator', () => {
   let calculator;
 
@@ -231,7 +231,7 @@ describe('Calculator', () => {
 
 ### Test Lifecycle
 
-```javascript
+```javascript:preview
 beforeAll(() => {
   // Setup before all tests
   return initializeDatabase();
@@ -257,7 +257,7 @@ afterEach(() => {
 
 ### Test Filtering
 
-```bash
+```bash:preview
 # Run specific tests
 jest path/to/test.js
 jest -t "test name"
@@ -271,7 +271,7 @@ jest --onlyChanged
 
 ### Parallel Execution
 
-```bash
+```bash:preview
 # Run tests in parallel
 jest --maxWorkers=4
 
@@ -283,7 +283,7 @@ jest --runInBand
 
 ### Interactive Mode
 
-```bash
+```bash:preview
 # Watch mode
 jest --watch
 
@@ -293,7 +293,7 @@ jest --watchAll
 
 ### Debugging Tests
 
-```javascript
+```javascript:preview
 test('debug example', () => {
   debugger;
   const result = someFunction();
@@ -317,7 +317,7 @@ test('console debug', () => {
 
 ### 2. Naming Conventions
 
-```javascript
+```javascript:preview
 describe('ProductService', () => {
   test('should create new product with valid data', () => {
     // Test implementation
@@ -331,7 +331,7 @@ describe('ProductService', () => {
 
 ### 3. Mocking Best Practices
 
-```javascript
+```javascript:preview
 // Mock specific methods
 jest.spyOn(object, 'method').mockImplementation(() => 'mocked');
 
@@ -348,7 +348,7 @@ beforeEach(() => {
 
 ### 4. Coverage Goals
 
-```bash
+```bash:preview
 # Generate coverage report
 jest --coverage
 

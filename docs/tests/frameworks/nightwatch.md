@@ -260,7 +260,7 @@ module.exports = {
 
 ### 1. Element Selection
 
-```javascript
+```javascript:preview
 module.exports = {
   'Selector best practices': (browser) => {
     // ❌ Avoid
@@ -277,7 +277,7 @@ module.exports = {
 
 ### 2. Waiting Strategies
 
-```javascript
+```javascript:preview
 module.exports = {
   'Wait strategies': (browser) => {
     // ❌ Avoid
@@ -296,7 +296,7 @@ module.exports = {
 
 ### 3. Error Handling
 
-```javascript
+```javascript:preview
 module.exports = {
   beforeEach: (browser) => {
     browser.windowMaximize();
@@ -326,7 +326,7 @@ module.exports = {
 
 ### 4. Test Organization
 
-```javascript
+```javascript:preview
 // globals.js
 module.exports = {
   beforeEach: (browser) => {
@@ -357,7 +357,7 @@ module.exports = {
 
 ### 5. Configuration Best Practices
 
-```javascript
+```javascript:preview
 // nightwatch.conf.js
 const chromedriver = require('chromedriver');
 const geckodriver = require('geckodriver');

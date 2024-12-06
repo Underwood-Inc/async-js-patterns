@@ -19,14 +19,14 @@ Vitest is a next-generation testing framework designed for Vite-based applicatio
 
 ## Getting Started
 
-```bash
+```bash:preview
 # Install Vitest
 npm install -D vitest
 ```
 
 ## Basic Test Structure
 
-```typescript
+```typescript:preview
 import { describe, it, expect } from 'vitest';
 
 describe('calculator', () => {
@@ -38,7 +38,7 @@ describe('calculator', () => {
 
 ## Configuration
 
-```typescript
+```typescript:preview
 // vitest.config.ts
 import { defineConfig } from 'vitest/config';
 
@@ -60,7 +60,7 @@ export default defineConfig({
 
 ### Mocking
 
-```typescript
+```typescript:preview
 import { vi } from 'vitest';
 
 const mock = vi.fn();
@@ -80,7 +80,7 @@ vi.mock('./path/to/module', () => {
 
 ### Snapshot Testing
 
-```typescript
+```typescript:preview
 it('matches snapshot', () => {
   const user = {
     name: 'John',
@@ -92,7 +92,7 @@ it('matches snapshot', () => {
 
 ### Test Coverage
 
-```bash
+```bash:preview
 # Run tests with coverage
 vitest run --coverage
 
@@ -102,7 +102,7 @@ vitest --coverage
 
 ### Custom Matchers
 
-```typescript
+```typescript:preview
 expect.extend({
   toBeWithinRange(received, floor, ceiling) {
     const pass = received >= floor && received <= ceiling;
@@ -123,7 +123,7 @@ test('custom matcher', () => {
 
 ### TypeScript
 
-```typescript
+```typescript:preview
 // vitest.config.ts
 import { defineConfig } from 'vitest/config';
 
@@ -138,7 +138,7 @@ export default defineConfig({
 
 ### React Testing
 
-```typescript
+```typescript:preview
 import { render, screen } from '@testing-library/react'
 import { test, expect } from 'vitest'
 import MyComponent from './MyComponent'
@@ -151,7 +151,7 @@ test('renders component', () => {
 
 ### Vue Testing
 
-```typescript
+```typescript:preview
 import { mount } from '@vue/test-utils';
 import { test, expect } from 'vitest';
 import MyComponent from './MyComponent.vue';
@@ -166,7 +166,7 @@ test('renders component', () => {
 
 ### 1. Test Organization
 
-```typescript
+```typescript:preview
 describe('UserService', () => {
   describe('authentication', () => {
     it('logs in user', async () => {
@@ -188,7 +188,7 @@ describe('UserService', () => {
 
 ### 2. Setup and Teardown
 
-```typescript
+```typescript:preview
 describe('Database tests', () => {
   beforeAll(async () => {
     await db.connect();
@@ -210,7 +210,7 @@ describe('Database tests', () => {
 
 ### 3. Async Testing
 
-```typescript
+```typescript:preview
 test('async operations', async () => {
   await expect(Promise.resolve(42)).resolves.toBe(42);
   await expect(Promise.reject('error')).rejects.toBe('error');
@@ -219,7 +219,7 @@ test('async operations', async () => {
 
 ### 4. Test Isolation
 
-```typescript
+```typescript:preview
 test.each([
   { input: 1, expected: 2 },
   { input: 2, expected: 4 },
@@ -233,7 +233,7 @@ test.each([
 
 ### 1. Parallel Execution
 
-```bash
+```bash:preview
 vitest --threads false  # Disable threading
 vitest --pool threads  # Use thread pool
 vitest --pool forks   # Use process pool
@@ -241,7 +241,7 @@ vitest --pool forks   # Use process pool
 
 ### 2. Test Filtering
 
-```bash
+```bash:preview
 # Run specific tests
 vitest basic.test.ts
 vitest "test name"
@@ -250,7 +250,7 @@ vitest -t "test pattern"
 
 ### 3. Watch Mode Optimization
 
-```typescript
+```typescript:preview
 // vitest.config.ts
 export default defineConfig({
   test: {
@@ -266,7 +266,7 @@ export default defineConfig({
 
 ### Using Debug Mode
 
-```bash
+```bash:preview
 # Start in debug mode
 vitest --debug
 
@@ -276,7 +276,7 @@ vitest --debug --port 9229
 
 ### Console Output
 
-```typescript
+```typescript:preview
 test('debugging', () => {
   console.log('Debug info:', someValue);
   expect(someValue).toBeDefined();
@@ -285,7 +285,7 @@ test('debugging', () => {
 
 ### Browser Debugging
 
-```typescript
+```typescript:preview
 // vitest.config.ts
 export default defineConfig({
   test: {

@@ -9,7 +9,7 @@ Yarn is a fast, reliable, and secure package manager developed by Facebook. It o
 
 ## Installation
 
-```bash
+```bash:preview
 # Using npm
 npm install -g yarn
 
@@ -25,7 +25,7 @@ yarn --version
 
 ### Project Initialization
 
-```bash
+```bash:preview
 # Create a new package.json
 yarn init
 
@@ -35,7 +35,7 @@ yarn init -y
 
 ### Package Installation
 
-```bash
+```bash:preview
 # Install all dependencies
 yarn
 # or
@@ -56,7 +56,7 @@ yarn add package-name@version
 
 ### Package Management
 
-```bash
+```bash:preview
 # Upgrade packages
 yarn upgrade
 
@@ -75,7 +75,7 @@ yarn cache clean
 
 ### Scripts
 
-```bash
+```bash:preview
 # Run a script
 yarn run script-name
 # or simply
@@ -91,7 +91,7 @@ yarn build
 
 ### Yarn Configuration File (`.yarnrc.yml`)
 
-```yaml
+```yaml:preview
 # Set registry
 npmRegistryServer: 'https://registry.npmjs.org'
 
@@ -107,7 +107,7 @@ cacheFolder: './.yarn/cache'
 
 ### package.json
 
-```json
+```json:preview
 {
   "name": "my-project",
   "version": "1.0.0",
@@ -130,7 +130,7 @@ cacheFolder: './.yarn/cache'
 
 Yarn has excellent support for monorepos through workspaces:
 
-```json
+```json:preview
 {
   "private": true,
   "workspaces": ["packages/*"]
@@ -139,7 +139,7 @@ Yarn has excellent support for monorepos through workspaces:
 
 ### Workspace Commands
 
-```bash
+```bash:preview
 # Install dependencies for all workspaces
 yarn install
 
@@ -154,7 +154,7 @@ yarn workspaces foreach run command
 
 Yarn's PnP feature improves installation and resolution speed:
 
-```yaml
+```yaml:preview
 # .yarnrc.yml
 pnpMode: strict
 
@@ -206,7 +206,7 @@ enableGlobalCache: false
 
 ### PnP Compatibility
 
-```bash
+```bash:preview
 # Handle packages without PnP support
 yarn add package-name --ignore-scripts
 
@@ -216,7 +216,7 @@ nodeLinker: node-modules
 
 ### Migration from npm
 
-```bash
+```bash:preview
 # Import npm configuration
 yarn import
 
@@ -226,7 +226,7 @@ yarn install
 
 ### Cache Issues
 
-```bash
+```bash:preview
 # Clear cache
 yarn cache clean
 
@@ -238,7 +238,7 @@ yarn rebuild
 
 ### Constraints
 
-```js
+```js:preview
 // .yarn/constraints.pro
 gen_enforced_dependency(WorkspaceCwd, 'typescript', '4.5.2', DependencyType) :-
   workspace_has_dependency(WorkspaceCwd, 'typescript', _, DependencyType).
@@ -246,7 +246,7 @@ gen_enforced_dependency(WorkspaceCwd, 'typescript', '4.5.2', DependencyType) :-
 
 ### Protocols
 
-```yaml
+```yaml:preview
 # .yarnrc.yml
 packageExtensions:
   'package-name@*':
@@ -256,7 +256,7 @@ packageExtensions:
 
 ### Custom Commands
 
-```js
+```js:preview
 // .yarn/plugins/plugin-commands-custom.js
 module.exports = {
   commands: {

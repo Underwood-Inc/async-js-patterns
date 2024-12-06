@@ -254,7 +254,7 @@ test('API calls', async (t) => {
 
 ### 1. Selector Best Practices
 
-```typescript
+```typescript:preview
 // ❌ Avoid
 const button = Selector('button').nth(2);
 const div = Selector('div.btn');
@@ -267,7 +267,7 @@ const heading = Selector('h1').withText('Welcome');
 
 ### 2. Waiting Strategies
 
-```typescript
+```typescript:preview
 // ❌ Avoid
 await t.wait(5000);
 
@@ -283,7 +283,7 @@ await t
 
 ### 3. Error Handling
 
-```typescript
+```typescript:preview
 test('with error handling', async (t) => {
   try {
     await t.click('.non-existent');
@@ -301,7 +301,7 @@ test('with error handling', async (t) => {
 
 ### 4. Test Organization
 
-```typescript
+```typescript:preview
 // roles.ts
 import { Role } from 'testcafe';
 
@@ -341,7 +341,7 @@ test('admin functionality', async (t) => {
 
 ### 5. Configuration
 
-```typescript
+```typescript:preview
 // .testcaferc.json
 {
     "browsers": ["chrome:headless", "firefox"],

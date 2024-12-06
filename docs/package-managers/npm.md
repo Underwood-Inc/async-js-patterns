@@ -11,7 +11,7 @@ npm (Node Package Manager) is the default package manager for Node.js and the wo
 
 npm comes bundled with Node.js:
 
-```bash
+```bash:preview
 # Check if npm is installed
 npm -v
 
@@ -23,7 +23,7 @@ npm install -g npm@latest
 
 ### Project Initialization
 
-```bash
+```bash:preview
 # Create a new package.json
 npm init
 
@@ -33,7 +33,7 @@ npm init -y
 
 ### Package Installation
 
-```bash
+```bash:preview
 # Install all dependencies
 npm install
 
@@ -52,7 +52,7 @@ npm install package-name@version
 
 ### Package Management
 
-```bash
+```bash:preview
 # Update packages
 npm update
 
@@ -74,7 +74,7 @@ npm audit fix
 
 ### Scripts
 
-```bash
+```bash:preview
 # Run a script defined in package.json
 npm run script-name
 
@@ -88,7 +88,7 @@ npm build
 
 ### npm Configuration File (`.npmrc`)
 
-```ini
+```ini:preview
 # Set default registry
 registry=https://registry.npmjs.org/
 
@@ -104,7 +104,7 @@ package-lock=true
 
 ### package.json
 
-```json
+```json:preview
 {
   "name": "my-project",
   "version": "1.0.0",
@@ -126,7 +126,7 @@ package-lock=true
 
 npm supports workspaces for monorepo management:
 
-```json
+```json:preview
 {
   "name": "my-monorepo",
   "workspaces": ["packages/*"]
@@ -135,7 +135,7 @@ npm supports workspaces for monorepo management:
 
 ### Workspace Commands
 
-```bash
+```bash:preview
 # Install dependencies for all workspaces
 npm install
 
@@ -178,7 +178,7 @@ npm run test --workspaces
 
 ### EACCES Permission Errors
 
-```bash
+```bash:preview
 # Fix permissions globally
 sudo chown -R $USER ~/.npm
 sudo chown -R $USER /usr/local/lib/node_modules
@@ -186,7 +186,7 @@ sudo chown -R $USER /usr/local/lib/node_modules
 
 ### Package Lock Conflicts
 
-```bash
+```bash:preview
 # Regenerate package-lock.json
 rm package-lock.json
 npm install
@@ -194,7 +194,7 @@ npm install
 
 ### Cache Issues
 
-```bash
+```bash:preview
 # Clear npm cache
 npm cache clean --force
 
@@ -206,7 +206,7 @@ npm cache verify
 
 ### npm Scripts with Arguments
 
-```json
+```json:preview
 {
   "scripts": {
     "start": "node server.js",
@@ -218,7 +218,7 @@ npm cache verify
 
 ### Custom Registry Configuration
 
-```bash
+```bash:preview
 # Set custom registry
 npm config set registry https://custom-registry.com
 
@@ -228,7 +228,7 @@ npm config set @myorg:registry https://custom-registry.com
 
 ### Publishing Packages
 
-```bash
+```bash:preview
 # Login to npm
 npm login
 

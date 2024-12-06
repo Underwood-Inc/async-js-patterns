@@ -9,7 +9,7 @@ pnpm is a fast, disk space efficient package manager that creates a non-flat nod
 
 ## Installation
 
-```bash
+```bash:preview
 # Using npm
 npm install -g pnpm
 
@@ -27,7 +27,7 @@ pnpm --version
 
 ### Project Initialization
 
-```bash
+```bash:preview
 # Create a new package.json
 pnpm init
 
@@ -37,7 +37,7 @@ pnpm init -y
 
 ### Package Installation
 
-```bash
+```bash:preview
 # Install all dependencies
 pnpm install
 
@@ -56,7 +56,7 @@ pnpm add package-name@version
 
 ### Package Management
 
-```bash
+```bash:preview
 # Update packages
 pnpm update
 
@@ -75,7 +75,7 @@ pnpm audit
 
 ### Scripts
 
-```bash
+```bash:preview
 # Run a script
 pnpm run script-name
 # or simply
@@ -91,7 +91,7 @@ pnpm build
 
 ### pnpm Configuration File (`.npmrc`)
 
-```ini
+```ini:preview
 # Set registry
 registry=https://registry.npmjs.org/
 
@@ -107,7 +107,7 @@ store-dir=.pnpm-store
 
 ### package.json
 
-```json
+```json:preview
 {
   "name": "my-project",
   "version": "1.0.0",
@@ -130,7 +130,7 @@ store-dir=.pnpm-store
 
 pnpm has excellent monorepo support through workspaces:
 
-```yaml
+```yaml:preview
 # pnpm-workspace.yaml
 packages:
   - 'packages/*'
@@ -140,7 +140,7 @@ packages:
 
 ### Workspace Commands
 
-```bash
+```bash:preview
 # Install dependencies for all workspaces
 pnpm install
 
@@ -160,7 +160,7 @@ pnpm uses a unique approach to manage dependencies:
 
 ### Content-addressable Store
 
-```bash
+```bash:preview
 # Location of global store
 ~/.pnpm-store/
 
@@ -207,7 +207,7 @@ node_modules/.pnpm/
 
 ### Store Issues
 
-```bash
+```bash:preview
 # Clear store
 pnpm store prune
 
@@ -220,7 +220,7 @@ pnpm store prune
 
 ### Dependency Resolution
 
-```bash
+```bash:preview
 # Force resolution
 pnpm add package-name --force
 
@@ -230,7 +230,7 @@ pnpm install --force
 
 ### Migration from npm/Yarn
 
-```bash
+```bash:preview
 # Import package-lock.json/yarn.lock
 pnpm import
 
@@ -242,7 +242,7 @@ pnpm install
 
 ### Filtering
 
-```bash
+```bash:preview
 # Run in packages that depend on another
 pnpm --filter ...package-name command
 
@@ -255,7 +255,7 @@ pnpm --filter "package-a...package-b" command
 
 ### Hooks
 
-```json
+```json:preview
 {
   "pnpm": {
     "hooks": {
@@ -267,7 +267,7 @@ pnpm --filter "package-a...package-b" command
 
 ### Custom Configs
 
-```js
+```js:preview
 // .pnpmfile.cjs
 module.exports = {
   hooks: {
@@ -281,7 +281,7 @@ module.exports = {
 
 ### Publishing
 
-```bash
+```bash:preview
 # Publish package
 pnpm publish
 

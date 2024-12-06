@@ -215,7 +215,7 @@ A flag on a block or element that changes appearance or behavior.
 
 ### 4. File Organization
 
-```txt
+```txt:preview
 styles/
   blocks/
     menu/

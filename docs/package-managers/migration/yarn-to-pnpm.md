@@ -11,7 +11,7 @@ This guide covers the process of migrating your project from Yarn to pnpm, inclu
 
 1. Install pnpm:
 
-```bash
+```bash:preview
 # Using npm
 npm install -g pnpm
 
@@ -24,7 +24,7 @@ iwr https://get.pnpm.io/install.ps1 -useb | iex
 
 2. Verify installation:
 
-```bash
+```bash:preview
 pnpm --version
 ```
 
@@ -32,7 +32,7 @@ pnpm --version
 
 ### 1. Generate pnpm-lock.yaml
 
-```bash
+```bash:preview
 # Remove Yarn's lock file
 rm yarn.lock
 
@@ -47,7 +47,7 @@ pnpm install
 
 #### GitHub Actions
 
-```yaml
+```yaml:preview
 # Before (Yarn)
 steps:
   - uses: actions/setup-node@v3
@@ -72,7 +72,7 @@ steps:
 
 #### package.json
 
-```json
+```json:preview
 {
   "scripts": {
     // Before (Yarn)
@@ -114,7 +114,7 @@ steps:
 
 ### 1. Package Manager Settings
 
-```json
+```json:preview
 // package.json
 {
   "packageManager": "pnpm@8.0.0"
@@ -123,7 +123,7 @@ steps:
 
 ### 2. Workspace Configuration
 
-```yaml
+```yaml:preview
 # Before (.yarnrc.yml)
 nodeLinker: node-modules
 plugins:
@@ -138,7 +138,7 @@ packages:
 
 ### 3. pnpm Configuration
 
-```ini
+```ini:preview
 # .npmrc
 strict-peer-dependencies=true
 auto-install-peers=true
@@ -149,7 +149,7 @@ registry=https://registry.npmjs.org/
 
 ### 4. Git Configuration
 
-```gitignore
+```gitignore:preview
 # .gitignore
 node_modules
 .pnpm-store/
@@ -164,7 +164,7 @@ node_modules
 
 ### 1. Update Dependencies
 
-```json
+```json:preview
 // Before (Yarn workspace protocol)
 {
   "dependencies": {
@@ -182,7 +182,7 @@ node_modules
 
 ### 2. Update Commands
 
-```bash
+```bash:preview
 # Before (Yarn)
 yarn workspace package-name add lodash
 yarn workspaces foreach run test
@@ -203,7 +203,7 @@ pnpm -r run test
 
 ### Workspace Features
 
-```bash
+```bash:preview
 # Yarn parallel execution
 yarn workspaces foreach -p run test
 
@@ -251,7 +251,7 @@ pnpm --filter package-name build
 
 ### 1. Module Resolution
 
-```ini
+```ini:preview
 # .npmrc
 node-linker=hoisted
 shamefully-hoist=true
@@ -259,7 +259,7 @@ shamefully-hoist=true
 
 ### 2. Workspace Protocol
 
-```json
+```json:preview
 {
   "dependencies": {
     // Both Yarn and pnpm support workspace:*
@@ -270,7 +270,7 @@ shamefully-hoist=true
 
 ### 3. Peer Dependencies
 
-```bash
+```bash:preview
 # Handle peer dependencies
 pnpm install --no-strict-peer-dependencies
 ```
@@ -279,7 +279,7 @@ pnpm install --no-strict-peer-dependencies
 
 If migration issues occur:
 
-```bash
+```bash:preview
 # 1. Remove pnpm files
 rm pnpm-lock.yaml
 rm -rf node_modules
@@ -295,7 +295,7 @@ yarn install --frozen-lockfile
 
 ## Verification Steps
 
-```bash
+```bash:preview
 # 1. Clean install
 rm -rf node_modules
 pnpm install

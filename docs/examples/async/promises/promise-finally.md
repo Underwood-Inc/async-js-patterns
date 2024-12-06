@@ -20,7 +20,7 @@ Learn how to use `Promise.finally` for cleanup and resource management.
 
 ## Basic Usage
 
-```typescript
+```typescript:preview
 // Basic cleanup pattern
 async function fetchWithCleanup(url: string) {
   const controller = new AbortController();
@@ -54,7 +54,7 @@ async function useResource<T, R>(
 
 ### Database Connection Management
 
-```typescript
+```typescript:preview
 interface Connection {
   query: (sql: string) => Promise<any>;
   close: () => Promise<void>;
@@ -91,7 +91,7 @@ async function withConnection<T>(
 
 ### Timer Management
 
-```typescript
+```typescript:preview
 class Timer {
   private timers: Set<NodeJS.Timeout> = new Set();
 
@@ -122,7 +122,7 @@ async function withTimers<T>(work: (timer: Timer) => Promise<T>): Promise<T> {
 
 ### File Handle Management
 
-```typescript
+```typescript:preview
 interface FileHandle {
   write: (data: string) => Promise<void>;
   close: () => Promise<void>;
@@ -152,7 +152,7 @@ async function processFile(path: string): Promise<string> {
 
 ### Mutex Lock Management
 
-```typescript
+```typescript:preview
 class Mutex {
   private locked = false;
   private queue: (() => void)[] = [];

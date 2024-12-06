@@ -9,7 +9,7 @@ Bun is an all-in-one JavaScript runtime and package manager that focuses on perf
 
 ## Installation
 
-```bash
+```bash:preview
 # Using curl (macOS, Linux)
 curl -fsSL https://bun.sh/install | bash
 
@@ -25,7 +25,7 @@ bun --version
 
 ### Project Initialization
 
-```bash
+```bash:preview
 # Create a new project
 bun init
 
@@ -35,7 +35,7 @@ bun init -y
 
 ### Package Installation
 
-```bash
+```bash:preview
 # Install all dependencies
 bun install
 
@@ -54,7 +54,7 @@ bun add package-name@version
 
 ### Package Management
 
-```bash
+```bash:preview
 # Update packages
 bun update
 
@@ -70,7 +70,7 @@ bun outdated
 
 ### Scripts
 
-```bash
+```bash:preview
 # Run a script
 bun run script-name
 
@@ -87,7 +87,7 @@ bun index.ts
 
 ### Bun Configuration File (`bunfig.toml`)
 
-```toml
+```toml:preview
 # Set registry
 registry = "https://registry.npmjs.org"
 
@@ -102,7 +102,7 @@ install.production = false
 
 ### package.json
 
-```json
+```json:preview
 {
   "name": "my-project",
   "version": "1.0.0",
@@ -125,7 +125,7 @@ install.production = false
 
 ### HTTP Server
 
-```typescript
+```typescript:preview
 const server = Bun.serve({
   port: 3000,
   fetch(req) {
@@ -138,7 +138,7 @@ console.log(`Listening on http://localhost:${server.port}`);
 
 ### File Operations
 
-```typescript
+```typescript:preview
 // Read file
 const file = await Bun.file('file.txt');
 const text = await file.text();
@@ -152,7 +152,7 @@ const json = await Bun.file('data.json').json();
 
 ### Testing
 
-```typescript
+```typescript:preview
 import { expect, test, describe } from 'bun:test';
 
 describe('math', () => {
@@ -166,7 +166,7 @@ describe('math', () => {
 
 Bun includes a built-in bundler:
 
-```bash
+```bash:preview
 # Bundle for production
 bun build ./index.ts --outdir ./dist
 
@@ -210,7 +210,7 @@ bun build ./index.ts --watch
 
 ### Node.js Compatibility
 
-```typescript
+```typescript:preview
 // Use Node.js compatibility mode
 process.version; // v18.0.0
 process.versions.bun; // actual Bun version
@@ -218,7 +218,7 @@ process.versions.bun; // actual Bun version
 
 ### Package Resolution
 
-```bash
+```bash:preview
 # Force reinstall packages
 bun install --force
 
@@ -228,7 +228,7 @@ bun pm cache rm
 
 ### TypeScript Setup
 
-```jsonc
+```jsonc:preview
 // tsconfig.json
 {
   "compilerOptions": {
@@ -241,7 +241,7 @@ bun pm cache rm
 
 ### WebSocket Server
 
-```typescript
+```typescript:preview
 const server = Bun.serve({
   fetch(req, server) {
     if (server.upgrade(req)) {
@@ -259,7 +259,7 @@ const server = Bun.serve({
 
 ### Environment Variables
 
-```typescript
+```typescript:preview
 // Load .env file
 const env = await Bun.file('.env').text();
 Bun.env = { ...Bun.env, ...parse(env) };
@@ -270,7 +270,7 @@ const port = Bun.env.PORT || 3000;
 
 ### SQLite Integration
 
-```typescript
+```typescript:preview
 import { Database } from 'bun:sqlite';
 
 const db = new Database('mydb.sqlite');
@@ -280,7 +280,7 @@ const user = query.get({ $id: 1 });
 
 ### Hot Reloading
 
-```typescript
+```typescript:preview
 // Enable hot reloading
 const server = Bun.serve({
   development: true,

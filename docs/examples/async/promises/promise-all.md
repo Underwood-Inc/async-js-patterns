@@ -20,7 +20,7 @@ Learn how to use `Promise.all` for parallel execution patterns.
 
 ## Basic Usage
 
-```typescript
+```typescript:preview
 // Fetch multiple resources in parallel
 async function fetchMultipleUrls(urls: string[]) {
   try {
@@ -45,7 +45,7 @@ async function processItems<T, R>(
 
 ### Parallel with Concurrency Limit
 
-```typescript
+```typescript:preview
 async function parallelWithLimit<T, R>(
   items: T[],
   processor: (item: T) => Promise<R>,
@@ -75,7 +75,7 @@ async function parallelWithLimit<T, R>(
 
 ### Batch Processing
 
-```typescript
+```typescript:preview
 async function processBatches<T, R>(
   items: T[],
   processor: (items: T[]) => Promise<R[]>,
@@ -97,7 +97,7 @@ async function processBatches<T, R>(
 
 ### Error Handling with Partial Results
 
-```typescript
+```typescript:preview
 async function processWithPartialResults<T, R>(
   items: T[],
   processor: (item: T) => Promise<R>

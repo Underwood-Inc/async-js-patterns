@@ -20,7 +20,7 @@ Lock files ensure dependency tree consistency across different environments by:
 
 ### Lock Files by Package Manager
 
-```bash
+```bash:preview
 # npm
 package-lock.json
 
@@ -38,7 +38,7 @@ bun.lockb
 
 ### .gitignore
 
-```gitignore
+```gitignore:preview
 # Dependencies
 node_modules/
 .pnp.*
@@ -71,7 +71,7 @@ build/
 
 ### What to Commit
 
-```bash
+```bash:preview
 # Always commit
 package.json
 package-lock.json
@@ -91,7 +91,7 @@ node_modules/
 
 ### Semantic Versioning
 
-```json
+```json:preview
 {
   "version": "MAJOR.MINOR.PATCH",
   "dependencies": {
@@ -105,7 +105,7 @@ node_modules/
 
 ### Version Constraints
 
-```json
+```json:preview
 {
   "engines": {
     "node": ">=14.0.0",
@@ -119,7 +119,7 @@ node_modules/
 
 ### Workspace Configuration
 
-```yaml
+```yaml:preview
 # pnpm-workspace.yaml
 packages:
   - 'packages/*'
@@ -127,7 +127,7 @@ packages:
   - '!**/test/**'
 ```
 
-```json
+```json:preview
 // package.json (Yarn/npm)
 {
   "workspaces": ["packages/*", "apps/*"]
@@ -136,7 +136,7 @@ packages:
 
 ### Version Management
 
-```json
+```json:preview
 {
   "private": true,
   "workspaces": ["packages/*"],
@@ -153,7 +153,7 @@ packages:
 
 #### GitHub Actions
 
-```yaml
+```yaml:preview
 - uses: actions/cache@v3
   with:
     path: |
@@ -166,7 +166,7 @@ packages:
 
 #### GitLab CI
 
-```yaml
+```yaml:preview
 cache:
   key:
     files:
@@ -180,7 +180,7 @@ cache:
 
 ### Clean Installs
 
-```bash
+```bash:preview
 # npm
 npm ci
 
@@ -228,7 +228,7 @@ bun install --frozen-lockfile
 
 ### Package Updates
 
-```bash
+```bash:preview
 # 1. Create branch
 git checkout -b update-dependencies
 
@@ -248,7 +248,7 @@ git push origin update-dependencies
 
 ### Breaking Changes
 
-```bash
+```bash:preview
 # 1. Document changes
 git checkout -b breaking-change
 
@@ -269,7 +269,7 @@ git push origin breaking-change
 
 ### Lock File Conflicts
 
-```bash
+```bash:preview
 # Reset lock file
 rm package-lock.json
 npm install
@@ -280,7 +280,7 @@ npm install --force
 
 ### Workspace Issues
 
-```bash
+```bash:preview
 # Clean install
 rm -rf node_modules
 npm install
@@ -292,7 +292,7 @@ npm install
 
 ### Cache Problems
 
-```bash
+```bash:preview
 # Clear all caches
 npm cache clean --force
 yarn cache clean

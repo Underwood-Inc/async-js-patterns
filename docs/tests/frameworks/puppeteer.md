@@ -254,7 +254,7 @@ await client.send('Performance.enable');
 
 ### Mobile Emulation
 
-```javascript
+```javascript:preview
 // Emulate device
 const iPhone = puppeteer.devices['iPhone 12'];
 await page.emulate(iPhone);
@@ -276,7 +276,7 @@ await page.emulateNetworkConditions({
 
 ### Visual Testing
 
-```javascript
+```javascript:preview
 const { toMatchImageSnapshot } = require('jest-image-snapshot');
 expect.extend({ toMatchImageSnapshot });
 
@@ -301,7 +301,7 @@ describe('Visual regression', () => {
 
 ### API Testing
 
-```javascript
+```javascript:preview
 describe('API integration', () => {
   it('should intercept API calls', async () => {
     // Mock API response
@@ -329,7 +329,7 @@ describe('API integration', () => {
 
 ### 1. Element Selection
 
-```javascript
+```javascript:preview
 // ❌ Avoid
 await page.$('.button:nth-child(2)');
 await page.$('div.btn');
@@ -342,7 +342,7 @@ await page.$('button[aria-label="Submit"]');
 
 ### 2. Waiting Strategies
 
-```javascript
+```javascript:preview
 // ❌ Avoid
 await page.waitFor(5000);
 
@@ -358,7 +358,7 @@ await page.waitForNavigation({
 
 ### 3. Error Handling
 
-```javascript
+```javascript:preview
 try {
   await page.click('.non-existent');
 } catch (error) {
@@ -380,7 +380,7 @@ try {
 
 ### 4. Resource Management
 
-```javascript
+```javascript:preview
 let browser;
 let page;
 

@@ -28,7 +28,7 @@ const user: User = {  // Hover over 'User'
 ```
 ````
 
-```javascript:preview:preview
+```javascript:preview
 // Your JavaScript code here
 ```
 
@@ -73,7 +73,7 @@ The plugin transforms markdown code blocks with the `:preview` suffix into CodeP
 
 ````typescript:preview
 // Input markdown
-```ts:preview:preview
+```ts:preview
 const x: number = 42;
 ````
 

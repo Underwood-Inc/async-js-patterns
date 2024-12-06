@@ -246,7 +246,7 @@ describe('Login', () => {
 
 ### Custom Commands
 
-```javascript
+```javascript:preview
 // Custom browser command
 browser.addCommand('getUrlAndTitle', async function () {
   return {
@@ -272,7 +272,7 @@ await $('#button').waitAndClick();
 
 ### Service Integration
 
-```javascript
+```javascript:preview
 // wdio.conf.js
 import allure from '@wdio/allure-reporter';
 
@@ -307,7 +307,7 @@ export const config = {
 
 ### Visual Regression
 
-```javascript
+```javascript:preview
 describe('Visual regression', () => {
   it('should match homepage screenshot', async () => {
     await browser.url('/');
@@ -325,7 +325,7 @@ describe('Visual regression', () => {
 
 ### API Testing
 
-```javascript
+```javascript:preview
 describe('API integration', () => {
   it('should create user via API', async () => {
     const response = await browser.call(async () => {
@@ -350,7 +350,7 @@ describe('API integration', () => {
 
 ### Mobile Testing
 
-```javascript
+```javascript:preview
 describe('Mobile app', () => {
   it('should handle touch gestures', async () => {
     // Tap
@@ -379,7 +379,7 @@ describe('Mobile app', () => {
 
 ### Metrics Collection
 
-```javascript
+```javascript:preview
 describe('Performance', () => {
   it('should measure page load metrics', async () => {
     // Enable performance monitoring
@@ -401,7 +401,7 @@ describe('Performance', () => {
 
 ### Network Interception
 
-```javascript
+```javascript:preview
 describe('Network', () => {
   it('should mock API responses', async () => {
     // Mock response
@@ -428,7 +428,7 @@ describe('Network', () => {
 
 ### 1. Selectors
 
-```javascript
+```javascript:preview
 // ❌ Avoid
 await $('button:nth-child(2)');
 await $('div.btn-class');
@@ -441,7 +441,7 @@ await $('~accessibility-id');
 
 ### 2. Waits
 
-```javascript
+```javascript:preview
 // ❌ Avoid
 await browser.pause(5000);
 
@@ -453,7 +453,7 @@ await expect($('#element')).toBePresent();
 
 ### 3. Error Handling
 
-```javascript
+```javascript:preview
 describe('Error handling', () => {
   it('should handle test failures', async () => {
     try {
@@ -469,7 +469,7 @@ describe('Error handling', () => {
 
 ### 4. Test Organization
 
-```javascript
+```javascript:preview
 // hooks.js
 export const config = {
   before: async () => {

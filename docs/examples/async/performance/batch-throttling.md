@@ -20,7 +20,7 @@ Learn how to implement batch processing with throttling for better performance a
 
 ## Basic Usage
 
-```typescript
+```typescript:preview
 // Simple batch processor
 async function processBatch<T, R>(
   items: T[],
@@ -65,7 +65,7 @@ async function processBatchWithDelay<T, R>(
 
 ### Throttled Batch Processor
 
-```typescript
+```typescript:preview
 interface ThrottledBatchOptions<T, R> {
   batchSize: number;
   minDelay: number;
@@ -178,7 +178,7 @@ class ThrottledBatchProcessor<T, R> {
 
 ### Concurrent Batch Processor
 
-```typescript
+```typescript:preview
 interface ConcurrentBatchOptions<T, R> {
   batchSize: number;
   concurrency: number;
@@ -254,7 +254,7 @@ class ConcurrentBatchProcessor<T, R> {
 
 ### Priority Batch Processor
 
-```typescript
+```typescript:preview
 interface PriorityBatchItem<T> {
   data: T;
   priority: number;

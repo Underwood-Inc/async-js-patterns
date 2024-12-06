@@ -20,7 +20,7 @@ Learn how to convert callback-based APIs into Promise-based ones.
 
 ## Basic Usage
 
-```typescript
+```typescript:preview
 // Basic promisification
 function promisify<T>(
   fn: (callback: (error: Error | null, result?: T) => void) => void
@@ -52,7 +52,7 @@ const readFileAsync = (path: string): Promise<string> =>
 
 ### Generic Promisification
 
-```typescript
+```typescript:preview
 type Callback<T> = (error: Error | null, result?: T) => void;
 
 function promisifyGeneric<T, A extends any[]>(
@@ -74,7 +74,7 @@ const writeFile = promisifyGeneric(fs.writeFile);
 
 ### Class Method Promisification
 
-```typescript
+```typescript:preview
 function promisifyMethod<T, A extends any[]>(
   target: any,
   method: string
@@ -106,7 +106,7 @@ const queryAsync = promisifyMethod(db, 'query');
 
 ### Event Emitter Promisification
 
-```typescript
+```typescript:preview
 function promisifyEvent(
   emitter: EventEmitter,
   eventName: string
@@ -145,7 +145,7 @@ async function waitForEvent(emitter: EventEmitter, event: string) {
 
 ### Batch Promisification
 
-```typescript
+```typescript:preview
 type AsyncFunction<T> = (...args: any[]) => Promise<T>;
 
 function promisifyAll<T extends object>(
@@ -177,7 +177,7 @@ async function example() {
 
 ### Promisification with Cancellation
 
-```typescript
+```typescript:preview
 interface CancellablePromise<T> extends Promise<T> {
   cancel: () => void;
 }
