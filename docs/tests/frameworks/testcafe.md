@@ -20,84 +20,97 @@ TestCafe is a Node.js tool to automate end-to-end web testing. It's easy to set 
 
 ## Getting Started
 
-```bash
+```bash:preview
 # Install TestCafe
 npm install --save-dev testcafe
 ```
 
-## Basic Test Structure
+## Core Concepts
 
-```typescript
-import { Selector } from 'testcafe';
+### Test Structure
 
-fixture`Getting Started`.page`https://example.com`;
+```typescript:preview
+import { Selector, t } from 'testcafe';
 
-test('My first test', async (t) => {
-  const loginInput = Selector('#login');
-  const passwordInput = Selector('#password');
-  const submitButton = Selector('button[type=submit]');
+fixture('Example Tests')
+  .page('https://example.com')
+  .beforeEach(async (t) => {
+    await t.maximizeWindow();
+  });
 
+test('Basic test', async (t) => {
   await t
-    .typeText(loginInput, 'myLogin')
-    .typeText(passwordInput, 'myPassword')
-    .click(submitButton)
-    .expect(Selector('.account').innerText)
-    .contains('Welcome');
+    .typeText('#email', 'user@example.com')
+    .typeText('#password', 'password')
+    .click('#submit')
+    .expect(Selector('.welcome').exists)
+    .ok();
 });
 ```
 
-## Common Operations
+### Selectors
 
-```typescript
-// Navigation
-await t.navigateTo('https://example.com');
+```typescript:preview
+// Basic selectors
+const button = Selector('button');
+const input = Selector('#email');
+const link = Selector('a').withText('Click me');
 
-// Interactions
-await t
-  .click(Selector('button'))
-  .doubleClick(Selector('.item'))
-  .rightClick(Selector('.context-menu'))
-  .hover(Selector('.dropdown'))
-  .typeText(Selector('input'), 'Hello')
-  .pressKey('tab')
-  .drag(Selector('.item'), 200, 0);
+// Chaining selectors
+const listItem = Selector('ul')
+  .child('li')
+  .nth(2)
+  .withAttribute('data-test', 'item');
 
-// Assertions
-await t
-  .expect(Selector('.title').exists)
-  .ok()
-  .expect(Selector('.count').innerText)
-  .eql('5')
-  .expect(Selector('.button').hasClass('active'))
-  .ok()
-  .expect(Selector('.input').value)
-  .contains('text');
+// Custom selectors
+const customSelector = Selector(() => {
+  return document.querySelector('.dynamic-class');
+});
 
-// Taking screenshots
-await t.takeScreenshot('my-screenshot.png');
-await t.takeElementScreenshot(Selector('.component'), 'component.png');
+// React selectors
+const reactComponent = Selector('MyComponent').withProps({ active: true });
 ```
 
-## Page Object Model
+### Actions
 
-```typescript
+```typescript:preview
+// Mouse actions
+await t
+  .click(button)
+  .doubleClick(button)
+  .rightClick(button)
+  .hover(button)
+  .drag(element, 200, 0)
+  .dragToElement(element, target);
+
+// Keyboard actions
+await t
+  .pressKey('tab space')
+  .pressKey('ctrl+a delete')
+  .typeText(input, 'Hello')
+  .selectText(input)
+  .selectTextAreaContent(textarea);
+```
+
+## Advanced Features
+
+### Page Model Pattern
+
+```typescript:preview
 class LoginPage {
-  emailInput: Selector;
-  passwordInput: Selector;
-  submitButton: Selector;
-  errorMessage: Selector;
+  private email = Selector('#email');
+  private password = Selector('#password');
+  private submitButton = Selector('button[type="submit"]');
+  private errorMessage = Selector('.error-message');
 
   constructor() {
-    this.emailInput = Selector('#email');
-    this.passwordInput = Selector('#password');
-    this.submitButton = Selector('button[type="submit"]');
-    this.errorMessage = Selector('.error-message');
+    this.email = Selector('#email');
   }
 
   async login(email: string, password: string) {
     await t
-      .typeText(this.emailInput, email)
-      .typeText(this.passwordInput, password)
+      .typeText(this.email, email)
+      .typeText(this.password, password)
       .click(this.submitButton);
   }
 
@@ -106,41 +119,245 @@ class LoginPage {
   }
 }
 
+// Usage
 const loginPage = new LoginPage();
 
-test('Login with invalid credentials', async (t) => {
-  await loginPage.login('invalid@email.com', 'wrongpass');
-  await t
-    .expect(await loginPage.getErrorMessage())
-    .contains('Invalid credentials');
+test('Login test', async (t) => {
+  await loginPage.login('user@example.com', 'password');
+  await t.expect(Selector('.dashboard').exists).ok();
 });
 ```
 
-## Configuration Example
+### Request Hooks
 
-```typescript
-// .testcaferc.js
-module.exports = {
-  browsers: ['chrome', 'firefox'],
-  src: 'tests/**/*.test.ts',
-  screenshots: {
-    path: 'screenshots/',
-    takeOnFails: true,
-    pathPattern: '${DATE}_${TIME}/${BROWSER}/${TEST}.png',
-  },
-  reporter: [
-    'spec',
-    {
-      name: 'html',
-      output: 'reports/report.html',
-    },
-  ],
-  concurrency: 3,
-  selectorTimeout: 3000,
-  assertionTimeout: 1000,
-  pageLoadTimeout: 1000,
-  speed: 1,
-};
+```typescript:preview
+import { RequestHook, RequestLogger, RequestMock } from 'testcafe';
+
+// Logger
+const logger = RequestLogger(/api\/users/, {
+  logRequestBody: true,
+  logResponseBody: true,
+});
+
+// Mock
+const mock = RequestMock()
+  .onRequestTo(/api\/data/)
+  .respond({ data: 'mocked' }, 200, {
+    'Content-Type': 'application/json',
+  });
+
+// Custom hook
+class AuthHook extends RequestHook {
+  constructor() {
+    super(/api/);
+  }
+
+  async onRequest(e) {
+    e.requestOptions.headers['Authorization'] = 'Bearer token';
+  }
+
+  async onResponse(e) {
+    // Handle response
+  }
+}
+
+fixture('API Tests')
+  .page('https://example.com')
+  .requestHooks(logger, mock, new AuthHook());
 ```
 
-More content coming soon...
+### Client Scripts
+
+```typescript:preview
+// Inject script
+fixture('Client Scripts').page('https://example.com').clientScripts({
+  path: './scripts/helper.js',
+  module: true,
+});
+
+// Inline script
+test('with client script', async (t) => {
+  await t.eval(() => {
+    window.localStorage.setItem('key', 'value');
+  });
+
+  const result = await t.eval(() => {
+    return document.title;
+  });
+});
+```
+
+## Testing Patterns
+
+### Visual Testing
+
+```typescript:preview
+import { takeSnapshot } from 'testcafe-blink-diff';
+
+fixture('Visual Tests').page('https://example.com');
+
+test('visual regression', async (t) => {
+  // Full page snapshot
+  await takeSnapshot(t, {
+    name: 'homepage',
+    fullPage: true,
+  });
+
+  // Element snapshot
+  const element = Selector('.card');
+  await takeSnapshot(t, {
+    name: 'card',
+    element,
+  });
+});
+```
+
+### Mobile Testing
+
+```typescript:preview
+fixture('Mobile Tests')
+  .page('https://example.com')
+  .beforeEach(async (t) => {
+    await t.resizeWindow(375, 812); // iPhone X
+  });
+
+test('mobile layout', async (t) => {
+  // Touch actions
+  await t
+    .tap(Selector('.button'))
+    .doubleTap(Selector('.zoom'))
+    .hover(Selector('.menu'));
+
+  // Orientation
+  await t.resizeWindowToFitDevice('iphonex', {
+    portraitOrientation: true,
+  });
+});
+```
+
+### API Testing
+
+```typescript:preview
+import { RequestLogger } from 'testcafe';
+
+const logger = RequestLogger();
+
+fixture('API Integration').page('https://example.com').requestHooks(logger);
+
+test('API calls', async (t) => {
+  // Trigger API call
+  await t.click('.load-data');
+});
+```
+
+## Best Practices
+
+### 1. Selector Best Practices
+
+```typescript
+// ❌ Avoid
+const button = Selector('button').nth(2);
+const div = Selector('div.btn');
+
+// ✅ Prefer
+const button = Selector('[data-testid="submit"]');
+const input = Selector('input').withAttribute('name', 'email');
+const heading = Selector('h1').withText('Welcome');
+```
+
+### 2. Waiting Strategies
+
+```typescript
+// ❌ Avoid
+await t.wait(5000);
+
+// ✅ Prefer
+await t
+  .expect(Selector('.loader').exists)
+  .notOk()
+  .expect(Selector('.content').exists)
+  .ok()
+  .expect(Selector('.data').innerText)
+  .contains('Loaded');
+```
+
+### 3. Error Handling
+
+```typescript
+test('with error handling', async (t) => {
+  try {
+    await t.click('.non-existent');
+  } catch (error) {
+    // Take screenshot
+    await t.takeScreenshot({
+      path: `error-${Date.now()}.png`,
+      fullPage: true,
+    });
+
+    throw error;
+  }
+});
+```
+
+### 4. Test Organization
+
+```typescript
+// roles.ts
+import { Role } from 'testcafe';
+
+export const adminRole = Role('https://example.com/login', async (t) => {
+  await t
+    .typeText('#email', 'admin@example.com')
+    .typeText('#password', 'admin123')
+    .click('#submit');
+});
+
+// hooks.ts
+export const globalHooks = {
+  beforeEach: async (t) => {
+    await t.maximizeWindow().setTestSpeed(0.8).setPageLoadTimeout(30000);
+  },
+
+  afterEach: async (t) => {
+    if (await Selector('.error').exists) {
+      await t.takeScreenshot();
+    }
+  },
+};
+
+// test.ts
+import { adminRole } from './roles';
+import { globalHooks } from './hooks';
+
+fixture('Admin Tests')
+  .page('https://example.com')
+  .beforeEach(globalHooks.beforeEach)
+  .afterEach(globalHooks.afterEach);
+
+test('admin functionality', async (t) => {
+  await t.useRole(adminRole).expect(Selector('.admin-panel').exists).ok();
+});
+```
+
+### 5. Configuration
+
+```typescript
+// .testcaferc.json
+{
+    "browsers": ["chrome:headless", "firefox"],
+    "src": "tests/**/*.ts",
+    "screenshots": {
+        "path": "screenshots/",
+        "takeOnFails": true,
+        "fullPage": true
+    },
+    "reporter": {
+        "name": "spec",
+        "output": "reports/report.html"
+    },
+    "concurrency": 3,
+    "selectorTimeout": 10000,
+    "assertionTimeout": 5000,
+    "pageLoadTimeout": 30000
+}
+```
