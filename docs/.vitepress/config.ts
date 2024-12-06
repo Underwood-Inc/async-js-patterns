@@ -289,6 +289,8 @@ export default defineConfig({
     nav: [
       { text: 'Async', link: '/async/' },
       { text: 'TypeScript', link: '/typescript/utility-types' },
+      { text: 'Testing', link: '/tests/' },
+      { text: 'Package Managers', link: '/package-managers/' },
       { text: 'Styling', link: '/styling/' },
       { text: 'Examples', link: '/examples/' },
     ],
@@ -346,7 +348,6 @@ export default defineConfig({
             },
             { text: 'Type Guards', link: '/typescript/type-guards' },
             { text: 'Type Inference', link: '/typescript/type-inference' },
-            { text: 'Type Testing', link: '/typescript/type-testing' },
           ],
         },
         {
@@ -357,11 +358,41 @@ export default defineConfig({
             { text: 'State Management', link: '/typescript/state-management' },
           ],
         },
+      ],
+      '/tests/': [
         {
-          text: 'Testing',
+          text: 'Strategy',
           items: [
-            { text: 'Test Utilities', link: '/typescript/test-utilities' },
-            { text: 'Testing Patterns', link: '/typescript/testing-patterns' },
+            { text: 'Overview', link: '/tests/' },
+            {
+              text: 'DD: Testing Strategy',
+              link: '/tests/deep-dive-testing-strategy',
+            },
+          ],
+        },
+        {
+          text: 'Testing Patterns',
+          items: [
+            { text: 'Test Utilities', link: '/tests/test-utilities' },
+            { text: 'Testing Patterns', link: '/tests/testing-patterns' },
+          ],
+        },
+        {
+          text: 'Frameworks',
+          items: [
+            { text: 'Vitest', link: '/tests/frameworks/vitest' },
+            { text: 'Jest', link: '/tests/frameworks/jest' },
+            {
+              text: 'Testing Library',
+              link: '/tests/frameworks/testing-library',
+            },
+            { text: 'Cypress', link: '/tests/frameworks/cypress' },
+            { text: 'Playwright', link: '/tests/frameworks/playwright' },
+            { text: 'Selenium', link: '/tests/frameworks/selenium' },
+            { text: 'WebdriverIO', link: '/tests/frameworks/webdriverio' },
+            { text: 'Puppeteer', link: '/tests/frameworks/puppeteer' },
+            { text: 'TestCafe', link: '/tests/frameworks/testcafe' },
+            { text: 'Nightwatch', link: '/tests/frameworks/nightwatch' },
           ],
         },
       ],
@@ -439,6 +470,10 @@ export default defineConfig({
             { text: 'Markdown Lint', link: '/examples/markdown-lint-test' },
           ],
         },
+        {
+          text: 'UI Components',
+          items: [{ text: 'Tooltip System', link: '/examples/tooltip-system' }],
+        },
       ],
       '/styling/': [
         {
@@ -455,6 +490,50 @@ export default defineConfig({
             { text: 'BEM', link: '/styling/bem-methodology' },
             { text: 'Spacing', link: '/styling/single-direction-spacing' },
             { text: 'Selectors', link: '/styling/lobotomized-owl' },
+          ],
+        },
+      ],
+      '/package-managers/': [
+        {
+          text: 'Package Managers',
+          items: [
+            { text: 'Overview', link: '/package-managers/' },
+            { text: 'npm', link: '/package-managers/npm' },
+            { text: 'Yarn', link: '/package-managers/yarn' },
+            { text: 'pnpm', link: '/package-managers/pnpm' },
+            { text: 'Bun', link: '/package-managers/bun' },
+          ],
+        },
+        {
+          text: 'Best Practices',
+          items: [
+            {
+              text: 'Dependency Management',
+              link: '/package-managers/dependency-management',
+            },
+            {
+              text: 'Version Control',
+              link: '/package-managers/version-control',
+            },
+            { text: 'Security', link: '/package-managers/security' },
+            { text: 'Monorepos', link: '/package-managers/monorepos' },
+          ],
+        },
+        {
+          text: 'Migration Guides',
+          items: [
+            {
+              text: 'npm to Yarn',
+              link: '/package-managers/migration/npm-to-yarn',
+            },
+            {
+              text: 'npm to pnpm',
+              link: '/package-managers/migration/npm-to-pnpm',
+            },
+            {
+              text: 'Yarn to pnpm',
+              link: '/package-managers/migration/yarn-to-pnpm',
+            },
           ],
         },
       ],
