@@ -2,7 +2,7 @@ import { inBrowser } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
 import Layout from './Layout.vue';
 import { setupTooltips } from './setupTooltips';
-import './styles/custom.scss';
+import './styles/index.scss';
 
 export default {
   ...DefaultTheme,

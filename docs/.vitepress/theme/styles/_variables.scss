@@ -1,50 +1,5 @@
 @use 'sass:map';
 
-// Colors - Pastel Purple Theme
-$purple-light: #f8f7fc; // Very light purple for backgrounds
-$purple-dark: #2a2438; // Deep purple for dark mode
-$purple-brand: #9d8cd6; // Main purple brand color
-$purple-brand-light: #b3a5e3; // Lighter purple for hover states
-$purple-brand-dark: #7a69b3; // Darker purple for active states
-
-// Secondary Colors
-$purple-gray-100: #f3f0ff;
-$purple-gray-200: #e9e4ff;
-$purple-gray-300: #d4ccf4;
-$purple-gray-400: #b4a6e5;
-$purple-gray-500: #9d8cd6;
-$purple-gray-600: #7a69b3;
-$purple-gray-700: #5d4d94;
-$purple-gray-800: #413369;
-$purple-gray-900: #2a2438;
-
-// Typography
-$font-size-base: 16px;
-$font-size-sm: 0.9em;
-$font-size-xs: 0.8em;
-
-// Spacing
-$spacing-base: 1rem;
-$spacing-sm: 0.5rem;
-$spacing-lg: 1.5rem;
-
-// Borders
-$border-radius-base: 4px;
-$border-radius-lg: 8px;
-
-// Shadows
-$shadow-sm: 0 0 8px rgba($purple-brand, 0.2);
-
-// Transitions
-$transition-base: all 0.3s ease;
-
-// Breakpoints
-$breakpoint-sm: 640px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 1024px;
-$breakpoint-xl: 1280px;
-
-// Z-indices
 $z-index: (
   'base': 1,
   'content': 10,
@@ -59,7 +14,39 @@ $z-index: (
   'nav': 1080,
 );
 
-// Function to get z-index
 @function get-z-index($key) {
   @return map.get($z-index, $key);
+}
+
+:root {
+  /* Spacing */
+  --space-unit: 0.25rem;
+  --space-xs: calc(var(--space-unit) * 2);
+  --space-sm: calc(var(--space-unit) * 3);
+  --space-md: calc(var(--space-unit) * 4);
+  --space-lg: calc(var(--space-unit) * 6);
+  --space-xl: calc(var(--space-unit) * 8);
+
+  /* Typography */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-base: 16px;
+
+  /* Layout */
+  --sidebar-width: 17.5rem;
+  --content-width: 50rem;
+
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --border-radius-base: 4px;
+  --border-radius-lg: 8px;
+
+  /* Effects */
+  --shadow-sm: 0 0 8px rgba(var(--vp-c-brand), 0.2);
+  --transition-base: all 0.3s ease;
 }

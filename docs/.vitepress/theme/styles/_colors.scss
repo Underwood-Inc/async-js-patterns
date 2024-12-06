@@ -1,0 +1,21 @@
+@use 'sass:color';
+
+// Purple theme variables
+$purple-light: #f8f7fc;
+$purple-dark: #2a2438;
+$purple-brand: #9d8cd6;
+$purple-brand-light: #b3a5e3;
+$purple-brand-dark: #7a69b3;
+$purple-gray-100: #f3f0ff;
+$purple-gray-200: #e9e4ff;
+$purple-gray-300: #d4ccf4;
+$purple-gray-400: #b4a6e5;
+$purple-gray-500: #9d8cd6;
+$purple-gray-600: #7a69b3;
+$purple-gray-700: #5d4d94;
+$purple-gray-800: #413369;
+$purple-gray-900: #2a2438;
+
+// Code background variables
+$code-bg-light: color.adjust($purple-light, $lightness: -5%);
+$code-bg-dark: color.adjust($purple-dark, $lightness: -5%);

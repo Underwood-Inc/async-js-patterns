@@ -1,0 +1,39 @@
+@use './_colors.scss' as colors;
+@use 'sass:color';
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #{color.adjust(colors.$purple-light, $lightness: -2%)};
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #{color.adjust(colors.$purple-brand, $alpha: -0.5)};
+  border-radius: 10px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background: #{color.adjust(colors.$purple-brand, $alpha: -0.3)};
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.dark {
+  ::-webkit-scrollbar-track {
+    background: #{color.adjust(colors.$purple-dark, $lightness: 5%)};
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #{color.adjust(colors.$purple-brand-dark, $alpha: -0.5)};
+
+    &:hover {
+      background: #{color.adjust(colors.$purple-brand-dark, $alpha: -0.3)};
+    }
+  }
+}

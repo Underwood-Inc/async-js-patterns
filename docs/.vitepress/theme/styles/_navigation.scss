@@ -1,0 +1,64 @@
+.VPNavBar {
+  background-color: var(--vp-nav-bg-color) !important;
+  z-index: var(--vp-z-index-nav) !important;
+}
+
+.VPNavBarTitle {
+  background-color: var(--vp-nav-bg-color) !important;
+}
+
+.VPNav {
+  .VPNavBarMenuLink {
+    height: var(--vp-nav-height);
+    line-height: var(--vp-nav-height);
+
+    &:hover {
+      background-color: var(--vp-c-bg-soft);
+    }
+  }
+
+  .VPNavBarMenuGroup {
+    .link {
+      height: var(--vp-nav-height);
+      line-height: var(--vp-nav-height);
+
+      &:hover {
+        background-color: var(--vp-c-bg-soft);
+      }
+    }
+  }
+
+  z-index: var(--vp-z-index-nav) !important;
+}
+
+.VPLink.link.link {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: var(--vp-c-bg-soft);
+  }
+}
+
+// Hero section gradient text
+.name,
+.text {
+  background: -webkit-linear-gradient(
+    120deg,
+    var(--vp-c-brand-light) 30%,
+    var(--vp-c-brand)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark .name,
+.dark .text {
+  background: -webkit-linear-gradient(
+    120deg,
+    var(--vp-c-brand-light) 30%,
+    var(--vp-c-brand)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

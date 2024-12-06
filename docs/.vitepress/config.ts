@@ -263,7 +263,10 @@ export default defineConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          includePaths: [resolve(__dirname, 'theme/styles')],
+          includePaths: [
+            resolve(__dirname, 'theme/styles'),
+            resolve(__dirname, 'theme'),
+          ],
         },
       },
     },

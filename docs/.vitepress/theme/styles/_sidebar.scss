@@ -1,0 +1,32 @@
+.VPSidebar {
+  background-color: var(--vp-sidebar-bg-color) !important;
+
+  .VPSidebarItem.is-active .text {
+    color: var(--vp-c-brand-dark) !important;
+  }
+
+  .VPSidebarItem .text {
+    color: var(--vp-c-text-2) !important;
+  }
+}
+
+.VPSidebarItem.level-0.is-link.is-active,
+.VPSidebarItem.level-1.is-link.is-active,
+.VPSidebarItem.level-2.is-link.is-active {
+  background: var(--vp-c-brand-soft) !important;
+}
+
+.VPSidebarItem.level-0.is-link:hover,
+.VPSidebarItem.level-1.is-link:hover,
+.VPSidebarItem.level-2.is-link:hover {
+  background: var(--vp-c-bg-soft) !important;
+}
+
+.VPSidebarItem .text {
+  color: var(--vp-c-text) !important;
+}
+
+.VPSidebarItem.is-active .text {
+  color: var(--vp-c-brand) !important;
+  font-weight: 600;
+}

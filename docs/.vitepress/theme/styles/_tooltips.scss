@@ -1,0 +1,96 @@
+.tooltip-portal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.has-tooltip {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--vp-c-brand);
+  text-decoration-thickness: 1px;
+  cursor: help;
+  position: relative;
+
+  &::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    background: var(--vp-c-bg-soft);
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: pre-wrap;
+    z-index: var(--vp-z-index-tooltip);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.2s,
+      visibility 0.2s;
+    max-width: 300px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &:hover::before {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.has-error {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: rgba(255, 100, 100, 0.8);
+  text-decoration-thickness: 2px;
+}
+
+.tooltip-stack {
+  position: relative;
+  display: inline-block;
+
+  .has-tooltip::before {
+    margin-bottom: 4px;
+    z-index: var(--vp-z-index-tooltip);
+  }
+
+  .has-error::before {
+    background: rgba(255, 100, 100, 0.1);
+    border-color: rgba(255, 100, 100, 0.3);
+    margin-bottom: 8px;
+  }
+}
+
+.error-tooltip {
+  color: #ff6b6b;
+  font-family: var(--vp-font-family-mono);
+  white-space: pre-wrap;
+  font-size: 0.9em;
+}
+
+.tooltip-trigger {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--vp-c-brand);
+  text-decoration-thickness: 1px;
+  cursor: help !important;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+
+  &:active {
+    opacity: 0.7;
+  }
+
+  &.has-error {
+    text-decoration-style: wavy;
+    text-decoration-color: rgba(255, 100, 100, 0.8);
+    text-decoration-thickness: 2px;
+    cursor: help !important;
+  }
+}

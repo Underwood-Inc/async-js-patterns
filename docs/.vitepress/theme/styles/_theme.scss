@@ -1,0 +1,53 @@
+@use './_colors.scss' as colors;
+@use './_variables.scss' as vars;
+@use 'sass:color';
+
+:root {
+  // Light theme
+  --vp-c-bg: #{colors.$purple-light};
+  --vp-c-bg-alt: #{colors.$purple-gray-100};
+  --vp-c-bg-soft: #{colors.$purple-gray-200};
+
+  --vp-c-brand: #{colors.$purple-brand};
+  --vp-c-brand-light: #{colors.$purple-brand-light};
+  --vp-c-brand-lighter: #{colors.$purple-gray-300};
+  --vp-c-brand-dark: #{colors.$purple-brand-dark};
+  --vp-c-brand-darker: #{colors.$purple-gray-700};
+
+  --vp-c-text-1: #{colors.$purple-gray-900};
+  --vp-c-text-2: #{colors.$purple-gray-800};
+  --vp-c-text-3: #{colors.$purple-gray-700};
+
+  --vp-sidebar-bg-color: #{color.mix(
+      colors.$purple-light,
+      colors.$purple-gray-100,
+      70%
+    )};
+  --vp-nav-bg-color: #{colors.$purple-gray-200};
+
+  --vp-c-search-highlight: #{color.adjust(colors.$purple-brand, $alpha: -0.7)};
+  --vp-c-search-highlight-text: #{colors.$purple-dark};
+
+  --vp-z-index-nav: #{vars.get-z-index('nav')};
+  --vp-z-index-tooltip: #{vars.get-z-index('tooltip')};
+  --vp-z-index-code-block: #{vars.get-z-index('code-block')};
+}
+
+.dark {
+  --vp-c-bg: #{colors.$purple-dark};
+  --vp-c-bg-alt: #{color.adjust(colors.$purple-dark, $lightness: 5%)};
+  --vp-c-bg-soft: #{color.adjust(colors.$purple-dark, $lightness: 3%)};
+
+  --vp-c-text-1: #{colors.$purple-gray-100};
+  --vp-c-text-2: #{colors.$purple-gray-200};
+  --vp-c-text-3: #{colors.$purple-gray-300};
+
+  --vp-sidebar-bg-color: #{color.adjust(colors.$purple-dark, $lightness: -3%)};
+  --vp-nav-bg-color: #{color.adjust(colors.$purple-dark, $lightness: -5%)};
+
+  --vp-c-search-highlight: #{color.adjust(
+      colors.$purple-brand-light,
+      $alpha: -0.8
+    )};
+  --vp-c-search-highlight-text: #{colors.$purple-light};
+}
