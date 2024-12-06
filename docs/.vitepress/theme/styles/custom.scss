@@ -19,3 +19,18 @@
   background-color: #{color.adjust(colors.$purple-brand, $alpha: -0.7)} !important;
   color: #{color.adjust(colors.$purple-light, $lightness: -20%)} !important;
 }
+
+// Search result highlight override
+mark[data-markjs='true'] {
+  background-color: #{color.adjust(colors.$purple-brand, $alpha: -0.8)} !important;
+  color: #{color.adjust(colors.$purple-dark, $lightness: -40%)} !important;
+}
+
+.title .text mark[data-markjs='true'] {
+  background-color: #{color.adjust(colors.$purple-brand, $alpha: -0.85)} !important;
+}
+
+.dark mark[data-markjs='true'] {
+  background-color: #{color.adjust(colors.$purple-brand, $alpha: -0.8)} !important;
+  color: #{color.adjust(colors.$purple-light, $lightness: -20%)} !important;
+}
