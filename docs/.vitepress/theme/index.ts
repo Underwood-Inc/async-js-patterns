@@ -1,8 +1,11 @@
 import { inBrowser } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
 import Layout from './Layout.vue';
-import { setupTooltips } from './setupTooltips';
 import './styles/index.scss';
+
+// Lazy load tooltip setup
+const setupTooltips = () =>
+  import('./setupTooltips').then((m) => m.setupTooltips());
 
 export default {
   ...DefaultTheme,

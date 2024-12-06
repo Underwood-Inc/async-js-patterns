@@ -401,3 +401,4 @@ describe('API Tests', () => {
 
 - [Jest Documentation](https://jestjs.io/docs/getting-started)
 - [TypeScript Testing Documentation](https://www.typescriptlang.org/docs/handbook/typescript-tooling-in-5-minutes.html#testing)
+- [Vitest Documentation](https://vitest.dev/guide/)

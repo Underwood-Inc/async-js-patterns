@@ -8,8 +8,11 @@
     "serve": "vitepress serve docs"
   },
   "devDependencies": {
-    "vue": "3.2.44",
-    "vitepress": "1.0.0-alpha.28"
+    "vue": "^3.3.0",
+    "vitepress": "^1.0.0",
+    "unplugin-vue-macros": "^2.7.0",
+    "@vue-macros/volar": "^0.18.0",
+    "@vitejs/plugin-vue": "^5.0.0"
   },
   "pnpm": {
     "peerDependencyRules": {

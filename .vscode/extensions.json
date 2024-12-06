@@ -5,6 +5,17 @@
     "ms-vscode.vscode-typescript-tslint-plugin",
     "orta.vscode-jest",
     "davidanson.vscode-markdownlint",
-    "vue.volar"
+    "vitest.explorer",
+    "wallabyjs.wallaby-vscode",
+    "redhat.vscode-yaml",
+    "sonarsource.sonarlint-vscode",
+    "foxundermoon.shell-format",
+    "wallabyjs.quokka-vscode",
+    "yzhang.markdown-all-in-one",
+    "oderwat.indent-rainbow",
+    "eamodio.gitlens",
+    "waderyan.gitblame",
+    "joshbolduc.commitlint",
+    "streetsidesoftware.code-spell-checker"
   ]
 }

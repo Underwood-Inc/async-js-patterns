@@ -195,7 +195,8 @@ jobs:
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "ms-vscode.vscode-typescript-tslint-plugin",
-    "orta.vscode-jest"
+    "orta.vscode-jest",
+    "ZixuanChen.vitest-explorer"
   ]
 }
 ```

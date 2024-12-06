@@ -93,8 +93,6 @@ export default [
       'docs/.vitepress/**/*.js',
       '*.config.js',
       '.eslintrc.js',
-      'jest.setup.js',
-      'jest.config.js',
       '**/*.min.js',
       '**/*.bundle.js',
     ],
