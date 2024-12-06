@@ -1,0 +1,95 @@
+.favorites-menu {
+  position: fixed;
+  right: 2rem;
+  top: 6rem;
+  background: var(--vp-c-bg-soft);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  transition: all 0.3s ease;
+  z-index: 100;
+
+  &.collapsed {
+    width: 48px;
+    height: 48px;
+  }
+
+  .toggle-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  .favorites-list {
+    list-style: none;
+    padding: 1rem;
+    margin: 0;
+    max-height: 400px;
+    overflow-y: auto;
+
+    li {
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background: var(--vp-c-bg-mute);
+      }
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-top: 1px solid var(--vp-c-divider);
+
+    button {
+      width: 32px;
+      height: 32px;
+      border-radius: 16px;
+      border: 1px solid var(--vp-c-divider);
+      background: transparent;
+      cursor: pointer;
+
+      &.active {
+        background: var(--vp-c-brand);
+        color: white;
+        border-color: var(--vp-c-brand);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    right: 1rem;
+    width: calc(100% - 2rem);
+    max-width: 300px;
+  }
+}
+
+.favorite-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+
+  .star-icon {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    transition: all 0.2s;
+
+    &.favorited {
+      fill: var(--vp-c-brand);
+      stroke: var(--vp-c-brand);
+    }
+  }
+}

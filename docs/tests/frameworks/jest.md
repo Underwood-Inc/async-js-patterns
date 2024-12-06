@@ -183,19 +183,202 @@ test('form submission', async () => {
 });
 ```
 
-### Custom Hooks Testing
+### Context Testing
 
-```javascript:preview
-import { renderHook, act } from '@testing-library/react-hooks';
+```typescript:preview
+// Context definition
+interface UserContextType {
+  user: {
+    id: string;
+    name: string;
+    role: string;
+  } | null;
+  updateUser: (user: UserContextType['user']) => void;
+}
 
-test('useCounter', () => {
-  const { result } = renderHook(() => useCounter());
+const UserContext = React.createContext<UserContextType | undefined>(undefined);
 
-  act(() => {
-    result.current.increment();
+// Component that uses context
+function UserProfile() {
+  const context = React.useContext(UserContext);
+  if (!context) throw new Error('UserProfile must be used within UserProvider');
+  const { user } = context;
+
+  if (!user) return <div>Please log in</div>;
+
+  return (
+    <div>
+      <h1>{user.name}</h1>
+      <p>Role: {user.role}</p>
+    </div>
+  );
+}
+
+// Test suite demonstrating context value changes
+describe('UserProfile with changing context', () => {
+  const renderWithContext = (contextValue: UserContextType) => {
+    return render(
+      <UserContext.Provider value={contextValue}>
+        <UserProfile />
+      </UserContext.Provider>
+    );
+  };
+
+  test('updates display when context value changes', () => {
+    // Initial render with first user
+    const initialUser = {
+      user: { id: '1', name: 'John', role: 'user' },
+      updateUser: jest.fn(),
+    };
+    const { rerender } = renderWithContext(initialUser);
+    expect(screen.getByText('John')).toBeInTheDocument();
+    expect(screen.getByText('Role: user')).toBeInTheDocument();
+
+    // Rerender with different user
+    const updatedUser = {
+      user: { id: '2', name: 'Jane', role: 'admin' },
+      updateUser: jest.fn(),
+    };
+    rerender(
+      <UserContext.Provider value={updatedUser}>
+        <UserProfile />
+      </UserContext.Provider>
+    );
+    expect(screen.getByText('Jane')).toBeInTheDocument();
+    expect(screen.getByText('Role: admin')).toBeInTheDocument();
+
+    // Rerender with null user (logged out)
+    const loggedOut = {
+      user: null,
+      updateUser: jest.fn(),
+    };
+    rerender(
+      <UserContext.Provider value={loggedOut}>
+        <UserProfile />
+      </UserContext.Provider>
+    );
+    expect(screen.getByText('Please log in')).toBeInTheDocument();
   });
 
-  expect(result.current.count).toBe(1);
+  test('handles async context updates', async () => {
+    const mockUpdateUser = jest.fn();
+    const { rerender } = renderWithContext({
+      user: null,
+      updateUser: mockUpdateUser,
+    });
+
+    // Initial state
+    expect(screen.getByText('Please log in')).toBeInTheDocument();
+
+    // Simulate async update
+    await act(async () => {
+      rerender(
+        <UserContext.Provider
+          value={{
+            user: { id: '1', name: 'John', role: 'user' },
+            updateUser: mockUpdateUser,
+          }}
+        >
+          <UserProfile />
+        </UserContext.Provider>
+      );
+    });
+
+    expect(screen.getByText('John')).toBeInTheDocument();
+  });
+});
+```
+
+### Custom Hooks Testing
+
+```typescript
+// Type definitions
+interface User {
+  name: string;
+  email: string;
+  role: string;
+}
+
+interface UseCurrentUserReturn {
+  user: User | null;
+  loading: boolean;
+  error: string | null;
+}
+
+// Custom hook with explicit return type
+function useCurrentUser(): UseCurrentUserReturn {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await fetch('/api/current-user');
+        const data = await response.json();
+        setUser(data);
+      } catch (err) {
+        setError('Failed to fetch user');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCurrentUser();
+  }, []);
+
+  return { user, loading, error };
+}
+
+// Test suite with typed mock
+describe('CurrentUserProfile with typed mock', () => {
+  // Create a strongly-typed mock function
+  const mockUseCurrentUser = jest.fn<UseCurrentUserReturn, []>();
+
+  jest.mock('./hooks/useCurrentUser', () => ({
+    useCurrentUser: () => mockUseCurrentUser(),
+  }));
+
+  beforeEach(() => {
+    mockUseCurrentUser.mockReset();
+    // Type-safe default state
+    mockUseCurrentUser.mockReturnValue({
+      user: null,
+      loading: true,
+      error: null,
+    });
+  });
+
+  test('handles async data loading states', async () => {
+    // TypeScript will error if mock return values don't match UseCurrentUserReturn type
+    const { rerender } = render(<CurrentUserProfile />);
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+
+    mockUseCurrentUser.mockReturnValue({
+      user: {
+        name: 'Alice Smith',
+        email: 'alice@example.com',
+        role: 'admin',
+      },
+      loading: false,
+      error: null,
+    });
+
+    rerender(<CurrentUserProfile />);
+    expect(screen.getByText('Alice Smith')).toBeInTheDocument();
+
+    // TypeScript ensures all required fields are included
+    mockUseCurrentUser.mockReturnValue({
+      user: null,
+      loading: false,
+      error: 'Network error',
+    });
+
+    rerender(<CurrentUserProfile />);
+    expect(screen.getByText('Error: Network error')).toBeInTheDocument();
+  });
 });
 ```
 

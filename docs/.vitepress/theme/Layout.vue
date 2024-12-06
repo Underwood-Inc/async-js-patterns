@@ -1,18 +1,28 @@
 <template>
   <Layout>
-    <template #layout-bottom>
-      <DevPanel v-if="isDev" />
+    <template #nav-bar-content-after>
+      <FavoritesMenu />
+    </template>
+    <template #doc-before>
+      <FavoriteButton
+        :path="page.relativePath"
+        :title="frontmatter.title"
+        :description="frontmatter.description"
+        :date="frontmatter.date"
+      />
     </template>
   </Layout>
 </template>
 
 <script setup lang="ts">
 import DefaultTheme from 'vitepress/theme';
-import { computed } from 'vue';
-import DevPanel from './components/dev/DevPanel.vue';
+import { useData } from 'vitepress';
+import FavoritesMenu from './components/FavoritesMenu.vue';
+import FavoriteButton from './components/FavoriteButton.vue';
+import './styles/favorites.scss';
 
 const { Layout } = DefaultTheme;
-const isDev = computed(() => import.meta.env.DEV);
+const { page, frontmatter } = useData();
 </script>
 
 <style>
