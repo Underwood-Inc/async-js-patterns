@@ -34,3 +34,12 @@ mark[data-markjs='true'] {
   background-color: #{color.adjust(colors.$purple-brand, $alpha: -0.8)} !important;
   color: #{color.adjust(colors.$purple-light, $lightness: -20%)} !important;
 }
+
+// Navigation
+.shell {
+  @media (max-width: 767px) {
+    margin: 64px auto !important;
+    width: min(100vw - 60px, 1000px) !important;
+    height: 80vh !important;
+  }
+}
