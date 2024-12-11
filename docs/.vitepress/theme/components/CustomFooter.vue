@@ -2,7 +2,11 @@
 import { computed } from 'vue';
 import { useData } from 'vitepress';
 
-const { site } = useData();
+const { frontmatter, theme, site } = useData();
+const hasSidebar = computed(() => {
+  return theme.value.sidebar !== false && !frontmatter.value.layout;
+});
+console.log('hasSidebar.value',hasSidebar.value);
 const currentYear = new Date().getFullYear();
 const repoBase = 'https://github.com/Underwood-Inc/web-patterns';
 
@@ -30,7 +34,7 @@ const socialLinks = [
 </script>
 
 <template>
-  <footer class="custom-footer">
+  <footer class="custom-footer" :data-has-sidebar="hasSidebar">
     <div class="footer-content">
       <div class="footer-links">
         <div
@@ -75,6 +79,17 @@ const socialLinks = [
   padding: 2rem 1.5rem;
   border-top: 1px solid var(--vp-c-divider);
   background-color: var(--vp-c-bg-soft);
+  width: 100%;
+
+  // Default state (no sidebar)
+  padding-left: 1.5rem;
+
+  // When sidebar is present
+  &[data-has-sidebar="true"] {
+    @media (min-width: 960px) {
+      padding-left: calc(var(--vp-sidebar-width) + 1.5rem);
+    }
+  }
 
   a {
     color: var(--vp-c-brand);
@@ -93,7 +108,11 @@ const socialLinks = [
     align-items: center;
     gap: 1.5rem;
     margin: 0 auto;
-    max-width: 1200px;
+    max-width: calc(var(--vp-layout-max-width) - var(--vp-sidebar-width));
+    
+    @media (max-width: 959px) {
+      max-width: var(--vp-layout-max-width);
+    }
   }
 
   .footer-links {

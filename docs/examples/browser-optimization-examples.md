@@ -19,7 +19,9 @@ This page demonstrates practical examples of optimizing asynchronous operations 
 
 ## DOM Batch Processing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Efficient DOM batch updates
 class DOMBatchProcessor {
   private queue: Array<() => void> = [];
@@ -70,9 +72,13 @@ function updateElements(elements: HTMLElement[]): void {
 }
 ```
 
+:::
+
 ## Intersection Observer
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class LazyLoader {
   private observer: IntersectionObserver;
   private loadQueue: Map<Element, () => Promise<void>> = new Map();
@@ -158,9 +164,13 @@ document.querySelectorAll('[data-component]').forEach((element) => {
 });
 ```
 
+:::
+
 ## Web Worker Task Queue
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class WorkerTaskQueue {
   private worker: Worker;
   private tasks: Map<
@@ -274,9 +284,13 @@ const filteredData = await taskQueue.execute<ImageData>(
 );
 ```
 
+:::
+
 ## Real-World Example: Virtual Scrolling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class VirtualScroller {
   private container: HTMLElement;
   private itemHeight: number;
@@ -419,6 +433,8 @@ setTimeout(() => {
   scroller.updateItems(newItems);
 }, 5000);
 ```
+
+:::
 
 ## Best Practices
 

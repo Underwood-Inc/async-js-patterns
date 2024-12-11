@@ -18,7 +18,9 @@ image: /web-patterns/images/custom-promises-banner.png
 
 Learn how to create and use custom Promise wrappers for better control over asynchronous operations.
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Custom Promise wrapper for timeout
 class TimeoutPromise extends Promise<void> {
   private timeoutId: number | null = null;
@@ -47,11 +49,15 @@ timeout.then(() => console.log('Timeout completed'));
 // timeout.cancel();
 ```
 
+:::
+
 ## Additional Examples
 
 ### Cancellable Promise
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class CancellablePromise<T> {
   private promise: Promise<T>;
   private reject: ((reason?: any) => void) | null = null;
@@ -89,9 +95,13 @@ class CancellablePromise<T> {
 }
 ```
 
+:::
+
 ### Retryable Promise
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class RetryablePromise<T> {
   constructor(
     private executor: () => Promise<T>,
@@ -119,3 +129,5 @@ class RetryablePromise<T> {
   }
 }
 ```
+
+:::

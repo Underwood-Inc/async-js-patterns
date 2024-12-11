@@ -17,7 +17,9 @@ image: /web-patterns/images/lint-test-banner.png
 
 ## TypeScript Example with Issues
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Extra spaces and missing types
 function add(a, b) {
   console.log('Adding numbers');
@@ -34,9 +36,13 @@ function processData(data: any) {
 }
 ```
 
+:::
+
 ## JavaScript Example with Issues
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Using var and missing semicolons
 var x = 10;
 var y = 20;
@@ -49,9 +55,13 @@ function multiply(a, b) {
 const result = multiply(x, y);
 ```
 
+:::
+
 ## Good TypeScript Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Properly formatted code
 function add(a: number, b: number): number {
   const result = a + b;
@@ -60,3 +70,5 @@ function add(a: number, b: number): number {
 
 export const sum = add(1, 2);
 ```
+
+:::

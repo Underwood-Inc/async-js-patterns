@@ -115,7 +115,9 @@ Think of async debugging like:
 
 ### 1. Enhanced Logging
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class AsyncLogger {
   private static instance: AsyncLogger;
   private logs: any[] = [];
@@ -147,9 +149,13 @@ class AsyncLogger {
 }
 ```
 
+:::
+
 ### 2. Promise State Tracking
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class PromiseTracker {
   private promises: Map<
     string,
@@ -197,11 +203,15 @@ class PromiseTracker {
 }
 ```
 
+:::
+
 ## Breakpoint Strategies
 
 ### 1. Async Breakpoints
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class AsyncDebugger {
   private breakpoints: Set<string> = new Set();
 
@@ -224,9 +234,13 @@ class AsyncDebugger {
 }
 ```
 
+:::
+
 ### 2. Stack Trace Enhancement
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class StackTraceEnhancer {
   static enhance(error: Error) {
     if (error.stack) {
@@ -248,11 +262,15 @@ class StackTraceEnhancer {
 }
 ```
 
+:::
+
 ## Performance Debugging
 
 ### 1. Timing Profiler
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class AsyncProfiler {
   private operations: Map<
     string,
@@ -310,9 +328,13 @@ class AsyncProfiler {
 }
 ```
 
+:::
+
 ### 2. Memory Usage Tracker
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class MemoryTracker {
   private snapshots: Array<{
     timestamp: number;
@@ -348,3 +370,5 @@ class MemoryTracker {
   }
 }
 ```
+
+:::

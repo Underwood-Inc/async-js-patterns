@@ -43,7 +43,9 @@ Learn modern CSS methodologies and SCSS patterns for scalable applications.
 
 ### Modern CSS Features
 
-```scss:preview
+::: code-with-tooltips
+
+```scss
 // CSS Custom Properties
 :root {
   --primary-color: #007bff;
@@ -93,9 +95,13 @@ Learn modern CSS methodologies and SCSS patterns for scalable applications.
 }
 ```
 
+:::
+
 ### SCSS Mixins
 
-```scss:preview
+::: code-with-tooltips
+
+```scss
 // Responsive Breakpoints
 @mixin respond-to($breakpoint) {
   @if $breakpoint == "small" {
@@ -136,9 +142,13 @@ Learn modern CSS methodologies and SCSS patterns for scalable applications.
 }
 ```
 
+:::
+
 ### BEM Pattern
 
-```scss:preview
+::: code-with-tooltips
+
+```scss
 .card {
   &__header {
     padding: var(--spacing-unit);
@@ -159,6 +169,8 @@ Learn modern CSS methodologies and SCSS patterns for scalable applications.
   }
 }
 ```
+
+:::
 
 ## Best Practices
 

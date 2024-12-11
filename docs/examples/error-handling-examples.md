@@ -19,7 +19,9 @@ This page demonstrates practical examples of implementing and using error handli
 
 ## Basic Error Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic error handling with custom errors
 class ApplicationError extends Error {
   constructor(
@@ -83,9 +85,13 @@ async function fetchUserData(userId: string): Promise<User> {
 }
 ```
 
+:::
+
 ## Advanced Error Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ErrorBoundary {
   private errorHandlers: Map<
     string,
@@ -163,9 +169,13 @@ try {
 }
 ```
 
+:::
+
 ## Real-World Example: API Error Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ApiErrorHandler {
   private retryableStatusCodes = new Set([
     408, // Request Timeout
@@ -344,6 +354,8 @@ try {
   console.error('Operation failed:', error);
 }
 ```
+
+:::
 
 ## Best Practices
 

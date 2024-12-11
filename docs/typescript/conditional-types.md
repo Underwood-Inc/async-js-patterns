@@ -25,7 +25,9 @@ Conditional types help you create type definitions that depend on other types, s
 
 ### Type Conditions
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type IsString<T> = T extends string ? true : false;
 type IsNumber<T> = T extends number ? true : false;
 
@@ -35,9 +37,13 @@ type NumberCheck = IsString<42>; // false
 type ObjectCheck = IsNumber<{ x: number }>; // false
 ```
 
+:::
+
 ### Type Distribution
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type ToArray<T> = T extends any ? T[] : never;
 
 // Distribution over union types
@@ -49,11 +55,15 @@ type ArraysOfStringOrNumber = ToArray<StringOrNumber>;
 type ToArrayNonDistributive<T> = [T] extends [any] ? T[] : never;
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### Type Inference in Conditional Types
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type GetReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
 
 // Usage
@@ -80,9 +90,13 @@ type First = FirstArgument<Func>; // string
 type Second = SecondArgument<Func>; // number
 ```
 
+:::
+
 ### Recursive Conditional Types
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type DeepReadonly<T> = T extends object
   ? {
       readonly [P in keyof T]: DeepReadonly<T[P]>;
@@ -104,9 +118,13 @@ type ReadonlyNested = DeepReadonly<NestedObject>;
 // All properties and nested properties are readonly
 ```
 
+:::
+
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // API Response handling with conditional types
 type ApiResponse<T> = {
   data: T;
@@ -250,6 +268,8 @@ function processApiResult<T>(
   }
 }
 ```
+
+:::
 
 ## Best Practices
 

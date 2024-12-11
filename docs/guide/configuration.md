@@ -22,7 +22,9 @@ head:
 
 ### 1. ESLint Configuration
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // .eslintrc.json
 {
   "parser": "@typescript-eslint/parser",
@@ -40,9 +42,13 @@ head:
 }
 ```
 
+:::
+
 ### 2. Prettier Configuration
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // .prettierrc
 {
   "semi": true,
@@ -53,16 +59,24 @@ head:
 }
 ```
 
+:::
+
 ### 3. Husky Setup
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 npm install --save-dev husky lint-staged
 
 # Initialize Husky
 npx husky install
 ```
 
-```json:preview
+:::
+
+::: code-with-tooltips
+
+```json
 // package.json
 {
   "scripts": {
@@ -78,7 +92,11 @@ npx husky install
 }
 ```
 
-```bash:preview
+:::
+
+::: code-with-tooltips
+
+```bash
 # Add pre-commit hook
 npx husky add .husky/pre-commit "npx lint-staged"
 
@@ -86,9 +104,13 @@ npx husky add .husky/pre-commit "npx lint-staged"
 npx husky add .husky/commit-msg 'npx --no -- commitlint --edit "$1"'
 ```
 
+:::
+
 ### 4. Commitlint Configuration
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // commitlint.config.js
 module.exports = {
   extends: ['@commitlint/config-conventional'],
@@ -112,9 +134,13 @@ module.exports = {
 };
 ```
 
+:::
+
 ### 5. Jest Configuration
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // jest.config.js
 module.exports = {
   preset: 'ts-jest',
@@ -131,9 +157,13 @@ module.exports = {
 };
 ```
 
+:::
+
 ### 6. GitHub Actions Workflow
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # .github/workflows/ci.yml
 name: CI
 
@@ -170,11 +200,15 @@ jobs:
         run: npm run build
 ```
 
+:::
+
 ## Development Environment
 
 ### VS Code Settings
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // .vscode/settings.json
 {
   "editor.formatOnSave": true,
@@ -186,9 +220,13 @@ jobs:
 }
 ```
 
+:::
+
 ### VS Code Extensions
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // .vscode/extensions.json
 {
   "recommendations": [
@@ -201,9 +239,13 @@ jobs:
 }
 ```
 
+:::
+
 ## Package Scripts
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "scripts": {
     "build": "tsc",
@@ -219,3 +261,5 @@ jobs:
   }
 }
 ```
+
+:::

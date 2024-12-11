@@ -28,7 +28,9 @@ Browser optimizations for async JavaScript focus on techniques to improve perfor
 
 When handling multiple DOM updates, batching operations is crucial for performance:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Example: Efficient DOM batch updates with read/write separation
 class DOMBatchProcessor {
   private readQueue: Array<() => void> = [];
@@ -70,11 +72,15 @@ class DOMBatchProcessor {
 }
 ```
 
+:::
+
 ### Common Pitfalls
 
 1. **Layout Thrashing**
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // ❌ Bad: Causes layout thrashing
 elements.forEach((el) => {
   const height = el.offsetHeight;
@@ -88,9 +94,13 @@ elements.forEach((el, i) => {
 });
 ```
 
+:::
+
 2. **Event Handler Proliferation**
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // ❌ Bad: Attaches handlers to every element
 elements.forEach((el) => {
   el.addEventListener('click', handler);
@@ -104,11 +114,15 @@ parentElement.addEventListener('click', (e) => {
 });
 ```
 
+:::
+
 ## Real-World Example
 
 Consider a web application that dynamically loads content as the user scrolls. Using IntersectionObserver and DOM batch processing, you can efficiently manage resource loading and DOM updates without blocking the main thread.
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class LazyLoader {
   private observer: IntersectionObserver;
 
@@ -136,11 +150,15 @@ class LazyLoader {
 }
 ```
 
+:::
+
 ### 3. DOM Element Tracking
 
 Efficient tracking of processed DOM elements using WeakSet
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class DOMTracker {
   private processedElements = new WeakSet<Element>();
   private observer: MutationObserver;
@@ -173,6 +191,8 @@ class DOMTracker {
 }
 ```
 
+:::
+
 Key benefits:
 
 1. Prevents duplicate event listeners
@@ -195,7 +215,9 @@ This pattern is especially useful for:
 
 A common challenge in web applications is managing tooltips that need to break out of their containing elements, especially within scrollable or overflow-hidden containers.
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class TooltipPortal {
   private portal: HTMLElement;
   private processedTooltips = new WeakSet<Element>();
@@ -278,6 +300,8 @@ class TooltipPortal {
 }
 ```
 
+:::
+
 Key optimizations in this example:
 
 1. Uses WeakSet to track processed tooltips without memory leaks
@@ -290,7 +314,9 @@ Key optimizations in this example:
 
 Another common performance challenge is rendering large lists efficiently:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class VirtualScroller {
   private container: HTMLElement;
   private itemHeight: number;
@@ -374,6 +400,8 @@ class VirtualScroller {
   }
 }
 ```
+
+:::
 
 Key optimizations in this example:
 

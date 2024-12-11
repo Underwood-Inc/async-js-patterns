@@ -25,7 +25,9 @@ State management in TypeScript applications requires careful consideration of ty
 
 ### Simple State Container
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class State<T> {
   private listeners: Set<(state: T) => void> = new Set();
 
@@ -51,9 +53,13 @@ class State<T> {
 }
 ```
 
+:::
+
 ### Type-Safe Actions
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type Action<T extends string = string, P = any> = {
   type: T;
   payload?: P;
@@ -71,11 +77,15 @@ function createAction<T extends string, P>(type: T): ActionCreator<T, P> {
 }
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### Immutable State Updates
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type DeepReadonly<T> = {
   readonly [P in keyof T]: T[P] extends object ? DeepReadonly<T[P]> : T[P];
 };
@@ -113,9 +123,13 @@ class ImmutableState<T extends object> {
 }
 ```
 
+:::
+
 ### Observable State
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface Observer<T> {
   update(value: T): void;
 }
@@ -149,9 +163,13 @@ class Observable<T> {
 }
 ```
 
+:::
+
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Application state types
 interface User {
   id: string;
@@ -262,6 +280,8 @@ stateManager.dispatch(
 // Unsubscribe when done
 unsubscribe();
 ```
+
+:::
 
 ## Best Practices
 

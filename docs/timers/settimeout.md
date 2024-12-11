@@ -8,7 +8,9 @@ implementation also provides a way to track and manage multiple timeouts.
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface Timer {
   id: number;
   start: number;
@@ -115,9 +117,13 @@ class CustomTimeout {
 }
 ```
 
+:::
+
 ## Usage Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 const timeout = new CustomTimeout();
 
 // Basic usage
@@ -148,6 +154,8 @@ setTimeout(() => {
   }, 1000);
 }, 2000);
 ```
+
+:::
 
 ## Key Concepts
 
@@ -182,7 +190,9 @@ setTimeout(() => {
 
 ## Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Test basic timeout
 const basicTest = async () => {
   const start = Date.now();
@@ -217,9 +227,13 @@ const cleanupTest = () => {
 };
 ```
 
+:::
+
 ## Advanced Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // With retry mechanism
 async function withRetry<T>(
   operation: () => Promise<T>,
@@ -271,3 +285,5 @@ class ProgressTimeout extends CustomTimeout {
   }
 }
 ```
+
+:::

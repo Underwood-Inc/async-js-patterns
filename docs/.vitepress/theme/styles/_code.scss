@@ -1,7 +1,9 @@
 @use './_colors.scss' as colors;
+@use './_tooltips.scss';
 
 .vp-doc {
   div[class*='language-'] {
+    position: relative;
     background-color: colors.$code-bg-light !important;
     border: 2px solid var(--vp-c-brand) !important;
     border-radius: 8px !important;
@@ -16,6 +18,26 @@
       background-color: colors.$code-bg-dark !important;
       border-color: var(--vp-c-brand-dark) !important;
       box-shadow: 0 0 8px rgba(colors.$purple-brand, 0.2);
+    }
+  }
+
+  .code-block-wrapper[data-code-tooltips='true'] {
+    position: relative;
+    background-color: colors.$code-bg-light !important;
+    border: 2px solid var(--vp-c-brand) !important;
+    border-radius: 8px !important;
+    margin: 1rem 0;
+    box-shadow: 0 0 8px rgba(colors.$purple-brand, 0.1);
+
+    .dark & {
+      background-color: colors.$code-bg-dark !important;
+      border-color: var(--vp-c-brand-dark) !important;
+      box-shadow: 0 0 8px rgba(colors.$purple-brand, 0.2);
+    }
+
+    pre.shiki {
+      margin: 0;
+      background: transparent;
     }
   }
 

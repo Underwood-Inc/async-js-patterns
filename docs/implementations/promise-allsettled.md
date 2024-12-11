@@ -27,7 +27,9 @@ monitoring and enhanced error handling.
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { AsyncOperationError } from '../advanced/error-handling';
 import { PerformanceMonitor } from '../advanced/performance-monitoring';
 
@@ -95,11 +97,15 @@ function promiseAllSettled<T>(
 }
 ```
 
+:::
+
 ## Usage Examples
 
 ### Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 const promises = [
   Promise.resolve(1),
   Promise.reject('Error'),
@@ -117,9 +123,13 @@ promiseAllSettled(promises).then((results) => {
 });
 ```
 
+:::
+
 ### Error Analysis
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 async function analyzeOperations(operations: Array<Promise<any>>) {
   const results = await promiseAllSettled(operations);
 
@@ -151,9 +161,13 @@ analyzeOperations([
 });
 ```
 
+:::
+
 ### Batch Processing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class BatchProcessor {
   async processBatch<T>(
     items: T[],
@@ -189,6 +203,8 @@ processor.processBatch(items, (item) =>
   fetch(`api/${item}`).then((r) => r.json())
 );
 ```
+
+:::
 
 ## Key Features
 
@@ -392,7 +408,9 @@ processor.processBatch(items, (item) =>
 
 ## Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 describe('Promise.allSettled', () => {
   it('should handle mixed success and failure', async () => {
     const results = await promiseAllSettled([
@@ -426,3 +444,5 @@ describe('Promise.allSettled', () => {
   });
 });
 ```
+
+:::

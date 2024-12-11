@@ -11,7 +11,9 @@ This guide covers the process of migrating your project from npm to Yarn, includ
 
 1. Install Yarn:
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Using npm
 npm install -g yarn
 
@@ -20,17 +22,25 @@ corepack enable
 corepack prepare yarn@stable --activate
 ```
 
+:::
+
 2. Verify installation:
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 yarn --version
 ```
+
+:::
 
 ## Migration Steps
 
 ### 1. Generate yarn.lock
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Remove npm's lock file
 rm package-lock.json
 
@@ -38,11 +48,15 @@ rm package-lock.json
 yarn
 ```
 
+:::
+
 ### 2. Update CI Configuration
 
 #### GitHub Actions
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # Before (npm)
 steps:
   - uses: actions/setup-node@v3
@@ -60,11 +74,15 @@ steps:
   - run: yarn test
 ```
 
+:::
+
 ### 3. Update Scripts
 
 #### package.json
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "scripts": {
     // Before (npm)
@@ -77,6 +95,8 @@ steps:
   }
 }
 ```
+
+:::
 
 ## Command Mapping
 
@@ -106,16 +126,22 @@ steps:
 
 ### 1. Package Manager Settings
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // package.json
 {
   "packageManager": "yarn@3.6.0"
 }
 ```
 
+:::
+
 ### 2. Yarn Configuration
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # .yarnrc.yml
 nodeLinker: node-modules
 enableGlobalCache: true
@@ -123,9 +149,13 @@ enableGlobalCache: true
 npmRegistryServer: 'https://registry.npmjs.org'
 ```
 
+:::
+
 ### 3. Git Configuration
 
-```gitignore:preview
+::: code-with-tooltips
+
+```plaintext
 # .gitignore
 .yarn/*
 !.yarn/patches
@@ -138,11 +168,15 @@ npmRegistryServer: 'https://registry.npmjs.org'
 .pnp.*
 ```
 
+:::
+
 ## Workspace Migration
 
 ### 1. Update Workspace Configuration
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // Before (npm)
 {
   "workspaces": [
@@ -159,9 +193,13 @@ npmRegistryServer: 'https://registry.npmjs.org'
 }
 ```
 
+:::
+
 ### 2. Update Workspace Commands
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Before (npm)
 npm install --workspace=package-name
 npm run test --workspaces
@@ -170,6 +208,8 @@ npm run test --workspaces
 yarn workspace package-name install
 yarn workspaces foreach run test
 ```
+
+:::
 
 ## Best Practices
 
@@ -205,14 +245,20 @@ yarn workspaces foreach run test
 
 ### 1. Peer Dependencies
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Handle peer dependency warnings
 yarn install --ignore-peer-dependencies
 ```
 
+:::
+
 ### 2. Node Version
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // package.json
 {
   "engines": {
@@ -221,9 +267,13 @@ yarn install --ignore-peer-dependencies
 }
 ```
 
+:::
+
 ### 3. Script Execution
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Run scripts with arguments
 yarn build --watch
 
@@ -231,11 +281,15 @@ yarn build --watch
 yarn build && yarn test
 ```
 
+:::
+
 ## Rollback Plan
 
 If migration issues occur:
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # 1. Remove Yarn files
 rm yarn.lock
 rm -rf .yarn
@@ -249,9 +303,13 @@ git checkout package-lock.json
 npm ci
 ```
 
+:::
+
 ## Verification Steps
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # 1. Clean install
 rm -rf node_modules
 yarn install
@@ -268,3 +326,5 @@ yarn list
 # 5. Check for issues
 yarn audit
 ```
+
+:::

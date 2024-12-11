@@ -23,7 +23,9 @@ Modern HTML layout patterns focusing on semantic structure, accessibility, and b
 
 ### Basic Page Layout
 
-```html:preview
+::: code-with-tooltips
+
+```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -64,11 +66,15 @@ Modern HTML layout patterns focusing on semantic structure, accessibility, and b
 </html>
 ```
 
+:::
+
 ## Accessibility Patterns
 
 ### Form Layout
 
-```html:preview
+::: code-with-tooltips
+
+```html
 <form role="form" aria-labelledby="form-title">
   <h2 id="form-title">Contact Form</h2>
 
@@ -101,9 +107,13 @@ Modern HTML layout patterns focusing on semantic structure, accessibility, and b
 </form>
 ```
 
+:::
+
 ### Navigation Patterns
 
-```html:preview
+::: code-with-tooltips
+
+```html
 <nav aria-label="Main navigation">
   <button
     aria-expanded="false"
@@ -129,11 +139,15 @@ Modern HTML layout patterns focusing on semantic structure, accessibility, and b
 </nav>
 ```
 
+:::
+
 ## Content Patterns
 
 ### Article Structure
 
-```html:preview
+::: code-with-tooltips
+
+```html
 <article>
   <header>
     <h1>Article Title</h1>
@@ -160,9 +174,13 @@ Modern HTML layout patterns focusing on semantic structure, accessibility, and b
 </article>
 ```
 
+:::
+
 ### Card Components
 
-```html:preview
+::: code-with-tooltips
+
+```html
 <div class="card" role="article">
   <div class="card-media">
     <img src="image.jpg" alt="" aria-hidden="true" />
@@ -180,6 +198,8 @@ Modern HTML layout patterns focusing on semantic structure, accessibility, and b
   </div>
 </div>
 ```
+
+:::
 
 ## Best Practices
 
@@ -216,7 +236,9 @@ Modern HTML layout patterns focusing on semantic structure, accessibility, and b
 
 ### 5. Performance Considerations
 
-```html:preview
+::: code-with-tooltips
+
+```html
 <!-- Preload critical assets -->
 <link rel="preload" href="critical.css" as="style" />
 <link rel="preload" href="main.js" as="script" />
@@ -236,6 +258,8 @@ Modern HTML layout patterns focusing on semantic structure, accessibility, and b
   <img src="small.jpg" alt="Description" />
 </picture>
 ```
+
+:::
 
 ## References
 

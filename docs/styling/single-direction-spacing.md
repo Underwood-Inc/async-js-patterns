@@ -17,7 +17,9 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 
 ### Basic Usage
 
-```css:preview
+::: code-with-tooltips
+
+```css
 /* Define spacing scale */
 :root {
   --space-unit: 8px;
@@ -46,11 +48,15 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 }
 ```
 
+:::
+
 ### Real-World Examples
 
 #### Article Layout
 
-```html:preview
+::: code-with-tooltips
+
+```html
 <article class="article">
   <h1 class="mb-md">Article Title</h1>
   <p class="mb-sm">First paragraph...</p>
@@ -65,7 +71,11 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 </article>
 ```
 
-```css:preview
+:::
+
+::: code-with-tooltips
+
+```css
 .article {
   max-width: 65ch;
   padding: var(--space-lg);
@@ -89,9 +99,13 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 }
 ```
 
+:::
+
 #### Form Layout
 
-```html:preview
+::: code-with-tooltips
+
+```html
 <form class="form">
   <div class="form-group mb-md">
     <label class="mb-xs">Name</label>
@@ -105,7 +119,11 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 </form>
 ```
 
-```css:preview
+:::
+
+::: code-with-tooltips
+
+```css
 .form {
   padding: var(--space-lg);
 }
@@ -120,11 +138,15 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 }
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### Responsive Spacing
 
-```css:preview
+::: code-with-tooltips
+
+```css
 /* Base spacing */
 .mb-responsive {
   margin-bottom: var(--space-sm);
@@ -144,9 +166,13 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 }
 ```
 
+:::
+
 ### Grid Systems
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .grid {
   display: grid;
   gap: var(--space-md);
@@ -168,9 +194,13 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 }
 ```
 
+:::
+
 ### Component Spacing
 
-```css:preview
+::: code-with-tooltips
+
+```css
 /* Card component */
 .card {
   padding: var(--space-md);
@@ -190,6 +220,8 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 }
 ```
 
+:::
+
 ## Best Practices
 
 ### 1. Consistent Direction
@@ -204,7 +236,9 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 - Define spacing variables at the root level
 - Use meaningful names for spacing values
 
-```css:preview
+::: code-with-tooltips
+
+```css
 :root {
   /* Base unit: 4px */
   --space-unit: 4px;
@@ -216,9 +250,13 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 }
 ```
 
+:::
+
 ### 3. Exception Handling
 
-```css:preview
+::: code-with-tooltips
+
+```css
 /* Last child exceptions */
 .stack > *:not(:last-child) {
   margin-bottom: var(--space-md);
@@ -241,9 +279,13 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 }
 ```
 
+:::
+
 ### 4. Documentation
 
-```css:preview
+::: code-with-tooltips
+
+```css
 /* Document spacing patterns */
 :root {
   /* Spacing Scale
@@ -256,11 +298,15 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 }
 ```
 
+:::
+
 ## Common Use Cases
 
 ### 1. Content Flow
 
-```css:preview
+::: code-with-tooltips
+
+```css
 /* Article content */
 .content > * {
   margin-bottom: var(--space-md);
@@ -275,9 +321,13 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 }
 ```
 
+:::
+
 ### 2. Navigation
 
-```css:preview
+::: code-with-tooltips
+
+```css
 /* Vertical navigation */
 .nav-vertical .nav-item:not(:last-child) {
   margin-bottom: var(--space-xs);
@@ -289,9 +339,13 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
 }
 ```
 
+:::
+
 ### 3. Form Layout
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .form-field:not(:last-child) {
   margin-bottom: var(--space-md);
 }
@@ -304,6 +358,8 @@ Single-Direction Spacing (also known as Unidirectional Margin) is a CSS layout p
   margin-bottom: var(--space-sm);
 }
 ```
+
+:::
 
 ## References
 

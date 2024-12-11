@@ -13,15 +13,15 @@ tags:
 image: /web-patterns/images/examples-banner.png
 ---
 
-# Examples Overview
-
 This section provides comprehensive, practical examples of all async patterns and implementations covered in this project. Each example is designed to demonstrate real-world usage and best practices.
 
 ## Promise Examples
 
 Learn how to use various Promise implementations:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Custom Promise Example
 const myPromise = new CustomPromise((resolve, reject) => {
   setTimeout(() => resolve('Success!'), 1000);
@@ -43,11 +43,13 @@ const result = await Promise.race([
 ]);
 ```
 
+:::
+
 ## Task Pattern Examples
 
 Implement common async task patterns:
 
-```typescript:preview
+```typescript
 // Sequential Task Processing
 async function processInSeries(tasks: Array<() => Promise<any>>) {
   const results = [];
@@ -85,7 +87,7 @@ async function processInParallel(
 
 Enhanced timer implementations:
 
-```typescript:preview
+```typescript
 // Custom setTimeout with Cleanup
 const timer = new Timer();
 const cleanup = timer.setTimeout(() => {
@@ -109,7 +111,7 @@ interval.clear(); // Stop completely
 
 Sophisticated async patterns for real-world scenarios:
 
-```typescript:preview
+```typescript
 // Auto-Retry with Exponential Backoff
 const result = await withRetry(
   async () => {
@@ -144,7 +146,7 @@ const memoizedFetch = memoize(
 
 Optimize async operations:
 
-```typescript:preview
+```typescript
 // Memory-Efficient Stream Processing
 async function processLargeDataStream(stream: ReadableStream) {
   const reader = stream.getReader();
@@ -180,7 +182,7 @@ await monitor.track('fetchData', async () => {
 
 Complete implementations of common scenarios:
 
-```typescript:preview
+```typescript
 // API Client with Retries, Caching, and Rate Limiting
 class APIClient {
   private memoizer = new Memoizer({ maxAge: 60000 });

@@ -25,7 +25,9 @@ Observable state patterns allow for reactive state management where components c
 
 ### 1. Basic Observable
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface Observer<T> {
   update(value: T): void;
 }
@@ -59,9 +61,13 @@ class Observable<T> {
 }
 ```
 
+:::
+
 ### 2. Event Emitter
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type EventHandler<T> = (data: T) => void;
 
 class EventEmitter<T extends string> {
@@ -92,11 +98,15 @@ class EventEmitter<T extends string> {
 }
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### 1. Observable Store
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type Subscriber<T> = (state: T) => void;
 type Selector<T, R> = (state: T) => R;
 
@@ -148,9 +158,13 @@ class Store<T extends object> {
 }
 ```
 
+:::
+
 ### 2. Computed Observables
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ComputedObservable<T, R> implements Observer<T> {
   private value: R;
   private observers: Set<Observer<R>> = new Set();
@@ -191,9 +205,13 @@ class ComputedObservable<T, R> implements Observer<T> {
 }
 ```
 
+:::
+
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Application state types
 interface User {
   id: string;
@@ -329,6 +347,8 @@ taskManager.toggleTaskCompletion('1');
 unsubscribeStats();
 unsubscribeTasks();
 ```
+
+:::
 
 ## Best Practices
 

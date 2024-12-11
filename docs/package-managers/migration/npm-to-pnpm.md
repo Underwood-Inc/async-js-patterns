@@ -11,7 +11,9 @@ This guide covers the process of migrating your project from npm to pnpm, includ
 
 1. Install pnpm:
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Using npm
 npm install -g pnpm
 
@@ -22,17 +24,25 @@ curl -fsSL https://get.pnpm.io/install.sh | sh -
 iwr https://get.pnpm.io/install.ps1 -useb | iex
 ```
 
+:::
+
 2. Verify installation:
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 pnpm --version
 ```
+
+:::
 
 ## Migration Steps
 
 ### 1. Generate pnpm-lock.yaml
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Remove npm's lock file
 rm package-lock.json
 
@@ -40,11 +50,15 @@ rm package-lock.json
 pnpm install
 ```
 
+:::
+
 ### 2. Update CI Configuration
 
 #### GitHub Actions
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # Before (npm)
 steps:
   - uses: actions/setup-node@v3
@@ -65,11 +79,15 @@ steps:
   - run: pnpm test
 ```
 
+:::
+
 ### 3. Update Scripts
 
 #### package.json
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "scripts": {
     // Before (npm)
@@ -82,6 +100,8 @@ steps:
   }
 }
 ```
+
+:::
 
 ## Command Mapping
 
@@ -111,16 +131,22 @@ steps:
 
 ### 1. Package Manager Settings
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // package.json
 {
   "packageManager": "pnpm@8.0.0"
 }
 ```
 
+:::
+
 ### 2. pnpm Configuration
 
-```ini:preview
+::: code-with-tooltips
+
+```ini
 # .npmrc
 strict-peer-dependencies=true
 auto-install-peers=true
@@ -129,20 +155,28 @@ shamefully-hoist=true
 registry=https://registry.npmjs.org/
 ```
 
+:::
+
 ### 3. Git Configuration
 
-```gitignore:preview
+::: code-with-tooltips
+
+```plaintext
 # .gitignore
 node_modules
 .pnpm-store/
 .pnpm-debug.log
 ```
 
+:::
+
 ## Workspace Migration
 
 ### 1. Update Workspace Configuration
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # pnpm-workspace.yaml
 packages:
   - 'packages/*'
@@ -150,9 +184,13 @@ packages:
   - '!**/test/**'
 ```
 
+:::
+
 ### 2. Update Workspace Commands
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Before (npm)
 npm install --workspace=package-name
 npm run test --workspaces
@@ -162,17 +200,23 @@ pnpm --filter package-name install
 pnpm -r run test
 ```
 
+:::
+
 ## Store & Linking
 
 ### Understanding pnpm's Store
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Global store location
 ~/.pnpm-store/
 
 # Project store
 node_modules/.pnpm/
 ```
+
+:::
 
 ### Hard Links
 
@@ -214,22 +258,32 @@ node_modules/.pnpm/
 
 ### 1. Hoisting Problems
 
-```ini:preview
+::: code-with-tooltips
+
+```ini
 # .npmrc
 shamefully-hoist=true
 node-linker=hoisted
 ```
 
+:::
+
 ### 2. Peer Dependencies
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Handle peer dependencies
 pnpm install --no-strict-peer-dependencies
 ```
 
+:::
+
 ### 3. Store Issues
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Verify store
 pnpm store verify
 
@@ -237,11 +291,15 @@ pnpm store verify
 pnpm store prune
 ```
 
+:::
+
 ## Rollback Plan
 
 If migration issues occur:
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # 1. Remove pnpm files
 rm pnpm-lock.yaml
 rm -rf node_modules
@@ -255,9 +313,13 @@ git checkout package-lock.json
 npm ci
 ```
 
+:::
+
 ## Verification Steps
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # 1. Clean install
 rm -rf node_modules
 pnpm install
@@ -275,11 +337,15 @@ pnpm list
 pnpm audit
 ```
 
+:::
+
 ## Advanced Features
 
 ### Filtering in Monorepos
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Run in packages that depend on another
 pnpm --filter ...package-name command
 
@@ -290,9 +356,13 @@ pnpm --filter "[main]" command
 pnpm --filter "package-a...package-b" command
 ```
 
+:::
+
 ### Custom Configs
 
-```js:preview
+::: code-with-tooltips
+
+```js
 // .pnpmfile.cjs
 module.exports = {
   hooks: {
@@ -304,9 +374,13 @@ module.exports = {
 };
 ```
 
+:::
+
 ### Publishing
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Publish package
 pnpm publish
 
@@ -316,3 +390,5 @@ pnpm publish --tag beta
 # Publish workspace packages
 pnpm -r publish
 ```
+
+:::

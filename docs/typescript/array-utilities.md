@@ -26,7 +26,9 @@ Array utilities help you perform common array operations in a type-safe manner w
 
 ### Array Creation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function createArray<T>(length: number, defaultValue: T): T[] {
   return Array(length).fill(defaultValue);
 }
@@ -45,9 +47,13 @@ const numbers = range(1, 5); // [1, 2, 3, 4]
 const uniqueValues = unique([1, 2, 2, 3, 3, 4]); // [1, 2, 3, 4]
 ```
 
+:::
+
 ### Array Manipulation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function chunk<T>(array: T[], size: number): T[][] {
   return array.reduce((chunks, item, index) => {
     const chunkIndex = Math.floor(index / size);
@@ -77,11 +83,15 @@ const shuffled = shuffle([1, 2, 3, 4, 5]); // Random order
 const rotated = rotate([1, 2, 3, 4, 5], 2); // [3, 4, 5, 1, 2]
 ```
 
+:::
+
 ## Advanced Utilities
 
 ### Array Type Checking
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function isArrayOf<T>(
   array: unknown,
   typeGuard: (item: unknown) => item is T
@@ -112,9 +122,13 @@ console.log(isUnique([1, 2, 3])); // true
 console.log(isUnique([1, 2, 2, 3])); // false
 ```
 
+:::
+
 ### Array Transformations
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function groupBy<T, K extends string | number | symbol>(
   array: T[],
   getKey: (item: T) => K
@@ -163,9 +177,13 @@ const [admins, nonAdmins] = partition(users, (user) => user.role === 'admin');
 const pairs = zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]
 ```
 
+:::
+
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Array utility class with common operations
 class ArrayUtils<T> {
   constructor(private readonly items: T[]) {}
@@ -290,6 +308,8 @@ console.log({
   randomPairs,
 });
 ```
+
+:::
 
 ## Best Practices
 

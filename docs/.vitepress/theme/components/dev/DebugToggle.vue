@@ -13,7 +13,7 @@
 import { ref } from 'vue';
 import { toggleDebugLogging } from '../../markdown/codePreview';
 
-const isEnabled = ref(false);
+const isEnabled = ref(true);
 
 function toggleDebug() {
   isEnabled.value = !isEnabled.value;

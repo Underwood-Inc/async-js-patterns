@@ -20,7 +20,9 @@ Learn how to execute tasks in sequence with proper error handling and state mana
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Simple sequential execution
 async function executeSequential<T>(tasks: (() => Promise<T>)[]): Promise<T[]> {
   const results: T[] = [];
@@ -45,11 +47,15 @@ async function executeWithIntermediateResults<T>(
 }
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### Pipeline Processing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type PipelineStage<T, R> = (input: T) => Promise<R>;
 
 class Pipeline<T> {
@@ -77,9 +83,13 @@ const dataPipeline = new Pipeline<string>()
   .addStage(async (chars) => chars.join(''));
 ```
 
+:::
+
 ### State Machine Execution
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface State {
   name: string;
   execute: () => Promise<string>;
@@ -128,9 +138,13 @@ class StateMachine {
 }
 ```
 
+:::
+
 ### Dependency-Based Execution
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface Task<T> {
   id: string;
   execute: () => Promise<T>;
@@ -194,9 +208,13 @@ const executor = new DependencyExecutor<string>()
   });
 ```
 
+:::
+
 ### Retry with Backoff
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface RetryOptions {
   maxAttempts: number;
   initialDelay: number;
@@ -227,3 +245,5 @@ async function executeWithRetry<T>(
   throw new Error('Should not reach here');
 }
 ```
+
+:::

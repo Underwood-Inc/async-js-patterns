@@ -19,7 +19,9 @@ Testing Library is a family of packages that help you test UI components in a wa
 
 ## Getting Started
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # For React
 npm install --save-dev @testing-library/react
 # For Vue
@@ -28,9 +30,13 @@ npm install --save-dev @testing-library/vue
 npm install --save-dev @testing-library/angular
 ```
 
+:::
+
 ## Basic Test Structure
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Button } from './Button';
 
@@ -45,9 +51,13 @@ test('calls onClick handler when clicked', () => {
 });
 ```
 
+:::
+
 ## Common Queries
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // By role (preferred)
 const button = screen.getByRole('button', { name: 'Submit' });
 
@@ -64,9 +74,13 @@ const element = screen.getByText('Hello, World');
 const container = screen.getByTestId('custom-element');
 ```
 
+:::
+
 ## User Events
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 import userEvent from '@testing-library/user-event';
 
 test('typing in an input field', async () => {
@@ -80,11 +94,15 @@ test('typing in an input field', async () => {
 });
 ```
 
+:::
+
 ## Advanced Queries
 
 ### Priority Order
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Best to worst query methods:
 getByRole('button', { name: 'Submit' }); // 1. Accessible Roles
 getByLabelText('Username'); // 2. Labels
@@ -96,9 +114,13 @@ getByTitle('Close'); // 7. Title Attribute
 getByTestId('submit-button'); // 8. Test IDs
 ```
 
+:::
+
 ### Query Variants
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Single Element
 getBy...    // Throws error if not found or multiple found
 queryBy...  // Returns null if not found
@@ -110,11 +132,15 @@ queryAllBy...  // Returns empty array if none found
 findAllBy...   // Returns promise, waits for elements
 ```
 
+:::
+
 ## Testing Patterns
 
 ### Form Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 test('form submission', async () => {
   const handleSubmit = jest.fn();
   render(<LoginForm onSubmit={handleSubmit} />);
@@ -131,9 +157,13 @@ test('form submission', async () => {
 });
 ```
 
+:::
+
 ### Async Operations
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 test('loads and displays data', async () => {
   render(<UserProfile userId="1" />);
 
@@ -146,9 +176,13 @@ test('loads and displays data', async () => {
 });
 ```
 
+:::
+
 ### Event Handling
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 test('menu toggle', async () => {
   render(<Dropdown />);
 
@@ -168,11 +202,15 @@ test('menu toggle', async () => {
 });
 ```
 
+:::
+
 ## Framework Integration
 
 ### React Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -188,9 +226,13 @@ test('counter increments', async () => {
 });
 ```
 
+:::
+
 ### Vue Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 import { render, fireEvent } from '@testing-library/vue';
 
 test('emits update event', async () => {
@@ -203,9 +245,13 @@ test('emits update event', async () => {
 });
 ```
 
+:::
+
 ### Angular Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { render, screen, fireEvent } from '@testing-library/angular';
 
 test('button click', async () => {
@@ -223,11 +269,15 @@ test('button click', async () => {
 });
 ```
 
+:::
+
 ## Custom Queries
 
 ### Creating Custom Queries
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 const getByDataCy = (container, id) => getByAttribute('data-cy', id, container);
 
 const queryByDataCy = (container, id) =>
@@ -258,11 +308,15 @@ const customRender = (ui, options) =>
   render(ui, { queries: { ...queries, ...customQueries }, ...options });
 ```
 
+:::
+
 ## Best Practices
 
 ### 1. Query Selection
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // ❌ Avoid
 getByTestId('submit-button');
 getByClassName('submit-btn');
@@ -273,9 +327,13 @@ getByRole('button', { name: /submit/i });
 getByLabelText('Submit form');
 ```
 
+:::
+
 ### 2. Async Operations
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // ❌ Avoid
 await wait(() => {
   expect(getByText('Loaded')).toBeInTheDocument();
@@ -285,9 +343,13 @@ await wait(() => {
 expect(await findByText('Loaded')).toBeInTheDocument();
 ```
 
+:::
+
 ### 3. User Interactions
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // ❌ Avoid
 fireEvent.change(input, { target: { value: 'test' } });
 
@@ -295,9 +357,13 @@ fireEvent.change(input, { target: { value: 'test' } });
 await userEvent.type(input, 'test');
 ```
 
+:::
+
 ### 4. Accessibility Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 test('form is accessible', async () => {
   const { container } = render(<Form />);
 
@@ -314,11 +380,15 @@ test('form is accessible', async () => {
 });
 ```
 
+:::
+
 ## Debugging
 
 ### Screen Debug
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 test('debugging example', () => {
   render(<Component />);
 
@@ -333,9 +403,13 @@ test('debugging example', () => {
 });
 ```
 
+:::
+
 ### Logging Queries
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 import { prettyDOM } from '@testing-library/dom';
 
 test('logging example', () => {
@@ -349,9 +423,13 @@ test('logging example', () => {
 });
 ```
 
+:::
+
 ### Error Messages
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 test('error handling', () => {
   render(<Component />);
 
@@ -359,3 +437,5 @@ test('error handling', () => {
   expect(() => screen.getByRole('button', { name: /submit/i })).toThrow();
 });
 ```
+
+:::

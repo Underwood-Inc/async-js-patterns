@@ -23,7 +23,9 @@ Learn how to effectively work with Promises in JavaScript.
 
 Create and work with Promises:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Creating a Promise
 const promise = new Promise((resolve, reject) => {
   // Async operation
@@ -53,11 +55,15 @@ async function example() {
 }
 ```
 
+:::
+
 ## Promise Combinators
 
 Using Promise combination methods:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Promise.all - Wait for all promises
 async function fetchAllUsers(ids: number[]) {
   const promises = ids.map(id => fetchUser(id));
@@ -92,11 +98,15 @@ async function attemptAll(tasks: Promise<any>[]) {
 }
 ```
 
+:::
+
 ## Promise Chaining
 
 Chain multiple operations:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function processUser(userId: number) {
   return fetchUser(userId)
     .then(user => {
@@ -125,11 +135,15 @@ function processUser(userId: number) {
 }
 ```
 
+:::
+
 ## Custom Promise Wrappers
 
 Create reusable Promise patterns:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Retry wrapper
 function withRetry<T>(
   operation: () => Promise<T>,
@@ -193,11 +207,15 @@ function withCache<T>(
 }
 ```
 
+:::
+
 ## Error Handling
 
 Handle Promise errors effectively:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 async function robustOperation() {
   try {
     // Operation that might fail
@@ -222,6 +240,8 @@ async function robustOperation() {
   }
 }
 ```
+
+:::
 
 ## Best Practices
 

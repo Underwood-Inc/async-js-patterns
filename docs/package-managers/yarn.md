@@ -9,7 +9,9 @@ Yarn is a fast, reliable, and secure package manager developed by Facebook. It o
 
 ## Installation
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Using npm
 npm install -g yarn
 
@@ -21,11 +23,15 @@ corepack prepare yarn@stable --activate
 yarn --version
 ```
 
+:::
+
 ## Key Commands
 
 ### Project Initialization
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Create a new package.json
 yarn init
 
@@ -33,9 +39,13 @@ yarn init
 yarn init -y
 ```
 
+:::
+
 ### Package Installation
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install all dependencies
 yarn
 # or
@@ -54,9 +64,13 @@ yarn global add package-name
 yarn add package-name@version
 ```
 
+:::
+
 ### Package Management
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Upgrade packages
 yarn upgrade
 
@@ -73,9 +87,13 @@ yarn outdated
 yarn cache clean
 ```
 
+:::
+
 ### Scripts
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Run a script
 yarn run script-name
 # or simply
@@ -87,11 +105,15 @@ yarn test
 yarn build
 ```
 
+:::
+
 ## Configuration
 
 ### Yarn Configuration File (`.yarnrc.yml`)
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # Set registry
 npmRegistryServer: 'https://registry.npmjs.org'
 
@@ -105,9 +127,13 @@ pnpMode: strict
 cacheFolder: './.yarn/cache'
 ```
 
+:::
+
 ### package.json
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "name": "my-project",
   "version": "1.0.0",
@@ -126,20 +152,28 @@ cacheFolder: './.yarn/cache'
 }
 ```
 
+:::
+
 ## Workspaces
 
 Yarn has excellent support for monorepos through workspaces:
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "private": true,
   "workspaces": ["packages/*"]
 }
 ```
 
+:::
+
 ### Workspace Commands
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install dependencies for all workspaces
 yarn install
 
@@ -150,11 +184,15 @@ yarn workspace package-name command
 yarn workspaces foreach run command
 ```
 
+:::
+
 ## Plug'n'Play (PnP)
 
 Yarn's PnP feature improves installation and resolution speed:
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # .yarnrc.yml
 pnpMode: strict
 
@@ -164,6 +202,8 @@ nodeLinker: pnp
 # Zero-Installs
 enableGlobalCache: false
 ```
+
+:::
 
 ### PnP Benefits
 
@@ -206,7 +246,9 @@ enableGlobalCache: false
 
 ### PnP Compatibility
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Handle packages without PnP support
 yarn add package-name --ignore-scripts
 
@@ -214,9 +256,13 @@ yarn add package-name --ignore-scripts
 nodeLinker: node-modules
 ```
 
+:::
+
 ### Migration from npm
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Import npm configuration
 yarn import
 
@@ -224,9 +270,13 @@ yarn import
 yarn install
 ```
 
+:::
+
 ### Cache Issues
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Clear cache
 yarn cache clean
 
@@ -234,19 +284,27 @@ yarn cache clean
 yarn rebuild
 ```
 
+:::
+
 ## Advanced Features
 
 ### Constraints
 
-```js:preview
+::: code-with-tooltips
+
+```js
 // .yarn/constraints.pro
 gen_enforced_dependency(WorkspaceCwd, 'typescript', '4.5.2', DependencyType) :-
   workspace_has_dependency(WorkspaceCwd, 'typescript', _, DependencyType).
 ```
 
+:::
+
 ### Protocols
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # .yarnrc.yml
 packageExtensions:
   'package-name@*':
@@ -254,9 +312,13 @@ packageExtensions:
       'missing-peer': '^1.0.0'
 ```
 
+:::
+
 ### Custom Commands
 
-```js:preview
+::: code-with-tooltips
+
+```js
 // .yarn/plugins/plugin-commands-custom.js
 module.exports = {
   commands: {
@@ -269,5 +331,7 @@ module.exports = {
   },
 };
 ```
+
+:::
 
 More content coming soon...

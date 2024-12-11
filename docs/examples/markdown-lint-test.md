@@ -22,10 +22,14 @@ readability.
 - Consistent spacing
   - Correct indentation
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Code block with language specified
 const x = 1;
 ```
+
+:::
 
 ## Correct Header Level
 

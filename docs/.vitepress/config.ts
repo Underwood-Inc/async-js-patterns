@@ -2,10 +2,13 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { fileURLToPath, URL } from 'node:url';
 import { resolve } from 'path';
+import { getHighlighter } from 'shiki';
 import { defineConfig } from 'vitepress';
-import { readingTime } from './plugins/readingTime';
-import { typescriptPlugin } from './plugins/typescript';
-import { codePreviewPlugin } from './theme/markdown/codePreview';
+import { languages } from './theme/languages';
+import { codeTooltipsPlugin } from './theme/markdown/codeTooltips';
+import { parseCode } from './theme/utils/parsers';
+import { typeColors, typeDefinitions } from './theme/utils/typeDefinitions';
+import { performanceLogger } from './theme/utils/performanceLogger';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
@@ -236,15 +239,191 @@ export default defineConfig({
       dark: 'github-dark',
     },
     lineNumbers: true,
-    config: (md) => {
-      md.use(readingTime);
-      md.use(typescriptPlugin);
-      md.use(codePreviewPlugin);
+    languages: languages,
+    languageAlias: {
+      'typescript:preview': 'typescript',
+      'javascript:preview': 'javascript',
+      ':preview': 'plaintext',
     },
-    async buildEnd() {
-      const { buildSearchIndex } = await import('./buildSearchIndex.js');
-      await buildSearchIndex();
+    config: async (md) => {
+      codeTooltipsPlugin(md);
+
+      const highlighter = await getHighlighter({
+        themes: ['github-dark', 'github-light'],
+        langs: [
+          'typescript',
+          'javascript',
+          'json',
+          'bash',
+          'markdown',
+          'tsx',
+          'scss',
+          'css',
+          'html',
+          'python',
+        ],
+      });
+
+      const originalFence = md.renderer.rules.fence;
+      md.renderer.rules.fence = (tokens, idx, options, env, slf) => {
+        const token = tokens[idx];
+        const term = tokens[idx].content.trim();
+        const info = token.info ? token.info.trim() : '';
+        const code = token.content.trim();
+        const lang = token.info.trim();
+        // Parse code using existing system
+        const parseResult = parseCode(token.content, lang);
+        const tooltipMap = new Map<
+          string,
+          { errors: Set<string>; info: Set<string> }
+        >();
+
+        // Parse code using existing system
+        const [langType] = info.split(':')
+        performanceLogger.logTooltip(
+          term,
+          langType || 'plaintext',
+          parseResult.errors?.length > 0
+        );
+
+        // Check if we're inside a code-with-tooltips container
+        const isInTooltipContainer = tokens.some(
+          (t, i) => i < idx && t.type === 'container_code-with-tooltips_open'
+        );
+
+        // If not in tooltip container, use original renderer
+        if (!isInTooltipContainer) {
+          return originalFence!(tokens, idx, options, env, slf);
+        }
+
+        const highlightedCode = highlighter.codeToHtml(code, {
+          lang: highlighter.getLoadedLanguages().includes(lang)
+            ? lang
+            : 'plaintext',
+          themes: {
+            light: 'github-light',
+            dark: 'github-dark',
+          },
+        });
+
+        // Process tokens and build tooltips
+        parseResult.tokens.forEach((tokenInfo) => {
+          if (!tokenInfo?.text) return;
+
+          const term = tokenInfo.text;
+          const info = tokenInfo.info || typeDefinitions[term];
+
+          if (!tooltipMap.has(term)) {
+            tooltipMap.set(term, { errors: new Set(), info: new Set() });
+          }
+
+          if (info) {
+            const tooltipContent = encodeURIComponent(
+              JSON.stringify({
+                type: info.type || 'identifier',
+                description: info.documentation || `Identifier: ${term}`,
+                color: typeColors[info.type as keyof typeof typeColors] || {
+                  text: '#666',
+                  background: 'rgba(102, 102, 102, 0.1)',
+                },
+              })
+            );
+            tooltipMap
+              .get(term)!
+              .info.add(`info:::${info.type}\ntype:${tooltipContent}`);
+          }
+        });
+
+        // Enhanced tooltip debugging
+        const debugData = {
+          term,
+          hasInfo: !!info,
+          type: info?.type || 'none',
+          hasDocumentation: !!info?.documentation,
+          hasTypeDefinition: !!typeDefinitions[term],
+          parseResult: {
+            totalTokens: parseResult.tokens.length,
+            hasErrors: parseResult.errors?.length > 0,
+            errors: parseResult.errors
+          }
+        }
+
+        performanceLogger.logTooltipDebug(debugData)
+
+        // Add detailed tooltip content in a separate group if needed
+        // if (tooltipMap.size > 0) {
+        //   console.group('Detailed Tooltip Content');
+        //   tooltipMap.forEach((data, term) => {
+        //     console.group(`Term: ${term}`);
+        //     Array.from(data.info).forEach((tooltip, index) => {
+        //       console.log(`Tooltip ${index + 1}:`, tooltip);
+        //     });
+        //     console.groupEnd();
+        //   });
+        //   console.groupEnd();
+        // }
+
+        performanceLogger.startProcess(parseResult.tokens.length);
+        // Process code with tooltips while preserving Shiki classes
+        let processedCode = highlightedCode.replace(
+          /<pre class="shiki[^>]*>(.*?)<\/pre>/s,
+          (match, codeContent) => {
+            let processed = codeContent;
+            tooltipMap.forEach(({ errors, info }, term) => {
+              const termPattern = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+              const regex = new RegExp(
+                `(<span[^>]*?>)([^<]*?\\b)(${termPattern})\\b([^<]*?)(</span>)`,
+                'g'
+              );
+
+              const combinedContent = Array.from(info).join('|||');
+              processed = processed.replace(
+                regex,
+                (match, spanStart, before, term, after, spanEnd) =>
+                  `${spanStart}${before}<span class="tooltip-trigger" data-tooltip="${encodeURIComponent(combinedContent)}">${term}</span>${after}${spanEnd}`
+              );
+            });
+            return `<pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0">${processed}</pre>`;
+          }
+        );
+
+        if (parseResult.errors?.length > 0) {
+          parseResult.errors.forEach(error => {
+            performanceLogger.logError(term, error)
+          })
+        }
+
+        performanceLogger.startProcess(parseResult.tokens.length)
+
+        return `<div class="code-block-wrapper" data-code-tooltips="true">${processedCode}</div>`;
+      };
     },
+    breaks: true,
+    html: true,
+    linkify: true,
+    typographer: true,
+    vue: {
+      customBlocks: [],
+      template: {
+        compilerOptions: {
+          isCustomElement: () => false,
+          whitespace: 'preserve',
+          delimiters: ['${', '}'],
+          // Disable template compilation for examples route
+          // compileTemplate: (template) => {
+          //   if (template.id?.includes('/examples/')) {
+          //     return { code: template.content };
+          //   }
+          //   return undefined;
+          // },
+        },
+      },
+    },
+  },
+  async buildEnd() {
+    const { buildSearchIndex } = await import('./buildSearchIndex.js');
+    await buildSearchIndex();
+    performanceLogger.finalize();
   },
   vite: {
     build: {
@@ -293,6 +472,7 @@ export default defineConfig({
       { text: 'Package Managers', link: '/package-managers/' },
       { text: 'Styling', link: '/styling/' },
       { text: 'Examples', link: '/examples/' },
+      { text: 'React Component Patterns', link: '/react-component-patterns/' },
     ],
     sidebar: {
       '/guide/': [
@@ -534,6 +714,116 @@ export default defineConfig({
               text: 'Yarn to pnpm',
               link: '/package-managers/migration/yarn-to-pnpm',
             },
+          ],
+        },
+      ],
+      '/react-component-patterns/': [
+        {
+          text: 'React Components',
+          items: [{ text: 'Overview', link: '/react-component-patterns/' }],
+        },
+        {
+          text: 'Foundation',
+          items: [
+            {
+              text: 'Typography',
+              link: '/react-component-patterns/foundation/typography',
+            },
+            {
+              text: 'Colors',
+              link: '/react-component-patterns/foundation/colors',
+            },
+            {
+              text: 'Spacing',
+              link: '/react-component-patterns/foundation/spacing',
+            },
+            {
+              text: 'Icons',
+              link: '/react-component-patterns/foundation/icons',
+            },
+          ],
+        },
+        {
+          text: 'Layout',
+          items: [
+            {
+              text: 'Container',
+              link: '/react-component-patterns/layout/container',
+            },
+            { text: 'Grid', link: '/react-component-patterns/layout/grid' },
+            { text: 'Stack', link: '/react-component-patterns/layout/stack' },
+            { text: 'Flex', link: '/react-component-patterns/layout/flex' },
+          ],
+        },
+        {
+          text: 'Form Controls',
+          items: [
+            { text: 'Button', link: '/react-component-patterns/form/button' },
+            { text: 'Input', link: '/react-component-patterns/form/input' },
+            { text: 'Select', link: '/react-component-patterns/form/select' },
+            {
+              text: 'Checkbox',
+              link: '/react-component-patterns/form/checkbox',
+            },
+            { text: 'Radio', link: '/react-component-patterns/form/radio' },
+            { text: 'Switch', link: '/react-component-patterns/form/switch' },
+          ],
+        },
+        {
+          text: 'Navigation',
+          items: [
+            { text: 'Menu', link: '/react-component-patterns/navigation/menu' },
+            { text: 'Tabs', link: '/react-component-patterns/navigation/tabs' },
+            {
+              text: 'Breadcrumb',
+              link: '/react-component-patterns/navigation/breadcrumb',
+            },
+            {
+              text: 'Pagination',
+              link: '/react-component-patterns/navigation/pagination',
+            },
+          ],
+        },
+        {
+          text: 'Feedback',
+          items: [
+            { text: 'Alert', link: '/react-component-patterns/feedback/alert' },
+            { text: 'Toast', link: '/react-component-patterns/feedback/toast' },
+            {
+              text: 'Progress',
+              link: '/react-component-patterns/feedback/progress',
+            },
+            {
+              text: 'Skeleton',
+              link: '/react-component-patterns/feedback/skeleton',
+            },
+          ],
+        },
+        {
+          text: 'Overlay',
+          items: [
+            { text: 'Modal', link: '/react-component-patterns/overlay/modal' },
+            {
+              text: 'Drawer',
+              link: '/react-component-patterns/overlay/drawer',
+            },
+            {
+              text: 'Popover',
+              link: '/react-component-patterns/overlay/popover',
+            },
+            {
+              text: 'Tooltip',
+              link: '/react-component-patterns/overlay/tooltip',
+            },
+          ],
+        },
+        {
+          text: 'Data Display',
+          items: [
+            { text: 'Table', link: '/react-component-patterns/data/table' },
+            { text: 'List', link: '/react-component-patterns/data/list' },
+            { text: 'Card', link: '/react-component-patterns/data/card' },
+            { text: 'Badge', link: '/react-component-patterns/data/badge' },
           ],
         },
       ],

@@ -9,7 +9,9 @@ pnpm is a fast, disk space efficient package manager that creates a non-flat nod
 
 ## Installation
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Using npm
 npm install -g pnpm
 
@@ -23,11 +25,15 @@ iwr https://get.pnpm.io/install.ps1 -useb | iex
 pnpm --version
 ```
 
+:::
+
 ## Key Commands
 
 ### Project Initialization
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Create a new package.json
 pnpm init
 
@@ -35,9 +41,13 @@ pnpm init
 pnpm init -y
 ```
 
+:::
+
 ### Package Installation
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install all dependencies
 pnpm install
 
@@ -54,9 +64,13 @@ pnpm add -g package-name
 pnpm add package-name@version
 ```
 
+:::
+
 ### Package Management
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Update packages
 pnpm update
 
@@ -73,9 +87,13 @@ pnpm outdated
 pnpm audit
 ```
 
+:::
+
 ### Scripts
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Run a script
 pnpm run script-name
 # or simply
@@ -87,11 +105,15 @@ pnpm test
 pnpm build
 ```
 
+:::
+
 ## Configuration
 
 ### pnpm Configuration File (`.npmrc`)
 
-```ini:preview
+::: code-with-tooltips
+
+```ini
 # Set registry
 registry=https://registry.npmjs.org/
 
@@ -105,9 +127,13 @@ node-linker=hoisted
 store-dir=.pnpm-store
 ```
 
+:::
+
 ### package.json
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "name": "my-project",
   "version": "1.0.0",
@@ -126,11 +152,15 @@ store-dir=.pnpm-store
 }
 ```
 
+:::
+
 ## Workspaces
 
 pnpm has excellent monorepo support through workspaces:
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # pnpm-workspace.yaml
 packages:
   - 'packages/*'
@@ -138,9 +168,13 @@ packages:
   - '!**/test/**'
 ```
 
+:::
+
 ### Workspace Commands
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install dependencies for all workspaces
 pnpm install
 
@@ -154,19 +188,25 @@ pnpm -r run command
 pnpm -r --parallel run command
 ```
 
+:::
+
 ## Store & Linking
 
 pnpm uses a unique approach to manage dependencies:
 
 ### Content-addressable Store
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Location of global store
 ~/.pnpm-store/
 
 # Project-specific store
 node_modules/.pnpm/
 ```
+
+:::
 
 ### Hard Links
 
@@ -207,7 +247,9 @@ node_modules/.pnpm/
 
 ### Store Issues
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Clear store
 pnpm store prune
 
@@ -218,9 +260,13 @@ pnpm store verify
 pnpm store prune
 ```
 
+:::
+
 ### Dependency Resolution
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Force resolution
 pnpm add package-name --force
 
@@ -228,9 +274,13 @@ pnpm add package-name --force
 pnpm install --force
 ```
 
+:::
+
 ### Migration from npm/Yarn
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Import package-lock.json/yarn.lock
 pnpm import
 
@@ -238,11 +288,15 @@ pnpm import
 pnpm install
 ```
 
+:::
+
 ## Advanced Features
 
 ### Filtering
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Run in packages that depend on another
 pnpm --filter ...package-name command
 
@@ -253,9 +307,13 @@ pnpm --filter "[main]" command
 pnpm --filter "package-a...package-b" command
 ```
 
+:::
+
 ### Hooks
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "pnpm": {
     "hooks": {
@@ -265,9 +323,13 @@ pnpm --filter "package-a...package-b" command
 }
 ```
 
+:::
+
 ### Custom Configs
 
-```js:preview
+::: code-with-tooltips
+
+```js
 // .pnpmfile.cjs
 module.exports = {
   hooks: {
@@ -279,9 +341,13 @@ module.exports = {
 };
 ```
 
+:::
+
 ### Publishing
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Publish package
 pnpm publish
 
@@ -291,5 +357,7 @@ pnpm publish --tag beta
 # Publish workspace packages
 pnpm -r publish
 ```
+
+:::
 
 More content coming soon...

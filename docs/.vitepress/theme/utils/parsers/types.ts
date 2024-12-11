@@ -4,13 +4,21 @@ export interface TokenLocation {
   type: string;
   text: string;
   error?: string;
+  info?: {
+    type?: string;
+    documentation?: string;
+    color?: {
+      text: string;
+      background: string;
+    };
+  };
 }
 
 export interface ParserResult {
   tokens: TokenLocation[];
+  errors: string[];
   isValid: boolean;
   usesFallback: boolean;
-  errors?: TokenLocation[];
 }
 
 export type CodeParser = (code: string) => ParserResult;

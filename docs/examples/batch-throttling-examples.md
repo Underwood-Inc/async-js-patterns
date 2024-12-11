@@ -19,7 +19,9 @@ This page demonstrates practical examples of implementing and using batch thrott
 
 ## Basic Batch Processor
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic batch processor with throttling
 class BatchProcessor<T, R> {
   private queue: T[] = [];
@@ -105,9 +107,13 @@ const results = await Promise.all([
 ]);
 ```
 
+:::
+
 ## Advanced Batch Throttling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ThrottledBatchProcessor<T, R> {
   private queue: Array<{
     item: T;
@@ -225,9 +231,13 @@ const batchProcessor = new ThrottledBatchProcessor(
 );
 ```
 
+:::
+
 ## Real-World Example: Rate-Limited API Client
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class RateLimitedApiClient {
   private batchProcessor: ThrottledBatchProcessor<ApiRequest, ApiResponse>;
   private rateLimits: Map<string, RateLimit> = new Map();
@@ -391,6 +401,8 @@ const [users, posts] = await Promise.all([
   api.request<Post[]>('/posts'),
 ]);
 ```
+
+:::
 
 ## Best Practices
 

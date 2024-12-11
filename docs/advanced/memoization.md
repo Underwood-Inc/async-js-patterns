@@ -77,7 +77,9 @@ Think of memoization like a chef's mise en place (prepared ingredients):
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface MemoizeOptions<T> {
   maxSize?: number;
   maxAge?: number;
@@ -191,9 +193,13 @@ class Memoizer<T> {
 }
 ```
 
+:::
+
 ## Usage Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic API caching
 const apiMemoizer = new Memoizer<any>({
   maxAge: 60000, // 1 minute cache
@@ -238,6 +244,8 @@ const dataMemoizer = new Memoizer<any>({
 });
 ```
 
+:::
+
 ## Key Concepts
 
 1. **Cache Management**: Size and age limits
@@ -271,7 +279,9 @@ const dataMemoizer = new Memoizer<any>({
 
 ## Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Test basic caching
 const cachingTest = async () => {
   let callCount = 0;
@@ -307,9 +317,13 @@ const expirationTest = async () => {
 };
 ```
 
+:::
+
 ## Advanced Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // With cache warming
 class PreloadingMemoizer<T> extends Memoizer<T> {
   async preload(
@@ -346,3 +360,5 @@ class BatchMemoizer<T> extends Memoizer<T> {
 const batchMemoizer = new BatchMemoizer();
 batchMemoizer.invalidatePattern('user.*');
 ```
+
+:::

@@ -20,14 +20,20 @@ Cypress is a next-generation front-end testing tool built for the modern web. It
 
 ## Getting Started
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install Cypress
 npm install --save-dev cypress
 ```
 
+:::
+
 ## Basic Test Structure
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 describe('Login Page', () => {
   beforeEach(() => {
     cy.visit('/login');
@@ -47,9 +53,13 @@ describe('Login Page', () => {
 });
 ```
 
+:::
+
 ## Common Commands
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Navigation
 cy.visit('/about');
 cy.go('back');
@@ -77,11 +87,15 @@ Cypress.Commands.add('login', (email, password) => {
 });
 ```
 
+:::
+
 ## Advanced Features
 
 ### Custom Commands
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // cypress/support/commands.js
 Cypress.Commands.add('login', (email, password) => {
   cy.visit('/login');
@@ -94,9 +108,13 @@ Cypress.Commands.add('login', (email, password) => {
 cy.login('user@example.com', 'password123');
 ```
 
+:::
+
 ### Fixtures
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // cypress/fixtures/user.json
 {
   "id": 1,
@@ -111,9 +129,13 @@ cy.fixture('user').then((user) => {
 })
 ```
 
+:::
+
 ### Network Interception
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Mock API response
 cy.intercept('GET', '/api/users', {
   statusCode: 200,
@@ -138,11 +160,15 @@ cy.intercept('POST', '/api/users', {
 });
 ```
 
+:::
+
 ## Testing Patterns
 
 ### Page Objects
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // cypress/support/pages/login.page.js
 class LoginPage {
   visit() {
@@ -180,9 +206,13 @@ it('should login successfully', () => {
 });
 ```
 
+:::
+
 ### API Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 describe('API Tests', () => {
   it('creates a new user', () => {
     cy.request('POST', '/api/users', {
@@ -208,11 +238,15 @@ describe('API Tests', () => {
 });
 ```
 
+:::
+
 ## Configuration
 
 ### cypress.config.js
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
@@ -237,9 +271,13 @@ module.exports = defineConfig({
 });
 ```
 
+:::
+
 ### Environment Variables
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // cypress.env.json
 {
   "auth_token": "secret-token",
@@ -250,11 +288,15 @@ module.exports = defineConfig({
 cy.visit(`${Cypress.env('apiUrl')}/users`)
 ```
 
+:::
+
 ## Best Practices
 
 ### 1. Selectors
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // ❌ Avoid
 cy.get('.submit-button');
 cy.get('#login-form');
@@ -266,9 +308,13 @@ cy.get('[data-cy="login-form"]');
 cy.get('[data-cy="submit"]');
 ```
 
+:::
+
 ### 2. Waiting
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // ❌ Avoid
 cy.wait(5000);
 
@@ -279,9 +325,13 @@ cy.intercept('/api/data').as('getData');
 cy.wait('@getData');
 ```
 
+:::
+
 ### 3. Assertions
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Element state
 cy.get('[data-cy="button"]')
   .should('be.visible')
@@ -296,11 +346,15 @@ cy.get('[data-cy="user"]').should(($el) => {
 });
 ```
 
+:::
+
 ## Testing Strategies
 
 ### Visual Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 describe('Visual Tests', () => {
   it('matches homepage screenshot', () => {
     cy.visit('/');
@@ -315,9 +369,13 @@ describe('Visual Tests', () => {
 });
 ```
 
+:::
+
 ### Component Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 import Button from './Button';
 
 describe('Button Component', () => {
@@ -335,11 +393,15 @@ describe('Button Component', () => {
 });
 ```
 
+:::
+
 ## Performance Testing
 
 ### Measuring Performance
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 cy.window().then((win) => {
   const performance = win.performance;
   const navigation = performance.getEntriesByType('navigation')[0];
@@ -349,9 +411,13 @@ cy.window().then((win) => {
 });
 ```
 
+:::
+
 ### Resource Loading
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 cy.window().then((win) => {
   const resources = win.performance.getEntriesByType('resource');
 
@@ -367,11 +433,15 @@ cy.window().then((win) => {
 });
 ```
 
+:::
+
 ## Debugging
 
 ### Console Output
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 cy.get('[data-cy="element"]').then(($el) => {
   console.log('Element:', $el);
 });
@@ -383,9 +453,13 @@ cy.debug();
 cy.pause();
 ```
 
+:::
+
 ### Screenshots and Videos
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Take screenshot
 cy.screenshot('error-state');
 
@@ -401,3 +475,5 @@ module.exports = defineConfig({
   },
 });
 ```
+
+:::

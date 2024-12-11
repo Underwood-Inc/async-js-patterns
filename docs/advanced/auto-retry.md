@@ -78,7 +78,9 @@ Think of auto-retry like trying to make a phone call in an area with poor recept
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface RetryOptions {
   maxAttempts: number;
   initialDelay: number;
@@ -159,9 +161,13 @@ async function withRetry<T>(
 }
 ```
 
+:::
+
 ## Usage Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic usage
 const fetchWithRetry = async (url: string) => {
   return withRetry(() => fetch(url), {
@@ -200,6 +206,8 @@ const customRetry = async () => {
 };
 ```
 
+:::
+
 ## Key Concepts
 
 1. **Exponential Backoff**: Increasing delays between retries
@@ -233,7 +241,9 @@ const customRetry = async () => {
 
 ## Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Test successful retry
 const successTest = async () => {
   let attempts = 0;
@@ -292,9 +302,13 @@ const backoffTest = async () => {
 };
 ```
 
+:::
+
 ## Advanced Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // With circuit breaker pattern
 class CircuitBreaker {
   private failures = 0;
@@ -354,3 +368,5 @@ const retryWithCircuitBreaker = async <T>(
   });
 };
 ```
+
+:::

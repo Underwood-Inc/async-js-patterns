@@ -20,7 +20,9 @@ Learn how to implement debouncing patterns for rate limiting and performance opt
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Simple debounce function
 function debounce<T extends (...args: any[]) => void>(
   func: T,
@@ -57,11 +59,15 @@ function debounceWithImmediate<T extends (...args: any[]) => void>(
 }
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### Promise-based Debounce
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface DebouncedFunction<T extends (...args: any[]) => any> {
   (...args: Parameters<T>): Promise<ReturnType<T>>;
   cancel: () => void;
@@ -116,9 +122,13 @@ function debouncePromise<T extends (...args: any[]) => any>(
 }
 ```
 
+:::
+
 ### Debounce with Queue
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface QueuedDebounceOptions {
   wait: number;
   maxQueueSize?: number;
@@ -206,9 +216,13 @@ class QueuedDebounce<T> {
 }
 ```
 
+:::
+
 ### Adaptive Debounce
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface AdaptiveDebounceOptions {
   initialWait: number;
   minWait: number;
@@ -307,3 +321,5 @@ class AdaptiveDebounce<T extends (...args: any[]) => any> {
   }
 }
 ```
+
+:::

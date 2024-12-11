@@ -25,7 +25,9 @@ Immutable state is a fundamental concept in modern application development that 
 
 ### 1. Readonly Types
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic readonly type
 type ReadonlyUser = Readonly<User>;
 
@@ -47,9 +49,13 @@ interface Config {
 type ImmutableConfig = DeepReadonly<Config>;
 ```
 
+:::
+
 ### 2. Immutable Collections
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ImmutableList<T> {
   private readonly items: ReadonlyArray<T>;
 
@@ -79,11 +85,15 @@ class ImmutableList<T> {
 }
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### 1. Immutable State Updates
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ImmutableStore<T extends object> {
   private readonly state: DeepReadonly<T>;
 
@@ -119,9 +129,13 @@ class ImmutableStore<T extends object> {
 }
 ```
 
+:::
+
 ### 2. Immutable Records
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class Record<T extends object> {
   private readonly data: DeepReadonly<T>;
 
@@ -143,9 +157,13 @@ class Record<T extends object> {
 }
 ```
 
+:::
+
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Domain types
 interface Product {
   id: string;
@@ -266,6 +284,8 @@ console.log(cart.getCart());
 //   total: 6
 // }
 ```
+
+:::
 
 ## Best Practices
 

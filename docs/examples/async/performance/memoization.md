@@ -20,7 +20,9 @@ Learn how to implement memoization patterns for caching and performance optimiza
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Simple memoization
 function memoize<T extends (...args: any[]) => any>(
   func: T
@@ -60,11 +62,15 @@ function memoizeAsync<T extends (...args: any[]) => Promise<any>>(
 }
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### LRU Cache Memoization
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class LRUCache<K, V> {
   private cache = new Map<K, V>();
   private timestamps = new Map<K, number>();
@@ -136,9 +142,13 @@ function memoizeWithLRU<T extends (...args: any[]) => any>(
 }
 ```
 
+:::
+
 ### Time-based Memoization
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface TimedCacheOptions {
   ttl: number;
   maxSize?: number;
@@ -255,9 +265,13 @@ function memoizeWithTTL<T extends (...args: any[]) => any>(
 }
 ```
 
+:::
+
 ### Smart Memoization
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface SmartMemoOptions<T> {
   maxSize: number;
   ttl: number;
@@ -364,3 +378,5 @@ class SmartMemoization<T extends (...args: any[]) => any> {
   }
 }
 ```
+
+:::

@@ -20,7 +20,9 @@ Selenium WebDriver is a widely-used tool for browser automation that enables you
 
 ## Getting Started
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install Selenium WebDriver for Node.js
 npm install selenium-webdriver
 
@@ -28,9 +30,13 @@ npm install selenium-webdriver
 npm install chromedriver geckodriver
 ```
 
+:::
+
 ## Basic Test Structure
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 const { Builder, By, Key, until } = require('selenium-webdriver');
 
 describe('Search functionality', function () {
@@ -57,9 +63,13 @@ describe('Search functionality', function () {
 });
 ```
 
+:::
+
 ## Common Operations
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Navigation
 await driver.get('https://example.com');
 await driver.navigate().back();
@@ -86,9 +96,13 @@ await driver.executeScript('return document.title;');
 await driver.executeAsyncScript('window.setTimeout(arguments[0], 500);');
 ```
 
+:::
+
 ## Page Object Model Example
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 class LoginPage {
   constructor(driver) {
     this.driver = driver;
@@ -111,11 +125,15 @@ class LoginPage {
 }
 ```
 
+:::
+
 ## Core Concepts
 
 ### WebDriver Setup
 
-```python:preview
+::: code-with-tooltips
+
+```python
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -134,9 +152,13 @@ driver = webdriver.Chrome(service=service, options=chrome_options)
 driver.implicitly_wait(10)
 ```
 
+:::
+
 ### Element Location
 
-```python:preview
+::: code-with-tooltips
+
+```python
 from selenium.webdriver.common.by import By
 
 # Different locator strategies
@@ -150,9 +172,13 @@ driver.find_element(By.XPATH, "//input[@type='search']")
 elements = driver.find_elements(By.TAG_NAME, 'a')
 ```
 
+:::
+
 ### Interactions
 
-```python:preview
+::: code-with-tooltips
+
+```python
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -171,11 +197,15 @@ actions.key_down(Keys.CONTROL).click(element).key_up(Keys.CONTROL)
 actions.perform()
 ```
 
+:::
+
 ## Advanced Features
 
 ### Wait Strategies
 
-```python:preview
+::: code-with-tooltips
+
+```python
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -195,9 +225,13 @@ def element_has_css_class(locator, css_class):
 wait.until(element_has_css_class((By.ID, 'myElement'), 'active'))
 ```
 
+:::
+
 ### JavaScript Execution
 
-```python:preview
+::: code-with-tooltips
+
+```python
 # Execute JavaScript
 driver.execute_script("return document.title;")
 
@@ -213,9 +247,13 @@ driver.execute_script("""
 """)
 ```
 
+:::
+
 ### Window Management
 
-```python:preview
+::: code-with-tooltips
+
+```python
 # Handle multiple windows
 main_window = driver.current_window_handle
 driver.switch_to.new_window('tab')
@@ -231,11 +269,15 @@ driver.switch_to.frame('frame_name')
 driver.switch_to.default_content()
 ```
 
+:::
+
 ## Testing Patterns
 
 ### Page Object Model
 
-```python:preview
+::: code-with-tooltips
+
+```python
 class LoginPage:
     def __init__(self, driver):
         self.driver = driver
@@ -249,9 +291,13 @@ class LoginPage:
         self.driver.find_element(*self.login_button).click()
 ```
 
+:::
+
 ### Data-Driven Testing
 
-```python:preview
+::: code-with-tooltips
+
+```python
 import pytest
 import csv
 
@@ -274,11 +320,15 @@ def test_login(driver, test_data):
         assert login_page.get_error_message() == test_data['error_message']
 ```
 
+:::
+
 ## Advanced Testing
 
 ### API Integration
 
-```python:preview
+::: code-with-tooltips
+
+```python
 import requests
 
 class TestUserFlow:
@@ -304,9 +354,13 @@ class TestUserFlow:
         requests.delete(f"https://api.example.com/users/{self.test_user['id']}")
 ```
 
+:::
+
 ### Screenshot Capture
 
-```python:preview
+::: code-with-tooltips
+
+```python
 import os
 from datetime import datetime
 
@@ -331,11 +385,15 @@ def test_with_screenshot(driver):
         raise
 ```
 
+:::
+
 ## Best Practices
 
 ### 1. Element Location
 
-```python:preview
+::: code-with-tooltips
+
+```python
 # ❌ Avoid
 driver.find_element(By.CSS_SELECTOR, 'button:nth-child(2)')
 driver.find_element(By.XPATH, '//div[contains(@class, "btn")][2]')
@@ -346,9 +404,13 @@ driver.find_element(By.NAME, 'email')
 driver.find_element(By.CSS_SELECTOR, '[data-testid="submit"]')
 ```
 
+:::
+
 ### 2. Waits
 
-```python:preview
+::: code-with-tooltips
+
+```python
 # ❌ Avoid
 import time
 time.sleep(5)
@@ -359,9 +421,13 @@ wait.until(EC.element_to_be_clickable((By.ID, 'button')))
 wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'modal')))
 ```
 
+:::
+
 ### 3. Error Handling
 
-```python:preview
+::: code-with-tooltips
+
+```python
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 try:
@@ -376,9 +442,13 @@ except NoSuchElementException as e:
     raise
 ```
 
+:::
+
 ### 4. Resource Management
 
-```python:preview
+::: code-with-tooltips
+
+```python
 class TestBase:
     @classmethod
     def setup_class(cls):
@@ -394,3 +464,5 @@ class TestBase:
         self.driver.delete_all_cookies()
         self.driver.get(self.base_url)
 ```
+
+:::

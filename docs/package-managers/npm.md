@@ -11,7 +11,9 @@ npm (Node Package Manager) is the default package manager for Node.js and the wo
 
 npm comes bundled with Node.js:
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Check if npm is installed
 npm -v
 
@@ -19,11 +21,15 @@ npm -v
 npm install -g npm@latest
 ```
 
+:::
+
 ## Key Commands
 
 ### Project Initialization
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Create a new package.json
 npm init
 
@@ -31,9 +37,13 @@ npm init
 npm init -y
 ```
 
+:::
+
 ### Package Installation
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install all dependencies
 npm install
 
@@ -50,9 +60,13 @@ npm install -g package-name
 npm install package-name@version
 ```
 
+:::
+
 ### Package Management
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Update packages
 npm update
 
@@ -72,9 +86,13 @@ npm audit
 npm audit fix
 ```
 
+:::
+
 ### Scripts
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Run a script defined in package.json
 npm run script-name
 
@@ -84,11 +102,15 @@ npm test
 npm build
 ```
 
+:::
+
 ## Configuration
 
 ### npm Configuration File (`.npmrc`)
 
-```ini:preview
+::: code-with-tooltips
+
+```ini
 # Set default registry
 registry=https://registry.npmjs.org/
 
@@ -102,9 +124,13 @@ save-prefix=~
 package-lock=true
 ```
 
+:::
+
 ### package.json
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "name": "my-project",
   "version": "1.0.0",
@@ -122,20 +148,28 @@ package-lock=true
 }
 ```
 
+:::
+
 ## Workspaces
 
 npm supports workspaces for monorepo management:
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "name": "my-monorepo",
   "workspaces": ["packages/*"]
 }
 ```
 
+:::
+
 ### Workspace Commands
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install dependencies for all workspaces
 npm install
 
@@ -145,6 +179,8 @@ npm run test --workspace=package-name
 # Run command in all workspaces
 npm run test --workspaces
 ```
+
+:::
 
 ## Best Practices
 
@@ -178,23 +214,33 @@ npm run test --workspaces
 
 ### EACCES Permission Errors
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Fix permissions globally
 sudo chown -R $USER ~/.npm
 sudo chown -R $USER /usr/local/lib/node_modules
 ```
 
+:::
+
 ### Package Lock Conflicts
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Regenerate package-lock.json
 rm package-lock.json
 npm install
 ```
 
+:::
+
 ### Cache Issues
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Clear npm cache
 npm cache clean --force
 
@@ -202,11 +248,15 @@ npm cache clean --force
 npm cache verify
 ```
 
+:::
+
 ## Advanced Features
 
 ### npm Scripts with Arguments
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "scripts": {
     "start": "node server.js",
@@ -216,9 +266,13 @@ npm cache verify
 }
 ```
 
+:::
+
 ### Custom Registry Configuration
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Set custom registry
 npm config set registry https://custom-registry.com
 
@@ -226,9 +280,13 @@ npm config set registry https://custom-registry.com
 npm config set @myorg:registry https://custom-registry.com
 ```
 
+:::
+
 ### Publishing Packages
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Login to npm
 npm login
 
@@ -238,5 +296,7 @@ npm publish
 # Publish scoped package
 npm publish --access public
 ```
+
+:::
 
 More content coming soon...

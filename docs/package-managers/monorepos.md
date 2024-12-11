@@ -11,7 +11,9 @@ Monorepos allow you to manage multiple packages in a single repository. This gui
 
 ### npm Workspaces
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // package.json
 {
   "name": "my-monorepo",
@@ -20,9 +22,13 @@ Monorepos allow you to manage multiple packages in a single repository. This gui
 }
 ```
 
+:::
+
 ### Yarn Workspaces
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # .yarnrc.yml
 nodeLinker: node-modules
 plugins:
@@ -30,9 +36,13 @@ plugins:
     spec: '@yarnpkg/plugin-workspace-tools'
 ```
 
+:::
+
 ### pnpm Workspaces
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # pnpm-workspace.yaml
 packages:
   - 'packages/*'
@@ -40,9 +50,13 @@ packages:
   - '!**/test/**'
 ```
 
+:::
+
 ## Project Structure
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 monorepo/
 ├── package.json
 ├── packages/
@@ -63,11 +77,15 @@ monorepo/
     └── scripts/
 ```
 
+:::
+
 ## Package Management
 
 ### Local Dependencies
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // packages/web/package.json
 {
   "name": "@myorg/web",
@@ -78,9 +96,13 @@ monorepo/
 }
 ```
 
+:::
+
 ### Installation Commands
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # npm
 npm install
 npm install --workspace=web
@@ -97,11 +119,15 @@ pnpm --filter web install
 pnpm --filter web add lodash
 ```
 
+:::
+
 ## Script Execution
 
 ### Running Scripts
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # npm
 npm run test --workspaces
 npm run build --workspace=web
@@ -115,9 +141,13 @@ pnpm -r run test
 pnpm --filter web run build
 ```
 
+:::
+
 ### Parallel Execution
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # npm
 npm run test --workspaces --parallel
 
@@ -128,11 +158,15 @@ yarn workspaces foreach -p run test
 pnpm -r --parallel run test
 ```
 
+:::
+
 ## Version Management
 
 ### Independent Versions
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // lerna.json
 {
   "version": "independent",
@@ -145,9 +179,13 @@ pnpm -r --parallel run test
 }
 ```
 
+:::
+
 ### Fixed Versions
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // lerna.json
 {
   "version": "1.0.0",
@@ -160,11 +198,15 @@ pnpm -r --parallel run test
 }
 ```
 
+:::
+
 ## Build Systems
 
 ### Turborepo
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // turbo.json
 {
   "pipeline": {
@@ -180,9 +222,13 @@ pnpm -r --parallel run test
 }
 ```
 
+:::
+
 ### Nx
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // nx.json
 {
   "tasksRunnerOptions": {
@@ -196,11 +242,15 @@ pnpm -r --parallel run test
 }
 ```
 
+:::
+
 ## Dependencies Management
 
 ### Shared Dependencies
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // package.json (root)
 {
   "dependencies": {
@@ -214,9 +264,13 @@ pnpm -r --parallel run test
 }
 ```
 
+:::
+
 ### Dependency Hoisting
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // .npmrc
 hoist=true
 shamefully-hoist=true
@@ -225,11 +279,15 @@ shamefully-hoist=true
 nodeLinker: node-modules
 ```
 
+:::
+
 ## Development Workflow
 
 ### Git Hooks
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // package.json
 {
   "scripts": {
@@ -242,9 +300,13 @@ nodeLinker: node-modules
 }
 ```
 
+:::
+
 ### Task Running
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // package.json
 {
   "scripts": {
@@ -256,11 +318,15 @@ nodeLinker: node-modules
 }
 ```
 
+:::
+
 ## CI/CD Integration
 
 ### GitHub Actions
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 name: CI
 on: [push]
 jobs:
@@ -279,9 +345,13 @@ jobs:
       - run: npm test --workspaces
 ```
 
+:::
+
 ### CircleCI
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 version: 2.1
 jobs:
   build:
@@ -299,6 +369,8 @@ jobs:
             - node_modules
       - run: npm test --workspaces
 ```
+
+:::
 
 ## Best Practices
 
@@ -334,7 +406,9 @@ jobs:
 
 ### Shared Configurations
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // packages/tsconfig/base.json
 {
   "compilerOptions": {
@@ -354,9 +428,13 @@ jobs:
 }
 ```
 
+:::
+
 ### Package Aliases
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // tsconfig.json
 {
   "compilerOptions": {
@@ -367,9 +445,13 @@ jobs:
 }
 ```
 
+:::
+
 ### Shared ESLint Config
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // packages/eslint-config/index.js
 module.exports = {
   extends: ['airbnb', 'prettier'],
@@ -378,3 +460,5 @@ module.exports = {
   },
 };
 ```
+
+:::

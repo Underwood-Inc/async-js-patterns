@@ -6,7 +6,9 @@ A comprehensive timer management system that can track and clear all types of ti
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class TimerManager {
   private static instance: TimerManager;
   private timeouts: Map<number, NodeJS.Timeout> = new Map();
@@ -106,9 +108,13 @@ class TimerManager {
 }
 ```
 
+:::
+
 ## Usage Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 const timerManager = TimerManager.getInstance();
 
 // Set some timeouts and intervals
@@ -143,6 +149,8 @@ timerManager.setTimeout(() => {
 timerManager.clearTimersByGroup(groupId);
 ```
 
+:::
+
 ## Key Concepts
 
 1. **Singleton Pattern**: Single instance for global timer management
@@ -176,7 +184,9 @@ timerManager.clearTimersByGroup(groupId);
 
 ## Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Test timer cleanup
 const cleanupTest = async () => {
   const manager = TimerManager.getInstance();
@@ -217,9 +227,13 @@ const groupTest = () => {
 };
 ```
 
+:::
+
 ## Advanced Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // With automatic cleanup
 class AutoCleanupTimerManager extends TimerManager {
   private cleanupInterval: number;
@@ -263,3 +277,5 @@ autoCleanupManager.setTimeout(() => {
   console.log('This timer will be auto-cleaned if stale');
 }, 5000);
 ```
+
+:::

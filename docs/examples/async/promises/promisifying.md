@@ -20,7 +20,9 @@ Learn how to convert callback-based APIs into Promise-based ones.
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic promisification
 function promisify<T>(
   fn: (callback: (error: Error | null, result?: T) => void) => void
@@ -48,11 +50,15 @@ const readFileAsync = (path: string): Promise<string> =>
   });
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### Generic Promisification
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type Callback<T> = (error: Error | null, result?: T) => void;
 
 function promisifyGeneric<T, A extends any[]>(
@@ -72,9 +78,13 @@ const readFile = promisifyGeneric(fs.readFile);
 const writeFile = promisifyGeneric(fs.writeFile);
 ```
 
+:::
+
 ### Class Method Promisification
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function promisifyMethod<T, A extends any[]>(
   target: any,
   method: string
@@ -104,9 +114,13 @@ const db = new Database();
 const queryAsync = promisifyMethod(db, 'query');
 ```
 
+:::
+
 ### Event Emitter Promisification
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function promisifyEvent(
   emitter: EventEmitter,
   eventName: string
@@ -143,9 +157,13 @@ async function waitForEvent(emitter: EventEmitter, event: string) {
 }
 ```
 
+:::
+
 ### Batch Promisification
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type AsyncFunction<T> = (...args: any[]) => Promise<T>;
 
 function promisifyAll<T extends object>(
@@ -175,9 +193,13 @@ async function example() {
 }
 ```
 
+:::
+
 ### Promisification with Cancellation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface CancellablePromise<T> extends Promise<T> {
   cancel: () => void;
 }
@@ -209,3 +231,5 @@ const cancellableTimeout = promisifyWithCancel<void>((callback) => {
   return () => clearTimeout(timeoutId);
 });
 ```
+
+:::

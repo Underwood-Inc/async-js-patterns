@@ -25,7 +25,9 @@ Type guards are expressions that perform runtime checks to guarantee the type of
 
 ### typeof Type Guard
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function processValue(value: string | number) {
   if (typeof value === 'string') {
     // TypeScript knows value is a string here
@@ -37,9 +39,13 @@ function processValue(value: string | number) {
 }
 ```
 
+:::
+
 ### instanceof Type Guard
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ApiError extends Error {
   statusCode: number;
   constructor(message: string, statusCode: number) {
@@ -70,11 +76,15 @@ function handleError(error: Error) {
 }
 ```
 
+:::
+
 ## Custom Type Guards
 
 ### User-Defined Type Guards
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface User {
   id: string;
   name: string;
@@ -101,9 +111,13 @@ function handleUser(user: User) {
 }
 ```
 
+:::
+
 ### Array Type Guards
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function isNonEmpty<T>(arr: T[]): arr is [T, ...T[]] {
   return arr.length > 0;
 }
@@ -126,11 +140,15 @@ function processItems<T>(items: T[]) {
 }
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### Discriminated Unions
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type Result<T> =
   | { type: 'success'; data: T }
   | { type: 'error'; error: Error }
@@ -154,9 +172,13 @@ function handleResult<T>(result: Result<T>) {
 }
 ```
 
+:::
+
 ### Assertion Functions
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function assertIsString(value: unknown): asserts value is string {
   if (typeof value !== 'string') {
     throw new Error('Value must be a string');
@@ -182,9 +204,13 @@ function getUserName(user: { name: string } | null) {
 }
 ```
 
+:::
+
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // API Response types
 type ApiResponse<T> =
   | { status: 'success'; data: T }
@@ -303,6 +329,8 @@ async function displayOrder(orderId: string) {
   });
 }
 ```
+
+:::
 
 ## Best Practices
 

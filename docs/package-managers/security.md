@@ -11,7 +11,9 @@ Security is crucial when working with package managers. This guide covers best p
 
 ### Running Security Audits
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # npm
 npm audit
 npm audit fix
@@ -28,9 +30,13 @@ pnpm audit fix
 bun run security
 ```
 
+:::
+
 ### Audit Configuration
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "scripts": {
     "security": "npm audit && snyk test",
@@ -40,11 +46,15 @@ bun run security
 }
 ```
 
+:::
+
 ## Supply Chain Security
 
 ### Registry Security
 
-```ini:preview
+::: code-with-tooltips
+
+```ini
 # .npmrc
 registry=https://registry.npmjs.org/
 always-auth=true
@@ -52,9 +62,13 @@ audit=true
 strict-ssl=true
 ```
 
+:::
+
 ### Package Signing
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Sign your packages
 npm publish --sign
 
@@ -62,9 +76,13 @@ npm publish --sign
 npm verify --signatures
 ```
 
+:::
+
 ### Trusted Publishers
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Add trusted publisher
 npm access grant read-write username:package-name
 
@@ -72,11 +90,15 @@ npm access grant read-write username:package-name
 npm access ls-collaborators package-name
 ```
 
+:::
+
 ## Dependency Management
 
 ### Version Pinning
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "dependencies": {
     "critical-package": "1.2.3",
@@ -88,9 +110,13 @@ npm access ls-collaborators package-name
 }
 ```
 
+:::
+
 ### Lock File Security
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Verify lock file integrity
 npm ci
 yarn install --frozen-lockfile
@@ -101,19 +127,27 @@ npm audit fix --package-lock-only
 yarn upgrade --pattern "vulnerable-*"
 ```
 
+:::
+
 ## Authentication & Authorization
 
 ### Registry Authentication
 
-```ini:preview
+::: code-with-tooltips
+
+```ini
 # .npmrc
 //registry.npmjs.org/:_authToken=${NPM_TOKEN}
 //registry.company.com/:_authToken=${COMPANY_NPM_TOKEN}
 ```
 
+:::
+
 ### Access Control
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Scope access
 npm access restricted @myorg/package
 
@@ -124,11 +158,15 @@ npm access grant read-only username [@scope/]package
 npm access revoke username [@scope/]package
 ```
 
+:::
+
 ## CI/CD Security
 
 ### Environment Variables
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # GitHub Actions
 jobs:
   build:
@@ -142,9 +180,13 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 ```
 
+:::
+
 ### Security Checks
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # GitLab CI
 security:
   script:
@@ -154,6 +196,8 @@ security:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 ```
+
+:::
 
 ## Best Practices
 
@@ -189,7 +233,9 @@ security:
 
 ### Built-in Tools
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # npm audit
 npm audit
 npm audit fix
@@ -205,9 +251,13 @@ pnpm audit
 pnpm audit fix
 ```
 
+:::
+
 ### Third-party Tools
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Snyk
 npm install -g snyk
 snyk test
@@ -220,11 +270,15 @@ sonar-scanner
 dependency-check --project "My Project" --scan ./
 ```
 
+:::
+
 ## Common Vulnerabilities
 
 ### 1. Malicious Packages
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Check package reputation
 npm view package-name
 npm view package-name maintainers
@@ -234,17 +288,25 @@ npm pack package-name
 tar -xzf package-name-*.tgz
 ```
 
+:::
+
 ### 2. Dependency Confusion
 
-```ini:preview
+::: code-with-tooltips
+
+```ini
 # .npmrc
 @company:registry=https://registry.company.com/
 always-auth=true
 ```
 
+:::
+
 ### 3. Outdated Dependencies
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Check outdated packages
 npm outdated
 npm audit
@@ -253,11 +315,15 @@ npm audit
 npm update --depth 1
 ```
 
+:::
+
 ## Security Policies
 
 ### package.json
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "engines": {
     "node": ">=14.0.0"
@@ -269,20 +335,28 @@ npm update --depth 1
 }
 ```
 
+:::
+
 ### .npmrc
 
-```ini:preview
+::: code-with-tooltips
+
+```ini
 audit=true
 fund=false
 package-lock=true
 save-exact=true
 ```
 
+:::
+
 ## Incident Response
 
 ### Security Issue Detection
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Check for known vulnerabilities
 npm audit
 
@@ -293,9 +367,13 @@ npm audit --json > security-report.json
 npm audit fix --force
 ```
 
+:::
+
 ### Rollback Procedures
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Revert to last known good state
 git checkout package-lock.json@{yesterday}
 npm ci
@@ -304,9 +382,13 @@ npm ci
 npm install package@1.2.3 --save-exact
 ```
 
+:::
+
 ### Reporting
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Generate security reports
 npm audit --json
 npm ls --json
@@ -315,3 +397,5 @@ npm outdated --json
 # Document incidents
 echo "Security incident report" > incident-report.md
 ```
+
+:::

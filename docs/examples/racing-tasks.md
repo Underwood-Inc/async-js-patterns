@@ -19,7 +19,9 @@ This page demonstrates practical examples of executing tasks in a racing pattern
 
 ## Basic Racing Pattern
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic racing pattern with timeout
 async function raceWithTimeout<T>(
   task: () => Promise<T>,
@@ -48,9 +50,13 @@ try {
 }
 ```
 
+:::
+
 ## Multiple Data Sources
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class RedundantDataFetcher {
   private sources: DataSource[];
 
@@ -100,9 +106,13 @@ const fetcher = new RedundantDataFetcher([
 const data = await fetcher.fetch('/api/critical-data');
 ```
 
+:::
+
 ## Service Discovery
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ServiceDiscovery {
   private registries: ServiceRegistry[];
   private cache: Map<string, ServiceInfo>;
@@ -156,9 +166,13 @@ class ServiceDiscovery {
 }
 ```
 
+:::
+
 ## Real-World Example: Load Balancer
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class LoadBalancer {
   private servers: ServerInstance[];
   private healthChecks: Map<string, HealthStatus>;
@@ -267,6 +281,8 @@ try {
   console.error('Request failed:', error);
 }
 ```
+
+:::
 
 ## Best Practices
 

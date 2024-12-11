@@ -2,7 +2,18 @@ import { Component } from 'vue';
 
 export interface CustomTooltip {
   id: string;
-  content: string | Component;
+  content:
+    | {
+        title: string;
+        description: string;
+        type: string;
+        color?: {
+          text: string;
+          background: string;
+        };
+      }
+    | string
+    | Component;
   trigger: string | string[];
   appearance?: {
     theme?: 'light' | 'dark' | 'custom';

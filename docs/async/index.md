@@ -61,7 +61,9 @@ Master asynchronous programming in JavaScript with comprehensive patterns and ex
 
 ## Quick Examples
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic Promise usage
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -100,6 +102,8 @@ async function fetchWithTimeout(url: string, timeout: number) {
   ]);
 }
 ```
+
+:::
 
 ## Best Practices
 

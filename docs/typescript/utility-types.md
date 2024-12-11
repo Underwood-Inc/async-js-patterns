@@ -19,7 +19,22 @@ This section covers essential TypeScript utility types and their practical appli
 
 ## Overview
 
-TypeScript provides several built-in utility types to facilitate common type transformations. This guide covers both built-in utilities and custom implementations.
+TypeScript provides several utility types to help with common type transformations. Here are some of the most frequently used ones:
+
+- `Partial<T>`
+- `Required<T>`
+- `Pick<T, K>`
+- `Omit<T, K>`
+- `Record<K, T>`
+- `Exclude<T, U>`
+- `Extract<T, U>`
+- `NonNullable<T>`
+- `ReturnType<T>`
+- `Parameters<T>`
+
+## Examples
+
+Each utility type serves a specific purpose in type manipulation and safety. Let's explore them with practical examples.
 
 ## Built-in Utility Types
 
@@ -27,7 +42,9 @@ TypeScript provides several built-in utility types to facilitate common type tra
 
 Makes all properties in T optional:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface User {
   id: number;
   name: string;
@@ -42,11 +59,15 @@ function updateUser(userId: number, updates: PartialUser) {
 }
 ```
 
+:::
+
 ### Required\<T>
 
 Makes all properties in T required:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface Config {
   cache?: boolean;
   timeout?: number;
@@ -61,11 +82,15 @@ function initializeWithConfig(config: RequiredConfig) {
 }
 ```
 
+:::
+
 ### Pick\<T, K>
 
 Creates a type by picking the specified properties K from T:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface Article {
   id: number;
   title: string;
@@ -83,13 +108,17 @@ function renderPreview(preview: ArticlePreview) {
 }
 ```
 
+:::
+
 ## Custom Utility Types
 
 ### DeepPartial\<T>
 
 Makes all properties in T optional recursively:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
@@ -120,11 +149,15 @@ function updateConfig(updates: PartialConfig) {
 }
 ```
 
+:::
+
 ### NonNullable\<T>
 
 Removes null and undefined from type T:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type NonNullable<T> = T extends null | undefined ? never : T;
 
 function processValue<T>(value: T): NonNullable<T> {
@@ -135,26 +168,38 @@ function processValue<T>(value: T): NonNullable<T> {
 }
 ```
 
+:::
+
 ## Best Practices
 
 1. Type Composition:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Combine utility types for complex transformations
 type ReadonlyPartial<T> = Readonly<Partial<T>>;
 ```
 
+:::
+
 2. Type Guards with Utility Types:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function isNonNullable<T>(value: T): value is NonNullable<T> {
   return value !== null && value !== undefined;
 }
 ```
 
+:::
+
 3. Conditional Types:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type NonEmptyArray<T> = T[] & { 0: T };
 
 function ensureNonEmpty<T>(arr: T[]): NonEmptyArray<T> {
@@ -165,9 +210,13 @@ function ensureNonEmpty<T>(arr: T[]): NonEmptyArray<T> {
 }
 ```
 
+:::
+
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // API Response Types
 interface ApiResponse<T> {
   data: T;
@@ -206,6 +255,8 @@ async function fetchData<T>(url: string): Promise<T> {
   throw new Error(response.error.message);
 }
 ```
+
+:::
 
 ## References
 

@@ -19,7 +19,9 @@ This page demonstrates practical examples of implementing and using performance 
 
 ## Basic Performance Monitoring
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic performance monitoring
 class PerformanceMonitor {
   private metrics: Map<
@@ -88,9 +90,13 @@ const result = await monitor.measure('fetchUserData', async () => {
 console.log('Metrics:', monitor.getMetrics('fetchUserData'));
 ```
 
+:::
+
 ## Advanced Performance Monitoring
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class AdvancedPerformanceMonitor {
   private metrics: Map<string, OperationMetrics> = new Map();
   private thresholds: Map<string, number> = new Map();
@@ -298,9 +304,13 @@ try {
 }
 ```
 
+:::
+
 ## Real-World Example: API Performance Monitoring
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ApiPerformanceMonitor {
   private monitor: AdvancedPerformanceMonitor;
   private endpoints: Map<string, EndpointStats> = new Map();
@@ -472,6 +482,8 @@ const report = await apiMonitor.generateReport({
 
 console.log('Performance report:', report);
 ```
+
+:::
 
 ## Best Practices
 

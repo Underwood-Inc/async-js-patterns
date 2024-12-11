@@ -25,7 +25,9 @@ TypeScript provides powerful features for string manipulation, including templat
 
 ### Basic Template Literals
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type EventName<T extends string> = `${T}Changed`;
 
 // Usage
@@ -33,9 +35,13 @@ type UserEvents = EventName<'user'>; // type is 'userChanged'
 type DataEvents = EventName<'data'>; // type is 'dataChanged'
 ```
 
+:::
+
 ### Combining Template Literals
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 type APIEndpoint = '/users' | '/posts' | '/comments';
 type APIRoute = `${HTTPMethod} ${APIEndpoint}`;
@@ -47,9 +53,13 @@ type APIRoute = `${HTTPMethod} ${APIEndpoint}`;
 // 'DELETE /users' | 'DELETE /posts' | 'DELETE /comments'
 ```
 
+:::
+
 ### Extracting String Parts
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type ExtractEventName<T extends string> = T extends `${infer Name}Changed`
   ? Name
   : never;
@@ -59,11 +69,15 @@ type Event = 'userChanged';
 type Name = ExtractEventName<Event>; // type is 'user'
 ```
 
+:::
+
 ## Type-Safe String Operations
 
 ### String Validation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type EmailString = string & { __brand: 'email' };
 type URLString = string & { __brand: 'url' };
 
@@ -92,9 +106,13 @@ if (validateEmail(email)) {
 }
 ```
 
+:::
+
 ### String Transformations
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type CamelCase<S extends string> =
   S extends `${infer P1}_${infer P2}${infer P3}`
     ? `${Lowercase<P1>}${Uppercase<P2>}${CamelCase<P3>}`
@@ -109,11 +127,15 @@ type UserName = CamelCase<'user_name'>; // type is 'userName'
 type APIKey = SnakeCase<'APIKey'>; // type is 'api_key'
 ```
 
+:::
+
 ## String Utility Functions
 
 ### Safe Substring
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function safeSubstring(str: string, start: number, end?: number): string {
   const normalizedStart = Math.max(0, start);
   const normalizedEnd =
@@ -127,9 +149,13 @@ const text = 'Hello, World!';
 const safe = safeSubstring(text, 0, 100); // No out-of-bounds error
 ```
 
+:::
+
 ### String Format
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function format<T extends Record<string, unknown>>(
   template: string,
   params: T
@@ -144,6 +170,8 @@ const result = format(template, {
   count: 5,
 }); // "Hello, John! You have 5 messages."
 ```
+
+:::
 
 ## Best Practices
 
@@ -190,7 +218,9 @@ const result = format(template, {
 
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // API Route Builder
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE';
 type Version = 'v1' | 'v2';
@@ -245,6 +275,8 @@ const postsURL = api.buildURL('GET', '/v2/posts/:postId/comments', {
   postId: '456',
 });
 ```
+
+:::
 
 ## References
 

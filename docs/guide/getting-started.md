@@ -25,15 +25,21 @@ with TypeScript support and best practices.
 
 ## Installation
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 git clone https://github.com/Underwood-Inc/async-mastery.git
 cd async-mastery
 npm install
 ```
 
+:::
+
 ## Quick Start
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { withRetry } from './patterns/auto-retry';
 import { Memoizer } from './patterns/memoization';
 
@@ -57,6 +63,8 @@ const fetchData = async (id: string) => {
   );
 };
 ```
+
+:::
 
 ## Pattern Categories
 

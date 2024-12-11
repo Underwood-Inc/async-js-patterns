@@ -19,7 +19,9 @@ This page demonstrates practical examples of using `Promise.all` for parallel ex
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic Promise.all with multiple fetch requests
 const fetchMultipleUsers = async (userIds: string[]) => {
   const promises = userIds.map((id) =>
@@ -36,9 +38,13 @@ const fetchMultipleUsers = async (userIds: string[]) => {
 };
 ```
 
+:::
+
 ## Error Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Handling errors in Promise.all
 const validateUsers = async (users: User[]) => {
   try {
@@ -64,9 +70,13 @@ const validateUsers = async (users: User[]) => {
 };
 ```
 
+:::
+
 ## Data Aggregation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Aggregating data from multiple sources
 interface UserData {
   user: User;
@@ -85,9 +95,13 @@ async function getUserData(userId: string): Promise<UserData> {
 }
 ```
 
+:::
+
 ## Batch Processing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Processing data in batches
 async function processBatch<T>(
   items: T[],
@@ -112,9 +126,13 @@ const processUser = async (user: User) => {
 await processBatch(users, 5, processUser);
 ```
 
+:::
+
 ## Resource Management
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Managing multiple resources
 class ResourceManager {
   private connections: Map<string, Connection> = new Map();
@@ -146,9 +164,13 @@ class ResourceManager {
 }
 ```
 
+:::
+
 ## Real-World Example: Data Synchronization
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class DataSynchronizer {
   private api: APIClient;
   private db: Database;
@@ -222,6 +244,8 @@ const result = await syncer.syncData([
   { type: 'comment', id: '1' },
 ]);
 ```
+
+:::
 
 ## Best Practices
 

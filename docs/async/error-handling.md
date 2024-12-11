@@ -21,7 +21,9 @@ Learn how to effectively handle errors in asynchronous JavaScript code.
 
 Create specific error types for better error handling:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class NetworkError extends Error {
   constructor(
     message: string,
@@ -55,11 +57,15 @@ class TimeoutError extends Error {
 }
 ```
 
+:::
+
 ## Error Boundaries
 
 Implement error boundaries for async operations:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class AsyncBoundary {
   private errorHandler: (error: Error) => void;
   private retryCount: number;
@@ -129,11 +135,15 @@ try {
 }
 ```
 
+:::
+
 ## Error Recovery
 
 Implement graceful error recovery:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 async function withFallback<T>(
   primary: () => Promise<T>,
   fallback: () => Promise<T>,
@@ -157,11 +167,15 @@ const data = await withFallback(
 );
 ```
 
+:::
+
 ## Circuit Breaker
 
 Implement a circuit breaker pattern:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class CircuitBreaker {
   private failures = 0;
   private lastFailure: number = 0;
@@ -239,11 +253,15 @@ async function fetchWithBreaker() {
 }
 ```
 
+:::
+
 ## Error Aggregation
 
 Handle multiple errors gracefully:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class AggregateError extends Error {
   constructor(
     message: string,
@@ -300,6 +318,8 @@ try {
   }
 }
 ```
+
+:::
 
 ## Best Practices
 

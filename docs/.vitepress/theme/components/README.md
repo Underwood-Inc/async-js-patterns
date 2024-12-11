@@ -14,7 +14,9 @@ The CodePreview system consists of two main parts:
 To use the interactive code preview, add the `:preview` suffix to your code block's language:
 
 ````markdown:preview
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Your TypeScript code here
 interface User {
   id: string;  // Hover over 'string'
@@ -26,11 +28,17 @@ const user: User = {  // Hover over 'User'
   name: "John"
 };
 ```
+
+:::
 ````
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Your JavaScript code here
 ```
+
+:::
 
 ````
 
@@ -45,7 +53,9 @@ The CodePreview component supports:
 ### Configuration
 
 #### Basic Usage
-```vue:preview
+::: code-with-tooltips
+
+```vue
 <CodePreview
   :code="yourCode"
   language="typescript"
@@ -64,6 +74,8 @@ The CodePreview component supports:
   :showFileTree="true"
 />
 ```
+
+:::
 
 ## Implementation Details
 

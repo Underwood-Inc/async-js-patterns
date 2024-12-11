@@ -21,7 +21,9 @@ Learn how to manage asynchronous control flow in JavaScript.
 
 Execute operations in sequence:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 async function sequentialFlow<T>(
   input: T,
   operations: ((data: T) => Promise<T>)[]
@@ -41,11 +43,15 @@ const processUser = await sequentialFlow(userData, [
 ]);
 ```
 
+:::
+
 ## Parallel Flow
 
 Execute operations in parallel:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 async function parallelFlow<T, R>(
   inputs: T[],
   operation: (input: T) => Promise<R>,
@@ -81,11 +87,15 @@ const userIds = [1, 2, 3, 4, 5];
 const users = await parallelFlow(userIds, fetchUser, 2); // Max 2 concurrent requests
 ```
 
+:::
+
 ## Race Conditions
 
 Handle race conditions properly:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class RequestManager {
   private currentRequest: symbol | null = null;
 
@@ -119,11 +129,15 @@ manager.fetch('/api/data').catch(error => {
 });
 ```
 
+:::
+
 ## State Machine
 
 Implement an async state machine:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type State = 'idle' | 'loading' | 'success' | 'error';
 type Transition = 'fetch' | 'success' | 'error' | 'reset';
 
@@ -186,11 +200,15 @@ async function fetchData() {
 }
 ```
 
+:::
+
 ## Event Sequencing
 
 Control event sequence and timing:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class EventSequencer {
   private events: Map<string, Promise<void>> = new Map();
   private completedEvents: Set<string> = new Set();
@@ -254,6 +272,8 @@ async function initializeApp() {
 loadConfig().then(() => sequencer.complete('config_loaded'));
 authenticateUser().then(() => sequencer.complete('user_authenticated'));
 ```
+
+:::
 
 ## Best Practices
 

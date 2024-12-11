@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useData } from 'vitepress';
 import { parse } from '@typescript-eslint/typescript-estree';
+import { parsers } from '../utils/parsers';
 
 const props = defineProps<{
   code: string;
@@ -21,6 +22,7 @@ onMounted(() => {
     range: true,
     tokens: true,
     comment: true,
+    jsx: props.language === 'tsx' || props.language === 'jsx',
   });
 
   // Function to add tooltips to relevant nodes
@@ -35,8 +37,17 @@ onMounted(() => {
         ? `${props.tooltips[text].type}\n\n${props.tooltips[text].description}`
         : props.tooltips[text].description;
 
-      // Add tooltip span
-      const tooltipSpan = `<span class="tooltip" data-tooltip="${tooltip}">${text}</span>`;
+      // Calculate position relative to the node
+      const position = {
+        x: range[0],
+        y: range[1],
+      };
+
+      // Add tooltip span with position data
+      const tooltipSpan = `<span class="tooltip" 
+        data-tooltip="${tooltip}" 
+        data-tooltip-position="${JSON.stringify(position)}">${text}</span>`;
+
       codeRef.value!.innerHTML = codeRef.value!.innerHTML.replace(
         text,
         tooltipSpan
@@ -56,77 +67,78 @@ onMounted(() => {
 
   traverse(ast);
 });
+
+function getActiveParser() {
+  const parser = parsers[props.language || ''];
+  if (!parser) return '';
+
+  switch (props.language) {
+    case 'tsx':
+    case 'jsx':
+      return 'React + TS';
+    case 'typescript':
+      return 'TS';
+    case 'css':
+      return 'CSS';
+    case 'scss':
+      return 'SCSS';
+    default:
+      return props.language || '';
+  }
+}
 </script>
 
 <template>
   <div class="code-preview" :class="{ 'theme-dark': isDark }">
     <div class="code-content">
+      <div class="code-meta">
+        <span class="language-info">
+          <span class="language-label">{{ language }}</span>
+          <span v-if="getActiveParser()" class="parser-badge">
+            <span class="parser-icon">ℹ️</span>
+            <span class="parser-name">{{ getActiveParser() }}</span>
+          </span>
+        </span>
+      </div>
       <pre><code ref="codeRef" :class="language">{{ decodeURIComponent(code) }}</code></pre>
     </div>
   </div>
 </template>
 
 <style scoped>
-.code-preview {
-  margin: 16px 0;
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--vp-code-block-bg);
-}
-
-.code-content {
-  padding: 1em;
-  overflow-x: auto;
-}
-
-pre {
-  margin: 0;
-  font-family: var(--vp-font-family-mono);
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-code {
-  font-family: inherit;
-}
-
-:deep(.tooltip) {
-  position: relative;
-  border-bottom: 1px dashed var(--vp-c-brand);
-  cursor: help;
-}
-
-:deep(.tooltip)::before {
-  content: attr(data-tooltip);
+.code-meta {
   position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 6px 10px;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.language-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85em;
+  color: var(--vp-c-text-2);
+}
+
+.parser-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
   background: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-1);
-  font-size: 12px;
-  white-space: pre-wrap;
   border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.2s,
-    visibility 0.2s;
-  z-index: 100;
-  pointer-events: none;
-  max-width: 300px;
-  text-align: left;
+  font-size: 0.9em;
 }
 
-:deep(.tooltip):hover::before {
-  opacity: 1;
-  visibility: visible;
+.parser-icon {
+  font-size: 12px;
 }
 
-.theme-dark :deep(.tooltip)::before {
-  background: var(--vp-c-bg-soft);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+.parser-name {
+  color: var(--vp-c-text-3);
 }
 </style>

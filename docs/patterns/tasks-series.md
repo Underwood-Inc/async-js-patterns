@@ -27,7 +27,9 @@ order.
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type AsyncTask<T, R> = (input: T) => Promise<R>;
 
 async function executeInSeries<T, R>(
@@ -69,9 +71,13 @@ async function executeInSeriesWithTransform<T, R, U>(
 }
 ```
 
+:::
+
 ## Usage Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Example tasks
 const tasks: AsyncTask<number, number>[] = [
   async (n: number) => {
@@ -111,6 +117,8 @@ executeInSeriesWithTransform(tasksWithTransform, '1', (result) =>
 });
 ```
 
+:::
+
 ## Key Concepts
 
 1. **Sequential Execution**: Tasks run one after another
@@ -143,7 +151,9 @@ executeInSeriesWithTransform(tasksWithTransform, '1', (result) =>
 
 ## Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Test successful series
 const successTasks: AsyncTask<number, number>[] = [
   async (n) => n + 1,
@@ -179,9 +189,13 @@ const emptyTest = executeInSeries([], 1).then((results) => {
 });
 ```
 
+:::
+
 ## Advanced Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // With progress tracking
 async function executeInSeriesWithProgress<T, R>(
   tasks: AsyncTask<T, R>[],
@@ -241,3 +255,5 @@ executeInSeriesWithTimeout(tasks, 1, 1000, controller.signal)
 // Abort after 2 seconds
 setTimeout(() => controller.abort(), 2000);
 ```
+
+:::

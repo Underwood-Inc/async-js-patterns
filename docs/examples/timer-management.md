@@ -19,7 +19,9 @@ This page demonstrates practical examples of managing multiple timers, including
 
 ## Timer Registry
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class TimerRegistry {
   private timeouts: Map<string, NodeJS.Timeout> = new Map();
   private intervals: Map<string, NodeJS.Timeout> = new Map();
@@ -115,9 +117,13 @@ registry.clear(timeoutId);
 registry.clearAll();
 ```
 
+:::
+
 ## Timer Group Management
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class TimerGroup {
   private registry = new TimerRegistry();
   private groupTimers: Map<string, Set<string>> = new Map();
@@ -199,9 +205,13 @@ timerGroup.setTimeout(
 timerGroup.clearGroup('polling');
 ```
 
+:::
+
 ## Real-World Example: Task Scheduler
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class TaskScheduler {
   private registry = new TimerRegistry();
   private tasks = new Map<string, ScheduledTask>();
@@ -338,6 +348,8 @@ const recurringTaskId = scheduler.scheduleTask(
 // Cancel task if needed
 scheduler.cancelTask(taskId);
 ```
+
+:::
 
 ## Best Practices
 

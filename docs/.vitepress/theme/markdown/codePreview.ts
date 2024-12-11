@@ -1,6 +1,11 @@
 import type { MarkdownRenderer } from 'vitepress';
 import { parseCode } from '../utils/parsers';
-import { typeColors, typeDefinitions } from '../utils/typeDefinitions';
+import { createParserTooltip } from '../utils/tooltips/parserInfo';
+import {
+  typeColors,
+  typeDefinitions,
+  TypeSignature,
+} from '../utils/typeDefinitions';
 
 // Debug control state
 let debugLoggingEnabled = false;
@@ -46,7 +51,96 @@ function escapeHtml(unsafe: string | undefined): string {
     .replace(/'/g, '&#039;');
 }
 
-export function codePreviewPlugin(md: MarkdownRenderer) {
+function formatTypeSignature(signature: TypeSignature): string {
+  const typeParams = signature.typeParameters?.length
+    ? `<${signature.typeParameters.join(', ')}>`
+    : '';
+
+  const params = signature.parameters
+    ?.map((p) => `${p.name}${p.optional ? '?' : ''}: ${p.type}`)
+    .join(', ');
+
+  const returnType = signature.returnType ? `: ${signature.returnType}` : '';
+
+  return `${signature.name}${typeParams}(${params})${returnType}`;
+}
+
+interface CodePreviewOptions {
+  parseOptions?: {
+    reviver?: (key: string, value: any) => any;
+  };
+}
+
+function safeJSONParse(str: string) {
+  try {
+    // First try direct parse
+    return JSON.parse(str);
+  } catch (e) {
+    try {
+      // Handle TypeScript interface/type definitions
+      if (str.includes('```typescript')) {
+        return {
+          type: 'Type Signature',
+          color: {
+            text: '#666',
+            background: 'rgba(102, 102, 102, 0.1)',
+          },
+          description: str,
+        };
+      }
+
+      // Sanitize the string
+      let sanitized = str
+        // Handle single quotes
+        .replace(/'/g, '"')
+        // Handle newlines in strings
+        .replace(/\n/g, '\\n')
+        // Handle escaped quotes
+        .replace(/\\"/g, '\\\\"')
+        // Handle unescaped backslashes
+        .replace(/\\/g, '\\\\')
+        // Handle function arrows
+        .replace(/=>/g, "'=>'")
+        // Handle template literals
+        .replace(/`/g, '"')
+        // Handle special characters in strings
+        .replace(/[\u0000-\u001f\u007f-\u009f]/g, '')
+        // Handle trailing commas
+        .replace(/,\s*([\]}])/g, '$1')
+        // Handle code blocks with backticks
+        .replace(/```[\s\S]*?```/g, function (match) {
+          return JSON.stringify(match);
+        });
+
+      return JSON.parse(sanitized);
+    } catch (innerError) {
+      // Return a default object if all parsing attempts fail
+      return {
+        type: str,
+        color: {
+          text: '#666',
+          background: 'rgba(102, 102, 102, 0.1)',
+        },
+        description: 'No description available',
+      };
+    }
+  }
+}
+
+function safeJSONStringify(obj: any, options?: CodePreviewOptions) {
+  try {
+    const stringified = JSON.stringify(obj, options?.parseOptions?.reviver);
+    return stringified.replace(/"/g, "'"); // Convert back to single quotes for consistency
+  } catch (error) {
+    console.warn('JSON stringify error:', error);
+    return '{}';
+  }
+}
+
+export function codePreviewPlugin(
+  md: MarkdownRenderer,
+  options: CodePreviewOptions = {}
+) {
   const originalFence = md.renderer.rules.fence!;
 
   md.renderer.rules.fence = (...args) => {
@@ -60,6 +154,7 @@ export function codePreviewPlugin(md: MarkdownRenderer) {
     token.info = lang;
     const highlightedCode = originalFence(tokens, idx, options, env, self);
 
+    console.log('isPreview', isPreview, flags);
     if (!isPreview) {
       return highlightedCode;
     }
@@ -95,12 +190,9 @@ export function codePreviewPlugin(md: MarkdownRenderer) {
     // Process regular type tooltips
     parseResult.tokens.forEach((tokenInfo) => {
       const term = tokenInfo?.text;
-      const info = term ? typeDefinitions[term] : undefined;
+      const info = tokenInfo?.info || typeDefinitions[term];
 
-      if (!info) {
-        // console.log('No type definition found for term:', term);
-        return;
-      }
+      if (!info) return;
 
       if (!tooltipMap.has(term)) {
         tooltipMap.set(term, { errors: new Set(), info: new Set() });
@@ -113,22 +205,78 @@ export function codePreviewPlugin(md: MarkdownRenderer) {
           info.type && typeColors[info.type as keyof typeof typeColors]
             ? typeColors[info.type as keyof typeof typeColors]
             : { text: '#666', background: 'rgba(102, 102, 102, 0.1)' },
+        documentation:
+          info.documentation || info.description || 'No description available',
       };
 
-      const tooltipContent = encodeURIComponent(
-        JSON.stringify({
-          type: typeInfo.type,
-          color: typeInfo.color,
-          description: info.description || 'No description available',
-        })
-      );
+      try {
+        const tooltipContent = encodeURIComponent(
+          safeJSONStringify(
+            {
+              type: typeInfo.type,
+              color: typeInfo.color,
+              description: typeInfo.documentation,
+            },
+            options
+          )
+        );
 
-      tooltipMap
-        .get(term)!
-        .info.add(`info:::${typeInfo.type}\ntype:${tooltipContent}`);
+        tooltipMap
+          .get(term)!
+          .info.add(`info:::${typeInfo.type}\ntype:${tooltipContent}`);
+
+        if (info.signature) {
+          const formattedSignature = formatTypeSignature(info.signature);
+          const tooltipContent = encodeURIComponent(
+            safeJSONStringify(
+              {
+                type: 'type-signature',
+                signature: formattedSignature,
+                color: typeColors['type-signature'] || {
+                  text: '#4078f2',
+                  background: 'rgba(64, 120, 242, 0.1)',
+                },
+                description: info.description,
+              },
+              options
+            )
+          );
+
+          tooltipMap
+            .get(term)!
+            .info.add(`info:::${formattedSignature}\ntype:${tooltipContent}`);
+        }
+      } catch (error) {
+        console.warn(`Error processing tooltip for term "${term}":`, error);
+      }
     });
 
-    // Apply tooltips
+    // Add parser info tooltip
+    const parserInfo = createParserTooltip(lang);
+    const content =
+      typeof parserInfo.content === 'object' && !('$' in parserInfo.content)
+        ? parserInfo.content
+        : { title: '', type: 'info', description: String(parserInfo.content) };
+
+    const parserTooltipContent = `info:::${content.title}\ntype:${encodeURIComponent(
+      safeJSONStringify({
+        type: content.type,
+        color: content.color,
+        description: content.description.replace(/\n/g, '<br>'),
+      })
+    )}`;
+
+    // Insert parser info inside the language div, after it opens
+    modifiedCode = modifiedCode.replace(
+      /(<div class="language-.*?">)/,
+      `$1<div class="code-meta">
+        <span class="tooltip-trigger" data-tooltip="${parserTooltipContent}">
+          ${lang} ℹ️
+        </span>
+      </div>`
+    );
+
+    // Process existing tooltips
     tooltipMap.forEach(({ errors, info }, term) => {
       const termPattern = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(
@@ -153,14 +301,14 @@ export function codePreviewPlugin(md: MarkdownRenderer) {
             const [desc, typeInfoStr] = infoStr
               .split('type:')
               .map((s) => s.trim());
-            const typeInfo = JSON.parse(decodeURIComponent(typeInfoStr));
+            const typeInfo = safeJSONParse(decodeURIComponent(typeInfoStr));
 
             if (!typeInfo || typeof typeInfo !== 'object') {
               console.log('Invalid typeInfo:', typeInfoStr);
               return infoStr;
             }
 
-            return `${desc}\ntype:${encodeURIComponent(JSON.stringify(typeInfo))}`;
+            return `${desc}\ntype:${encodeURIComponent(safeJSONStringify(typeInfo))}`;
           } catch (error) {
             console.error('Error processing type info:', error);
             return infoStr;
@@ -179,6 +327,6 @@ export function codePreviewPlugin(md: MarkdownRenderer) {
       );
     });
 
-    return `<div class="code-preview">${modifiedCode}</div>`;
+    return modifiedCode;
   };
 }
