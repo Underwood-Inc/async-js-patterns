@@ -85,7 +85,7 @@ To use this workflow:
 
 2. Ensure your VitePress configuration has the correct base URL:
 
-   ```js:preview
+   ```js
    import { defineConfig } from 'vitepress';
 
    export default defineConfig({

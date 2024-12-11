@@ -195,7 +195,7 @@ type MixedElement = ArrayElement<Mixed>; // type is string | number
 
 1. Type Guards with Arrays:
 
-   ```typescript:preview
+   ```typescript
    function isArrayOfType<T>(
      value: unknown,
      typeGuard: (item: unknown) => item is T
@@ -206,7 +206,7 @@ type MixedElement = ArrayElement<Mixed>; // type is string | number
 
 2. Immutable Array Operations:
 
-   ```typescript:preview
+   ```typescript
    function insertAt<T>(array: readonly T[], index: number, item: T): T[] {
      return [...array.slice(0, index), item, ...array.slice(index)];
    }
@@ -214,7 +214,7 @@ type MixedElement = ArrayElement<Mixed>; // type is string | number
 
 3. Type-Safe Array Sorting:
 
-   ```typescript:preview
+   ```typescript
    function typeSafeSort<T>(
      array: T[],
      compareFn: (a: T, b: T) => number

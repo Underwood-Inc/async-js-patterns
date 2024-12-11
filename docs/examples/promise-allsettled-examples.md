@@ -311,7 +311,7 @@ console.log('Health Check Report:', JSON.stringify(report, null, 2));
 
 1. Type handling:
 
-   ```typescript:preview
+   ```typescript
    function isPromiseFulfilled<T>(
      result: PromiseSettledResult<T>
    ): result is PromiseFulfilledResult<T> {
@@ -332,7 +332,7 @@ console.log('Health Check Report:', JSON.stringify(report, null, 2));
 
 2. Error aggregation:
 
-   ```typescript:preview
+   ```typescript
    function aggregateErrors(results: PromiseSettledResult<unknown>[]) {
      return results
        .filter(isPromiseRejected)
@@ -352,7 +352,7 @@ console.log('Health Check Report:', JSON.stringify(report, null, 2));
 
 3. Progress tracking:
 
-   ```typescript:preview
+   ```typescript
    async function trackProgress<T>(
      promises: Promise<T>[],
      onProgress: (progress: ProgressInfo) => void
@@ -388,7 +388,7 @@ console.log('Health Check Report:', JSON.stringify(report, null, 2));
 
 4. Cleanup handling:
 
-   ```typescript:preview
+   ```typescript
    async function withCleanup<T>(
      operations: Array<() => Promise<T>>,
      cleanup: (results: PromiseSettledResult<T>[]) => Promise<void>

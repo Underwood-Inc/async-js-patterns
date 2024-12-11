@@ -361,7 +361,7 @@ try {
 
 1. Error aggregation:
 
-   ```typescript:preview
+   ```typescript
    class ErrorAggregator {
      private errors: ApplicationError[] = [];
 
@@ -408,7 +408,7 @@ try {
 
 2. Context preservation:
 
-   ```typescript:preview
+   ```typescript
    class ErrorContext {
      private context: Map<string, any> = new Map();
 
@@ -438,7 +438,7 @@ try {
 
 3. Error recovery:
 
-   ```typescript:preview
+   ```typescript
    class ErrorRecovery {
      private recoveryStrategies: Map<
        string,
@@ -480,7 +480,7 @@ try {
 
 4. Error monitoring:
 
-   ```typescript:preview
+   ```typescript
    class ErrorMonitor {
      private errorCounts: Map<string, number> = new Map();
      private errorThresholds: Map<string, number> = new Map();

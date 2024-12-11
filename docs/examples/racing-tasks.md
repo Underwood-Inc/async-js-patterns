@@ -288,7 +288,7 @@ try {
 
 1. Timeout handling:
 
-   ```typescript:preview
+   ```typescript
    function withTimeout<T>(
      promise: Promise<T>,
      timeoutMs: number,
@@ -310,7 +310,7 @@ try {
 
 2. Cancellation support:
 
-   ```typescript:preview
+   ```typescript
    class RaceController {
      private abortController = new AbortController();
 
@@ -344,7 +344,7 @@ try {
 
 3. Error handling:
 
-   ```typescript:preview
+   ```typescript
    async function raceWithErrorBoundary<T>(
      tasks: Array<() => Promise<T>>,
      options: {
@@ -385,7 +385,7 @@ try {
 
 4. Resource cleanup:
 
-   ```typescript:preview
+   ```typescript
    class ResourceManager {
      private resources: Set<Resource> = new Set();
 

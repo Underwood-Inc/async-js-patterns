@@ -207,7 +207,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 1. **Error Creation**
 
-   ```typescript:preview
+   ```typescript
    // Create specific error types
    class DomainError extends Error {
      constructor(
@@ -227,7 +227,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 2. **Value Wrapping**
 
-   ```typescript:preview
+   ```typescript
    // Safe value wrapping
    function wrapValue<T>(value: T | PromiseLike<T>): Promise<T> {
      try {
@@ -240,7 +240,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 3. **Type Safety**
 
-   ```typescript:preview
+   ```typescript
    // Type-safe promise creation
    function createTypedPromise<T>(
      value: T,
@@ -256,7 +256,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 1. **Not Handling Thenable Errors**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Unsafe thenable handling
    const thenable = {
      then(resolve) {
@@ -278,7 +278,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 2. **Incorrect Error Types**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Using non-error objects
    Promise.reject('something went wrong');
 
@@ -288,7 +288,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 3. **Double Wrapping**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Unnecessary promise wrapping
    const promise = Promise.resolve(Promise.resolve(value));
 
@@ -298,7 +298,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 4. **Lost Error Context**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Error context lost
    Promise.reject(new Error('Failed')).catch(() => Promise.reject('Failed'));
 
@@ -308,7 +308,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 5. **Async Function Confusion**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Mixing async/await with Promise.resolve
    async function getData() {
      return Promise.resolve(await fetchData());

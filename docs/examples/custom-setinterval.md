@@ -307,7 +307,7 @@ pollingService.start();
 
 1. Memory leak prevention:
 
-   ```typescript:preview
+   ```typescript
    class SafeInterval {
      private intervals = new WeakMap<object, NodeJS.Timeout>();
 
@@ -329,7 +329,7 @@ pollingService.start();
 
 2. Error handling:
 
-   ```typescript:preview
+   ```typescript
    class ResilientInterval {
      setInterval(
        callback: () => void,
@@ -351,7 +351,7 @@ pollingService.start();
 
 3. Performance monitoring:
 
-   ```typescript:preview
+   ```typescript
    class MonitoredInterval {
      private metrics = {
        executionCount: 0,
@@ -389,7 +389,7 @@ pollingService.start();
 
 4. Resource management:
 
-   ```typescript:preview
+   ```typescript
    class ResourceAwareInterval {
      private resources = new Set<Resource>();
 

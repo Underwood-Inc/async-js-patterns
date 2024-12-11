@@ -362,3 +362,35 @@ pnpm store prune
 ```
 
 :::
+
+<script setup>
+import { ref, computed } from 'vue';
+
+// Provide default values
+const defaultOs = {
+  type: 'unknown',
+  version: 'unknown'
+};
+
+// Safely compute OS information
+const os = computed(() => {
+  try {
+    return window?.navigator?.platform ? {
+      type: window.navigator.platform,
+      version: window.navigator.userAgent
+    } : defaultOs;
+  } catch {
+    return defaultOs;
+  }
+});
+</script>
+
+<template>
+  <div class="version-control">
+    <!-- Use optional chaining and provide fallbacks -->
+    <div class="os-info">
+      Operating System: {{ os?.type || 'Unknown' }}
+    </div>
+    <!-- Rest of your content -->
+  </div>
+</template>

@@ -440,7 +440,7 @@ setTimeout(() => {
 
 1. Frame timing:
 
-   ```typescript:preview
+   ```typescript
    class FrameScheduler {
      private callbacks = new Set<() => void>();
      private running = false;
@@ -477,7 +477,7 @@ setTimeout(() => {
 
 2. Memory management:
 
-   ```typescript:preview
+   ```typescript
    class DOMRecycler<T> {
      private pool: HTMLElement[] = [];
      private inUse = new Set<HTMLElement>();
@@ -524,7 +524,7 @@ setTimeout(() => {
 
 3. Event delegation:
 
-   ```typescript:preview
+   ```typescript
    class EventDelegator {
      private handlers: Map<string, Map<string, Set<EventListener>>> = new Map();
 
@@ -585,7 +585,7 @@ setTimeout(() => {
 
 4. Idle scheduling:
 
-   ```typescript:preview
+   ```typescript
    class IdleTaskScheduler {
      private tasks: Array<{
        task: () => void;

@@ -13,7 +13,7 @@ interface SearchItem {
   content: string;
 }
 
-async function buildSearchIndex() {
+export async function buildSearchIndex() {
   const searchIndex: SearchItem[] = [];
 
   function processDirectory(dir: string) {
@@ -50,5 +50,3 @@ async function buildSearchIndex() {
   processDirectory(DOCS_DIR);
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(searchIndex, null, 2));
 }
-
-buildSearchIndex();

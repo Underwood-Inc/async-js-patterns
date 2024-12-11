@@ -305,14 +305,14 @@ validateUser({ age: 16 })
 
 1. **Error Handling**
 
-   ```typescript:preview
+   ```typescript
    // Always catch potential errors
    promise.then(handleSuccess).catch(handleError).finally(cleanup);
    ```
 
 2. **Type Safety**
 
-   ```typescript:preview
+   ```typescript
    // Use TypeScript generics for type safety
    const promise = new CustomPromise<number>((resolve) => {
      resolve(42);
@@ -321,7 +321,7 @@ validateUser({ age: 16 })
 
 3. **Resource Cleanup**
 
-   ```typescript:preview
+   ```typescript
    // Use finally for cleanup operations
    const connection = await connect();
    processData(connection).finally(() => {
@@ -333,7 +333,7 @@ validateUser({ age: 16 })
 
 1. **Forgetting Error Handling**
 
-   ```typescript:preview
+   ```typescript
    // Bad: No error handling
    promise.then(handleSuccess);
 
@@ -343,7 +343,7 @@ validateUser({ age: 16 })
 
 2. **Nested Promise Chains**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Promise nesting
    promise.then((result) => {
      return anotherPromise().then((newResult) => {
@@ -361,7 +361,7 @@ validateUser({ age: 16 })
 
 3. **Losing Error Context**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Error context lost
    promise.catch(() => 'Error occurred');
 

@@ -303,7 +303,7 @@ try {
 
 1. Error handling with partial completion:
 
-   ```typescript:preview
+   ```typescript
    async function executeWithRollback<T>(
      tasks: Array<{
        execute: () => Promise<T>;
@@ -335,7 +335,7 @@ try {
 
 2. Progress tracking:
 
-   ```typescript:preview
+   ```typescript
    async function executeWithProgress<T>(
      tasks: Array<() => Promise<T>>,
      onProgress: (completed: number, total: number) => void
@@ -354,7 +354,7 @@ try {
 
 3. Timeout handling:
 
-   ```typescript:preview
+   ```typescript
    async function executeWithTimeout<T>(
      task: () => Promise<T>,
      timeout: number
@@ -378,7 +378,7 @@ try {
 
 4. Resource management:
 
-   ```typescript:preview
+   ```typescript
    class ResourceManager {
      private resources: Resource[] = [];
 

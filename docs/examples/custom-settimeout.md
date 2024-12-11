@@ -301,7 +301,7 @@ const results = await Promise.all(userIds.map((id) => fetchUserData(id)));
 
 1. Cleanup handling:
 
-   ```typescript:preview
+   ```typescript
    class CleanupTimer {
      private cleanupFns: Set<() => void> = new Set();
 
@@ -341,7 +341,7 @@ const results = await Promise.all(userIds.map((id) => fetchUserData(id)));
 
 2. Error handling:
 
-   ```typescript:preview
+   ```typescript
    class SafeTimer {
      setTimeout<T>(
        operation: () => Promise<T>,
@@ -370,7 +370,7 @@ const results = await Promise.all(userIds.map((id) => fetchUserData(id)));
 
 3. Resource management:
 
-   ```typescript:preview
+   ```typescript
    class ResourceTimer {
      private resources: Set<Resource> = new Set();
 
@@ -398,7 +398,7 @@ const results = await Promise.all(userIds.map((id) => fetchUserData(id)));
 
 4. Debounce utility:
 
-   ```typescript:preview
+   ```typescript
    function createDebouncedTimer(delay: number) {
      let timeoutId: NodeJS.Timeout;
      let cleanup: (() => void) | null = null;

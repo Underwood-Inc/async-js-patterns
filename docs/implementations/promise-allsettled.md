@@ -235,7 +235,7 @@ processor.processBatch(items, (item) =>
 
 1. **Type Safety**
 
-   ```typescript:preview
+   ```typescript
    type Result<T> = SettledResult<T>;
 
    function processResults<T>(results: Result<T>[]) {
@@ -258,7 +258,7 @@ processor.processBatch(items, (item) =>
 
 2. **Resource Management**
 
-   ```typescript:preview
+   ```typescript
    async function withResources<T>(
      promises: Promise<T>[],
      cleanup: (results: SettledResult<T>[]) => void
@@ -274,7 +274,7 @@ processor.processBatch(items, (item) =>
 
 3. **Progress Tracking**
 
-   ```typescript:preview
+   ```typescript
    function withProgress<T>(promises: Promise<T>[]) {
      let completed = 0;
      const total = promises.length;
@@ -294,7 +294,7 @@ processor.processBatch(items, (item) =>
 
 1. **Not Checking Result Status**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Assuming all results are fulfilled
    const results = await Promise.allSettled(promises);
    results.forEach((result) => console.log(result.value));
@@ -312,7 +312,7 @@ processor.processBatch(items, (item) =>
 
 2. **Memory Management with Large Arrays**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Processing all results at once
    const results = await Promise.allSettled(largeArrayOfPromises);
    const processedResults = results.map(processResult);
@@ -327,7 +327,7 @@ processor.processBatch(items, (item) =>
 
 3. **Not Handling Empty Arrays**
 
-   ```typescript:preview
+   ```typescript
    // Bad: No validation for empty input
    const results = await Promise.allSettled([]);
 
@@ -341,7 +341,7 @@ processor.processBatch(items, (item) =>
 
 4. **Incorrect Error Aggregation**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Lost error context
    const results = await Promise.allSettled(promises);
    const errors = results
@@ -361,7 +361,7 @@ processor.processBatch(items, (item) =>
 
 5. **Resource Management**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Not cleaning up resources
    const results = await Promise.allSettled([fetch(url1), fetch(url2)]);
 

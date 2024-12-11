@@ -209,7 +209,7 @@ async function testPromiseAll() {
 
 1. **Not Handling Rejections**
 
-   ```typescript:preview
+   ```typescript
    // Bad: No error handling
    const results = await Promise.all(promises);
 
@@ -223,7 +223,7 @@ async function testPromiseAll() {
 
 2. **Memory Leaks with Large Arrays**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Loading too many promises into memory
    const promises = items.map((item) => fetchData(item));
    const results = await Promise.all(promises);
@@ -239,7 +239,7 @@ async function testPromiseAll() {
 
 3. **Mixing Sync and Async Operations**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Mixing sync and async operations
    const promises = items.map((item) => {
      if (item.cached) return item.data;
@@ -255,7 +255,7 @@ async function testPromiseAll() {
 
 4. **Not Considering Promise Order**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Assuming results order matches completion order
    const [slow, fast] = await Promise.all([slowFetch(), fastFetch()]);
 

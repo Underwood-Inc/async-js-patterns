@@ -11,40 +11,36 @@ The CodePreview system consists of two main parts:
 
 ### In Markdown Files
 
-To use the interactive code preview, add the `:preview` suffix to your code block's language:
+To use the interactive code preview, add the `::: code-with-tooltips` wrapper to your code block:
 
-````markdown:preview
+```markdown
+
 ::: code-with-tooltips
 
 ```typescript
-// Your TypeScript code here
-interface User {
-  id: string;  // Hover over 'string'
-  name: string;
-}
-
-const user: User = {  // Hover over 'User'
-  id: "1",
-  name: "John"
-};
-```
+// Your code here
+.```
 
 :::
-````
+
+```
+
+```markdown
 
 ::: code-with-tooltips
 
 ```javascript
 // Your JavaScript code here
-```
+.```
 
 :::
 
-````
+```
 
 ### Component Features
 
 The CodePreview component supports:
+
 - Syntax highlighting
 - Type information and hover tooltips
 - IntelliSense suggestions
@@ -53,6 +49,8 @@ The CodePreview component supports:
 ### Configuration
 
 #### Basic Usage
+
+```markdown
 ::: code-with-tooltips
 
 ```vue
@@ -60,11 +58,17 @@ The CodePreview component supports:
   :code="yourCode"
   language="typescript"
 />
-````
+.```
+
+:::
+```
 
 #### With Multiple Files
 
-```vue:preview
+```markdown
+::: code-with-tooltips
+
+```vue
 <CodePreview
   :code="mainCode"
   :files="[
@@ -73,29 +77,32 @@ The CodePreview component supports:
   ]"
   :showFileTree="true"
 />
-```
+.```
 
 :::
+```
 
 ## Implementation Details
 
 ### 1. Markdown Plugin (`codePreview.ts`)
 
-The plugin transforms markdown code blocks with the `:preview` suffix into CodePreview component instances. Example:
+The plugin transforms code blocks within `::: code-with-tooltips` containers into CodePreview component instances. Example:
 
-````typescript:preview
-// Input markdown
-```ts:preview
+```markdown
+::: code-with-tooltips
+```typescript
 const x: number = 42;
-````
+.```
 
-// Transformed to
+:::
+
+// Transforms to:
 <CodePreview
   code="const x: number = 42;"
   language="TypeScript"
 />
 
-````
+```
 
 ### 2. Component Setup
 
@@ -107,18 +114,20 @@ The CodePreview component:
 ## Troubleshooting
 
 If hover tooltips or IntelliSense aren't working:
-1. Ensure code blocks use the `:preview` suffix
+1. Ensure code blocks use the `::: code-with-tooltips` wrapper
 2. Check that the language is specified correctly
 3. Verify the code is valid TypeScript/JavaScript
 
 ## Example
 
-```markdown:preview
 # My Documentation
 
-Here's an interactive code example:
+Here's a code example:
 
-```typescript:preview
+```markdown
+::: code-with-tooltips
+
+```typescript
 interface User {
   id: string;
   name: string;
@@ -128,4 +137,8 @@ const user: User = {
   id: "1",
   name: "John"
 };
-````
+.``
+
+:::
+
+```

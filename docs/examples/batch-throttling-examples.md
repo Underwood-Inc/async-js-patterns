@@ -408,7 +408,7 @@ const [users, posts] = await Promise.all([
 
 1. Dynamic batch sizing:
 
-   ```typescript:preview
+   ```typescript
    class DynamicBatchSizer {
      private successRates: number[] = [];
      private currentSize: number;
@@ -456,7 +456,7 @@ const [users, posts] = await Promise.all([
 
 2. Priority queuing:
 
-   ```typescript:preview
+   ```typescript
    class PriorityBatchProcessor<T> {
      private queues: Map<Priority, T[]> = new Map();
 
@@ -495,7 +495,7 @@ const [users, posts] = await Promise.all([
 
 3. Resource monitoring:
 
-   ```typescript:preview
+   ```typescript
    class ResourceAwareBatchProcessor<T> {
      private readonly monitor = new ResourceMonitor();
 
@@ -524,7 +524,7 @@ const [users, posts] = await Promise.all([
 
 4. Circuit breaking:
 
-   ```typescript:preview
+   ```typescript
    class BatchCircuitBreaker {
      private failures = 0;
      private lastFailureTime = 0;

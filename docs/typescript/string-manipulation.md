@@ -177,7 +177,7 @@ const result = format(template, {
 
 1. Type-Safe String Literals:
 
-   ```typescript:preview
+   ```typescript
    type Direction = 'north' | 'south' | 'east' | 'west';
 
    function move(direction: Direction, steps: number) {
@@ -190,7 +190,7 @@ const result = format(template, {
 
 2. String Enum Alternatives:
 
-   ```typescript:preview
+   ```typescript
    const HttpStatus = {
      OK: 200,
      Created: 201,
@@ -203,7 +203,7 @@ const result = format(template, {
 
 3. String Pattern Matching:
 
-   ```typescript:preview
+   ```typescript
    type RouteParams<T extends string> =
      T extends `${string}:${infer Param}/${infer Rest}`
        ? Param | RouteParams<Rest>

@@ -21,59 +21,76 @@
         @input="handleInput"
         @focus="handleFocus"
       />
+      <div v-if="searchResults.length" class="search-results">
+        <a 
+          v-for="result in searchResults" 
+          :key="result.path"
+          :href="result.path"
+          class="search-result"
+        >
+          <h3>{{ result.title }}</h3>
+          <p>{{ result.content.slice(0, 100) }}...</p>
+        </a>
+      </div>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import type { SearchItem } from '../types';
 
 const searchInput = ref<HTMLInputElement | null>(null);
+const searchResults = ref<SearchItem[]>([]);
+const searchIndex = ref<SearchItem[]>([]);
+
+onMounted(async () => {
+  try {
+    const response = await fetch('/search-index.json');
+    searchIndex.value = await response.json();
+  } catch (error) {
+    console.error('Failed to load search index:', error);
+  }
+});
+
+// Add error handling for search results
+const processSearchResults = (results: SearchItem[]) => {
+  return results.map(item => ({
+    ...item,
+    // Add default values for potentially undefined properties
+    title: item.title || 'Untitled',
+    content: item.content || '',
+    // Remove references to undefined os property
+    description: item.description?.replace(/\${os\..+?}/g, '') || ''
+  }));
+};
 
 function handleInput(e: Event) {
   const input = e.target as HTMLInputElement;
-  if (input.value) {
-    // Trigger the native search dialog
-    const searchButton = document.querySelector(
-      '.DocSearch-Button'
-    ) as HTMLButtonElement;
-    if (searchButton && !document.querySelector('.DocSearch-Modal')) {
-      searchButton.click();
+  if (!input.value.trim()) {
+    searchResults.value = [];
+    return;
+  }
 
-      // Wait for the modal to open and move our input
-      setTimeout(() => {
-        const modalInput = document.querySelector(
-          '.DocSearch-Input'
-        ) as HTMLInputElement;
-        if (modalInput) {
-          modalInput.parentElement?.replaceChild(
-            searchInput.value!,
-            modalInput
-          );
-          searchInput.value?.focus();
-        }
-      }, 100);
-    }
+  const query = input.value.toLowerCase();
+  try {
+    searchResults.value = processSearchResults(
+      searchIndex.value
+        .filter(item => 
+          item.title?.toLowerCase().includes(query) || 
+          item.content?.toLowerCase().includes(query)
+        )
+        .slice(0, 10)
+    );
+  } catch (error) {
+    console.error('Search error:', error);
+    searchResults.value = [];
   }
 }
 
 function handleFocus() {
-  const searchButton = document.querySelector(
-    '.DocSearch-Button'
-  ) as HTMLButtonElement;
-  if (searchButton) {
-    searchButton.click();
-
-    setTimeout(() => {
-      const modalInput = document.querySelector(
-        '.DocSearch-Input'
-      ) as HTMLInputElement;
-      if (modalInput) {
-        modalInput.parentElement?.replaceChild(searchInput.value!, modalInput);
-        searchInput.value?.focus();
-      }
-    }, 100);
-  }
+  // Just focus the input, no need to hijack DocSearch
+  searchInput.value?.focus();
 }
 </script>
 
@@ -148,5 +165,42 @@ function handleFocus() {
     display: flex !important;
     visibility: visible !important;
   }
+}
+
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  margin-top: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.search-result {
+  display: block;
+  padding: 12px;
+  border-bottom: 1px solid var(--vp-c-divider);
+  text-decoration: none;
+  color: var(--vp-c-text-1);
+}
+
+.search-result:hover {
+  background: var(--vp-c-bg-alt);
+}
+
+.search-result h3 {
+  font-size: 14px;
+  margin: 0 0 4px;
+}
+
+.search-result p {
+  font-size: 12px;
+  margin: 0;
+  color: var(--vp-c-text-2);
 }
 </style>

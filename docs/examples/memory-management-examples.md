@@ -288,7 +288,7 @@ console.log('Processing metrics:', processor.getMetrics());
 
 1. Memory monitoring:
 
-   ```typescript:preview
+   ```typescript
    class MemoryMonitor {
      private samples: MemorySample[] = [];
      private readonly maxSamples: number;
@@ -376,7 +376,7 @@ console.log('Processing metrics:', processor.getMetrics());
 
 2. Garbage collection hooks:
 
-   ```typescript:preview
+   ```typescript
    class GCHooks {
      private listeners = new Set<(stats: GCStats) => void>();
 
@@ -430,7 +430,7 @@ console.log('Processing metrics:', processor.getMetrics());
 
 3. Memory leak detection:
 
-   ```typescript:preview
+   ```typescript
    class LeakDetector {
      private snapshots: HeapSnapshot[] = [];
      private growing = new Set<string>();
@@ -490,7 +490,7 @@ console.log('Processing metrics:', processor.getMetrics());
 
 4. Resource limits:
 
-   ```typescript:preview
+   ```typescript
    class ResourceLimiter {
      private limits: Map<string, number> = new Map();
      private usage: Map<string, number> = new Map();
