@@ -12,7 +12,7 @@ const setupTooltips = () =>
 export default {
   ...DefaultTheme,
   Layout: () => {
-    return h(DefaultTheme.Layout, null, {
+    return h(Layout, null, {
       'layout-bottom': () => h(CustomFooter),
     });
   },

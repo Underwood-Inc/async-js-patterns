@@ -31,6 +31,12 @@
   --vp-z-index-nav: #{vars.get-z-index('nav')};
   --vp-z-index-tooltip: #{vars.get-z-index('tooltip')};
   --vp-z-index-code-block: #{vars.get-z-index('code-block')};
+
+  // Gradient variables with proper transparency
+  --gradient-color-1: #{color.adjust(colors.$purple-dark, $lightness: 20%, $alpha: -0.3)};
+  --gradient-color-2: #{color.adjust(colors.$purple-light, $lightness: 20%, $alpha: -0.3)};
+  --gradient-color-3: #{color.adjust(colors.$purple-gray-400, $alpha: -0.3)};
+  --gradient-overlay: rgba(255, 255, 255, 0.7);
 }
 
 .dark {
@@ -50,4 +56,21 @@
       $alpha: -0.8
     )};
   --vp-c-search-highlight-text: #{colors.$purple-light};
+
+  // Dark theme gradient variables
+  --gradient-color-1: #{color.adjust(colors.$purple-dark, $lightness: 20%, $alpha: -0.3)};
+  --gradient-color-2: #{color.adjust(colors.$purple-gray-800, $alpha: -0.3)};
+  --gradient-color-3: #{color.adjust(colors.$purple-dark, $lightness: -20%, $alpha: -0.3)};
+  --gradient-overlay: rgba(0, 0, 0, 0.7);
+}
+
+.theme-container {
+  position: relative;
+  min-height: 100vh;
+  background: transparent;
+}
+
+.VPContent {
+  position: relative;
+  background: transparent;
 }

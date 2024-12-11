@@ -1,8 +1,8 @@
 <template>
-  <Layout>
-    <!-- <template #nav-bar-content-after>
-      <FavoritesMenu />
-    </template> -->
+  <DefaultTheme.Layout>
+    <template #layout-top>
+      <AnimatedBackground />
+    </template>
     <template #doc-before>
       <FavoriteButton
         :path="page.relativePath"
@@ -11,18 +11,21 @@
         :date="frontmatter.date"
       />
     </template>
-  </Layout>
+    <template #layout-bottom>
+      <CustomFooter />
+    </template>
+  </DefaultTheme.Layout>
 </template>
 
 <script setup lang="ts">
-import DefaultTheme from 'vitepress/theme';
-import { useData } from 'vitepress';
-// import FavoritesMenu from './components/FavoritesMenu.vue';
-import FavoriteButton from './components/FavoriteButton.vue';
-import './styles/favorites.scss';
+import DefaultTheme from 'vitepress/theme'
+import { useData } from 'vitepress'
+import FavoriteButton from './components/FavoriteButton.vue'
+import AnimatedBackground from './components/AnimatedBackground.vue'
+import CustomFooter from './components/CustomFooter.vue'
+import './styles/favorites.scss'
 
-const { Layout } = DefaultTheme;
-const { page, frontmatter } = useData();
+const { page, frontmatter } = useData()
 </script>
 
 <style>
