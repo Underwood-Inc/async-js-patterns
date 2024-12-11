@@ -338,7 +338,7 @@ form?.addEventListener('submit', async (event) => {
 
 1. Cancellable debounce:
 
-   ```typescript:preview
+   ```typescript
    class CancellableDebounce<T extends (...args: any[]) => any> {
      private controller = new AbortController();
 
@@ -376,7 +376,7 @@ form?.addEventListener('submit', async (event) => {
 
 2. Resource cleanup:
 
-   ```typescript:preview
+   ```typescript
    class ResourceAwareDebounce<T extends (...args: any[]) => any> {
      private cleanup?: () => void;
 
@@ -421,7 +421,7 @@ form?.addEventListener('submit', async (event) => {
 
 3. Performance monitoring:
 
-   ```typescript:preview
+   ```typescript
    class MonitoredDebounce<T extends (...args: any[]) => any> {
      private metrics = {
        calls: 0,
@@ -470,7 +470,7 @@ form?.addEventListener('submit', async (event) => {
 
 4. Error boundaries:
 
-   ```typescript:preview
+   ```typescript
    class ErrorBoundaryDebounce<T extends (...args: any[]) => any> {
      private errorHandler?: (error: Error) => void;
      private retryCount = 0;

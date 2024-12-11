@@ -251,7 +251,7 @@ const result = await syncer.syncData([
 
 1. Error handling:
 
-   ```typescript:preview
+   ```typescript
    Promise.all(promises)
      .then(handleSuccess)
      .catch((error) => {
@@ -262,7 +262,7 @@ const result = await syncer.syncData([
 
 2. Progress tracking:
 
-   ```typescript:preview
+   ```typescript
    async function trackProgress<T>(
      promises: Promise<T>[],
      onProgress: (completed: number, total: number) => void
@@ -283,7 +283,7 @@ const result = await syncer.syncData([
 
 3. Resource cleanup:
 
-   ```typescript:preview
+   ```typescript
    try {
      const results = await Promise.all(operations);
      return results;
@@ -296,7 +296,7 @@ const result = await syncer.syncData([
 
 4. Timeout handling:
 
-   ```typescript:preview
+   ```typescript
    function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
      const timeout = new Promise<never>((_, reject) =>
        setTimeout(() => reject(new Error('Timeout')), ms)

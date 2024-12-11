@@ -489,7 +489,7 @@ console.log('Performance report:', report);
 
 1. Memory monitoring:
 
-   ```typescript:preview
+   ```typescript
    class MemoryMonitor {
      private samples: number[] = [];
      private readonly maxSamples: number;
@@ -562,7 +562,7 @@ console.log('Performance report:', report);
 
 2. CPU profiling:
 
-   ```typescript:preview
+   ```typescript
    class CpuProfiler {
      private profiling = false;
      private profile: any = null;
@@ -606,7 +606,7 @@ console.log('Performance report:', report);
 
 3. Event loop monitoring:
 
-   ```typescript:preview
+   ```typescript
    class EventLoopMonitor {
      private samples: number[] = [];
      private timer?: NodeJS.Timer;
@@ -662,7 +662,7 @@ console.log('Performance report:', report);
 
 4. Resource utilization:
 
-   ```typescript:preview
+   ```typescript
    class ResourceMonitor {
      private readonly monitors: Map<string, Monitor> = new Map();
      private aggregator: MetricsAggregator;

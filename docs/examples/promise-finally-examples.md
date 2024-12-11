@@ -308,7 +308,7 @@ try {
 
 1. Always use finally for cleanup:
 
-   ```typescript:preview
+   ```typescript
    let resource;
    try {
      resource = await acquireResource();
@@ -325,7 +325,7 @@ try {
 
 2. Handle nested resources:
 
-   ```typescript:preview
+   ```typescript
    async function processWithResources() {
      const resources = [];
      try {
@@ -350,7 +350,7 @@ try {
 
 3. Combine with other Promise methods:
 
-   ```typescript:preview
+   ```typescript
    Promise.all(promises)
      .then(handleSuccess)
      .catch(handleError)
@@ -363,7 +363,7 @@ try {
 
 4. State management:
 
-   ```typescript:preview
+   ```typescript
    class StateManager {
      private states = new Map();
 

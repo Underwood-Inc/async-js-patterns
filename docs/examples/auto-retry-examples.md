@@ -334,7 +334,7 @@ try {
 
 1. Circuit breaker pattern:
 
-   ```typescript:preview
+   ```typescript
    class CircuitBreaker {
      private failures = 0;
      private lastFailureTime = 0;
@@ -382,7 +382,7 @@ try {
 
 2. Retry with jitter:
 
-   ```typescript:preview
+   ```typescript
    function calculateDelay(attempt: number, options: RetryOptions): number {
      const baseDelay = Math.min(
        options.initialDelay * Math.pow(options.backoffFactor, attempt - 1),
@@ -397,7 +397,7 @@ try {
 
 3. Retry budget:
 
-   ```typescript:preview
+   ```typescript
    class RetryBudget {
      private retryCount = 0;
      private lastResetTime = Date.now();
@@ -429,7 +429,7 @@ try {
 
 4. Retry with fallback:
 
-   ```typescript:preview
+   ```typescript
    async function retryWithFallback<T>(
      primary: () => Promise<T>,
      fallback: () => Promise<T>,

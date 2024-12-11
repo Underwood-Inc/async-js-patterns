@@ -341,7 +341,7 @@ async function getUserData(userId: number) {
 
 1. Error handling:
 
-   ```typescript:preview
+   ```typescript
    class PromiseError extends Error {
      constructor(
        message: string,
@@ -391,7 +391,7 @@ async function getUserData(userId: number) {
 
 2. Timeout handling:
 
-   ```typescript:preview
+   ```typescript
    function promisifyWithTimeout<T>(
      fn: Function,
      timeout: number
@@ -417,7 +417,7 @@ async function getUserData(userId: number) {
 
 3. Resource cleanup:
 
-   ```typescript:preview
+   ```typescript
    function promisifyWithCleanup<T>(
      fn: Function,
      cleanup: () => void
@@ -444,7 +444,7 @@ async function getUserData(userId: number) {
 
 4. Event handling:
 
-   ```typescript:preview
+   ```typescript
    function promisifyEvent<T>(
      emitter: EventEmitter,
      eventName: string

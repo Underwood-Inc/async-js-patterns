@@ -9,6 +9,12 @@ import { codeTooltipsPlugin } from './theme/markdown/codeTooltips';
 import { parseCode } from './theme/utils/parsers';
 import { typeColors, typeDefinitions } from './theme/utils/typeDefinitions';
 import { performanceLogger } from './theme/utils/performanceLogger';
+import {
+  processTooltips,
+  applyTooltipsToCode,
+} from './theme/utils/tooltipProcessor';
+import container from 'markdown-it-container';
+import { debugLog } from './theme/markdown/codePreview';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
@@ -58,6 +64,22 @@ export default defineConfig({
   ignoreDeadLinks: [
     // Ignore LICENSE file link
     /\/LICENSE/,
+    // Patterns to ignore
+    /^\.\/layout\/stack/,
+    /^\.\/navigation\/menu/,
+    /^\.\/navigation\/pagination/,
+    /^\.\/feedback\/alert/,
+    /^\.\/feedback\/toast/,
+    /^\.\/feedback\/progress/,
+    /^\.\/feedback\/skeleton/,
+    /^\.\/overlay\/modal/,
+    /^\.\/overlay\/drawer/,
+    /^\.\/overlay\/popover/,
+    /^\.\/overlay\/tooltip/,
+    /^\.\/data\/table/,
+    /^\.\/data\/list/,
+    /^\.\/data\/card/,
+    /^\.\/data\/badge/
   ],
 
   transformPageData(pageData) {
@@ -240,11 +262,6 @@ export default defineConfig({
     },
     lineNumbers: true,
     languages: languages,
-    languageAlias: {
-      'typescript:preview': 'typescript',
-      'javascript:preview': 'javascript',
-      ':preview': 'plaintext',
-    },
     config: async (md) => {
       codeTooltipsPlugin(md);
 
@@ -264,139 +281,123 @@ export default defineConfig({
         ],
       });
 
-      const originalFence = md.renderer.rules.fence;
-      md.renderer.rules.fence = (tokens, idx, options, env, slf) => {
+      const originalFence = md.renderer.rules.fence!;
+      md.renderer.rules.fence = (tokens, idx, options, env, self) => {
         const token = tokens[idx];
-        const term = tokens[idx].content.trim();
-        const info = token.info ? token.info.trim() : '';
-        const code = token.content.trim();
-        const lang = token.info.trim();
-        // Parse code using existing system
-        const parseResult = parseCode(token.content, lang);
-        const tooltipMap = new Map<
-          string,
-          { errors: Set<string>; info: Set<string> }
-        >();
-
-        // Parse code using existing system
-        const [langType] = info.split(':')
-        performanceLogger.logTooltip(
-          term,
-          langType || 'plaintext',
-          parseResult.errors?.length > 0
-        );
+        const filePath = env.path || 'unknown';
+        const originalContent = token.content;
 
         // Check if we're inside a code-with-tooltips container
         const isInTooltipContainer = tokens.some(
           (t, i) => i < idx && t.type === 'container_code-with-tooltips_open'
         );
 
-        // If not in tooltip container, use original renderer
         if (!isInTooltipContainer) {
-          return originalFence!(tokens, idx, options, env, slf);
+          debugLog('SKIPPING', {
+            reason: 'not in tooltip container',
+            file: filePath
+          });
+          return originalFence(tokens, idx, options, env, self);
         }
 
-        const highlightedCode = highlighter.codeToHtml(code, {
-          lang: highlighter.getLoadedLanguages().includes(lang)
-            ? lang
-            : 'plaintext',
-          themes: {
-            light: 'github-light',
-            dark: 'github-dark',
-          },
-        });
+        try {
+          // Process template variables with error handling
+          token.content = token.content.replace(/\${([^}]+)}/g, (match, expr) => {
+            try {
+              const value = expr.split('.').reduce((obj, prop) => obj?.[prop], env);
+              return value ?? match; // Return original match if value is null/undefined
+            } catch (e) {
+              console.warn(`Template expression error: ${expr}`, e);
+              return match;
+            }
+          });
+          
+          const highlightedCode = originalFence(tokens, idx, options, env, self);
+          
+          debugLog('TOOLTIP_PROCESSING', {
+            file: filePath,
+            tokenType: token.type,
+            inContainer: isInTooltipContainer
+          });
 
-        // Process tokens and build tooltips
-        parseResult.tokens.forEach((tokenInfo) => {
-          if (!tokenInfo?.text) return;
+          // Process tooltips
+          const { parseResult, tooltipMap, parserInfo } = processTooltips(token.content, token.info);
 
-          const term = tokenInfo.text;
-          const info = tokenInfo.info || typeDefinitions[term];
+          let modifiedCode = highlightedCode;
 
-          if (!tooltipMap.has(term)) {
-            tooltipMap.set(term, { errors: new Set(), info: new Set() });
+          // Add tooltips and other features
+          if (tooltipMap.size > 0) {
+            modifiedCode = applyTooltipsToCode(modifiedCode, tooltipMap);
           }
 
-          if (info) {
-            const tooltipContent = encodeURIComponent(
-              JSON.stringify({
-                type: info.type || 'identifier',
-                description: info.documentation || `Identifier: ${term}`,
-                color: typeColors[info.type as keyof typeof typeColors] || {
-                  text: '#666',
-                  background: 'rgba(102, 102, 102, 0.1)',
-                },
-              })
-            );
-            tooltipMap
-              .get(term)!
-              .info.add(`info:::${info.type}\ntype:${tooltipContent}`);
-          }
-        });
-
-        // Enhanced tooltip debugging
-        const debugData = {
-          term,
-          hasInfo: !!info,
-          type: info?.type || 'none',
-          hasDocumentation: !!info?.documentation,
-          hasTypeDefinition: !!typeDefinitions[term],
-          parseResult: {
-            totalTokens: parseResult.tokens.length,
-            hasErrors: parseResult.errors?.length > 0,
-            errors: parseResult.errors
-          }
+          return `<div class="code-block-wrapper" data-code-tooltips="true">${modifiedCode}</div>`;
+        } catch (error) {
+          debugLog('ERROR', {
+            file: filePath,
+            line: token.map?.[0],
+            error: error.message
+          });
+          token.content = originalContent; // Restore original content on error
+          return originalFence(tokens, idx, options, env, self);
         }
-
-        performanceLogger.logTooltipDebug(debugData)
-
-        // Add detailed tooltip content in a separate group if needed
-        // if (tooltipMap.size > 0) {
-        //   console.group('Detailed Tooltip Content');
-        //   tooltipMap.forEach((data, term) => {
-        //     console.group(`Term: ${term}`);
-        //     Array.from(data.info).forEach((tooltip, index) => {
-        //       console.log(`Tooltip ${index + 1}:`, tooltip);
-        //     });
-        //     console.groupEnd();
-        //   });
-        //   console.groupEnd();
-        // }
-
-        performanceLogger.startProcess(parseResult.tokens.length);
-        // Process code with tooltips while preserving Shiki classes
-        let processedCode = highlightedCode.replace(
-          /<pre class="shiki[^>]*>(.*?)<\/pre>/s,
-          (match, codeContent) => {
-            let processed = codeContent;
-            tooltipMap.forEach(({ errors, info }, term) => {
-              const termPattern = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-              const regex = new RegExp(
-                `(<span[^>]*?>)([^<]*?\\b)(${termPattern})\\b([^<]*?)(</span>)`,
-                'g'
-              );
-
-              const combinedContent = Array.from(info).join('|||');
-              processed = processed.replace(
-                regex,
-                (match, spanStart, before, term, after, spanEnd) =>
-                  `${spanStart}${before}<span class="tooltip-trigger" data-tooltip="${encodeURIComponent(combinedContent)}">${term}</span>${after}${spanEnd}`
-              );
-            });
-            return `<pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0">${processed}</pre>`;
-          }
-        );
-
-        if (parseResult.errors?.length > 0) {
-          parseResult.errors.forEach(error => {
-            performanceLogger.logError(term, error)
-          })
-        }
-
-        performanceLogger.startProcess(parseResult.tokens.length)
-
-        return `<div class="code-block-wrapper" data-code-tooltips="true">${processedCode}</div>`;
       };
+
+      // Combine the originalRender logic
+      const originalRender = md.render;
+      const originalTextRender = md.renderer.rules.text || ((tokens, idx) => tokens[idx].content);
+      
+      md.render = function (src, env) {
+        // Process template syntax before rendering
+        const processed = src
+          .replace(/```[\s\S]*?```/g, match => match)
+          .replace(/`[^`]*`/g, match => match)
+          .replace(/\${(?!\{)/g, '\\${')
+          .replace(/{{\s*([^}]*)}}/g, '\\{{ $1 }}');
+        
+        return originalRender.call(this, processed, env);
+      };
+
+      md.renderer.rules.text = (tokens, idx, options, env, self) => {
+        let content = tokens[idx].content;
+        
+        // Only process if not inside code blocks
+        if (!env.inCode) {
+          content = content
+            // Escape template literals
+            .replace(/\${/g, '\\${')
+            // Escape Vue interpolation
+            .replace(/{{\s*([^}]*)}}/g, '@{{$1}}');
+        }
+        
+        tokens[idx].content = content;
+        return originalTextRender(tokens, idx, options, env, self);
+      };
+
+      // Track code block state
+      md.core.ruler.push('track_code_blocks', state => {
+        let inCode = false;
+        state.tokens.forEach(token => {
+          if (token.type === 'fence' || token.type === 'code_block') {
+            inCode = true;
+          }
+          token.env = { ...token.env, inCode };
+        });
+        return true;
+      });
+
+      // Add custom container for Vue templates
+      md.use(container, 'vue', {
+        validate: function(params) {
+          return params.trim().match(/^vue\s*(.*)$/);
+        },
+        render: function (tokens, idx) {
+          if (tokens[idx].nesting === 1) {
+            return '<div class="vue-template">\n';
+          } else {
+            return '</div>\n';
+          }
+        }
+      });
     },
     breaks: true,
     html: true,
@@ -408,15 +409,8 @@ export default defineConfig({
         compilerOptions: {
           isCustomElement: () => false,
           whitespace: 'preserve',
-          delimiters: ['${', '}'],
-          // Disable template compilation for examples route
-          // compileTemplate: (template) => {
-          //   if (template.id?.includes('/examples/')) {
-          //     return { code: template.content };
-          //   }
-          //   return undefined;
-          // },
-        },
+          delimiters: ['@{{', '}}']  // Use different delimiters for Vue
+        }
       },
     },
   },
@@ -438,6 +432,83 @@ export default defineConfig({
       minify: 'esbuild',
       cssCodeSplit: true,
       sourcemap: true,
+    },
+    plugins: [
+      {
+        name: 'markdown-template-handler',
+        enforce: 'pre',
+        transform(code, id) {
+          if (id.endsWith('.md')) {
+            // First preserve Vue containers
+            const containers: string[] = [];
+            let preservedContainers = code.replace(
+              /::: [\s\S]*? :::/g,
+              (match, offset) => {
+                const placeholder = `___CONTAINER_${containers.length}___`;
+                containers.push(match);
+                return placeholder;
+              }
+            );
+
+            // Then preserve code blocks
+            const codeBlocks: string[] = [];
+            let preservedCode = preservedContainers.replace(
+              /```[\s\S]*?```/g,
+              (match, offset) => {
+                const placeholder = `___CODE_BLOCK_${codeBlocks.length}___`;
+                codeBlocks.push(match);
+                return placeholder;
+              }
+            );
+
+            // Then handle inline code
+            const inlineCode: string[] = [];
+            preservedCode = preservedCode.replace(/`[^`]*`/g, (match, offset) => {
+              const placeholder = `___INLINE_CODE_${inlineCode.length}___`;
+              inlineCode.push(match);
+              return placeholder;
+            });
+
+            // Process template syntax
+            preservedCode = preservedCode
+              // Escape template literals
+              .replace(/\${/g, '\\${')
+              // Handle Vue interpolation
+              .replace(/{{\s*([^}]*)}}/g, '@{{$1}}');
+
+            // Restore everything in reverse order
+            const result = preservedCode
+              .replace(/___INLINE_CODE_(\d+)___/g, (_, i) => inlineCode[i])
+              .replace(/___CODE_BLOCK_(\d+)___/g, (_, i) => codeBlocks[i])
+              .replace(/___CONTAINER_(\d+)___/g, (_, i) => containers[i]);
+
+            return result;
+          }
+        }
+      },
+      {
+        name: 'react-component-patterns-handler',
+        enforce: 'pre',
+        transform(code, id) {
+          if (id.endsWith('.md') && (
+            id.includes('react-component-patterns') || 
+            id.includes('/form/')
+          )) {
+            // For React files, escape all Vue-style interpolation
+            return code
+              .replace(/{{/g, '\\{{')
+              .replace(/}}/g, '}}');
+          }
+        }
+      }
+    ],
+    vue: {
+      template: {
+        compilerOptions: {
+          isCustomElement: tag => tag.includes('-'),
+          whitespace: 'preserve'
+        }
+      }
     },
     css: {
       preprocessorOptions: {
@@ -847,19 +918,8 @@ export default defineConfig({
     search: {
       provider: 'local',
       options: {
-        detailedView: true,
-        miniSearch: {
-          searchOptions: {
-            fuzzy: 0.2,
-            prefix: true,
-            boost: {
-              title: 2,
-              text: 1,
-              titles: 1.5,
-            },
-          },
-        },
-      },
+        detailedView: true
+      }
     },
   },
   locales: {

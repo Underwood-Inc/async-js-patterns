@@ -328,7 +328,7 @@ try {
 
 1. Window-based throttling:
 
-   ```typescript:preview
+   ```typescript
    class WindowThrottle<T extends (...args: any[]) => any> {
      private window: Array<{
        timestamp: number;
@@ -376,7 +376,7 @@ try {
 
 2. Resource-aware throttling:
 
-   ```typescript:preview
+   ```typescript
    class ResourceThrottle<T extends (...args: any[]) => any> {
      private resourceUsage: number = 0;
      private readonly maxResources: number;
@@ -425,7 +425,7 @@ try {
 
 3. Priority throttling:
 
-   ```typescript:preview
+   ```typescript
    class PriorityThrottle<T extends (...args: any[]) => any> {
      private queues: Map<
        Priority,
@@ -497,7 +497,7 @@ try {
 
 4. Adaptive throttling:
 
-   ```typescript:preview
+   ```typescript
    class AdaptiveThrottle<T extends (...args: any[]) => any> {
      private metrics: {
        successCount: number;

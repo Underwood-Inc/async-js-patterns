@@ -86,7 +86,7 @@ function handleVariableDeclaration(
         varDecl.initializer.properties.map((p) => p.getText()).join('; ') +
         ' }'
       : varDecl.initializer.getText();
-    return `(${modifiers.join(' ')} variable) ${node.getText()} = ${initializerType}`;
+    return `(${modifiers.join(' ')} variable) ${node.getText()}: ${initializerType}`;
   }
   return '';
 }

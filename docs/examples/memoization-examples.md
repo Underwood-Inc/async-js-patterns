@@ -340,7 +340,7 @@ console.log('Cache stats:', apiClient.getCacheStats());
 
 1. Async memoization:
 
-   ```typescript:preview
+   ```typescript
    class AsyncMemoized<T extends (...args: any[]) => Promise<any>> {
      private cache = new Map<string, Promise<ReturnType<T>>>();
      private pending = new Set<string>();
@@ -382,7 +382,7 @@ console.log('Cache stats:', apiClient.getCacheStats());
 
 2. Weak reference caching:
 
-   ```typescript:preview
+   ```typescript
    class WeakMemoized<T extends (...args: any[]) => any> {
      private cache = new WeakMap<object, ReturnType<T>>();
 
@@ -400,7 +400,7 @@ console.log('Cache stats:', apiClient.getCacheStats());
 
 3. Composite key generation:
 
-   ```typescript:preview
+   ```typescript
    class CompositeKeyMemoized<T extends (...args: any[]) => any> {
      private cache = new Map<string, ReturnType<T>>();
 
@@ -427,7 +427,7 @@ console.log('Cache stats:', apiClient.getCacheStats());
 
 4. Selective caching:
 
-   ```typescript:preview
+   ```typescript
    class SelectiveMemoized<T extends (...args: any[]) => any> {
      private cache = new Map<string, ReturnType<T>>();
 

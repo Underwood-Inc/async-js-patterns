@@ -224,13 +224,13 @@ describe('CustomPromise', () => {
 
 1. Always handle rejections:
 
-   ```typescript:preview
+   ```typescript
    myPromise.then(handleSuccess).catch(handleError).finally(cleanup);
    ```
 
 2. Use TypeScript for better type safety:
 
-   ```typescript:preview
+   ```typescript
    const typedPromise = new CustomPromise<User>((resolve) => {
      resolve({ id: '1', name: 'John' });
    });
@@ -238,7 +238,7 @@ describe('CustomPromise', () => {
 
 3. Chain promises appropriately:
 
-   ```typescript:preview
+   ```typescript
    // Good
    return promise.then(transform1).then(transform2);
 
@@ -250,7 +250,7 @@ describe('CustomPromise', () => {
 
 4. Proper error propagation:
 
-   ```typescript:preview
+   ```typescript
    promise
      .then((value) => {
        if (!value) throw new Error('Invalid value');

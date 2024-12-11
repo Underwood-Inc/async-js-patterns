@@ -5,10 +5,9 @@
   div[class*='language-'] {
     position: relative;
     background-color: colors.$code-bg-light !important;
-    border: 2px solid var(--vp-c-brand) !important;
-    border-radius: 8px !important;
-    margin: 1rem 0;
+    margin: 0;
     box-shadow: 0 0 8px rgba(colors.$purple-brand, 0.1);
+    padding-left: 0!important;
 
     code {
       color: var(--vp-c-text-1);
@@ -26,7 +25,6 @@
     background-color: colors.$code-bg-light !important;
     border: 2px solid var(--vp-c-brand) !important;
     border-radius: 8px !important;
-    margin: 1rem 0;
     box-shadow: 0 0 8px rgba(colors.$purple-brand, 0.1);
 
     .dark & {

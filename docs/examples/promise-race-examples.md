@@ -273,7 +273,7 @@ try {
 
 1. Always include timeouts:
 
-   ```typescript:preview
+   ```typescript
    function withTimeout<T>(
      promise: Promise<T>,
      ms: number,
@@ -288,7 +288,7 @@ try {
 
 2. Handle errors appropriately:
 
-   ```typescript:preview
+   ```typescript
    Promise.race(promises)
      .then(handleSuccess)
      .catch((error) => {
@@ -302,7 +302,7 @@ try {
 
 3. Clean up resources:
 
-   ```typescript:preview
+   ```typescript
    let cleanup: (() => void) | null = null;
 
    try {
@@ -321,7 +321,7 @@ try {
 
 4. Consider cancellation:
 
-   ```typescript:preview
+   ```typescript
    class CancellableOperation {
      private abortController = new AbortController();
 

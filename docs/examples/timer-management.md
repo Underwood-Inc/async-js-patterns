@@ -355,7 +355,7 @@ scheduler.cancelTask(taskId);
 
 1. Resource cleanup:
 
-   ```typescript:preview
+   ```typescript
    class ResourceTimer {
      private resources = new WeakMap<object, Resource>();
      private registry = new TimerRegistry();
@@ -386,7 +386,7 @@ scheduler.cancelTask(taskId);
 
 2. Error boundaries:
 
-   ```typescript:preview
+   ```typescript
    class SafeTimer {
      private registry = new TimerRegistry();
 
@@ -423,7 +423,7 @@ scheduler.cancelTask(taskId);
 
 3. Performance tracking:
 
-   ```typescript:preview
+   ```typescript
    class MetricsTimer {
      private metrics = {
        totalExecutions: 0,
@@ -479,7 +479,7 @@ scheduler.cancelTask(taskId);
 
 4. Memory management:
 
-   ```typescript:preview
+   ```typescript
    class MemoryAwareTimer {
      private registry = new TimerRegistry();
      private memoryThreshold = 0.9; // 90% of available memory

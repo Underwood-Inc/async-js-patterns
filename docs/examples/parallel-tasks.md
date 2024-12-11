@@ -348,7 +348,7 @@ try {
 
 1. Resource management:
 
-   ```typescript:preview
+   ```typescript
    class ResourcePool {
      private available: Resource[] = [];
      private inUse = new Set<Resource>();
@@ -383,7 +383,7 @@ try {
 
 2. Error handling:
 
-   ```typescript:preview
+   ```typescript
    async function executeWithErrorBoundary<T>(
      tasks: Array<() => Promise<T>>,
      options: {
@@ -419,7 +419,7 @@ try {
 
 3. Progress monitoring:
 
-   ```typescript:preview
+   ```typescript
    class ProgressTracker {
      private completed = 0;
      private readonly total: number;
@@ -447,7 +447,7 @@ try {
 
 4. Cancellation support:
 
-   ```typescript:preview
+   ```typescript
    class CancellableTaskRunner {
      private abortController = new AbortController();
 

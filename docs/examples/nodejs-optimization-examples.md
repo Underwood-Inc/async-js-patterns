@@ -349,7 +349,7 @@ await processor.shutdown();
 
 1. Memory management:
 
-   ```typescript:preview
+   ```typescript
    class MemoryManager {
      private readonly maxHeapSize: number;
      private readonly threshold: number;
@@ -390,7 +390,7 @@ await processor.shutdown();
 
 2. Event loop monitoring:
 
-   ```typescript:preview
+   ```typescript
    class EventLoopMonitor {
      private samples: number[] = [];
      private timer?: NodeJS.Timer;
@@ -447,7 +447,7 @@ await processor.shutdown();
 
 3. Resource pooling:
 
-   ```typescript:preview
+   ```typescript
    class ResourcePool<T> {
      private available: T[] = [];
      private inUse = new Set<T>();
@@ -552,7 +552,7 @@ await processor.shutdown();
 
 4. Graceful shutdown:
 
-   ```typescript:preview
+   ```typescript
    class ShutdownManager {
      private handlers: Set<() => Promise<void>> = new Set();
      private shuttingDown = false;

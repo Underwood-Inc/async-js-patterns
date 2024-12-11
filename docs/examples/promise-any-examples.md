@@ -324,7 +324,7 @@ try {
 
 1. Always handle AggregateError:
 
-   ```typescript:preview
+   ```typescript
    try {
      const result = await Promise.any(promises);
      return result;
@@ -340,7 +340,7 @@ try {
 
 2. Implement proper logging:
 
-   ```typescript:preview
+   ```typescript
    const promises = endpoints.map(async (endpoint, index) => {
      try {
        const result = await fetch(endpoint);
@@ -355,7 +355,7 @@ try {
 
 3. Consider timeouts:
 
-   ```typescript:preview
+   ```typescript
    function withTimeout(promise: Promise<any>, ms: number) {
      return Promise.race([
        promise,
@@ -371,7 +371,7 @@ try {
 
 4. Implement fallback mechanisms:
 
-   ```typescript:preview
+   ```typescript
    async function withFallback<T>(
      primary: Promise<T>,
      fallbacks: Promise<T>[]
