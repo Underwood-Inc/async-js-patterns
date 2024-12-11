@@ -538,12 +538,13 @@ export default defineConfig({
         },
       ],
     },
-    footer: {
-      message: 'Released under the OpenRAIL-S v1.0 License.',
-      copyright: 'Copyright © 2024-present Underwood Inc.',
-    },
+    // footer: {
+    //   message: footerMessage,
+    //   copyright: 'Copyright © 2024-present Underwood Inc.',
+    // },
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Underwood-Inc/web-patterns' },
+      { icon: 'twitter', link: `https://twitter.com/${twitterHandle}` },
     ],
     outline: 'deep',
     aside: true,

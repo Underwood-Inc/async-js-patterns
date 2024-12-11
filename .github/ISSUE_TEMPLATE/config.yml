@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📚 Documentation
+    url: https://underwood-inc.github.io/web-patterns
+    about: Check our documentation first
+  - name: 💬 Discussions
+    url: https://github.com/Underwood-Inc/web-patterns/discussions
+    about: Ask questions and share ideas
+  - name: 🤝 Contributing Guidelines
+    url: https://github.com/Underwood-Inc/web-patterns/blob/main/CONTRIBUTING.md
+    about: Review our contributing guidelines 

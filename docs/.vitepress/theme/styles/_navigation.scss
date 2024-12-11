@@ -39,26 +39,3 @@
     background-color: var(--vp-c-bg-soft);
   }
 }
-
-// Hero section gradient text
-.name,
-.text {
-  background: -webkit-linear-gradient(
-    120deg,
-    var(--vp-c-brand-light) 30%,
-    var(--vp-c-brand)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.dark .name,
-.dark .text {
-  background: -webkit-linear-gradient(
-    120deg,
-    var(--vp-c-brand-light) 30%,
-    var(--vp-c-brand)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
