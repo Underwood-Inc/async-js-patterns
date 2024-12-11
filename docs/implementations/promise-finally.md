@@ -26,7 +26,9 @@ includes proper resource cleanup, error handling, and performance monitoring.
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { AsyncOperationError } from '../advanced/error-handling';
 import { PerformanceMonitor } from '../advanced/performance-monitoring';
 
@@ -62,11 +64,15 @@ if (!Promise.prototype.finally) {
 }
 ```
 
+:::
+
 ## Usage Examples
 
 ### Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function fetchData() {
   let connection;
 
@@ -83,9 +89,13 @@ function fetchData() {
 }
 ```
 
+:::
+
 ### Resource Cleanup
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ResourceManager {
   private resources: Set<{ cleanup: () => Promise<void> }> = new Set();
 
@@ -120,9 +130,13 @@ await manager.withCleanup(
 );
 ```
 
+:::
+
 ### Error Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 async function robustOperation() {
   let resource;
   try {
@@ -143,6 +157,8 @@ async function robustOperation() {
   }
 }
 ```
+
+:::
 
 ## Key Features
 
@@ -362,7 +378,9 @@ async function robustOperation() {
 
 ## Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 describe('Promise.finally', () => {
   it('should execute cleanup on success', async () => {
     let cleaned = false;
@@ -398,3 +416,5 @@ describe('Promise.finally', () => {
   });
 });
 ```
+
+:::

@@ -222,6 +222,11 @@ export function showTooltip(
 
   const tooltipId = hashString(content);
 
+  // Add to tracking sets based on both click and pin state
+  if (isClickOpened || keepTooltipsOpen) {
+    clickOpenedTooltips.add(tooltipId);
+  }
+
   // Remove from hiding set if it was being hidden
   hidingTooltips.delete(tooltipId);
 
@@ -254,16 +259,11 @@ export function showTooltip(
     transform: translate(${x}px, ${y}px);
   `;
 
-  if (isClickOpened) {
-    clickOpenedTooltips.add(tooltipId);
-  }
-
   const app = createApp({
     render() {
       return h(Tooltip, {
         content,
-        x: 0,
-        y: 0,
+        position: { x, y },
         type,
         isClickOpened,
         onClose: () => {
@@ -365,38 +365,31 @@ export function setupTooltips() {
     const target = e.target as HTMLElement;
     if (!target.classList.contains('tooltip-trigger')) return;
 
-    if (!hoverEnabled || keepTooltipsOpen) return;
+    // Only check hoverEnabled, remove keepTooltipsOpen check
+    if (!hoverEnabled) return;
 
     const content = target.getAttribute('data-tooltip');
     if (!content) return;
 
     const tooltipId = hashString(content);
-    tooltipInteractions.set(tooltipId, Date.now());
-    // Check if this tooltip is already open
-    const existingTooltip = Array.from(activeTooltips.values()).find(
-      (entry) => entry.id === tooltipId
-    );
-    if (existingTooltip) {
-      debugTooltips('mouseover - existing tooltip', { tooltipId });
+
+    // Don't show duplicate tooltip if it's already pinned
+    if (clickOpenedTooltips.has(tooltipId)) {
+      debugTooltips('mouseover-skip-pinned', { tooltipId });
       return;
     }
 
+    // Show tooltip
     const rect = target.getBoundingClientRect();
-    const x = rect.left + rect.width / 2;
-    const y = rect.top;
-
-    currentTooltip = showTooltip(
+    showTooltip(
       tooltipPortal,
       content,
-      x,
-      y,
+      rect.left + rect.width / 2,
+      rect.top,
       target.classList.contains('has-error') ? 'error' : 'default',
       target
     );
-
-    if (currentTooltip) {
-      activeTooltipTrigger = target;
-    }
+    debugTooltips('mouseover-show', { tooltipId });
   });
 
   // Handle mouseout for hover mode
@@ -404,16 +397,16 @@ export function setupTooltips() {
     const target = e.target as HTMLElement;
     if (!target.classList.contains('tooltip-trigger')) return;
 
-    if (!hoverEnabled || keepTooltipsOpen) return;
+    if (!hoverEnabled) return;
 
     const content = target.getAttribute('data-tooltip');
     if (!content) return;
 
     const tooltipId = hashString(content);
 
-    // Don't hide click-opened tooltips on mouseout
+    // Don't hide pinned tooltips
     if (clickOpenedTooltips.has(tooltipId)) {
-      debugTooltips('mouseout-skip-click', { tooltipId });
+      debugTooltips('mouseout-skip-pinned', { tooltipId });
       return;
     }
 
@@ -423,7 +416,7 @@ export function setupTooltips() {
       return;
     }
 
-    // Find the tooltip element for this specific trigger
+    // Find and hide unpinned tooltip
     const tooltipEntry = Array.from(activeTooltips.entries()).find(
       ([_, v]) => v.trigger === target && !clickOpenedTooltips.has(v.id)
     );
@@ -528,10 +521,13 @@ export function setupTooltips() {
   document.addEventListener('mousemove', (e) => {
     lastMousePosition = { x: e.clientX, y: e.clientY };
 
+    // Add early return if tooltips are pinned
+    if (keepTooltipsOpen) return;
+
     // Clear any pending close timeout
     if (closeTimeoutId) {
-      window.clearTimeout(closeTimeoutId);
-      closeTimeoutId = null;
+        window.clearTimeout(closeTimeoutId);
+        closeTimeoutId = null;
     }
 
     // Check distance for all active tooltips
@@ -684,6 +680,8 @@ function getDistanceFromTooltip(
   );
 }
 
+// TODO: investigate, this is not working.
+// likely can remove due to how tooltips generate at build time now
 function showLoader() {
   if (!inBrowser) return;
 

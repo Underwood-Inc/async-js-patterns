@@ -115,7 +115,9 @@ Think of async testing like:
 
 ### 1. Promise Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 describe('Promise Operations', () => {
   it('should resolve with correct value', async () => {
     const result = await someAsyncOperation();
@@ -130,9 +132,13 @@ describe('Promise Operations', () => {
 });
 ```
 
+:::
+
 ### 2. Timer Mocking
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 describe('Timer Operations', () => {
   beforeEach(() => {
     jest.useFakeTimers();
@@ -154,11 +160,15 @@ describe('Timer Operations', () => {
 });
 ```
 
+:::
+
 ## Integration Testing
 
 ### 1. API Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class APITester {
   private baseURL: string;
 
@@ -183,9 +193,13 @@ class APITester {
 }
 ```
 
+:::
+
 ### 2. Mock Services
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class MockService {
   private responses: Map<string, any> = new Map();
 
@@ -203,11 +217,15 @@ class MockService {
 }
 ```
 
+:::
+
 ## Performance Testing
 
 ### 1. Load Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class LoadTester {
   async runConcurrent(operation: () => Promise<any>, concurrency: number) {
     const start = Date.now();
@@ -227,9 +245,13 @@ class LoadTester {
 }
 ```
 
+:::
+
 ### 2. Memory Leak Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class MemoryTester {
   private snapshots: any[] = [];
 
@@ -261,11 +283,15 @@ class MemoryTester {
 }
 ```
 
+:::
+
 ## Mocking Strategies
 
 ### 1. Network Mocking
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class NetworkMocker {
   private interceptors: Map<string, Function> = new Map();
 
@@ -283,9 +309,13 @@ class NetworkMocker {
 }
 ```
 
+:::
+
 ### 2. Time Control
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class TimeController {
   private currentTime: number = Date.now();
 
@@ -302,3 +332,5 @@ class TimeController {
   }
 }
 ```
+
+:::

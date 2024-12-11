@@ -26,7 +26,9 @@ monitoring, proper resource cleanup, and enhanced error handling.
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { AsyncOperationError } from '../advanced/error-handling';
 import { PerformanceMonitor } from '../advanced/performance-monitoring';
 
@@ -69,11 +71,15 @@ function promiseRace<T>(promises: Array<Promise<T>>): Promise<T> {
 }
 ```
 
+:::
+
 ## Usage Examples
 
 ### Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 const fast = new Promise((resolve) => setTimeout(() => resolve('fast'), 100));
 const slow = new Promise((resolve) => setTimeout(() => resolve('slow'), 500));
 
@@ -82,9 +88,13 @@ promiseRace([fast, slow])
   .catch((error) => console.error('Race failed:', error));
 ```
 
+:::
+
 ### Timeout Pattern
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   const timeout = new Promise<never>((_, reject) => {
     setTimeout(
@@ -109,9 +119,13 @@ withTimeout(apiCall, 5000)
   });
 ```
 
+:::
+
 ### Resource Cleanup
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ResourceManager {
   private cleanupFunctions: Array<() => void> = [];
 
@@ -154,6 +168,8 @@ manager
   .then((result) => console.log('First response:', result))
   .catch((error) => console.error('Race failed:', error));
 ```
+
+:::
 
 ## Key Features
 
@@ -355,7 +371,9 @@ manager
 
 ## Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 describe('Promise.race', () => {
   it('should resolve with first fulfilled promise', async () => {
     const result = await promiseRace([
@@ -386,3 +404,5 @@ describe('Promise.race', () => {
   });
 });
 ```
+
+:::

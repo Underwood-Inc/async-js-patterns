@@ -19,7 +19,9 @@ This page demonstrates practical examples of implementing and using auto-retry p
 
 ## Basic Retry Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic retry with exponential backoff
 async function withRetry<T>(
   operation: () => Promise<T>,
@@ -89,9 +91,13 @@ try {
 }
 ```
 
+:::
+
 ## Advanced Retry Strategy
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class RetryStrategy {
   private attempts = 0;
   private totalDelay = 0;
@@ -206,9 +212,13 @@ try {
 }
 ```
 
+:::
+
 ## Real-World Example: Resilient API Client
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ResilientApiClient {
   private retryStrategies: Map<string, RetryStrategy> = new Map();
 
@@ -317,6 +327,8 @@ try {
   console.error('Failed to fetch user data:', error);
 }
 ```
+
+:::
 
 ## Best Practices
 

@@ -19,7 +19,9 @@ This page demonstrates practical examples of using `Promise.any` to handle multi
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic example with multiple API endpoints
 async function fetchFromAnyEndpoint<T>(endpoints: string[]): Promise<T> {
   try {
@@ -56,9 +58,13 @@ try {
 }
 ```
 
+:::
+
 ## Fallback Mechanisms
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Implementing fallback mechanisms
 class ServiceWithFallback {
   private primaryEndpoint: string;
@@ -108,9 +114,13 @@ class ServiceWithFallback {
 }
 ```
 
+:::
+
 ## Authentication System
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Multiple authentication providers
 class MultiAuthSystem {
   private providers: AuthProvider[];
@@ -160,9 +170,13 @@ try {
 }
 ```
 
+:::
+
 ## Resource Loading
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Loading resources from multiple sources
 class ResourceLoader {
   async loadResource(
@@ -219,9 +233,13 @@ class ResourceLoader {
 }
 ```
 
+:::
+
 ## Real-World Example: Service Discovery
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ServiceDiscoveryClient {
   private registries: string[];
   private cache: Map<string, ServiceInfo>;
@@ -299,6 +317,8 @@ try {
   console.error('Service discovery failed:', error);
 }
 ```
+
+:::
 
 ## Best Practices
 

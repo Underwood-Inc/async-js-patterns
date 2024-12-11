@@ -20,14 +20,20 @@ Playwright is a powerful testing framework by Microsoft that enables reliable en
 
 ## Getting Started
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install Playwright
 npm init playwright@latest
 ```
 
+:::
+
 ## Basic Test Structure
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { test, expect } from '@playwright/test';
 
 test.describe('authentication flows', () => {
@@ -44,9 +50,13 @@ test.describe('authentication flows', () => {
 });
 ```
 
+:::
+
 ## Common Actions
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Navigation
 await page.goto('https://example.com');
 await page.goBack();
@@ -74,9 +84,13 @@ await page.route('**/api/users', (route) => {
 await page.screenshot({ path: 'screenshot.png' });
 ```
 
+:::
+
 ## Test Configuration
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // playwright.config.ts
 import { PlaywrightTestConfig } from '@playwright/test';
 
@@ -108,11 +122,15 @@ const config: PlaywrightTestConfig = {
 export default config;
 ```
 
+:::
+
 ## Advanced Features
 
 ### API Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test('API endpoints', async ({ request }) => {
   // GET request
   const response = await request.get('/api/users');
@@ -132,9 +150,13 @@ test('API endpoints', async ({ request }) => {
 });
 ```
 
+:::
+
 ### Network Interception
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test('mock API calls', async ({ page }) => {
   // Mock response
   await page.route('/api/users', async (route) => {
@@ -163,9 +185,13 @@ test('mock API calls', async ({ page }) => {
 });
 ```
 
+:::
+
 ### Visual Comparison
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test('visual regression', async ({ page }) => {
   await page.goto('/dashboard');
 
@@ -186,11 +212,15 @@ test('visual regression', async ({ page }) => {
 });
 ```
 
+:::
+
 ## Testing Patterns
 
 ### Page Objects
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // models/LoginPage.ts
 class LoginPage {
   constructor(private page: Page) {}
@@ -219,9 +249,13 @@ test('successful login', async ({ page }) => {
 });
 ```
 
+:::
+
 ### Component Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test('button component', async ({ mount }) => {
   const component = await mount(
     <Button onClick={() => console.log('clicked')}>
@@ -235,11 +269,15 @@ test('button component', async ({ mount }) => {
 })
 ```
 
+:::
+
 ## Mobile Testing
 
 ### Device Emulation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test('mobile viewport', async ({ browser }) => {
   const pixel5 = playwright.devices['Pixel 5'];
   const context = await browser.newContext({
@@ -255,9 +293,13 @@ test('mobile viewport', async ({ browser }) => {
 });
 ```
 
+:::
+
 ### Touch Interactions
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test('touch gestures', async ({ page }) => {
   // Tap
   await page.tap('.button');
@@ -273,11 +315,15 @@ test('touch gestures', async ({ page }) => {
 });
 ```
 
+:::
+
 ## Performance Testing
 
 ### Metrics Collection
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test('performance metrics', async ({ page }) => {
   // Enable performance monitoring
   await page.coverage.startJSCoverage();
@@ -299,9 +345,13 @@ test('performance metrics', async ({ page }) => {
 });
 ```
 
+:::
+
 ### Resource Monitoring
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test('resource loading', async ({ page }) => {
   const [request] = await Promise.all([
     page.waitForRequest('**/*.js'),
@@ -318,11 +368,15 @@ test('resource loading', async ({ page }) => {
 });
 ```
 
+:::
+
 ## Debugging
 
 ### Trace Viewer
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test('record trace', async ({ page }) => {
   // Start tracing
   await context.tracing.start({
@@ -340,9 +394,13 @@ test('record trace', async ({ page }) => {
 });
 ```
 
+:::
+
 ### Debug Mode
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test('debug test', async ({ page }) => {
   // Launch debugger
   await page.pause();
@@ -359,11 +417,15 @@ test('debug test', async ({ page }) => {
 });
 ```
 
+:::
+
 ## Best Practices
 
 ### 1. Selectors
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // ❌ Avoid
 page.click('.submit-button');
 page.fill('#email', 'user@example.com');
@@ -374,9 +436,13 @@ page.getByLabel('Email');
 page.getByTestId('submit-form');
 ```
 
+:::
+
 ### 2. Waiting
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // ❌ Avoid
 await page.waitForTimeout(1000);
 
@@ -386,9 +452,13 @@ await expect(page.getByRole('alert')).toBeVisible();
 await page.waitForResponse('**/api/data');
 ```
 
+:::
+
 ### 3. Assertions
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // State assertions
 await expect(page.getByRole('button')).toBeEnabled();
 await expect(page.getByRole('textbox')).toHaveValue('text');
@@ -402,9 +472,13 @@ await expect(async () => {
 }).toPass();
 ```
 
+:::
+
 ### 4. Error Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test.beforeEach(async ({ page }) => {
   page.on('pageerror', (exception) => {
     console.error(`Page error: ${exception.message}`);
@@ -415,3 +489,5 @@ test.beforeEach(async ({ page }) => {
   });
 });
 ```
+
+:::

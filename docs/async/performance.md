@@ -21,7 +21,9 @@ Learn how to optimize asynchronous operations for better performance.
 
 Implement efficient caching for async operations:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface CacheOptions {
   ttl: number;  // Time to live in milliseconds
   maxSize?: number;  // Maximum cache size
@@ -117,11 +119,15 @@ const user = await cache.get(
 );
 ```
 
+:::
+
 ## Request Batching
 
 Batch multiple requests for better performance:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class BatchProcessor<T, R> {
   private batch: T[] = [];
   private promises: Array<{
@@ -193,11 +199,15 @@ const [user1, user2] = await Promise.all([
 ]);
 ```
 
+:::
+
 ## Resource Pooling
 
 Manage resource pools for better performance:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ResourcePool<T> {
   private available: T[] = [];
   private inUse = new Set<T>();
@@ -294,11 +304,15 @@ async function executeQuery(sql: string): Promise<any> {
 }
 ```
 
+:::
+
 ## Memory Management
 
 Implement memory-efficient processing:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 async function* streamProcessor<T, R>(
   items: AsyncIterable<T>,
   operation: (item: T) => Promise<R>,
@@ -336,11 +350,15 @@ for await (const result of streamProcessor(
 }
 ```
 
+:::
+
 ## Performance Monitoring
 
 Monitor async operation performance:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface PerformanceMetrics {
   operation: string;
   duration: number;
@@ -424,6 +442,8 @@ const result = await monitor.measure(
   () => fetchUser(id)
 );
 ```
+
+:::
 
 ## Best Practices
 

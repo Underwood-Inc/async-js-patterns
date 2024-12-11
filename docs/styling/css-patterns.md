@@ -23,7 +23,9 @@ Modern CSS patterns and best practices for building maintainable and performant 
 
 ### Custom Properties (Variables)
 
-```css:preview
+::: code-with-tooltips
+
+```css
 :root {
   --color-primary: #9d8cd6;
   --color-secondary: #6366f1;
@@ -38,9 +40,13 @@ Modern CSS patterns and best practices for building maintainable and performant 
 }
 ```
 
+:::
+
 ### Container Queries
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .card {
   container-type: inline-size;
 }
@@ -52,9 +58,13 @@ Modern CSS patterns and best practices for building maintainable and performant 
 }
 ```
 
+:::
+
 ### Grid Layout
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -62,9 +72,13 @@ Modern CSS patterns and best practices for building maintainable and performant 
 }
 ```
 
+:::
+
 ### Flexbox Patterns
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .flex-container {
   display: flex;
   flex-wrap: wrap;
@@ -74,11 +88,15 @@ Modern CSS patterns and best practices for building maintainable and performant 
 }
 ```
 
+:::
+
 ## Layout Patterns
 
 ### Holy Grail Layout
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .layout {
   display: grid;
   grid-template-areas:
@@ -106,9 +124,13 @@ Modern CSS patterns and best practices for building maintainable and performant 
 }
 ```
 
+:::
+
 ### Card Grid
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -117,11 +139,15 @@ Modern CSS patterns and best practices for building maintainable and performant 
 }
 ```
 
+:::
+
 ## Component Patterns
 
 ### Button System
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .button {
   /* Base styles */
   padding: 0.5em 1em;
@@ -156,9 +182,13 @@ Modern CSS patterns and best practices for building maintainable and performant 
 }
 ```
 
+:::
+
 ### Form Controls
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .form-control {
   display: grid;
   gap: 0.5rem;
@@ -181,11 +211,15 @@ Modern CSS patterns and best practices for building maintainable and performant 
 }
 ```
 
+:::
+
 ## Responsive Patterns
 
 ### Fluid Typography
 
-```css:preview
+::: code-with-tooltips
+
+```css
 :root {
   --fluid-min-width: 320;
   --fluid-max-width: 1140;
@@ -205,9 +239,13 @@ body {
 }
 ```
 
+:::
+
 ### Responsive Images
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .image {
   max-width: 100%;
   height: auto;
@@ -221,20 +259,28 @@ body {
 }
 ```
 
+:::
+
 ## Performance Patterns
 
 ### Content Visibility
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .below-fold {
   content-visibility: auto;
   contain-intrinsic-size: 0 500px;
 }
 ```
 
+:::
+
 ### Will-Change
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .animated {
   will-change: transform;
   transition: transform 0.3s ease;
@@ -245,11 +291,15 @@ body {
 }
 ```
 
+:::
+
 ## Animation Patterns
 
 ### Keyframe Animations
 
-```css:preview
+::: code-with-tooltips
+
+```css
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -266,9 +316,13 @@ body {
 }
 ```
 
+:::
+
 ### Transitions
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .button {
   transition: all 0.3s ease;
 
@@ -279,20 +333,28 @@ body {
 }
 ```
 
+:::
+
 ## Best Practices
 
 1. Use Logical Properties
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .element {
   margin-block: 1rem;
   padding-inline: 2rem;
 }
 ```
 
+:::
+
 2. Progressive Enhancement
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .grid {
   display: flex;
   flex-wrap: wrap;
@@ -304,9 +366,13 @@ body {
 }
 ```
 
+:::
+
 3. Accessibility
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .button:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
@@ -319,6 +385,8 @@ body {
   }
 }
 ```
+
+:::
 
 ## References
 

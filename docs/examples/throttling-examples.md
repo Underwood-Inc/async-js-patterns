@@ -19,7 +19,9 @@ This page demonstrates practical examples of implementing and using throttling p
 
 ## Basic Throttling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic throttle implementation
 function throttle<T extends (...args: any[]) => any>(
   func: T,
@@ -67,9 +69,13 @@ const handleScroll = throttle(
 window.addEventListener('scroll', handleScroll);
 ```
 
+:::
+
 ## Advanced Throttling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ThrottledFunction<T extends (...args: any[]) => any> {
   private timeoutId?: NodeJS.Timeout;
   private lastArgs?: Parameters<T>;
@@ -176,9 +182,13 @@ async function handleDataUpdate(data: any): Promise<void> {
 }
 ```
 
+:::
+
 ## Real-World Example: Rate Limited API Client
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class RateLimitedClient {
   private throttledRequests: Map<string, ThrottledFunction<any>> = new Map();
   private rateLimits: Map<string, RateLimit> = new Map();
@@ -311,6 +321,8 @@ try {
   console.error('Failed to fetch data:', error);
 }
 ```
+
+:::
 
 ## Best Practices
 

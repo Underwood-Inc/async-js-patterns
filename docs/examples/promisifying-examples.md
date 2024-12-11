@@ -19,7 +19,9 @@ This page demonstrates practical examples of converting callback-based APIs to P
 
 ## Basic Promisification
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic promisify implementation
 function promisify<T>(
   fn: (...args: any[]) => void
@@ -50,9 +52,13 @@ try {
 }
 ```
 
+:::
+
 ## Advanced Promisification
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class Promisifier {
   private static defaultOptions: PromisifyOptions = {
     multiArgs: false,
@@ -168,9 +174,13 @@ try {
 }
 ```
 
+:::
+
 ## Real-World Example: Legacy API Wrapper
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class LegacyApiWrapper {
   private api: LegacyApi;
   private promisified: Map<string, Function> = new Map();
@@ -324,6 +334,8 @@ async function getUserData(userId: number) {
   }
 }
 ```
+
+:::
 
 ## Best Practices
 

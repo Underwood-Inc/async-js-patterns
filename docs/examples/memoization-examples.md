@@ -19,7 +19,9 @@ This page demonstrates practical examples of implementing and using memoization 
 
 ## Basic Memoization
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic memoize implementation
 function memoize<T extends (...args: any[]) => any>(
   func: T,
@@ -78,9 +80,13 @@ console.log(expensiveOperation(5)); // Computes
 console.log(expensiveOperation(5)); // Uses cache
 ```
 
+:::
+
 ## Advanced Memoization
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class MemoizedFunction<T extends (...args: any[]) => any> {
   private cache: Map<
     string,
@@ -195,9 +201,13 @@ console.log(memoizedFib.execute(10));
 console.log(memoizedFib.getCacheStats());
 ```
 
+:::
+
 ## Real-World Example: API Response Caching
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class CachedApiClient {
   private memoizedRequests: Map<string, MemoizedFunction<any>> = new Map();
 
@@ -323,6 +333,8 @@ const freshUsers = await apiClient.request<User[]>('/users', {
 
 console.log('Cache stats:', apiClient.getCacheStats());
 ```
+
+:::
 
 ## Best Practices
 

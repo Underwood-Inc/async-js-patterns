@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "npm run generate:preview && vitepress build docs",
+    "docs:dev": "clear && vitepress dev docs",
+    "docs:build": "clear && npm run generate:preview && vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -23,7 +23,9 @@
     "postinstall": "npm run prepare",
     "generate:preview": "tsx docs/.vitepress/scripts/generatePreviewImage.ts",
     "test:theme": "vitest run docs/.vitepress/theme/__tests__",
-    "test:theme:watch": "vitest docs/.vitepress/theme/__tests__"
+    "test:theme:watch": "vitest docs/.vitepress/theme/__tests__",
+    "analyze-tooltips": "tsx docs/.vitepress/theme/utils/tooltipAnalyzer.ts",
+    "analyze-tooltips-full": "tsx docs/.vitepress/theme/utils/tooltipAnalyzer.ts --errors --stats"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -54,7 +56,8 @@
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
     "@eslint/js": "^8.56.0",
-    "@types/node": "^18.0.0",
+    "@types/markdown-it-container": "^2.0.10",
+    "@types/node": "^18.19.67",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
     "@vitejs/plugin-vue": "^5.0.0",
@@ -69,6 +72,7 @@
     "husky": "^9.0.0",
     "jsdom": "^25.0.1",
     "lint-staged": "^15.2.0",
+    "markdown-it-container": "^4.0.0",
     "markdownlint": "^0.33.0",
     "markdownlint-cli": "^0.39.0",
     "mermaid": "^11.4.1",
@@ -78,7 +82,7 @@
     "sass": "^1.82.0",
     "tsx": "^4.19.2",
     "typedoc": "^0.25.0",
-    "typescript": "~5.5.0",
+    "typescript": "~5.5.4",
     "unplugin-vue-macros": "^2.13.5",
     "vitepress": "^1.0.0",
     "vitepress-plugin-mermaid": "^2.0.13",
@@ -91,12 +95,15 @@
     }
   },
   "dependencies": {
+    "@types/markdown-it": "^14.1.2",
     "@typescript-eslint/typescript-estree": "^8.17.0",
     "@braintree/sanitize-url": "^7.1.0",
     "dayjs": "^1.11.10",
     "debug": "^4.4.0",
     "fuse.js": "^7.0.0",
-    "gray-matter": "^4.0.3"
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^14.1.0",
+    "shiki": "^1.24.2"
   },
   "packageManager": "pnpm@9.14.4+sha512.c8180b3fbe4e4bca02c94234717896b5529740a6cbadf19fa78254270403ea2f27d4e1d46a08a0f56c89b63dc8ebfd3ee53326da720273794e6200fcf0d184ab"
 }

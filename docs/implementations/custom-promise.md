@@ -26,7 +26,9 @@ and error handling.
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class CustomPromise<T> {
   private state: 'pending' | 'fulfilled' | 'rejected' = 'pending';
   private value: T | null = null;
@@ -178,11 +180,15 @@ class CustomPromise<T> {
 }
 ```
 
+:::
+
 ## Usage Examples
 
 ### Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 const promise = new CustomPromise<string>((resolve, reject) => {
   setTimeout(() => {
     if (Math.random() > 0.5) {
@@ -207,9 +213,13 @@ promise
   });
 ```
 
+:::
+
 ### Chaining Promises
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 const fetchUser = (id: string) =>
   new CustomPromise<{ id: string; name: string }>((resolve) => {
     setTimeout(() => {
@@ -237,9 +247,13 @@ fetchUser('123')
   });
 ```
 
+:::
+
 ### Error Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 const validateUser = (user: { age: number }) =>
   new CustomPromise<string>((resolve, reject) => {
     if (user.age < 18) {
@@ -259,6 +273,8 @@ validateUser({ age: 16 })
     return 'Invalid user';
   });
 ```
+
+:::
 
 ## Key Features
 

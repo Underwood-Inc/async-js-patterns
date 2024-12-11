@@ -19,7 +19,9 @@ This page demonstrates practical examples of implementing and using debouncing p
 
 ## Basic Debouncing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic debounce implementation
 function debounce<T extends (...args: any[]) => any>(
   func: T,
@@ -70,9 +72,13 @@ handleSearch('apple');
 // Only 'apple' will be logged after 300ms
 ```
 
+:::
+
 ## Advanced Debouncing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class DebouncedFunction<T extends (...args: any[]) => any> {
   private timeoutId?: NodeJS.Timeout;
   private lastArgs?: Parameters<T>;
@@ -188,9 +194,13 @@ async function handleSearchInput(event: InputEvent): Promise<void> {
 }
 ```
 
+:::
+
 ## Real-World Example: Form Validation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class FormValidator {
   private validators: Map<string, DebouncedFunction<any>> = new Map();
   private formState: Map<string, any> = new Map();
@@ -321,6 +331,8 @@ form?.addEventListener('submit', async (event) => {
   }
 });
 ```
+
+:::
 
 ## Best Practices
 

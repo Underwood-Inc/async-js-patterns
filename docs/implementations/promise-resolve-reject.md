@@ -26,7 +26,9 @@ performance monitoring, proper error handling, and support for thenable objects.
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { AsyncOperationError } from '../advanced/error-handling';
 import { PerformanceMonitor } from '../advanced/performance-monitoring';
 
@@ -73,11 +75,15 @@ function promiseReject<T = never>(reason?: any): Promise<T> {
 }
 ```
 
+:::
+
 ## Usage Examples
 
 ### Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Promise.resolve examples
 const immediate = Promise.resolve(42);
 const deferred = Promise.resolve(Promise.resolve('nested'));
@@ -92,9 +98,13 @@ const error = Promise.reject(new Error('Failed'));
 const reason = Promise.reject('Invalid input');
 ```
 
+:::
+
 ### Error Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ValidationError extends Error {
   constructor(
     message: string,
@@ -133,9 +143,13 @@ validateData(null)
   });
 ```
 
+:::
+
 ### Thenable Objects
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class AsyncResult<T> {
   constructor(
     private value: T,
@@ -157,6 +171,8 @@ class AsyncResult<T> {
 const result = new AsyncResult('Hello', 1000);
 Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' after 1 second
 ```
+
+:::
 
 ## Key Features
 
@@ -335,7 +351,9 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 ## Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 describe('Promise.resolve and Promise.reject', () => {
   describe('Promise.resolve', () => {
     it('should resolve with value', async () => {
@@ -383,3 +401,5 @@ describe('Promise.resolve and Promise.reject', () => {
   });
 });
 ```
+
+:::

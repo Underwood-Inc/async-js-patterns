@@ -20,14 +20,20 @@ Puppeteer is a Node.js library that provides a high-level API to control Chrome/
 
 ## Getting Started
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install Puppeteer
 npm install puppeteer
 ```
 
+:::
+
 ## Basic Test Structure
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 const puppeteer = require('puppeteer');
 
 describe('Homepage', () => {
@@ -54,9 +60,13 @@ describe('Homepage', () => {
 });
 ```
 
+:::
+
 ## Common Operations
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Navigation
 await page.goto('https://example.com');
 await page.goBack();
@@ -84,11 +94,15 @@ await page.screenshot({ path: 'screenshot.png' });
 await page.pdf({ path: 'page.pdf', format: 'A4' });
 ```
 
+:::
+
 ## Core Concepts
 
 ### Browser Setup
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 const puppeteer = require('puppeteer');
 
 // Launch browser
@@ -106,9 +120,13 @@ await page.setViewport({ width: 1920, height: 1080 });
 await page.setRequestInterception(true);
 ```
 
+:::
+
 ### Navigation
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Basic navigation
 await page.goto('https://example.com', {
   waitUntil: 'networkidle0',
@@ -124,9 +142,13 @@ await page.goForward();
 await page.reload();
 ```
 
+:::
+
 ### Element Selection
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Selectors
 const button = await page.$('.button');
 const buttons = await page.$$('.button');
@@ -143,11 +165,15 @@ await page.waitForSelector('.dynamic-content');
 await page.waitForXPath('//button[contains(text(), "Submit")]');
 ```
 
+:::
+
 ## Advanced Features
 
 ### Page Interactions
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Mouse events
 await page.mouse.move(100, 200);
 await page.mouse.down();
@@ -166,9 +192,13 @@ const input = await page.$('input[type="file"]');
 await input.uploadFile('path/to/file.jpg');
 ```
 
+:::
+
 ### Network Monitoring
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Monitor requests
 page.on('request', (request) => {
   console.log(`Request: ${request.url()}`);
@@ -194,9 +224,13 @@ page.on('request', (request) => {
 });
 ```
 
+:::
+
 ### JavaScript Execution
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Execute in page context
 const dimensions = await page.evaluate(() => {
   return {
@@ -217,11 +251,15 @@ await page.addScriptTag({
 });
 ```
 
+:::
+
 ## Testing Patterns
 
 ### Screenshot Capture
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Full page screenshot
 await page.screenshot({
   path: 'screenshot.png',
@@ -242,19 +280,27 @@ await page.pdf({
 });
 ```
 
+:::
+
 ### Performance Monitoring
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Enable CPU and memory profiling
 const client = await page.target().createCDPSession();
 await client.send('Performance.enable');
 ```
 
+:::
+
 ## Advanced Testing
 
 ### Mobile Emulation
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Emulate device
 const iPhone = puppeteer.devices['iPhone 12'];
 await page.emulate(iPhone);
@@ -274,9 +320,13 @@ await page.emulateNetworkConditions({
 });
 ```
 
+:::
+
 ### Visual Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 const { toMatchImageSnapshot } = require('jest-image-snapshot');
 expect.extend({ toMatchImageSnapshot });
 
@@ -299,9 +349,13 @@ describe('Visual regression', () => {
 });
 ```
 
+:::
+
 ### API Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 describe('API integration', () => {
   it('should intercept API calls', async () => {
     // Mock API response
@@ -325,11 +379,15 @@ describe('API integration', () => {
 });
 ```
 
+:::
+
 ## Best Practices
 
 ### 1. Element Selection
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // ❌ Avoid
 await page.$('.button:nth-child(2)');
 await page.$('div.btn');
@@ -340,9 +398,13 @@ await page.$('#login-button');
 await page.$('button[aria-label="Submit"]');
 ```
 
+:::
+
 ### 2. Waiting Strategies
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // ❌ Avoid
 await page.waitFor(5000);
 
@@ -356,9 +418,13 @@ await page.waitForNavigation({
 });
 ```
 
+:::
+
 ### 3. Error Handling
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 try {
   await page.click('.non-existent');
 } catch (error) {
@@ -378,9 +444,13 @@ try {
 }
 ```
 
+:::
+
 ### 4. Resource Management
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 let browser;
 let page;
 
@@ -402,3 +472,5 @@ afterAll(async () => {
   await browser.close();
 });
 ```
+
+:::

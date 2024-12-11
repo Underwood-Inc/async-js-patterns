@@ -19,7 +19,9 @@ This page demonstrates practical examples of optimizing asynchronous operations 
 
 ## Stream Processing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Efficient stream processing
 import { Transform, pipeline } from 'stream';
 import { promisify } from 'util';
@@ -79,9 +81,13 @@ await processLargeFile(inputStream, outputStream, async (record) => {
 });
 ```
 
+:::
+
 ## Worker Threads Pool
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { Worker } from 'worker_threads';
 import { cpus } from 'os';
 
@@ -214,9 +220,13 @@ const results = await Promise.all([
 await pool.shutdown();
 ```
 
+:::
+
 ## Real-World Example: Batch Processing Service
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class BatchProcessor {
   private workerPool: WorkerPool;
   private streamProcessor: ChunkProcessor;
@@ -332,6 +342,8 @@ console.log('Processing metrics:', processor.getMetrics());
 
 await processor.shutdown();
 ```
+
+:::
 
 ## Best Practices
 

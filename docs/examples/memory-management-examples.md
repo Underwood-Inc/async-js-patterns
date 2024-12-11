@@ -19,7 +19,9 @@ This page demonstrates practical examples of managing memory efficiently in asyn
 
 ## Object Pool
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Generic object pool implementation
 class ObjectPool<T> {
   private available: T[] = [];
@@ -94,9 +96,13 @@ async function processData(data: Buffer): Promise<void> {
 }
 ```
 
+:::
+
 ## WeakRef Cache
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class WeakCache<K extends object, V> {
   private cache = new Map<
     WeakRef<K>,
@@ -160,9 +166,13 @@ async function processResource(
 }
 ```
 
+:::
+
 ## Real-World Example: Memory-Efficient Data Processing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class DataProcessor {
   private bufferPool: ObjectPool<Buffer>;
   private cache: WeakCache<DataChunk, ProcessedResult>;
@@ -271,6 +281,8 @@ const results = await processor.processChunks(chunks);
 
 console.log('Processing metrics:', processor.getMetrics());
 ```
+
+:::
 
 ## Best Practices
 

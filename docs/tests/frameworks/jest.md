@@ -19,14 +19,20 @@ Jest is a delightful JavaScript testing framework with a focus on simplicity and
 
 ## Getting Started
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install Jest
 npm install --save-dev jest
 ```
 
+:::
+
 ## Basic Test Structure
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 describe('string utilities', () => {
   test('concatenates strings correctly', () => {
     expect('Hello' + ' ' + 'World').toBe('Hello World');
@@ -38,9 +44,13 @@ describe('string utilities', () => {
 });
 ```
 
+:::
+
 ## Common Matchers
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Exact equality
 expect(2 + 2).toBe(4);
 
@@ -63,11 +73,15 @@ expect('team').toMatch(/tea/);
 expect(['apple', 'banana']).toContain('apple');
 ```
 
+:::
+
 ## Configuration
 
 ### Jest Configuration File
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // jest.config.js
 module.exports = {
   testEnvironment: 'node',
@@ -81,11 +95,15 @@ module.exports = {
 };
 ```
 
+:::
+
 ## Advanced Features
 
 ### Mock Functions
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 test('mock implementation', () => {
   const mock = jest
     .fn()
@@ -107,9 +125,13 @@ jest.mock('./math', () => ({
 }));
 ```
 
+:::
+
 ### Async Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Promises
 test('resolves to user', () => {
   return expect(fetchUser(1)).resolves.toEqual({
@@ -138,9 +160,13 @@ test('callbacks', (done) => {
 });
 ```
 
+:::
+
 ### Snapshot Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 test('renders correctly', () => {
   const tree = renderer.create(<Component />).toJSON();
   expect(tree).toMatchSnapshot();
@@ -156,11 +182,15 @@ test('inline snapshot', () => {
 });
 ```
 
+:::
+
 ## Testing React Components
 
 ### Component Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -183,9 +213,13 @@ test('form submission', async () => {
 });
 ```
 
+:::
+
 ### Context Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Context definition
 interface UserContextType {
   user: {
@@ -289,7 +323,11 @@ describe('UserProfile with changing context', () => {
 });
 ```
 
+:::
+
 ### Custom Hooks Testing
+
+::: code-with-tooltips
 
 ```typescript
 // Type definitions
@@ -382,11 +420,15 @@ describe('CurrentUserProfile with typed mock', () => {
 });
 ```
 
+:::
+
 ## Test Organization
 
 ### Test Suites
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 describe('Calculator', () => {
   let calculator;
 
@@ -412,9 +454,13 @@ describe('Calculator', () => {
 });
 ```
 
+:::
+
 ### Test Lifecycle
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 beforeAll(() => {
   // Setup before all tests
   return initializeDatabase();
@@ -436,11 +482,15 @@ afterEach(() => {
 });
 ```
 
+:::
+
 ## Performance Optimization
 
 ### Test Filtering
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Run specific tests
 jest path/to/test.js
 jest -t "test name"
@@ -452,9 +502,13 @@ jest --updateSnapshot
 jest --onlyChanged
 ```
 
+:::
+
 ### Parallel Execution
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Run tests in parallel
 jest --maxWorkers=4
 
@@ -462,11 +516,15 @@ jest --maxWorkers=4
 jest --runInBand
 ```
 
+:::
+
 ## Debugging
 
 ### Interactive Mode
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Watch mode
 jest --watch
 
@@ -474,9 +532,13 @@ jest --watch
 jest --watchAll
 ```
 
+:::
+
 ### Debugging Tests
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 test('debug example', () => {
   debugger;
   const result = someFunction();
@@ -490,6 +552,8 @@ test('console debug', () => {
 });
 ```
 
+:::
+
 ## Best Practices
 
 ### 1. Test Structure
@@ -500,7 +564,9 @@ test('console debug', () => {
 
 ### 2. Naming Conventions
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 describe('ProductService', () => {
   test('should create new product with valid data', () => {
     // Test implementation
@@ -512,9 +578,13 @@ describe('ProductService', () => {
 });
 ```
 
+:::
+
 ### 3. Mocking Best Practices
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Mock specific methods
 jest.spyOn(object, 'method').mockImplementation(() => 'mocked');
 
@@ -529,9 +599,13 @@ beforeEach(() => {
 });
 ```
 
+:::
+
 ### 4. Coverage Goals
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Generate coverage report
 jest --coverage
 
@@ -545,3 +619,5 @@ jest --coverage --coverageThreshold='{
   }
 }'
 ```
+
+:::

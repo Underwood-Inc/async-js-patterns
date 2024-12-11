@@ -19,7 +19,9 @@ This page demonstrates practical examples of executing tasks in parallel while m
 
 ## Basic Parallel Execution
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic parallel task execution
 async function executeInParallel<T>(
   tasks: Array<() => Promise<T>>
@@ -47,9 +49,13 @@ const results = await executeInParallel(tasks);
 console.log('All tasks completed:', results);
 ```
 
+:::
+
 ## Concurrent Task Queue
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class TaskQueue {
   private queue: Array<() => Promise<any>> = [];
   private running = 0;
@@ -106,9 +112,13 @@ queue.add(async () => fetchUserData('4'));
 const results = await queue.run();
 ```
 
+:::
+
 ## Batch Processing with Concurrency
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class BatchProcessor {
   constructor(private readonly concurrency: number = 3) {}
 
@@ -179,9 +189,13 @@ const results = await processor.processBatch(
 );
 ```
 
+:::
+
 ## Real-World Example: Parallel Data Processing Pipeline
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class DataProcessingPipeline {
   private readonly stages: ProcessingStage[];
   private readonly maxConcurrency: number;
@@ -327,6 +341,8 @@ try {
   console.error('Pipeline failed:', error);
 }
 ```
+
+:::
 
 ## Best Practices
 

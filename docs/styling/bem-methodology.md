@@ -25,7 +25,9 @@ BEM (Block Element Modifier) is a naming convention methodology that helps creat
 
 A standalone entity that is meaningful on its own.
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .block {
   /* styles */
 }
@@ -39,11 +41,15 @@ A standalone entity that is meaningful on its own.
 }
 ```
 
+:::
+
 ### Element
 
 A part of a block that has no standalone meaning and is semantically tied to its block.
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .block__element {
   /* styles */
 }
@@ -57,11 +63,15 @@ A part of a block that has no standalone meaning and is semantically tied to its
 }
 ```
 
+:::
+
 ### Modifier
 
 A flag on a block or element that changes appearance or behavior.
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .block--modifier {
   /* styles */
 }
@@ -79,11 +89,15 @@ A flag on a block or element that changes appearance or behavior.
 }
 ```
 
+:::
+
 ## Implementation Examples
 
 ### Basic Structure
 
-```html:preview
+::: code-with-tooltips
+
+```html
 <nav class="menu">
   <ul class="menu__list">
     <li class="menu__item">
@@ -96,7 +110,11 @@ A flag on a block or element that changes appearance or behavior.
 </nav>
 ```
 
-```css:preview
+:::
+
+::: code-with-tooltips
+
+```css
 .menu {
   background: #fff;
 }
@@ -121,9 +139,13 @@ A flag on a block or element that changes appearance or behavior.
 }
 ```
 
+:::
+
 ### Complex Component
 
-```html:preview
+::: code-with-tooltips
+
+```html
 <form class="search-form search-form--dark">
   <div class="search-form__field">
     <input class="search-form__input" type="text" />
@@ -140,7 +162,11 @@ A flag on a block or element that changes appearance or behavior.
 </form>
 ```
 
-```css:preview
+:::
+
+::: code-with-tooltips
+
+```css
 .search-form {
   padding: 1rem;
 }
@@ -180,6 +206,8 @@ A flag on a block or element that changes appearance or behavior.
 }
 ```
 
+:::
+
 ## Best Practices
 
 ### 1. Naming Conventions
@@ -201,7 +229,9 @@ A flag on a block or element that changes appearance or behavior.
 - Use key-value modifiers when a value is needed
 - Keep modifier names short but descriptive
 
-```css:preview
+::: code-with-tooltips
+
+```css
 /* Boolean modifier */
 .button--disabled {
 }
@@ -213,9 +243,13 @@ A flag on a block or element that changes appearance or behavior.
 }
 ```
 
+:::
+
 ### 4. File Organization
 
-```txt:preview
+::: code-with-tooltips
+
+```txt
 styles/
   blocks/
     menu/
@@ -228,23 +262,31 @@ styles/
       search-form__button.css
 ```
 
+:::
+
 ## Common Patterns
 
 ### 1. Mix Pattern
 
 Combining multiple BEM entities on a single DOM node.
 
-```html:preview
+::: code-with-tooltips
+
+```html
 <div class="header__logo logo">
   <!-- logo is a block, header__logo is an element -->
 </div>
 ```
 
+:::
+
 ### 2. Element State Pattern
 
 Using modifiers to represent element states.
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .form__input--invalid {
   border-color: red;
 }
@@ -254,11 +296,15 @@ Using modifiers to represent element states.
 }
 ```
 
+:::
+
 ### 3. Responsive Pattern
 
 Using modifiers for responsive variations.
 
-```css:preview
+::: code-with-tooltips
+
+```css
 .grid {
   display: grid;
 }
@@ -273,6 +319,8 @@ Using modifiers for responsive variations.
   }
 }
 ```
+
+:::
 
 ## References
 

@@ -25,7 +25,9 @@ TypeScript provides powerful type checking for array operations. This guide cove
 
 ### Filter with Type Predicates
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Type predicate for non-null values
 function isNonNull<T>(value: T | null | undefined): value is T {
   return value !== null && value !== undefined;
@@ -36,9 +38,13 @@ const items: (string | null)[] = ['a', null, 'b', undefined, 'c'];
 const nonNullItems: string[] = items.filter(isNonNull);
 ```
 
+:::
+
 ### Map with Type Inference
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Type-safe mapper
 function mapToNumbers<T>(array: T[], mapper: (item: T) => number): number[] {
   return array.map(mapper);
@@ -49,9 +55,13 @@ const strings = ['1', '2', '3'];
 const numbers = mapToNumbers(strings, (str) => parseInt(str, 10));
 ```
 
+:::
+
 ### Reduce with Accumulator Types
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface GroupedItems<T> {
   [key: string]: T[];
 }
@@ -67,11 +77,15 @@ function groupBy<T>(items: T[], keyFn: (item: T) => string): GroupedItems<T> {
 }
 ```
 
+:::
+
 ## Array Utility Functions
 
 ### Safe Array Access
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function safeGet<T>(array: T[], index: number, defaultValue: T): T {
   return index >= 0 && index < array.length ? array[index] : defaultValue;
 }
@@ -81,9 +95,13 @@ const arr = [1, 2, 3];
 const value = safeGet(arr, 5, 0); // Returns 0
 ```
 
+:::
+
 ### Chunk Array
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function chunk<T>(array: T[], size: number): T[][] {
   return array.reduce((chunks, item, index) => {
     const chunkIndex = Math.floor(index / size);
@@ -102,9 +120,13 @@ const items = [1, 2, 3, 4, 5];
 const chunks = chunk(items, 2); // [[1, 2], [3, 4], [5]]
 ```
 
+:::
+
 ### Unique Values
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function unique<T>(array: T[]): T[] {
   return Array.from(new Set(array));
 }
@@ -118,11 +140,15 @@ function uniqueBy<T>(array: T[], comparator: (a: T, b: T) => boolean): T[] {
 }
 ```
 
+:::
+
 ## Type-Safe Array Transformations
 
 ### Tuple Types
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type Tuple<T, N extends number> = N extends N
   ? number extends N
     ? T[]
@@ -146,9 +172,13 @@ function createTuple<T, N extends number>(value: T, length: N): Tuple<T, N> {
 const tuple = createTuple('x', 3); // type is [string, string, string]
 ```
 
+:::
+
 ### Array Element Types
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type ArrayElement<T> = T extends (infer U)[] ? U : never;
 
 // Usage
@@ -158,6 +188,8 @@ type Number = ArrayElement<Numbers>; // type is number
 type Mixed = (string | number)[];
 type MixedElement = ArrayElement<Mixed>; // type is string | number
 ```
+
+:::
 
 ## Best Practices
 
@@ -193,7 +225,9 @@ type MixedElement = ArrayElement<Mixed>; // type is string | number
 
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface User {
   id: number;
   name: string;
@@ -238,6 +272,8 @@ class UserCollection {
   }
 }
 ```
+
+:::
 
 ## References
 

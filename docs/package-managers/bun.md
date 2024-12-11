@@ -9,7 +9,9 @@ Bun is an all-in-one JavaScript runtime and package manager that focuses on perf
 
 ## Installation
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Using curl (macOS, Linux)
 curl -fsSL https://bun.sh/install | bash
 
@@ -21,11 +23,15 @@ brew install bun
 bun --version
 ```
 
+:::
+
 ## Key Commands
 
 ### Project Initialization
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Create a new project
 bun init
 
@@ -33,9 +39,13 @@ bun init
 bun init -y
 ```
 
+:::
+
 ### Package Installation
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install all dependencies
 bun install
 
@@ -52,9 +62,13 @@ bun add -g package-name
 bun add package-name@version
 ```
 
+:::
+
 ### Package Management
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Update packages
 bun update
 
@@ -68,9 +82,13 @@ bun pm ls
 bun outdated
 ```
 
+:::
+
 ### Scripts
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Run a script
 bun run script-name
 
@@ -83,11 +101,15 @@ bun run build
 bun index.ts
 ```
 
+:::
+
 ## Configuration
 
 ### Bun Configuration File (`bunfig.toml`)
 
-```toml:preview
+::: code-with-tooltips
+
+```toml
 # Set registry
 registry = "https://registry.npmjs.org"
 
@@ -100,9 +122,13 @@ install.frozen = true
 install.production = false
 ```
 
+:::
+
 ### package.json
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "name": "my-project",
   "version": "1.0.0",
@@ -121,11 +147,15 @@ install.production = false
 }
 ```
 
+:::
+
 ## Runtime Features
 
 ### HTTP Server
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 const server = Bun.serve({
   port: 3000,
   fetch(req) {
@@ -136,9 +166,13 @@ const server = Bun.serve({
 console.log(`Listening on http://localhost:${server.port}`);
 ```
 
+:::
+
 ### File Operations
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Read file
 const file = await Bun.file('file.txt');
 const text = await file.text();
@@ -150,9 +184,13 @@ await Bun.write('output.txt', 'Hello World');
 const json = await Bun.file('data.json').json();
 ```
 
+:::
+
 ### Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { expect, test, describe } from 'bun:test';
 
 describe('math', () => {
@@ -162,11 +200,15 @@ describe('math', () => {
 });
 ```
 
+:::
+
 ## Bundler
 
 Bun includes a built-in bundler:
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Bundle for production
 bun build ./index.ts --outdir ./dist
 
@@ -176,6 +218,8 @@ bun build ./index.ts --minify
 # Watch mode
 bun build ./index.ts --watch
 ```
+
+:::
 
 ## Best Practices
 
@@ -210,15 +254,21 @@ bun build ./index.ts --watch
 
 ### Node.js Compatibility
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Use Node.js compatibility mode
 process.version; // v18.0.0
 process.versions.bun; // actual Bun version
 ```
 
+:::
+
 ### Package Resolution
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Force reinstall packages
 bun install --force
 
@@ -226,9 +276,13 @@ bun install --force
 bun pm cache rm
 ```
 
+:::
+
 ### TypeScript Setup
 
-```jsonc:preview
+::: code-with-tooltips
+
+```jsonc
 // tsconfig.json
 {
   "compilerOptions": {
@@ -237,11 +291,15 @@ bun pm cache rm
 }
 ```
 
+:::
+
 ## Advanced Features
 
 ### WebSocket Server
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 const server = Bun.serve({
   fetch(req, server) {
     if (server.upgrade(req)) {
@@ -257,9 +315,13 @@ const server = Bun.serve({
 });
 ```
 
+:::
+
 ### Environment Variables
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Load .env file
 const env = await Bun.file('.env').text();
 Bun.env = { ...Bun.env, ...parse(env) };
@@ -268,9 +330,13 @@ Bun.env = { ...Bun.env, ...parse(env) };
 const port = Bun.env.PORT || 3000;
 ```
 
+:::
+
 ### SQLite Integration
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { Database } from 'bun:sqlite';
 
 const db = new Database('mydb.sqlite');
@@ -278,9 +344,13 @@ const query = db.query('SELECT * FROM users WHERE id = $id');
 const user = query.get({ $id: 1 });
 ```
 
+:::
+
 ### Hot Reloading
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Enable hot reloading
 const server = Bun.serve({
   development: true,
@@ -289,5 +359,7 @@ const server = Bun.serve({
   },
 });
 ```
+
+:::
 
 More content coming soon...

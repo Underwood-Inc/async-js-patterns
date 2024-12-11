@@ -2,6 +2,7 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { fileURLToPath, URL } from 'node:url';
 import { resolve } from 'path';
+import { getHighlighter } from 'shiki';
 import { defineConfig } from 'vitepress';
 import { readingTime } from './plugins/readingTime';
 import { typescriptPlugin } from './plugins/typescript';

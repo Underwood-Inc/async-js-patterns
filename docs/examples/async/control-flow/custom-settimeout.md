@@ -20,7 +20,9 @@ Learn how to create and use custom setTimeout implementations with advanced feat
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Promise-based setTimeout
 function setTimeoutAsync(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -53,11 +55,15 @@ async function withTimeout<T>(
 }
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### Recursive setTimeout
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class RecursiveTimeout {
   private timeoutId: NodeJS.Timeout | null = null;
   private startTime: number = 0;
@@ -117,9 +123,13 @@ class RecursiveTimeout {
 }
 ```
 
+:::
+
 ### Priority Queue Timeout
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface TimeoutTask {
   id: string;
   callback: () => void;
@@ -206,9 +216,13 @@ class PriorityTimeout {
 }
 ```
 
+:::
+
 ### Adaptive Timeout
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface AdaptiveTimeoutOptions {
   initialDelay: number;
   minDelay: number;
@@ -299,3 +313,5 @@ class AdaptiveTimeout {
   }
 }
 ```
+
+:::

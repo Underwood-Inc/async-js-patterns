@@ -20,7 +20,9 @@ Learn how to create and use custom setInterval implementations with advanced fea
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Promise-based interval
 function setIntervalAsync(
   callback: () => Promise<void>,
@@ -65,11 +67,15 @@ function setIntervalWithLimit(
 }
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### Dynamic Interval
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class DynamicInterval {
   private intervalId: NodeJS.Timeout | null = null;
   private currentDelay: number;
@@ -123,9 +129,13 @@ const interval = new DynamicInterval(
 );
 ```
 
+:::
+
 ### Precise Interval
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class PreciseInterval {
   private intervalId: NodeJS.Timeout | null = null;
   private startTime: number = 0;
@@ -173,9 +183,13 @@ class PreciseInterval {
 }
 ```
 
+:::
+
 ### Throttled Interval
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface ThrottleOptions {
   minDelay: number;
   maxDelay: number;
@@ -264,9 +278,13 @@ class ThrottledInterval {
 }
 ```
 
+:::
+
 ### Batch Interval
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface BatchIntervalOptions<T> {
   delay: number;
   maxBatchSize: number;
@@ -333,3 +351,5 @@ class BatchInterval<T> {
   }
 }
 ```
+
+:::

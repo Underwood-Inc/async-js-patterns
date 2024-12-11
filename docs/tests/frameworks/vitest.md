@@ -19,14 +19,20 @@ Vitest is a next-generation testing framework designed for Vite-based applicatio
 
 ## Getting Started
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install Vitest
 npm install -D vitest
 ```
 
+:::
+
 ## Basic Test Structure
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { describe, it, expect } from 'vitest';
 
 describe('calculator', () => {
@@ -36,9 +42,13 @@ describe('calculator', () => {
 });
 ```
 
+:::
+
 ## Configuration
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // vitest.config.ts
 import { defineConfig } from 'vitest/config';
 
@@ -56,11 +66,15 @@ export default defineConfig({
 });
 ```
 
+:::
+
 ## Advanced Features
 
 ### Mocking
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { vi } from 'vitest';
 
 const mock = vi.fn();
@@ -78,9 +92,13 @@ vi.mock('./path/to/module', () => {
 });
 ```
 
+:::
+
 ### Snapshot Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 it('matches snapshot', () => {
   const user = {
     name: 'John',
@@ -90,9 +108,13 @@ it('matches snapshot', () => {
 });
 ```
 
+:::
+
 ### Test Coverage
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Run tests with coverage
 vitest run --coverage
 
@@ -100,9 +122,13 @@ vitest run --coverage
 vitest --coverage
 ```
 
+:::
+
 ### Custom Matchers
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 expect.extend({
   toBeWithinRange(received, floor, ceiling) {
     const pass = received >= floor && received <= ceiling;
@@ -119,11 +145,15 @@ test('custom matcher', () => {
 });
 ```
 
+:::
+
 ## Integration with Other Tools
 
 ### TypeScript
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // vitest.config.ts
 import { defineConfig } from 'vitest/config';
 
@@ -136,9 +166,13 @@ export default defineConfig({
 });
 ```
 
+:::
+
 ### React Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { render, screen } from '@testing-library/react'
 import { test, expect } from 'vitest'
 import MyComponent from './MyComponent'
@@ -149,9 +183,13 @@ test('renders component', () => {
 })
 ```
 
+:::
+
 ### Vue Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { mount } from '@vue/test-utils';
 import { test, expect } from 'vitest';
 import MyComponent from './MyComponent.vue';
@@ -162,11 +200,15 @@ test('renders component', () => {
 });
 ```
 
+:::
+
 ## Best Practices
 
 ### 1. Test Organization
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 describe('UserService', () => {
   describe('authentication', () => {
     it('logs in user', async () => {
@@ -186,9 +228,13 @@ describe('UserService', () => {
 });
 ```
 
+:::
+
 ### 2. Setup and Teardown
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 describe('Database tests', () => {
   beforeAll(async () => {
     await db.connect();
@@ -208,18 +254,26 @@ describe('Database tests', () => {
 });
 ```
 
+:::
+
 ### 3. Async Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test('async operations', async () => {
   await expect(Promise.resolve(42)).resolves.toBe(42);
   await expect(Promise.reject('error')).rejects.toBe('error');
 });
 ```
 
+:::
+
 ### 4. Test Isolation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test.each([
   { input: 1, expected: 2 },
   { input: 2, expected: 4 },
@@ -229,28 +283,40 @@ test.each([
 });
 ```
 
+:::
+
 ## Performance Tips
 
 ### 1. Parallel Execution
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 vitest --threads false  # Disable threading
 vitest --pool threads  # Use thread pool
 vitest --pool forks   # Use process pool
 ```
 
+:::
+
 ### 2. Test Filtering
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Run specific tests
 vitest basic.test.ts
 vitest "test name"
 vitest -t "test pattern"
 ```
 
+:::
+
 ### 3. Watch Mode Optimization
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // vitest.config.ts
 export default defineConfig({
   test: {
@@ -262,11 +328,15 @@ export default defineConfig({
 });
 ```
 
+:::
+
 ## Debugging
 
 ### Using Debug Mode
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Start in debug mode
 vitest --debug
 
@@ -274,18 +344,26 @@ vitest --debug
 vitest --debug --port 9229
 ```
 
+:::
+
 ### Console Output
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test('debugging', () => {
   console.log('Debug info:', someValue);
   expect(someValue).toBeDefined();
 });
 ```
 
+:::
+
 ### Browser Debugging
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // vitest.config.ts
 export default defineConfig({
   test: {
@@ -297,3 +375,5 @@ export default defineConfig({
   },
 });
 ```
+
+:::

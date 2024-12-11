@@ -81,15 +81,22 @@ const socialLinks = [
   z-index: var(--vp-z-index-footer);
   border-top: 1px solid var(--vp-c-divider);
   background-color: var(--vp-c-bg-soft);
-  padding: 0 24px;
+  width: 100%;
+
+  // Default state (no sidebar)
+  padding-left: 1.5rem;
+
+  // When sidebar is present
+  &[data-has-sidebar="true"] {
+    @media (min-width: 960px) {
+      padding-left: calc(var(--vp-sidebar-width) + 1.5rem);
+    }
+  }
 
   .container {
     margin: 0 auto;
     padding: 32px 24px;
     max-width: var(--vp-layout-max-width);
-  }
-
-  &.has-sidebar {
     padding-left: calc(var(--vp-sidebar-width) + 32px);
   }
 
@@ -98,6 +105,11 @@ const socialLinks = [
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
+    margin: 0 auto;
+    
+    @media (max-width: 959px) {
+      max-width: var(--vp-layout-max-width);
+    }
   }
 
   .footer-links {

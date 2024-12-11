@@ -20,14 +20,20 @@ WebdriverIO is a test automation framework that allows you to run tests with ove
 
 ## Getting Started
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Create a new WebdriverIO project
 npm init wdio@latest
 ```
 
+:::
+
 ## Basic Test Structure
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 describe('My Login application', () => {
   beforeEach(async () => {
     await browser.url('/login');
@@ -44,9 +50,13 @@ describe('My Login application', () => {
 });
 ```
 
+:::
+
 ## Common Commands
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Navigation
 await browser.url('https://example.com');
 await browser.back();
@@ -79,9 +89,13 @@ await browser.waitUntil(
 await browser.saveScreenshot('./screenshot.png');
 ```
 
+:::
+
 ## Page Objects
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 class LoginPage {
   get username() {
     return $('#username');
@@ -108,9 +122,13 @@ class LoginPage {
 export default new LoginPage();
 ```
 
+:::
+
 ## Configuration Example
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // wdio.conf.js
 export const config = {
   specs: ['./test/specs/**/*.js'],
@@ -134,11 +152,15 @@ export const config = {
 };
 ```
 
+:::
+
 ## Core Concepts
 
 ### Configuration
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // wdio.conf.js
 export const config = {
   specs: ['./test/specs/**/*.js'],
@@ -165,9 +187,13 @@ export const config = {
 };
 ```
 
+:::
+
 ### Element Interactions
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Basic interactions
 await $('#button').click();
 await $('input').setValue('text');
@@ -184,9 +210,13 @@ for (const link of links) {
 }
 ```
 
+:::
+
 ### Selectors
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // CSS selectors
 await $('#id');
 await $('.class');
@@ -201,11 +231,15 @@ await $('android=UiSelector().text("text")');
 await $('ios=predicate=name == "example"');
 ```
 
+:::
+
 ## Advanced Features
 
 ### Page Objects
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // pages/login.page.js
 class LoginPage {
   get username() {
@@ -244,9 +278,13 @@ describe('Login', () => {
 });
 ```
 
+:::
+
 ### Custom Commands
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // Custom browser command
 browser.addCommand('getUrlAndTitle', async function () {
   return {
@@ -270,9 +308,13 @@ const result = await browser.getUrlAndTitle();
 await $('#button').waitAndClick();
 ```
 
+:::
+
 ### Service Integration
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // wdio.conf.js
 import allure from '@wdio/allure-reporter';
 
@@ -303,11 +345,15 @@ export const config = {
 };
 ```
 
+:::
+
 ## Testing Patterns
 
 ### Visual Regression
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 describe('Visual regression', () => {
   it('should match homepage screenshot', async () => {
     await browser.url('/');
@@ -323,9 +369,13 @@ describe('Visual regression', () => {
 });
 ```
 
+:::
+
 ### API Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 describe('API integration', () => {
   it('should create user via API', async () => {
     const response = await browser.call(async () => {
@@ -348,9 +398,13 @@ describe('API integration', () => {
 });
 ```
 
+:::
+
 ### Mobile Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 describe('Mobile app', () => {
   it('should handle touch gestures', async () => {
     // Tap
@@ -375,11 +429,15 @@ describe('Mobile app', () => {
 });
 ```
 
+:::
+
 ## Performance Testing
 
 ### Metrics Collection
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 describe('Performance', () => {
   it('should measure page load metrics', async () => {
     // Enable performance monitoring
@@ -399,9 +457,13 @@ describe('Performance', () => {
 });
 ```
 
+:::
+
 ### Network Interception
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 describe('Network', () => {
   it('should mock API responses', async () => {
     // Mock response
@@ -424,11 +486,15 @@ describe('Network', () => {
 });
 ```
 
+:::
+
 ## Best Practices
 
 ### 1. Selectors
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // ❌ Avoid
 await $('button:nth-child(2)');
 await $('div.btn-class');
@@ -439,9 +505,13 @@ await $('[data-testid="submit"]');
 await $('~accessibility-id');
 ```
 
+:::
+
 ### 2. Waits
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // ❌ Avoid
 await browser.pause(5000);
 
@@ -451,9 +521,13 @@ await $('#element').waitForClickable();
 await expect($('#element')).toBePresent();
 ```
 
+:::
+
 ### 3. Error Handling
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 describe('Error handling', () => {
   it('should handle test failures', async () => {
     try {
@@ -467,9 +541,13 @@ describe('Error handling', () => {
 });
 ```
 
+:::
+
 ### 4. Test Organization
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // hooks.js
 export const config = {
   before: async () => {
@@ -493,3 +571,5 @@ export const config = {
   },
 };
 ```
+
+:::

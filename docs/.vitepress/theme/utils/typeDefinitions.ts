@@ -1,18 +1,22 @@
+export interface TypeColors {
+  keyword: { text: string; background: string };
+  primitive: { text: string; background: string };
+  'built-in': { text: string; background: string };
+  'type-signature': { text: string; background: string };
+}
 // Type definition for type information entries
-export interface TypeInfo {
+export interface TypeInfo extends Partial<TypeColors> {
   description: string;
   type?: string;
-  color?: {
-    text: string;
-    background: string;
-  };
+  signature?: TypeSignature;
+  [key: string]: any; // Allows additional custom properties
 }
 
 // Type definition for the type information record
 export type TypeInfoRecord = Record<string, TypeInfo>;
 
 // Define color schemes for different types
-export const typeColors = {
+export const typeColors: TypeColors = {
   keyword: {
     text: '#c678dd',
     background: 'rgba(198, 120, 221, 0.1)',
@@ -22,6 +26,10 @@ export const typeColors = {
     background: 'rgba(229, 192, 123, 0.1)',
   },
   'built-in': {
+    text: '#56b6c2',
+    background: 'rgba(86, 182, 194, 0.1)',
+  },
+  'type-signature': {
     text: '#56b6c2',
     background: 'rgba(86, 182, 194, 0.1)',
   },
@@ -583,3 +591,16 @@ export const typeDefinitions: TypeInfoRecord = {
   ...builtInObjects,
   // Add other categories as needed
 };
+
+// Add type signature interface
+export interface TypeSignature {
+  name: string;
+  parameters?: {
+    name: string;
+    type: string;
+    optional?: boolean;
+  }[];
+  returnType?: string;
+  typeParameters?: string[];
+  description: string;
+}

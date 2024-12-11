@@ -25,7 +25,9 @@ Type inference is TypeScript's ability to automatically determine types based on
 
 ### Variable Initialization
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Type: string
 let name = 'John';
 
@@ -45,9 +47,13 @@ let person = {
 };
 ```
 
+:::
+
 ### Function Return Types
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Return type: number
 function add(a: number, b: number) {
   return a + b;
@@ -64,11 +70,15 @@ function isEven(num: number) {
 }
 ```
 
+:::
+
 ## Advanced Inference
 
 ### Generic Type Inference
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Type parameter T is inferred
 function identity<T>(value: T): T {
   return value;
@@ -84,9 +94,13 @@ const num = identity(42);
 const obj = identity({ name: 'John' });
 ```
 
+:::
+
 ### Array Method Inference
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 const numbers = [1, 2, 3, 4, 5];
 
 // Type: number[]
@@ -102,11 +116,15 @@ const sum = numbers.reduce((acc, n) => acc + n, 0);
 const objects = numbers.map((n) => ({ value: n }));
 ```
 
+:::
+
 ## Contextual Typing
 
 ### Event Handlers
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 const button = document.querySelector('button');
 
 button?.addEventListener('click', (event) => {
@@ -120,9 +138,13 @@ window.addEventListener('keydown', (event) => {
 });
 ```
 
+:::
+
 ### Promise Callbacks
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 async function fetchUser(id: string) {
   const response = await fetch(`/api/users/${id}`);
   // result is inferred as any
@@ -139,9 +161,13 @@ async function fetchData<T>(url: string): Promise<T> {
 }
 ```
 
+:::
+
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Domain types
 interface User {
   id: string;
@@ -244,6 +270,8 @@ function processUserData(users: User[]) {
   };
 }
 ```
+
+:::
 
 ## Best Practices
 

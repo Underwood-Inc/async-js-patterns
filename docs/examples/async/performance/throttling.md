@@ -20,7 +20,9 @@ Learn how to implement throttling patterns for rate limiting and performance opt
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Simple throttle function
 function throttle<T extends (...args: any[]) => void>(
   func: T,
@@ -63,11 +65,15 @@ function throttleWithTrailing<T extends (...args: any[]) => void>(
 }
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### Promise-based Throttle
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface ThrottledFunction<T extends (...args: any[]) => any> {
   (...args: Parameters<T>): Promise<ReturnType<T>>;
   cancel: () => void;
@@ -149,9 +155,13 @@ function throttlePromise<T extends (...args: any[]) => any>(
 }
 ```
 
+:::
+
 ### Rate Limiter
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface RateLimiterOptions {
   maxRequests: number;
   interval: number;
@@ -226,9 +236,13 @@ class RateLimiter {
 }
 ```
 
+:::
+
 ### Adaptive Throttle
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface AdaptiveThrottleOptions {
   initialLimit: number;
   minLimit: number;
@@ -329,3 +343,5 @@ class AdaptiveThrottle {
   }
 }
 ```
+
+:::
