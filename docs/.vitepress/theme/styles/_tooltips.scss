@@ -209,3 +209,24 @@
     }
   }
 }
+
+.tooltip-type-signature {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.9em;
+  
+  code {
+    display: block;
+    padding: 8px;
+    margin-bottom: 8px;
+    background: var(--vp-code-block-bg);
+    border-radius: 4px;
+    white-space: pre-wrap;
+    color: var(--vp-c-text-1);
+  }
+
+  .vp-doc {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--vp-c-divider);
+  }
+}

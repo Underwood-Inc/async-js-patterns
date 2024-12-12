@@ -1,10 +1,86 @@
-import { typeColors, typeDefinitions } from './typeDefinitions';
+import { typeColors, typeScriptKeywords, primitiveTypes, builtInObjects } from './typeDefinitions';
 import { parseCode } from './parsers';
 import { createParserTooltip } from './tooltips/parserInfo';
 
 interface TooltipData {
   errors: Set<string>;
   info: Set<string>;
+}
+
+// Helper to get type info from all type definition sources
+function getTypeInfo(term: string) {
+  return (
+    typeScriptKeywords[term] ||
+    primitiveTypes[term] ||
+    builtInObjects[term]
+  );
+}
+
+// Helper to colorize type signature parts
+function colorizeTypeSignature(signature: string): string {
+  // If it's a function signature, format it specially
+  if (signature.includes('=>')) {
+    return formatFunctionSignature(signature);
+  }
+
+  return signature
+    // Colorize keywords
+    .replace(
+      /\b(interface|type|extends|implements|readonly|public|private|protected)\b/g,
+      `<span style="color: ${typeColors.keyword.text}">$1</span>`
+    )
+    // Colorize primitive types
+    .replace(
+      /\b(string|number|boolean|void|null|undefined|any|never|object)\b/g,
+      `<span style="color: ${typeColors.primitive.text}">$1</span>`
+    )
+    // Colorize built-in types
+    .replace(
+      /\b(Array|Promise|Date|RegExp|Map|Set|PropsWithChildren)\b/g,
+      `<span style="color: ${typeColors['built-in'].text}">$1</span>`
+    )
+    // Colorize type parameters
+    .replace(
+      /<([^>]+)>/g,
+      `<span style="color: ${typeColors['type-signature'].text}">&lt;$1&gt;</span>`
+    )
+    // Colorize property names
+    .replace(
+      /(\w+)(?=\s*[?:])/g,
+      `<span style="color: #d19a66">$1</span>`
+    );
+}
+
+// Helper to format function signatures
+function formatFunctionSignature(signature: string): string {
+  // Split into parts
+  const parts = signature.match(/^(.+?)\s*=>\s*(.+)$/);
+  if (!parts) return colorizeTypeSignature(signature);
+
+  const [_, params, returnType] = parts;
+
+  // Format parameters
+  const formattedParams = params
+    .replace(/[{}]/g, '')
+    .split(',')
+    .map(param => {
+      const [name, type] = param.split(':').map(s => s.trim());
+      return `  ${colorizeParam(name)}: ${colorizeTypeSignature(type)}`;
+    })
+    .join(',\n');
+
+  // Format the whole signature
+  return `({\n${formattedParams}\n}) => ${colorizeTypeSignature(returnType)}`;
+}
+
+// Helper to colorize parameter names
+function colorizeParam(param: string): string {
+  // Handle default values
+  const parts = param.split('=').map(p => p.trim());
+  if (parts.length > 1) {
+    return `<span style="color: #d19a66">${parts[0]}</span> = <span style="color: #98c379">'${parts[1].replace(/['"]/g, '')}'</span>`;
+  }
+  return `<span style="color: #d19a66">${param}</span>`;
 }
 
 export function processTooltips(code: string, lang: string) {
@@ -28,7 +104,10 @@ export function processTooltips(code: string, lang: string) {
   parseResult.tokens.forEach((tokenInfo) => {
     if (!tokenInfo?.text) return;
     const term = tokenInfo.text;
-    const info = tokenInfo.info || typeDefinitions[term];
+    
+    // Get type info from our definitions
+    const typeInfo = getTypeInfo(term);
+    const info = tokenInfo.info || typeInfo;
 
     if (!info) return;
 
@@ -36,11 +115,18 @@ export function processTooltips(code: string, lang: string) {
       tooltipMap.set(term, { errors: new Set(), info: new Set() });
     }
 
+    let description = info.description || info.documentation || `Identifier: ${term}`;
+    
+    // If there's a type signature, colorize it
+    if (info.signature) {
+      description = `${description}\n\n\`\`\`typescript\n${colorizeTypeSignature(JSON.stringify(info.signature, null, 2))}\n\`\`\``;
+    }
+
     const tooltipContent = encodeURIComponent(
       JSON.stringify({
         type: info.type || 'identifier',
-        description: info.documentation || `Identifier: ${term}`,
-        color: typeColors[info.type as keyof typeof typeColors] || {
+        description,
+        color: info.color || typeColors[info.type as keyof typeof typeColors] || {
           text: '#666',
           background: 'rgba(102, 102, 102, 0.1)',
         },

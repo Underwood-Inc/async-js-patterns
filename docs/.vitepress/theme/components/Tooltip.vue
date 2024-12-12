@@ -104,31 +104,40 @@ function getIcon(message: string) {
 }
 
 function formatMessage(content: string) {
-  console.log('Formatting message:', content);
-  if (!content) {
-    console.log('Empty content, returning empty string');
-    return '';
-  }
+  if (!content) return '';
 
-  const result = content
+  return content
     .split('|||')
     .map((message) => {
-      console.log('Processing message part:', message);
       const [type, rawContent] = message.split(':::');
-      console.log('Split type/content:', { type, rawContent });
 
+      // Early return for variable signatures
+      if (rawContent?.startsWith('( variable)')) {
+        const [_, name, signature] =
+          rawContent.match(/\(\s*variable\)\s*(\w+):\s*(.+?)(?=\s*(?:type:|$))/) || [];
+        if (signature) {
+          const cleanSignature = signature
+            .replace(/\s*=>\s*{[\s\S]*}/, '') // Remove implementation
+            .trim();
+
+          return `
+            <div class="vp-doc">
+              <span class="type-text" style="color: #56b6c2; background: rgba(86, 182, 194, 0.1)">Type Signature</span>:
+              <pre><code class="language-typescript">${cleanSignature} => JSX.Element</code></pre>
+              <p>Identifier: ${name}</p>
+            </div>
+          `;
+        }
+      }
+
+      // Handle other info types
       if (type === 'info' && rawContent?.includes('type:')) {
-        const [desc, typeInfoStr] = rawContent
-          .split('type:')
-          .map((s) => s.trim());
-        console.log('Type info parts:', { desc, typeInfoStr });
-        
         try {
-          // Second decode for the type info
+          const typeInfoStr = rawContent.split('type:')[1]?.trim();
+          if (!typeInfoStr) return rawContent;
+
           const decodedTypeInfo = decodeURIComponent(typeInfoStr);
-          console.log('Second decode (type info):', decodedTypeInfo);
           const typeInfo = JSON.parse(decodedTypeInfo);
-          console.log('Parsed type info:', typeInfo);
 
           const typeSpan = `<span class="type-text" style="color: ${typeInfo.color.text}; background: ${typeInfo.color.background}">${typeInfo.type}</span>`;
           return `${typeSpan}${
@@ -138,16 +147,13 @@ function formatMessage(content: string) {
           }`;
         } catch (error) {
           console.error('Error parsing tooltip content:', error);
-          return rawContent || desc || '';
+          return rawContent;
         }
       }
 
       return rawContent || '';
     })
     .join('\n');
-
-  console.log('Final formatted result:', result);
-  return result;
 }
 
 onMounted(() => {
@@ -304,7 +310,8 @@ const isHovered = ref(false);
     }
 
     // Keep lists compact
-    ul, ol {
+    ul,
+    ol {
       margin: 0;
       padding-left: 1.2em;
     }
