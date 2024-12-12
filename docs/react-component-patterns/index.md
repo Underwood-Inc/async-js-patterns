@@ -142,8 +142,8 @@ Our React component library is organized into the following categories:
 
 - [Modal](/react-component-patterns/overlay/modal) - Modal dialogs
 - [Drawer](/react-component-patterns/overlay/drawer) - Slide-out panels
-- [Popover](/react-component-patterns/overlay/popover) - Contextual overlays
-- [Tooltip](/react-component-patterns/overlay/tooltip) - Hover tooltips
+- [Popover](/react-component-patterns/overlay/contextual-overlays/popover) - Contextual overlays
+- [Tooltip](/react-component-patterns/overlay/contextual-overlays/tooltip) - Hover tooltips
 
 ### Data Display
 

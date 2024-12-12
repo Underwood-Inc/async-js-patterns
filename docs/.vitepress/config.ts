@@ -860,33 +860,50 @@ export default withMermaid(
         {
           text: 'Feedback',
           items: [
-            { text: 'Alert', link: '/react-component-patterns/feedback/alert' },
-            { text: 'Toast', link: '/react-component-patterns/feedback/toast' },
+            {
+              text: 'Alert',
+              link: '/react-component-patterns/feedback/notifications/alert',
+            },
+            {
+              text: 'Toast',
+              link: '/react-component-patterns/feedback/notifications/toast',
+            },
+            {
+              text: 'Banner',
+              link: '/react-component-patterns/feedback/notifications/banner',
+            },
+            {
+              text: 'Snackbar',
+              link: '/react-component-patterns/feedback/notifications/snackbar',
+            },
             {
               text: 'Progress',
-              link: '/react-component-patterns/feedback/progress',
+              link: '/react-component-patterns/feedback/progress-indicators/progress',
             },
             {
               text: 'Skeleton',
-              link: '/react-component-patterns/feedback/skeleton',
+              link: '/react-component-patterns/feedback/status-indicators/skeleton',
             },
           ],
         },
         {
           text: 'Overlay',
           items: [
-            { text: 'Modal', link: '/react-component-patterns/overlay/modal' },
-            {
-              text: 'Drawer',
-              link: '/react-component-patterns/overlay/drawer',
-            },
             {
               text: 'Popover',
-              link: '/react-component-patterns/overlay/popover',
+              link: '/react-component-patterns/overlay/contextual-overlays/popover',
             },
             {
               text: 'Tooltip',
-              link: '/react-component-patterns/overlay/tooltip',
+              link: '/react-component-patterns/overlay/contextual-overlays/tooltip',
+            },
+            {
+              text: 'Dropdown',
+              link: '/react-component-patterns/overlay/contextual-overlays/dropdown',
+            },
+            {
+              text: 'Context Menu',
+              link: '/react-component-patterns/overlay/contextual-overlays/context-menu',
             },
           ],
         },

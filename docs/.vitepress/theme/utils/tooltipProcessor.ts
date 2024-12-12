@@ -2,9 +2,44 @@ import { typeColors, typeScriptKeywords, primitiveTypes, builtInObjects } from '
 import { parseCode } from './parsers';
 import { createParserTooltip } from './tooltips/parserInfo';
 
+interface ParseError {
+  text: string;
+  error: string;
+}
+
 interface TooltipData {
   errors: Set<string>;
   info: Set<string>;
+}
+
+interface TypeInfo {
+  type?: string;
+  description?: string;
+  documentation?: string;
+  signature?: string;
+  color?: {
+    text: string;
+    background: string;
+  };
+}
+
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+interface ParseResult {
+  errors?: string[] | ParseError[];
+  tokens: TokenInfo[];
+}
+
+interface TokenInfo {
+  text: string;
+  info?: TypeInfo;
 }
 
 // Helper to get type info from all type definition sources
@@ -88,8 +123,8 @@ export function processTooltips(code: string, lang: string) {
   const tooltipMap = new Map<string, TooltipData>();
 
   // Process errors first
-  parseResult.errors?.forEach((error) => {
-    if (!error?.text) return;
+  parseResult.errors?.forEach((error: any) => {
+    if (!error || typeof error === 'string' || !('text' in error)) return;
     const term = error.text;
     const escapedError = escapeHtml(error.error);
     if (!escapedError) return;
@@ -101,13 +136,13 @@ export function processTooltips(code: string, lang: string) {
   });
 
   // Process tokens
-  parseResult.tokens.forEach((tokenInfo) => {
+  parseResult.tokens.forEach((tokenInfo: TokenInfo) => {
     if (!tokenInfo?.text) return;
     
     // Skip variable signature tokens entirely
     if (tokenInfo.text.startsWith('( variable)') || 
         tokenInfo.info?.type === 'variable' || 
-        tokenInfo.info?.signature?.startsWith('( variable)')) {
+        (tokenInfo.info?.signature && tokenInfo.info.signature.toString().startsWith('( variable)'))) {
       return;
     }
 
