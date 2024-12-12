@@ -1,8 +1,11 @@
 ---
 title: CardList Component
 description: List layout component for displaying cards in a vertical or horizontal arrangement
+category: Data
+subcategory: Lists & Cards
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
   - Data Display
   - List
@@ -14,38 +17,30 @@ tags:
 
 ## Overview
 
-The CardList component provides a list-based layout for displaying cards in either vertical or horizontal arrangements. It supports various spacing options, dividers, and interaction patterns.
+The CardList component extends the base List component to provide a specialized layout for displaying cards in either vertical or horizontal arrangements. It supports various spacing options, dividers, and interaction patterns while maintaining consistent behavior with other list components.
 
-## Usage
+## Key Features
 
-### Basic CardList
+- Vertical/horizontal layouts
+- Customizable spacing
+- Optional dividers
+- Item selection
+- Keyboard navigation
+- Touch support
+- Responsive design
+- Accessibility support
+
+## Component API
+
+### Props Interface
 
 ::: code-with-tooltips
-
 ```tsx
-import { CardList } from '@/components/data';
+import { ReactNode } from 'react';
 
-<CardList spacing="md">
-  <Card>
-    <Card.Body>Card 1</Card.Body>
-  </Card>
-  <Card>
-    <Card.Body>Card 2</Card.Body>
-  </Card>
-  <Card>
-    <Card.Body>Card 3</Card.Body>
-  </Card>
-</CardList>
-```
-
-:::
-
-### API Reference
-
-```tsx
-interface CardListProps {
+export interface CardListProps {
   /** List items */
-  children: React.ReactNode;
+  children: ReactNode;
   /** Space between items */
   spacing?: SpacingValue;
   /** List direction */
@@ -59,437 +54,210 @@ interface CardListProps {
   /** Selected item indices */
   selectedIndices?: number[];
   /** Selection change handler */
-  onSelectionChange?: (indices: number[]) => void;
+  onSelectionChange?: (_indices: number[]) => void;
+  /** Loading state */
+  loading?: boolean;
+  /** Error state */
+  error?: string;
+  /** Empty state message */
+  emptyMessage?: string;
   /** Additional CSS class */
   className?: string;
 }
 
-type SpacingValue = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number;
+export type SpacingValue = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number;
 ```
-
-### Examples
-
-#### Horizontal List
-
-::: code-with-tooltips
-
-```tsx
-<CardList
-  direction="horizontal"
-  spacing="lg"
-  style={{ overflowX: 'auto' }}
->
-  {items.map(item => (
-    <Card key={item.id} style={{ minWidth: 300 }}>
-      <Card.Media src={item.image} />
-      <Card.Body>
-        <Card.Title>{item.title}</Card.Title>
-      </Card.Body>
-    </Card>
-  ))}
-</CardList>
-```
-
 :::
 
-#### With Dividers
+### Props Table
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | ReactNode | - | List items |
+| `spacing` | SpacingValue | 'md' | Item spacing |
+| `direction` | string | 'vertical' | List direction |
+| `dividers` | boolean | false | Show dividers |
+| `dividerColor` | string | - | Divider color |
+| `selectable` | boolean | false | Enable selection |
+| `selectedIndices` | number[] | [] | Selected indices |
+| `onSelectionChange` | function | - | Selection handler |
+| `loading` | boolean | false | Loading state |
+| `error` | string | - | Error message |
+| `emptyMessage` | string | 'No items' | Empty message |
+
+## Usage
+
+### Basic CardList
 
 ::: code-with-tooltips
-
 ```tsx
-<CardList
-  dividers
-  dividerColor="var(--border-color)"
-  spacing="md"
->
-  {items.map(item => (
-    <Card key={item.id}>
-      <Card.Body>{item.content}</Card.Body>
-    </Card>
-  ))}
-</CardList>
-```
+import { CardList, Card } from '@/components/data';
 
-:::
-
-## Implementation
-
-### Core Component
-
-::: code-with-tooltips
-
-```tsx
-export const CardList = React.forwardRef<HTMLDivElement, CardListProps>(({
-  children,
-  spacing = 'md',
-  direction = 'vertical',
-  dividers = false,
-  dividerColor = 'var(--border-color)',
-  selectable = false,
-  selectedIndices = [],
-  onSelectionChange,
-  className,
-  ...props
-}, ref) => {
-  const handleItemClick = (index: number) => {
-    if (!selectable) return;
-    
-    const newSelection = selectedIndices.includes(index)
-      ? selectedIndices.filter(i => i !== index)
-      : [...selectedIndices, index];
-    
-    onSelectionChange?.(newSelection);
-  };
-  
+export const BasicCardListExample = () => {
   return (
-    <div
-      ref={ref}
-      className={clsx(
-        'card-list',
-        `card-list--${direction}`,
-        { 'card-list--dividers': dividers },
-        className
-      )}
-      style={{
-        display: 'flex',
-        flexDirection: direction === 'vertical' ? 'column' : 'row',
-        gap: typeof spacing === 'number' ? spacing : `var(--spacing-${spacing})`
-      }}
-      {...props}
-    >
-      {React.Children.map(children, (child, index) => (
-        <div
-          className={clsx('card-list__item', {
-            'card-list__item--selected': selectedIndices.includes(index)
-          })}
-          onClick={() => handleItemClick(index)}
-          role={selectable ? 'option' : undefined}
-          aria-selected={selectable ? selectedIndices.includes(index) : undefined}
-        >
-          {child}
-          {dividers && index < React.Children.count(children) - 1 && (
-            <div
-              className="card-list__divider"
-              style={{
-                backgroundColor: dividerColor
-              }}
-            />
-          )}
-        </div>
-      ))}
-    </div>
-  );
-});
-```
-
-:::
-
-## Styling
-
-### Base Styles
-
-::: code-with-tooltips
-
-```scss
-.card-list {
-  // Container styles
-  width: 100%;
-  
-  // Direction variants
-  &--vertical {
-    flex-direction: column;
-  }
-  
-  &--horizontal {
-    flex-direction: row;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    
-    // Hide scrollbar in Firefox
-    scrollbar-width: none;
-    
-    // Hide scrollbar in Chrome/Safari
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-  
-  // Item styles
-  &__item {
-    position: relative;
-    flex-shrink: 0;
-    
-    // Selected state
-    &--selected {
-      outline: 2px solid var(--primary-color);
-      outline-offset: 2px;
-    }
-    
-    // Hover state
-    &:hover {
-      z-index: 1;
-    }
-  }
-  
-  // Divider styles
-  &--dividers {
-    .card-list__item {
-      &:not(:last-child) {
-        border-bottom: 1px solid var(--border-color);
-      }
-    }
-    
-    &.card-list--horizontal {
-      .card-list__item:not(:last-child) {
-        border-bottom: none;
-        border-right: 1px solid var(--border-color);
-      }
-    }
-  }
-  
-  // Spacing variations
-  &--spacing {
-    &-xs { gap: var(--spacing-xs); }
-    &-sm { gap: var(--spacing-sm); }
-    &-md { gap: var(--spacing-md); }
-    &-lg { gap: var(--spacing-lg); }
-    &-xl { gap: var(--spacing-xl); }
-  }
-}
-```
-
-:::
-
-## Testing
-
-### Unit Tests
-
-::: code-with-tooltips
-
-```tsx
-import { render, screen, fireEvent } from '@testing-library/react';
-import { CardList } from './CardList';
-
-describe('CardList', () => {
-  const mockItems = [
-    <Card key={1}><Card.Body>Card 1</Card.Body></Card>,
-    <Card key={2}><Card.Body>Card 2</Card.Body></Card>,
-    <Card key={3}><Card.Body>Card 3</Card.Body></Card>
-  ];
-
-  it('renders children correctly', () => {
-    render(<CardList>{mockItems}</CardList>);
-    
-    expect(screen.getByText('Card 1')).toBeInTheDocument();
-    expect(screen.getByText('Card 2')).toBeInTheDocument();
-    expect(screen.getByText('Card 3')).toBeInTheDocument();
-  });
-
-  it('handles selection', () => {
-    const handleSelectionChange = jest.fn();
-    
-    render(
-      <CardList
-        selectable
-        selectedIndices={[]}
-        onSelectionChange={handleSelectionChange}
-      >
-        {mockItems}
-      </CardList>
-    );
-    
-    fireEvent.click(screen.getByText('Card 1'));
-    expect(handleSelectionChange).toHaveBeenCalledWith([0]);
-  });
-
-  it('applies correct direction styles', () => {
-    const { container } = render(
-      <CardList direction="horizontal">
-        {mockItems}
-      </CardList>
-    );
-    
-    expect(container.firstChild).toHaveClass('card-list--horizontal');
-  });
-
-  it('renders dividers when specified', () => {
-    const { container } = render(
-      <CardList dividers>
-        {mockItems}
-      </CardList>
-    );
-    
-    const dividers = container.getElementsByClassName('card-list__divider');
-    expect(dividers.length).toBe(2); // Two dividers for three items
-  });
-});
-```
-
-:::
-
-## Accessibility
-
-### Keyboard Navigation
-
-::: code-with-tooltips
-
-```tsx
-const CardListWithKeyboard = React.forwardRef<HTMLDivElement, CardListProps>((props, ref) => {
-  const [focusedIndex, setFocusedIndex] = useState(-1);
-  
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!props.selectable) return;
-    
-    switch (e.key) {
-      case 'ArrowDown':
-      case 'ArrowRight':
-        e.preventDefault();
-        setFocusedIndex(prev => 
-          Math.min(prev + 1, React.Children.count(props.children) - 1)
-        );
-        break;
-      case 'ArrowUp':
-      case 'ArrowLeft':
-        e.preventDefault();
-        setFocusedIndex(prev => Math.max(prev - 1, 0));
-        break;
-      case ' ':
-      case 'Enter':
-        e.preventDefault();
-        if (focusedIndex >= 0) {
-          props.onSelectionChange?.([focusedIndex]);
-        }
-        break;
-    }
-  };
-  
-  return (
-    <div
-      ref={ref}
-      role="listbox"
-      aria-orientation={props.direction === 'horizontal' ? 'horizontal' : 'vertical'}
-      tabIndex={0}
-      onKeyDown={handleKeyDown}
-    >
-      <CardList {...props} />
-    </div>
-  );
-});
-```
-
-:::
-
-## Performance Optimization
-
-### Virtualization for Long Lists
-
-::: code-with-tooltips
-
-```tsx
-import { useVirtualizer } from '@tanstack/react-virtual';
-
-const VirtualCardList = ({
-  items,
-  itemHeight,
-  ...props
-}: CardListProps & {
-  items: any[];
-  itemHeight: number;
-}) => {
-  const parentRef = useRef<HTMLDivElement>(null);
-  
-  const virtualizer = useVirtualizer({
-    count: items.length,
-    getScrollElement: () => parentRef.current,
-    estimateSize: () => itemHeight,
-    overscan: 5
-  });
-  
-  return (
-    <div ref={parentRef} style={{ height: '100%', overflow: 'auto' }}>
-      <CardList
-        {...props}
-        style={{
-          height: `${virtualizer.getTotalSize()}px`,
-          position: 'relative'
-        }}
-      >
-        {virtualizer.getVirtualItems().map(virtualRow => (
-          <div
-            key={virtualRow.index}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: itemHeight,
-              transform: `translateY(${virtualRow.start}px)`
-            }}
-          >
-            {items[virtualRow.index]}
-          </div>
-        ))}
-      </CardList>
-    </div>
+    <CardList spacing="md">
+      <Card>
+        <Card.Body>
+          <Card.Title>Card 1</Card.Title>
+          <p>First card content</p>
+        </Card.Body>
+      </Card>
+      <Card>
+        <Card.Body>
+          <Card.Title>Card 2</Card.Title>
+          <p>Second card content</p>
+        </Card.Body>
+      </Card>
+      <Card>
+        <Card.Body>
+          <Card.Title>Card 3</Card.Title>
+          <p>Third card content</p>
+        </Card.Body>
+      </Card>
+    </CardList>
   );
 };
 ```
+:::
 
+### Horizontal List
+
+::: code-with-tooltips
+```tsx
+import { CardList, Card } from '@/components/data';
+
+export const HorizontalCardListExample = () => {
+  const items = [
+    { id: 1, title: 'Item 1', image: '/image1.jpg' },
+    { id: 2, title: 'Item 2', image: '/image2.jpg' },
+    { id: 3, title: 'Item 3', image: '/image3.jpg' },
+  ];
+
+  return (
+    <CardList
+      direction="horizontal"
+      spacing="lg"
+      style={{ overflowX: 'auto' }}
+    >
+      {items.map(item => (
+        <Card key={item.id} style={{ minWidth: 300 }}>
+          <Card.Media
+            src={item.image}
+            alt={item.title}
+            height={200}
+          />
+          <Card.Body>
+            <Card.Title>{item.title}</Card.Title>
+          </Card.Body>
+        </Card>
+      ))}
+    </CardList>
+  );
+};
+```
+:::
+
+### With Selection
+
+::: code-with-tooltips
+```tsx
+import { CardList, Card } from '@/components/data';
+import { useState } from 'react';
+
+export const SelectableCardListExample = () => {
+  const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
+
+  return (
+    <CardList
+      selectable
+      selectedIndices={selectedIndices}
+      onSelectionChange={setSelectedIndices}
+      dividers
+      spacing="md"
+    >
+      {items.map((item, index) => (
+        <Card
+          key={item.id}
+          hoverable
+          shadow={selectedIndices.includes(index) ? 'md' : 'sm'}
+        >
+          <Card.Body>
+            <Card.Title>{item.title}</Card.Title>
+            <p>{item.description}</p>
+          </Card.Body>
+        </Card>
+      ))}
+    </CardList>
+  );
+};
+```
 :::
 
 ## Best Practices
 
-### Layout Guidelines
+### Usage Guidelines
 
-::: code-with-tooltips
+1. **Layout Management**
+   - Use consistent spacing
+   - Handle overflow properly
+   - Maintain alignment
+   - Consider responsiveness
 
-```tsx
-// DO: Use consistent spacing
-<CardList spacing="md">
-  {items.map(item => (
-    <Card key={item.id} padding="md">
-      <Card.Body>{item.content}</Card.Body>
-    </Card>
-  ))}
-</CardList>
+2. **Interaction Design**
+   - Clear selection states
+   - Smooth transitions
+   - Touch-friendly areas
+   - Keyboard support
 
-// DON'T: Mix spacing values
-<CardList spacing="lg">
-  <Card style={{ marginBottom: '8px' }}> {/* Inconsistent! */}
-    <Card.Body>Content</Card.Body>
-  </Card>
-</CardList>
-```
+3. **Content Organization**
+   - Logical grouping
+   - Visual hierarchy
+   - Consistent sizing
+   - Proper spacing
 
-:::
+### Accessibility
 
-### Performance Considerations
+1. **Keyboard Navigation**
+   - Arrow key support
+   - Selection shortcuts
+   - Focus management
+   - Tab order
 
-::: code-with-tooltips
+2. **Screen Readers**
+   - List semantics
+   - Selection states
+   - Item positions
+   - Group context
 
-```tsx
-// DO: Memoize list items
-const MemoizedCard = memo(({ item }) => (
-  <Card>
-    <Card.Body>{item.content}</Card.Body>
-  </Card>
-));
+3. **Visual Feedback**
+   - Focus indicators
+   - Selection highlights
+   - Loading states
+   - Error messages
 
-// Usage
-<CardList>
-  {items.map(item => (
-    <MemoizedCard key={item.id} item={item} />
-  ))}
-</CardList>
+### Performance
 
-// DON'T: Create inline styles
-<CardList>
-  {items.map(item => (
-    <div key={item.id} style={{ margin: '8px' }}> {/* Avoid! */}
-      <Card>{item.content}</Card>
-    </div>
-  ))}
-</CardList>
-```
+1. **Rendering**
+   - Optimize updates
+   - Handle large lists
+   - Manage selection
+   - Clean up listeners
 
-:::
+2. **Interaction**
+   - Debounce events
+   - Batch updates
+   - Handle scrolling
+   - Manage memory
+
+3. **Layout**
+   - Minimize reflows
+   - Handle resizing
+   - Optimize transitions
+   - Cache measurements
+
+## Related Components
+
+- [List](./list.md) - Base list component
+- [Card](./card.md) - Card component
+- [CardGrid](./card-grid.md) - Grid layout
+- [VirtualList](./virtual-list.md) - For large lists

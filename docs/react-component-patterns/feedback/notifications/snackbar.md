@@ -1,8 +1,11 @@
 ---
-title: Snackbar
+title: Snackbar Component
 description: Brief feedback messages that appear at the bottom of the screen
+category: Feedback
+subcategory: Notifications
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
   - Feedback
   - Notifications
@@ -13,18 +16,32 @@ tags:
 
 ## Overview
 
-The Snackbar component displays brief feedback messages at the bottom of the screen. It's ideal for showing non-intrusive notifications about app processes.
+The Snackbar component displays brief feedback messages at the bottom of the screen. It's designed for showing non-intrusive notifications about app processes, with optional actions that users can take.
 
-## TypeScript Interface
+## Key Features
 
+- Automatic dismissal with configurable duration
+- Optional action buttons
+- Multiple severity levels
+- Customizable positioning
+- Queue management for multiple snackbars
+- Accessible by default
+
+## Component API
+
+### Props Interface
+
+::: code-with-tooltips
 ```tsx
-interface SnackbarProps {
+import { ReactNode } from 'react';
+
+export interface SnackbarProps {
   /** Controls the visibility of the snackbar */
   open: boolean;
   /** The message to display */
   message: string;
   /** Optional action button or element */
-  action?: React.ReactNode;
+  action?: ReactNode;
   /** Time in milliseconds before auto-hiding */
   autoHideDuration?: number;
   /** Callback fired when snackbar closes */
@@ -40,13 +57,29 @@ interface SnackbarProps {
   className?: string;
 }
 ```
+:::
+
+### Props Table
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `open` | boolean | false | Controls the visibility of the snackbar |
+| `message` | string | - | The message to display |
+| `action` | ReactNode | - | Optional action button or element |
+| `autoHideDuration` | number | 6000 | Time in milliseconds before auto-hiding |
+| `onClose` | function | - | Callback fired when snackbar closes |
+| `anchorOrigin` | object | { vertical: 'bottom', horizontal: 'left' } | Position of the snackbar |
+| `severity` | 'success' \| 'error' \| 'warning' \| 'info' | - | Optional severity level |
+| `className` | string | - | Additional CSS class |
 
 ## Usage
 
+::: code-with-tooltips
 ```tsx
-import { Snackbar } from '@underwood/components';
+import { useState } from 'react';
+import { Snackbar, Button } from '@underwood/components';
 
-function MyComponent() {
+export const SnackbarExample = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -62,153 +95,146 @@ function MyComponent() {
       onClose={() => setOpen(false)}
     />
   );
-}
+};
 ```
-
-## Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `open` | boolean | false | Controls the visibility of the snackbar |
-| `message` | string | - | The message to display |
-| `action` | ReactNode | - | Optional action button or element |
-| `autoHideDuration` | number | 6000 | Time in milliseconds before auto-hiding |
-| `onClose` | function | - | Callback fired when snackbar closes |
-| `anchorOrigin` | object | { vertical: 'bottom', horizontal: 'left' } | Position of the snackbar |
-| `severity` | 'success' \| 'error' \| 'warning' \| 'info' | - | Optional severity level |
-| `className` | string | - | Additional CSS class |
+:::
 
 ## Examples
 
 ### Basic Snackbar
 
+::: code-with-tooltips
 ```tsx
-<Snackbar
-  open={true}
-  message="File uploaded successfully"
-  autoHideDuration={3000}
-/>
+import { Snackbar } from '@underwood/components';
+
+export const BasicSnackbarExample = () => (
+  <Snackbar
+    open={true}
+    message="File uploaded successfully"
+    autoHideDuration={3000}
+  />
+);
 ```
+:::
 
 ### With Action Button
 
+::: code-with-tooltips
 ```tsx
-<Snackbar
-  open={true}
-  message="Message archived"
-  action={
-    <Button color="secondary" size="small">
-      UNDO
-    </Button>
-  }
-/>
+import { Snackbar, Button } from '@underwood/components';
+
+export const ActionSnackbarExample = () => (
+  <Snackbar
+    open={true}
+    message="Message archived"
+    action={
+      <Button color="secondary" size="small">
+        UNDO
+      </Button>
+    }
+  />
+);
 ```
+:::
 
 ### With Custom Position
 
+::: code-with-tooltips
 ```tsx
-<Snackbar
-  open={true}
-  message="Settings saved"
-  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-/>
+import { Snackbar } from '@underwood/components';
+
+export const PositionedSnackbarExample = () => (
+  <Snackbar
+    open={true}
+    message="Settings saved"
+    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+  />
+);
 ```
-
-### With Severity
-
-```tsx
-<Snackbar
-  open={true}
-  message="Changes could not be saved"
-  severity="error"
-  action={
-    <Button color="secondary" size="small">
-      RETRY
-    </Button>
-  }
-/>
-```
-
-## Accessibility
-
-### ARIA Attributes
-
-The Snackbar component uses the following ARIA attributes:
-
-```tsx
-<div
-  role="alert"
-  aria-live="polite"
-  aria-atomic="true"
->
-  {message}
-</div>
-```
-
-### Keyboard Navigation
-
-- `Escape` - Closes the snackbar
-- `Tab` - Focuses the action button if present
-- `Enter/Space` - Triggers the action when focused
-
-### Screen Reader Considerations
-
-- Messages are announced when they appear
-- Action buttons have clear, descriptive labels
-- Auto-dismiss timing considers reading speed
+:::
 
 ## Best Practices
 
-### Duration
+### Usage Guidelines
 
-- Keep messages brief and clear
-- Use appropriate auto-hide duration (recommended: 4000-6000ms)
-- Allow manual dismissal
-- Consider reading time for longer messages
+1. **Message Content**
+   - Keep messages brief and clear
+   - Use appropriate severity levels
+   - Include relevant context
+   - Avoid technical jargon
 
-### Positioning
+2. **Timing and Duration**
+   - Use appropriate auto-hide duration (4000-6000ms)
+   - Consider reading time for longer messages
+   - Allow manual dismissal
+   - Handle quick sequences
 
-- Maintain consistent positioning
-- Avoid blocking important content
-- Handle multiple snackbars properly
-- Consider mobile viewports
+3. **Visual Design**
+   - Maintain consistent positioning
+   - Use clear hierarchy
+   - Consider stacking order
+   - Support mobile viewports
 
-### Content
+### Accessibility
 
-- Use clear, concise messages
-- Include relevant actions when needed
-- Follow consistent tone and style
-- Limit message length
+1. **ARIA Attributes**
+   - Use `role="alert"` appropriately
+   - Set `aria-live="polite"` for most messages
+   - Include descriptive labels
+   - Handle focus management
+
+2. **Keyboard Navigation**
+   - Support Escape to dismiss
+   - Make actions focusable
+   - Maintain focus order
+   - Handle keyboard shortcuts
+
+3. **Screen Readers**
+   - Announce new messages appropriately
+   - Provide clear action descriptions
+   - Consider reading duration
+   - Handle message updates
 
 ### Performance
 
-- Clean up timers on unmount
-- Handle multiple snackbars efficiently
-- Use transitions sparingly
-- Consider bundle size
+1. **Rendering**
+   - Optimize animations
+   - Clean up timers
+   - Handle unmounting
+   - Manage message queue
+
+2. **State Management**
+   - Handle concurrent messages
+   - Manage lifecycle properly
+   - Clean up resources
+   - Prevent memory leaks
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Snackbar doesn't auto-close**
-   - Check if `autoHideDuration` is set
-   - Verify `onClose` handler is working
-   - Check for focus interrupting auto-close
+1. **Auto-dismiss not working**
+   - Verify `autoHideDuration` setting
+   - Check `onClose` handler
+   - Consider focus interference
+   - Validate timer cleanup
 
 2. **Multiple snackbars overlap**
-   - Use a snackbar manager/queue
    - Implement proper stacking
-   - Consider using a toast system for multiple messages
+   - Use message queue manager
+   - Set maximum visible count
+   - Handle positioning
 
-3. **Action button not working**
-   - Verify event handler attachment
-   - Check action button rendering
-   - Ensure proper focus management
+3. **Actions not responding**
+   - Verify event handlers
+   - Check action rendering
+   - Ensure proper focus
+   - Test keyboard access
 
 ## Related Components
 
-- [Toast](./toast.md) - For temporary notifications
-- [Alert](./alert.md) - For important messages
-- [Banner](./banner.md) - For prominent announcements
+- [Toast](./toast.md) - For temporary, auto-dismissing notifications
+- [Alert](./alert.md) - For persistent important messages
+- [Banner](./banner.md) - For system-wide announcements
+- [Dialog](../modals/dialog.md) - For important messages requiring user action
 ``` 

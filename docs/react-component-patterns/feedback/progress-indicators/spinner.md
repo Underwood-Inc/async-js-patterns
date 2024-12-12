@@ -1,8 +1,11 @@
 ---
-title: Spinner
+title: Spinner Component
 description: Loading spinner animations for indicating processing states
+category: Feedback
+subcategory: Progress Indicators
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
   - Feedback
   - Loading
@@ -13,24 +16,47 @@ tags:
 
 ## Overview
 
-The Spinner component provides a visual indicator for loading or processing states. It's commonly used during data fetching, form submission, or any operation that requires user wait time.
+The Spinner component provides a visual indicator for loading or processing states. It's designed for providing immediate feedback during data fetching, form submission, or any operation that requires user wait time.
 
-## Usage
+## Key Features
 
+- Multiple size options
+- Various visual variants (circle, dots, pulse)
+- Customizable colors and speed
+- Optional overlay mode
+- Accessible by default
+- Reduced motion support
+
+## Component API
+
+### Props Interface
+
+::: code-with-tooltips
 ```tsx
-import { Spinner } from '@underwood/components';
+import { ReactNode } from 'react';
 
-function MyComponent() {
-  return (
-    <Spinner
-      size="medium"
-      label="Loading content..."
-    />
-  );
+export interface SpinnerProps {
+  /** Size of the spinner */
+  size?: 'small' | 'medium' | 'large';
+  /** Accessible label for screen readers */
+  label?: string;
+  /** Color of the spinner */
+  color?: 'primary' | 'secondary' | string;
+  /** Animation speed */
+  speed?: 'slow' | 'normal' | 'fast';
+  /** Show spinner in a centered overlay */
+  overlay?: boolean;
+  /** Visual style variant */
+  variant?: 'circle' | 'dots' | 'pulse';
+  /** Additional CSS class */
+  className?: string;
+  /** Additional styles */
+  style?: React.CSSProperties;
 }
 ```
+:::
 
-## Props
+### Props Table
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -40,76 +66,154 @@ function MyComponent() {
 | `speed` | 'slow' \| 'normal' \| 'fast' | 'normal' | Animation speed |
 | `overlay` | boolean | false | Show spinner in a centered overlay |
 | `variant` | 'circle' \| 'dots' \| 'pulse' | 'circle' | Visual style variant |
+| `className` | string | - | Additional CSS class |
+| `style` | object | - | Additional styles |
+
+## Usage
+
+::: code-with-tooltips
+```tsx
+import { Spinner } from '@underwood/components';
+
+export const SpinnerExample = () => {
+  return (
+    <Spinner
+      size="medium"
+      label="Loading content..."
+    />
+  );
+};
+```
+:::
 
 ## Examples
 
 ### Basic Spinner
 
+::: code-with-tooltips
 ```tsx
-<Spinner
-  size="medium"
-  label="Loading..."
-/>
+import { Spinner } from '@underwood/components';
+
+export const BasicSpinnerExample = () => (
+  <Spinner
+    size="medium"
+    label="Loading..."
+  />
+);
 ```
+:::
 
 ### Overlay Spinner
 
+::: code-with-tooltips
 ```tsx
-<Spinner
-  overlay
-  size="large"
-  label="Processing your request..."
-/>
+import { Spinner } from '@underwood/components';
+
+export const OverlaySpinnerExample = () => (
+  <Spinner
+    overlay
+    size="large"
+    label="Processing your request..."
+  />
+);
 ```
+:::
 
 ### Custom Styled Spinner
 
+::: code-with-tooltips
 ```tsx
-<Spinner
-  color="#6200ee"
-  size="large"
-  speed="fast"
-  variant="dots"
-/>
+import { Spinner } from '@underwood/components';
+
+export const CustomSpinnerExample = () => (
+  <Spinner
+    color="#6200ee"
+    size="large"
+    speed="fast"
+    variant="dots"
+  />
+);
 ```
+:::
 
 ### With Content Wrapper
 
+::: code-with-tooltips
 ```tsx
-<div style={{ position: 'relative', minHeight: '200px' }}>
-  <Spinner
-    overlay
-    label="Loading content..."
-    variant="pulse"
-  />
-  {content}
-</div>
+import { Spinner } from '@underwood/components';
+
+export const WrappedSpinnerExample = () => (
+  <div style={{ position: 'relative', minHeight: '200px' }}>
+    <Spinner
+      overlay
+      label="Loading content..."
+      variant="pulse"
+    />
+    {content}
+  </div>
+);
 ```
+:::
 
 ## Best Practices
 
-1. **Usage**
+### Usage Guidelines
+
+1. **Timing and Display**
    - Show immediately when loading starts
    - Use appropriate size for context
-   - Include meaningful labels
+   - Consider loading duration
+   - Handle loading states consistently
 
-2. **Positioning**
+2. **Visual Design**
+   - Choose appropriate variant for context
+   - Maintain consistent styling
+   - Use clear visual hierarchy
+   - Consider animation speed
+
+3. **Positioning**
    - Center in container when possible
    - Use overlay for full-page loading
    - Consider content layout impact
+   - Handle mobile viewports
 
-3. **Accessibility**
-   - Always include descriptive labels
-   - Use proper ARIA attributes
-   - Consider reduced motion preferences
+### Accessibility
 
-4. **Performance**
-   - Optimize animation performance
+1. **ARIA Attributes**
+   - Use `role="status"` appropriately
+   - Set `aria-busy="true"` during loading
+   - Include descriptive labels
+   - Handle focus management
+
+2. **Motion and Animation**
+   - Respect reduced motion preferences
+   - Use appropriate animation speeds
+   - Consider animation impact
+   - Provide static alternatives
+
+3. **Screen Readers**
+   - Announce loading states
+   - Update status appropriately
+   - Use clear descriptions
+   - Consider loading duration
+
+### Performance
+
+1. **Animation**
+   - Use CSS animations when possible
+   - Optimize animation frames
+   - Handle cleanup properly
+   - Consider battery impact
+
+2. **Resource Management**
    - Clean up on unmount
    - Handle state changes efficiently
+   - Manage multiple instances
+   - Optimize render cycles
 
 ## Related Components
 
-- [Progress](./progress.md) - For determinate progress
-- [LoadingBar](./loading-bar.md) - For page-level loading
-- [Skeleton](./skeleton.md) - For content loading states 
+- [Progress](./progress.md) - For showing determinate progress
+- [LoadingBar](./loading-bar.md) - For page-level loading indicators
+- [Skeleton](./skeleton.md) - For content loading placeholders
+- [CircularProgress](./circular-progress.md) - For circular progress indicators

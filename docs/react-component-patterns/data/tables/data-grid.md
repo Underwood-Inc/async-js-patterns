@@ -1,8 +1,11 @@
 ---
 title: DataGrid Component
 description: Advanced grid component for displaying and managing tabular data with sorting, filtering, and selection
+category: Data
+subcategory: Tables
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
   - Data Display
   - Grid
@@ -14,73 +17,47 @@ tags:
 
 ## Overview
 
-The DataGrid component provides a powerful interface for displaying and interacting with tabular data. It supports features like sorting, filtering, row selection, and custom cell rendering.
+The DataGrid component provides a powerful interface for displaying and interacting with tabular data. It extends the basic Table component with advanced features like virtualization, complex sorting, filtering, and custom cell rendering.
 
-## Usage
+## Key Features
 
-### Basic DataGrid
+- Virtual scrolling for large datasets
+- Multi-column sorting
+- Advanced filtering
+- Row selection and bulk actions
+- Custom cell and header rendering
+- Column resizing and reordering
+- Keyboard navigation
+- Excel-like features
+
+## Component API
+
+### Props Interface
 
 ::: code-with-tooltips
-
 ```tsx
-import { DataGrid } from '@/components/data';
+import { ReactNode } from 'react';
 
-const columns = [
-  { field: 'id', headerName: 'ID' },
-  { field: 'name', headerName: 'Name' },
-  { field: 'age', headerName: 'Age', type: 'number' },
-  { 
-    field: 'status',
-    headerName: 'Status',
-    renderCell: (params) => (
-      <Badge color={params.value === 'active' ? 'success' : 'error'}>
-        {params.value}
-      </Badge>
-    )
-  }
-];
-
-const rows = [
-  { id: 1, name: 'John Doe', age: 30, status: 'active' },
-  { id: 2, name: 'Jane Smith', age: 25, status: 'inactive' }
-];
-
-<DataGrid
-  columns={columns}
-  rows={rows}
-  onRowClick={(row) => console.log('Clicked row:', row)}
-/>
-```
-
-:::
-
-### API Reference
-
-```tsx
-interface DataGridColumn<T = any> {
+export interface DataGridColumn<T = unknown> {
   /** Unique field identifier */
   field: string;
   /** Column header text */
   headerName: string;
-  /** Data type */
-  type?: 'string' | 'number' | 'date' | 'boolean';
-  /** Column width */
-  width?: number;
-  /** Whether column is sortable */
-  sortable?: boolean;
-  /** Whether column is filterable */
-  filterable?: boolean;
   /** Custom cell renderer */
-  renderCell?: (params: DataGridCellParams<T>) => React.ReactNode;
+  renderCell?: (_params: DataGridCellParams<T>) => ReactNode;
   /** Custom header renderer */
-  renderHeader?: (params: DataGridHeaderParams) => React.ReactNode;
+  renderHeader?: (_params: DataGridHeaderParams) => ReactNode;
   /** Value formatter */
-  valueFormatter?: (value: any) => string;
+  valueFormatter?: (_value: unknown) => string;
   /** Value getter */
-  valueGetter?: (params: DataGridValueGetterParams<T>) => any;
+  valueGetter?: (_params: DataGridValueGetterParams<T>) => unknown;
+  /** Column alignment */
+  align?: 'left' | 'center' | 'right';
+  /** Whether column is pinned */
+  pinned?: 'left' | 'right';
 }
 
-interface DataGridProps<T = any> {
+export interface DataGridProps<T = unknown> {
   /** Grid columns */
   columns: DataGridColumn<T>[];
   /** Grid rows */
@@ -90,477 +67,318 @@ interface DataGridProps<T = any> {
   /** Selected row IDs */
   selectedRows?: (string | number)[];
   /** Selection change handler */
-  onSelectionChange?: (selectedIds: (string | number)[]) => void;
+  onSelectionChange?: (_ids: (string | number)[]) => void;
   /** Row click handler */
-  onRowClick?: (row: T) => void;
+  onRowClick?: (_row: T) => void;
   /** Sort model */
   sortModel?: DataGridSortModel;
   /** Sort change handler */
-  onSortChange?: (model: DataGridSortModel) => void;
+  onSortChange?: (_model: DataGridSortModel) => void;
   /** Filter model */
   filterModel?: DataGridFilterModel;
   /** Filter change handler */
-  onFilterChange?: (model: DataGridFilterModel) => void;
+  onFilterChange?: (_model: DataGridFilterModel) => void;
   /** Loading state */
   loading?: boolean;
+  /** Row height */
+  rowHeight?: number;
+  /** Header height */
+  headerHeight?: number;
+  /** Whether to enable column resizing */
+  resizable?: boolean;
+  /** Whether to enable column reordering */
+  reorderable?: boolean;
+  /** Whether to enable virtual scrolling */
+  virtual?: boolean;
   /** Additional CSS class */
   className?: string;
 }
 ```
-
-### Examples
-
-#### With Selection and Sorting
-
-::: code-with-tooltips
-
-```tsx
-const [selectedIds, setSelectedIds] = useState<number[]>([]);
-const [sortModel, setSortModel] = useState<DataGridSortModel>([
-  { field: 'name', sort: 'asc' }
-]);
-
-<DataGrid
-  columns={columns}
-  rows={rows}
-  checkboxSelection
-  selectedRows={selectedIds}
-  onSelectionChange={setSelectedIds}
-  sortModel={sortModel}
-  onSortChange={setSortModel}
-/>
-```
-
 :::
 
-## Implementation
+### Props Table
 
-### Core Component
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `columns` | DataGridColumn[] | - | Grid column definitions |
+| `rows` | T[] | - | Grid data rows |
+| `checkboxSelection` | boolean | false | Enable row selection |
+| `selectedRows` | (string \| number)[] | [] | Selected row IDs |
+| `onSelectionChange` | function | - | Selection change handler |
+| `onRowClick` | function | - | Row click handler |
+| `sortModel` | DataGridSortModel | - | Sort configuration |
+| `onSortChange` | function | - | Sort change handler |
+| `filterModel` | DataGridFilterModel | - | Filter configuration |
+| `onFilterChange` | function | - | Filter change handler |
+| `loading` | boolean | false | Loading state |
+| `rowHeight` | number | 52 | Row height in pixels |
+| `headerHeight` | number | 56 | Header height in pixels |
+| `resizable` | boolean | false | Enable column resizing |
+| `reorderable` | boolean | false | Enable column reordering |
+| `virtual` | boolean | false | Enable virtual scrolling |
+
+## Usage
+
+### Basic DataGrid
 
 ::: code-with-tooltips
-
 ```tsx
-export const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps>(({
-  columns,
-  rows,
-  checkboxSelection = false,
-  selectedRows = [],
-  onSelectionChange,
-  onRowClick,
-  sortModel,
-  onSortChange,
-  filterModel,
-  onFilterChange,
-  loading = false,
-  className,
-  ...props
-}, ref) => {
-  const [internalSelectedRows, setInternalSelectedRows] = useState(
-    new Set(selectedRows)
-  );
-  const [internalSortModel, setInternalSortModel] = useState(sortModel);
-  
-  const handleHeaderClick = useCallback((column: DataGridColumn) => {
-    if (!column.sortable) return;
-    
-    const newModel = updateSortModel(internalSortModel, column.field);
-    setInternalSortModel(newModel);
-    onSortChange?.(newModel);
-  }, [internalSortModel, onSortChange]);
-  
-  const handleRowSelect = useCallback((rowId: string | number) => {
-    const newSelected = new Set(internalSelectedRows);
-    if (newSelected.has(rowId)) {
-      newSelected.delete(rowId);
-    } else {
-      newSelected.add(rowId);
-    }
-    
-    setInternalSelectedRows(newSelected);
-    onSelectionChange?.(Array.from(newSelected));
-  }, [internalSelectedRows, onSelectionChange]);
-  
-  const sortedRows = useMemo(() => {
-    if (!internalSortModel?.length) return rows;
-    return sortRows(rows, internalSortModel);
-  }, [rows, internalSortModel]);
-  
-  return (
-    <div
-      ref={ref}
-      className={clsx('data-grid', className)}
-      {...props}
-    >
-      <div className="data-grid__header">
-        {checkboxSelection && (
-          <div className="data-grid__cell data-grid__cell--checkbox">
-            <input
-              type="checkbox"
-              checked={internalSelectedRows.size === rows.length}
-              onChange={() => handleSelectAll()}
-            />
-          </div>
-        )}
-        {columns.map(column => (
-          <div
-            key={column.field}
-            className={clsx(
-              'data-grid__cell',
-              'data-grid__header-cell',
-              {
-                'data-grid__header-cell--sortable': column.sortable,
-                'data-grid__header-cell--sorted': isSorted(column.field)
-              }
-            )}
-            style={{ width: column.width }}
-            onClick={() => handleHeaderClick(column)}
-          >
-            {column.renderHeader?.(column) ?? column.headerName}
-            {column.sortable && (
-              <SortIcon
-                direction={getSortDirection(column.field)}
-              />
-            )}
-          </div>
-        ))}
-      </div>
-      
-      <div className="data-grid__body">
-        {loading ? (
-          <div className="data-grid__loading">
-            <Spinner />
-          </div>
-        ) : (
-          sortedRows.map(row => (
-            <div
-              key={row.id}
-              className="data-grid__row"
-              onClick={() => onRowClick?.(row)}
-            >
-              {checkboxSelection && (
-                <div className="data-grid__cell data-grid__cell--checkbox">
-                  <input
-                    type="checkbox"
-                    checked={internalSelectedRows.has(row.id)}
-                    onChange={() => handleRowSelect(row.id)}
-                  />
-                </div>
-              )}
-              {columns.map(column => (
-                <div
-                  key={column.field}
-                  className="data-grid__cell"
-                  style={{ width: column.width }}
-                >
-                  {column.renderCell?.({
-                    row,
-                    value: getValue(row, column),
-                    field: column.field
-                  }) ?? getValue(row, column)}
-                </div>
-              ))}
-            </div>
-          ))
-        )}
-      </div>
-    </div>
-  );
-});
-```
+import { DataGrid } from '@/components/data';
 
-:::
-
-## Styling
-
-### Base Styles
-
-::: code-with-tooltips
-
-```scss
-.data-grid {
-  width: 100%;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius-md);
-  overflow: hidden;
-  
-  // Header styles
-  &__header {
-    display: flex;
-    background: var(--surface-background-alt);
-    border-bottom: 1px solid var(--border-color);
-    position: sticky;
-    top: 0;
-    z-index: 1;
-  }
-  
-  &__header-cell {
-    font-weight: 600;
-    user-select: none;
-    
-    &--sortable {
-      cursor: pointer;
-      
-      &:hover {
-        background: var(--surface-hover);
-      }
-    }
-    
-    &--sorted {
-      background: var(--surface-selected);
-    }
-  }
-  
-  // Cell styles
-  &__cell {
-    padding: var(--spacing-md);
-    min-width: 100px;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    
-    &--checkbox {
-      flex: 0 0 48px;
-      min-width: 48px;
-      justify-content: center;
-    }
-  }
-  
-  // Row styles
-  &__row {
-    display: flex;
-    border-bottom: 1px solid var(--border-color);
-    transition: background 0.2s;
-    
-    &:hover {
-      background: var(--surface-hover);
-    }
-    
-    &--selected {
-      background: var(--surface-selected);
-    }
-  }
-  
-  // Loading state
-  &__loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-xl);
-  }
-  
-  // Empty state
-  &__empty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-xl);
-    color: var(--text-secondary);
-  }
-}
-```
-
-:::
-
-## Testing
-
-### Unit Tests
-
-::: code-with-tooltips
-
-```tsx
-import { render, screen, fireEvent } from '@testing-library/react';
-import { DataGrid } from './DataGrid';
-
-describe('DataGrid', () => {
+export const BasicDataGridExample = () => {
   const columns = [
-    { field: 'id', headerName: 'ID' },
-    { field: 'name', headerName: 'Name', sortable: true }
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'name', headerName: 'Name', width: 130 },
+    { field: 'age', headerName: 'Age', type: 'number', width: 90 },
+    { 
+      field: 'status',
+      headerName: 'Status',
+      width: 120,
+      renderCell: (params) => (
+        <Badge color={params.value === 'active' ? 'success' : 'error'}>
+          {params.value}
+        </Badge>
+      )
+    }
   ];
-  
+
   const rows = [
-    { id: 1, name: 'John' },
-    { id: 2, name: 'Jane' }
+    { id: 1, name: 'John Doe', age: 30, status: 'active' },
+    { id: 2, name: 'Jane Smith', age: 25, status: 'inactive' }
   ];
 
-  it('renders columns and rows', () => {
-    render(<DataGrid columns={columns} rows={rows} />);
-    
-    expect(screen.getByText('ID')).toBeInTheDocument();
-    expect(screen.getByText('Name')).toBeInTheDocument();
-    expect(screen.getByText('John')).toBeInTheDocument();
-    expect(screen.getByText('Jane')).toBeInTheDocument();
-  });
-
-  it('handles row selection', () => {
-    const handleSelectionChange = jest.fn();
-    render(
-      <DataGrid
-        columns={columns}
-        rows={rows}
-        checkboxSelection
-        onSelectionChange={handleSelectionChange}
-      />
-    );
-    
-    fireEvent.click(screen.getAllByRole('checkbox')[1]);
-    expect(handleSelectionChange).toHaveBeenCalledWith([1]);
-  });
-
-  it('handles sorting', () => {
-    const handleSortChange = jest.fn();
-    render(
-      <DataGrid
-        columns={columns}
-        rows={rows}
-        onSortChange={handleSortChange}
-      />
-    );
-    
-    fireEvent.click(screen.getByText('Name'));
-    expect(handleSortChange).toHaveBeenCalledWith([
-      { field: 'name', sort: 'asc' }
-    ]);
-  });
-});
+  return (
+    <DataGrid
+      columns={columns}
+      rows={rows}
+      onRowClick={(row) => console.log('Clicked row:', row)}
+    />
+  );
+};
 ```
-
 :::
 
-## Accessibility
-
-### ARIA Attributes
+### Advanced Features
 
 ::: code-with-tooltips
-
 ```tsx
-const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps>(({
-  // ... other props
-}, ref) => {
-  return (
-    <div
-      ref={ref}
-      role="grid"
-      aria-busy={loading}
-      aria-colcount={columns.length}
-      aria-rowcount={rows.length + 1} // Including header
-    >
-      <div role="rowgroup">
-        <div role="row">
-          {columns.map(column => (
-            <div
-              role="columnheader"
-              aria-sort={getSortDirection(column.field)}
-              aria-label={column.headerName}
-            >
-              {/* ... */}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div role="rowgroup">
-        {rows.map(row => (
-          <div
-            role="row"
-            aria-selected={isSelected(row.id)}
-          >
-            {/* ... */}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-});
-```
+import { DataGrid } from '@/components/data';
+import { useState } from 'react';
 
+export const AdvancedDataGridExample = () => {
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [sortModel, setSortModel] = useState<DataGridSortModel>([
+    { field: 'name', sort: 'asc' }
+  ]);
+  const [filterModel, setFilterModel] = useState<DataGridFilterModel>({
+    items: []
+  });
+
+  const columns = [
+    { 
+      field: 'id', 
+      headerName: 'ID',
+      width: 70,
+      pinned: 'left'
+    },
+    { 
+      field: 'name',
+      headerName: 'Name',
+      width: 130,
+      sortable: true,
+      filterable: true
+    },
+    { 
+      field: 'email',
+      headerName: 'Email',
+      width: 200,
+      sortable: true,
+      filterable: true
+    },
+    { 
+      field: 'role',
+      headerName: 'Role',
+      width: 120,
+      type: 'singleSelect',
+      valueOptions: ['Admin', 'User', 'Guest']
+    },
+    { 
+      field: 'lastLogin',
+      headerName: 'Last Login',
+      type: 'date',
+      width: 160,
+      valueFormatter: (value) => 
+        new Date(value as string).toLocaleDateString()
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      width: 120,
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => (
+        <ButtonGroup>
+          <IconButton
+            icon="edit"
+            onClick={() => handleEdit(params.row)}
+          />
+          <IconButton
+            icon="delete"
+            onClick={() => handleDelete(params.row)}
+          />
+        </ButtonGroup>
+      )
+    }
+  ];
+
+  return (
+    <DataGrid
+      columns={columns}
+      rows={rows}
+      checkboxSelection
+      selectedRows={selectedIds}
+      onSelectionChange={setSelectedIds}
+      sortModel={sortModel}
+      onSortChange={setSortModel}
+      filterModel={filterModel}
+      onFilterChange={setFilterModel}
+      resizable
+      reorderable
+      virtual
+      rowHeight={52}
+      headerHeight={56}
+    />
+  );
+};
+```
+:::
+
+### With Server-Side Operations
+
+::: code-with-tooltips
+```tsx
+import { DataGrid } from '@/components/data';
+import { useState, useEffect } from 'react';
+
+export const ServerSideDataGridExample = () => {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<GridRow[]>([]);
+  const [sortModel, setSortModel] = useState<DataGridSortModel>([]);
+  const [filterModel, setFilterModel] = useState<DataGridFilterModel>({
+    items: []
+  });
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 25
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/data', {
+          method: 'POST',
+          body: JSON.stringify({
+            sort: sortModel,
+            filter: filterModel,
+            pagination: paginationModel
+          })
+        });
+        const json = await response.json();
+        setData(json.rows);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [sortModel, filterModel, paginationModel]);
+
+  return (
+    <DataGrid
+      columns={columns}
+      rows={data}
+      loading={loading}
+      sortModel={sortModel}
+      onSortChange={setSortModel}
+      filterModel={filterModel}
+      onFilterChange={setFilterModel}
+      paginationModel={paginationModel}
+      onPaginationModelChange={setPaginationModel}
+      virtual
+    />
+  );
+};
+```
 :::
 
 ## Best Practices
 
 ### Usage Guidelines
 
-::: code-with-tooltips
+1. **Data Management**
+   - Use virtual scrolling for large datasets
+   - Implement server-side operations
+   - Handle data updates efficiently
+   - Cache results appropriately
 
-```tsx
-// DO: Use appropriate column widths
-const columns = [
-  { field: 'id', width: 80 }, // Narrow for IDs
-  { field: 'name', minWidth: 200 }, // Wider for names
-  { field: 'description', flex: 1 } // Flexible for content
-];
+2. **Column Configuration**
+   - Set appropriate column widths
+   - Configure sorting/filtering logically
+   - Use column pinning sparingly
+   - Group related columns
 
-// DON'T: Mix data types in columns
-const badColumns = [
-  {
-    field: 'status',
-    type: 'string',
-    renderCell: (params) => (
-      params.value === true ? 'Yes' : 'No' // Inconsistent types!
-    )
-  }
-];
+3. **User Experience**
+   - Provide clear loading states
+   - Handle errors gracefully
+   - Show helpful empty states
+   - Maintain responsive layout
 
-// DO: Handle loading and empty states
-<DataGrid
-  loading={isLoading}
-  rows={rows}
-  emptyContent={
-    <EmptyState
-      icon="table"
-      message="No data available"
-    />
-  }
-/>
+### Accessibility
 
-// DON'T: Use complex inline renderers
-<DataGrid
-  columns={[{
-    field: 'actions',
-    renderCell: (params) => (
-      <ComplexComponent // Move to separate component
-        data={params.row}
-        onAction={handleAction}
-      />
-    )
-  }]}
-/>
-```
+1. **Keyboard Navigation**
+   - Support arrow key navigation
+   - Enable cell selection
+   - Handle keyboard shortcuts
+   - Maintain focus management
 
-:::
+2. **Screen Readers**
+   - Use proper ARIA attributes
+   - Announce state changes
+   - Provide context information
+   - Handle dynamic updates
 
-### Performance Considerations
+3. **Visual Accessibility**
+   - Maintain sufficient contrast
+   - Support text scaling
+   - Handle high contrast mode
+   - Consider color blindness
 
-::: code-with-tooltips
+### Performance
 
-```tsx
-// DO: Memoize column definitions
-const DataGridWrapper = ({ data }) => {
-  const columns = useMemo(() => [
-    {
-      field: 'name',
-      renderCell: useCallback((params) => (
-        <UserCell user={params.row} />
-      ), [])
-    }
-  ], []);
-  
-  return <DataGrid columns={columns} rows={data} />;
-};
+1. **Rendering Optimization**
+   - Use virtualization
+   - Implement row/cell memoization
+   - Optimize sorting/filtering
+   - Handle large datasets
 
-// DON'T: Create new sort functions inline
-<DataGrid
-  sortComparator={(a, b) => a.localeCompare(b)} // Creates new function every render
-/>
+2. **State Management**
+   - Batch state updates
+   - Optimize re-renders
+   - Handle selection efficiently
+   - Clean up event listeners
 
-// DO: Use virtualization for large datasets
-<DataGrid
-  rows={largeDataset}
-  virtualization={{
-    enabled: true,
-    rowHeight: 52,
-    overscan: 5
-  }}
-/>
-```
+3. **Data Operations**
+   - Use server-side operations
+   - Implement data caching
+   - Handle real-time updates
+   - Optimize data transformations
 
-:::
+## Related Components
+
+- [Table](./table.md) - For simpler data display needs
+- [TreeTable](./tree-table.md) - For hierarchical data display
+- [List](../lists-and-cards/list.md) - For basic list display
+- [VirtualList](../lists-and-cards/virtual-list.md) - For virtualized lists

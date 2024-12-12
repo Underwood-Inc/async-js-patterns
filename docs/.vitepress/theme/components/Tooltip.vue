@@ -111,23 +111,9 @@ function formatMessage(content: string) {
     .map((message) => {
       const [type, rawContent] = message.split(':::');
 
-      // Early return for variable signatures
+      // Skip variable signature processing
       if (rawContent?.startsWith('( variable)')) {
-        const [_, name, signature] =
-          rawContent.match(/\(\s*variable\)\s*(\w+):\s*(.+?)(?=\s*(?:type:|$))/) || [];
-        if (signature) {
-          const cleanSignature = signature
-            .replace(/\s*=>\s*{[\s\S]*}/, '') // Remove implementation
-            .trim();
-
-          return `
-            <div class="vp-doc">
-              <span class="type-text" style="color: #56b6c2; background: rgba(86, 182, 194, 0.1)">Type Signature</span>:
-              <pre><code class="language-typescript">${cleanSignature} => JSX.Element</code></pre>
-              <p>Identifier: ${name}</p>
-            </div>
-          `;
-        }
+        return ''; // Return empty string to skip this tooltip
       }
 
       // Handle other info types

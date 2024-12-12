@@ -1,8 +1,11 @@
 ---
 title: Card Component
 description: Versatile card component for displaying content in a contained format
+category: Data
+subcategory: Lists & Cards
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
   - Data Display
   - Card
@@ -14,39 +17,30 @@ tags:
 
 ## Overview
 
-The Card component provides a flexible container for displaying content in a contained format. It supports various layouts, content sections, and interaction patterns.
+The Card component provides a flexible container for displaying content in a contained format. It supports various layouts, content sections, and interaction patterns through a compound component pattern.
 
-## Usage
+## Key Features
 
-### Basic Card
+- Compound component pattern
+- Header, body, and footer sections
+- Media support
+- Interactive states
+- Customizable styling
+- Accessibility support
+- Responsive design
+- Shadow variants
+
+## Component API
+
+### Props Interface
 
 ::: code-with-tooltips
-
 ```tsx
-import { Card } from '@/components/data';
+import { ReactNode } from 'react';
 
-<Card>
-  <Card.Header>
-    <Card.Title>Card Title</Card.Title>
-    <Card.Subtitle>Card Subtitle</Card.Subtitle>
-  </Card.Header>
-  <Card.Body>
-    This is the main content of the card.
-  </Card.Body>
-  <Card.Footer>
-    <Button>Action</Button>
-  </Card.Footer>
-</Card>
-```
-
-:::
-
-### API Reference
-
-```tsx
-interface CardProps {
+export interface CardProps {
   /** Card content */
-  children: React.ReactNode;
+  children: ReactNode;
   /** Whether card is hoverable */
   hoverable?: boolean;
   /** Whether card has shadow */
@@ -63,9 +57,9 @@ interface CardProps {
   className?: string;
 }
 
-interface CardHeaderProps {
+export interface CardHeaderProps {
   /** Header content */
-  children: React.ReactNode;
+  children: ReactNode;
   /** Header background */
   background?: string;
   /** Header padding */
@@ -74,527 +68,207 @@ interface CardHeaderProps {
   className?: string;
 }
 
-interface CardTitleProps {
+export interface CardTitleProps {
   /** Title content */
-  children: React.ReactNode;
+  children: ReactNode;
   /** Title level */
   level?: 1 | 2 | 3 | 4 | 5 | 6;
   /** Additional CSS class */
   className?: string;
 }
 
-interface CardBodyProps {
+export interface CardBodyProps {
   /** Body content */
-  children: React.ReactNode;
+  children: ReactNode;
   /** Body padding */
   padding?: number | string;
   /** Additional CSS class */
   className?: string;
 }
 
-interface CardFooterProps {
+export interface CardFooterProps {
   /** Footer content */
-  children: React.ReactNode;
+  children: ReactNode;
   /** Footer padding */
   padding?: number | string;
   /** Additional CSS class */
   className?: string;
 }
-```
 
-### Examples
-
-#### With Media
-
-::: code-with-tooltips
-
-```tsx
-<Card>
-  <Card.Media
-    src="/image.jpg"
-    alt="Card image"
-    height={200}
-  />
-  <Card.Body>
-    <Card.Title>Media Card</Card.Title>
-    <p>Card content with media.</p>
-  </Card.Body>
-</Card>
-```
-
-:::
-
-#### Interactive Card
-
-::: code-with-tooltips
-
-```tsx
-<Card
-  hoverable
-  clickable
-  onClick={() => handleCardClick()}
->
-  <Card.Body>
-    <Card.Title>Clickable Card</Card.Title>
-    <p>Click me to trigger an action.</p>
-  </Card.Body>
-</Card>
-```
-
-:::
-
-## Implementation
-
-### Core Component
-
-::: code-with-tooltips
-
-```tsx
-const CardContext = React.createContext<{
-  padding?: number | string;
-}>({});
-
-export const Card = React.forwardRef<HTMLDivElement, CardProps>(({
-  children,
-  hoverable = false,
-  shadow = false,
-  padding,
-  radius = 'md',
-  clickable = false,
-  onClick,
-  className,
-  ...props
-}, ref) => {
-  return (
-    <CardContext.Provider value={{ padding }}>
-      <div
-        ref={ref}
-        className={clsx(
-          'card',
-          {
-            'card--hoverable': hoverable,
-            'card--clickable': clickable,
-            [`card--shadow-${shadow}`]: shadow,
-          },
-          className
-        )}
-        style={{
-          padding,
-          borderRadius: radius,
-          cursor: clickable ? 'pointer' : undefined
-        }}
-        onClick={clickable ? onClick : undefined}
-        role={clickable ? 'button' : undefined}
-        tabIndex={clickable ? 0 : undefined}
-        {...props}
-      >
-        {children}
-      </div>
-    </CardContext.Provider>
-  );
-});
-
-Card.Header = function CardHeader({
-  children,
-  background,
-  padding,
-  className
-}: CardHeaderProps) {
-  const ctx = useContext(CardContext);
-  
-  return (
-    <div
-      className={clsx('card__header', className)}
-      style={{
-        background,
-        padding: padding ?? ctx.padding
-      }}
-    >
-      {children}
-    </div>
-  );
-};
-
-Card.Title = function CardTitle({
-  children,
-  level = 3,
-  className
-}: CardTitleProps) {
-  const Component = `h${level}` as keyof JSX.IntrinsicElements;
-  
-  return (
-    <Component
-      className={clsx('card__title', className)}
-    >
-      {children}
-    </Component>
-  );
-};
-
-Card.Body = function CardBody({
-  children,
-  padding,
-  className
-}: CardBodyProps) {
-  const ctx = useContext(CardContext);
-  
-  return (
-    <div
-      className={clsx('card__body', className)}
-      style={{ padding: padding ?? ctx.padding }}
-    >
-      {children}
-    </div>
-  );
-};
-
-Card.Footer = function CardFooter({
-  children,
-  padding,
-  className
-}: CardFooterProps) {
-  const ctx = useContext(CardContext);
-  
-  return (
-    <div
-      className={clsx('card__footer', className)}
-      style={{ padding: padding ?? ctx.padding }}
-    >
-      {children}
-    </div>
-  );
-};
-
-Card.Media = function CardMedia({
-  src,
-  alt,
-  height,
-  width,
-  className
-}: CardMediaProps) {
-  return (
-    <div
-      className={clsx('card__media', className)}
-      style={{ height, width }}
-    >
-      <img src={src} alt={alt} />
-    </div>
-  );
-};
-```
-
-:::
-
-## Styling
-
-### Base Styles
-
-::: code-with-tooltips
-
-```scss
-.card {
-  background: var(--surface-background);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  transition: all 0.2s ease;
-  
-  // Hover state
-  &--hoverable {
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-  }
-  
-  // Shadow variants
-  &--shadow-sm { box-shadow: var(--shadow-sm); }
-  &--shadow-md { box-shadow: var(--shadow-md); }
-  &--shadow-lg { box-shadow: var(--shadow-lg); }
-  
-  // Clickable state
-  &--clickable {
-    cursor: pointer;
-    
-    &:focus-visible {
-      outline: 2px solid var(--focus-ring);
-      outline-offset: 2px;
-    }
-  }
-  
-  // Header
-  &__header {
-    padding: var(--spacing-md);
-    border-bottom: 1px solid var(--border-color);
-    background: var(--surface-background);
-  }
-  
-  // Title
-  &__title {
-    margin: 0;
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-bold);
-    color: var(--text-primary);
-  }
-  
-  // Subtitle
-  &__subtitle {
-    margin: var(--spacing-xs) 0 0;
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-  }
-  
-  // Body
-  &__body {
-    padding: var(--spacing-md);
-    
-    > :first-child { margin-top: 0; }
-    > :last-child { margin-bottom: 0; }
-  }
-  
-  // Footer
-  &__footer {
-    padding: var(--spacing-md);
-    border-top: 1px solid var(--border-color);
-    background: var(--surface-background-alt);
-  }
-  
-  // Media
-  &__media {
-    position: relative;
-    overflow: hidden;
-    
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
+export interface CardMediaProps {
+  /** Media source URL */
+  src: string;
+  /** Alt text */
+  alt: string;
+  /** Media height */
+  height?: number | string;
+  /** Media width */
+  width?: number | string;
+  /** Object fit */
+  objectFit?: 'cover' | 'contain' | 'fill';
+  /** Additional CSS class */
+  className?: string;
 }
 ```
-
 :::
 
-## Testing
+### Props Table
 
-### Unit Tests
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | ReactNode | - | Card content |
+| `hoverable` | boolean | false | Enable hover effect |
+| `shadow` | string/boolean | false | Shadow variant |
+| `padding` | number/string | - | Card padding |
+| `radius` | number/string | 'md' | Border radius |
+| `clickable` | boolean | false | Enable click |
+| `onClick` | function | - | Click handler |
+| `className` | string | - | Custom class |
 
-::: code-with-tooltips
+## Usage
 
-```tsx
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Card } from './Card';
-
-describe('Card', () => {
-  it('renders children correctly', () => {
-    render(
-      <Card>
-        <Card.Body>Content</Card.Body>
-      </Card>
-    );
-    
-    expect(screen.getByText('Content')).toBeInTheDocument();
-  });
-
-  it('handles click events when clickable', () => {
-    const handleClick = jest.fn();
-    
-    render(
-      <Card clickable onClick={handleClick}>
-        <Card.Body>Clickable Content</Card.Body>
-      </Card>
-    );
-    
-    fireEvent.click(screen.getByRole('button'));
-    expect(handleClick).toHaveBeenCalled();
-  });
-
-  it('applies hover styles', () => {
-    const { container } = render(
-      <Card hoverable>
-        <Card.Body>Hoverable Content</Card.Body>
-      </Card>
-    );
-    
-    expect(container.firstChild).toHaveClass('card--hoverable');
-  });
-
-  it('renders media content', () => {
-    render(
-      <Card>
-        <Card.Media
-          src="/test.jpg"
-          alt="Test Image"
-          height={200}
-        />
-      </Card>
-    );
-    
-    const img = screen.getByAltText('Test Image');
-    expect(img).toBeInTheDocument();
-    expect(img.parentElement).toHaveStyle({ height: '200px' });
-  });
-
-  it('supports nested components', () => {
-    render(
-      <Card>
-        <Card.Header>
-          <Card.Title>Title</Card.Title>
-          <Card.Subtitle>Subtitle</Card.Subtitle>
-        </Card.Header>
-        <Card.Body>Body Content</Card.Body>
-        <Card.Footer>Footer Content</Card.Footer>
-      </Card>
-    );
-    
-    expect(screen.getByText('Title')).toBeInTheDocument();
-    expect(screen.getByText('Subtitle')).toBeInTheDocument();
-    expect(screen.getByText('Body Content')).toBeInTheDocument();
-    expect(screen.getByText('Footer Content')).toBeInTheDocument();
-  });
-});
-```
-
-:::
-
-## Accessibility
-
-### ARIA Attributes
+### Basic Card
 
 ::: code-with-tooltips
-
 ```tsx
-const Card = React.forwardRef<HTMLDivElement, CardProps>(({
-  children,
-  clickable,
-  onClick,
-  ...props
-}, ref) => {
+import { Card } from '@/components/data';
+
+export const BasicCardExample = () => {
   return (
-    <div
-      ref={ref}
-      role={clickable ? 'button' : undefined}
-      tabIndex={clickable ? 0 : undefined}
-      aria-pressed={clickable ? false : undefined}
-      onKeyDown={clickable ? (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onClick?.();
-        }
-      } : undefined}
-      {...props}
-    >
-      {children}
-    </div>
+    <Card>
+      <Card.Header>
+        <Card.Title>Card Title</Card.Title>
+        <Card.Subtitle>Card Subtitle</Card.Subtitle>
+      </Card.Header>
+      <Card.Body>
+        <p>This is the main content of the card.</p>
+      </Card.Body>
+      <Card.Footer>
+        <Button>Action</Button>
+      </Card.Footer>
+    </Card>
   );
-});
+};
 ```
-
 :::
 
-## Integration Examples
-
-### With React Router
+### With Media
 
 ::: code-with-tooltips
-
 ```tsx
-import { Link } from 'react-router-dom';
+import { Card } from '@/components/data';
 
-const LinkCard = ({ to, children, ...props }) => (
-  <Card
-    as={Link}
-    to={to}
-    clickable
-    hoverable
-    {...props}
-  >
-    {children}
-  </Card>
-);
-
-// Usage
-<LinkCard to="/article/1">
-  <Card.Media src="/thumbnail.jpg" alt="Article thumbnail" />
-  <Card.Body>
-    <Card.Title>Article Title</Card.Title>
-    <p>Article preview text...</p>
-  </Card.Body>
-</LinkCard>
+export const MediaCardExample = () => {
+  return (
+    <Card shadow="md">
+      <Card.Media
+        src="/image.jpg"
+        alt="Card image"
+        height={200}
+        objectFit="cover"
+      />
+      <Card.Body>
+        <Card.Title>Media Card</Card.Title>
+        <p>Card content with media.</p>
+      </Card.Body>
+    </Card>
+  );
+};
 ```
-
 :::
 
-### With Animation
+### Interactive Card
 
 ::: code-with-tooltips
-
 ```tsx
-import { motion } from 'framer-motion';
+import { Card } from '@/components/data';
 
-const AnimatedCard = motion(Card);
+export const InteractiveCardExample = () => {
+  const handleCardClick = () => {
+    console.log('Card clicked');
+  };
 
-<AnimatedCard
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  exit={{ opacity: 0, y: -20 }}
-  transition={{ duration: 0.2 }}
->
-  <Card.Body>Animated content</Card.Body>
-</AnimatedCard>
+  return (
+    <Card
+      hoverable
+      clickable
+      shadow="sm"
+      onClick={handleCardClick}
+    >
+      <Card.Body>
+        <Card.Title>Clickable Card</Card.Title>
+        <p>Click me to trigger an action.</p>
+      </Card.Body>
+    </Card>
+  );
+};
 ```
-
 :::
 
 ## Best Practices
 
-### Layout Guidelines
+### Usage Guidelines
 
-::: code-with-tooltips
+1. **Layout & Structure**
+   - Use semantic sections
+   - Maintain consistent spacing
+   - Follow content hierarchy
+   - Handle overflow properly
 
-```tsx
-// DO: Use consistent spacing
-<Card padding="md">
-  <Card.Body>
-    <Stack spacing="md">
-      <Card.Title>Well-spaced Content</Card.Title>
-      <p>Content with consistent margins</p>
-    </Stack>
-  </Card.Body>
-</Card>
+2. **Interaction Design**
+   - Clear hover states
+   - Obvious click targets
+   - Consistent feedback
+   - Touch-friendly areas
 
-// DON'T: Mix padding values
-<Card padding="lg">
-  <Card.Body padding="sm"> {/* Inconsistent! */}
-    <Card.Title>Inconsistent Spacing</Card.Title>
-  </Card.Body>
-</Card>
-```
+3. **Content Organization**
+   - Logical grouping
+   - Clear hierarchy
+   - Balanced density
+   - Proper alignment
 
-:::
+### Accessibility
 
-### Performance Considerations
+1. **Semantic Structure**
+   - Use proper headings
+   - Include ARIA roles
+   - Handle focus states
+   - Support keyboard
 
-::: code-with-tooltips
+2. **Interactive Elements**
+   - Clear focus states
+   - Keyboard navigation
+   - Touch targets
+   - Click handling
 
-```tsx
-// DO: Memoize handlers for clickable cards
-const MemoizedCard = memo(({ item, onSelect }) => (
-  <Card
-    clickable
-    onClick={useCallback(() => onSelect(item.id), [item.id, onSelect])}
-  >
-    <Card.Body>{item.content}</Card.Body>
-  </Card>
-));
+3. **Media Content**
+   - Alt text
+   - Loading states
+   - Fallback content
+   - Responsive images
 
-// DON'T: Create new handlers on every render
-<Card
-  clickable
-  onClick={() => handleSelect(item.id)} // Creates new function every render
->
-  <Card.Body>{item.content}</Card.Body>
-</Card>
-```
+### Performance
 
-:::
+1. **Rendering**
+   - Optimize media loading
+   - Lazy load images
+   - Handle transitions
+   - Minimize reflows
+
+2. **State Management**
+   - Cache hover states
+   - Optimize click handlers
+   - Manage media states
+   - Handle animations
+
+3. **Resource Loading**
+   - Optimize image loading
+   - Preload critical assets
+   - Handle loading states
+   - Manage fallbacks
+
+## Related Components
+
+- [CardList](./card-list.md) - For displaying cards in a list layout
+- [CardGrid](./card-grid.md) - For displaying cards in a grid layout
+- [List](./list.md) - For simpler list layouts

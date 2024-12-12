@@ -133,24 +133,24 @@ Our React component library is organized into the following categories:
 
 ### Feedback
 
-- [Alert](./feedback/alert.md) - Alert messages
-- [Toast](./feedback/toast.md) - Toast notifications
-- [Progress](./feedback/progress.md) - Progress indicators
-- [Skeleton](./feedback/skeleton.md) - Loading states
+- [Alert](/react-component-patterns/feedback/notifications/alert) - Alert messages
+- [Toast](/react-component-patterns/feedback/notifications/toast) - Toast notifications
+- [Progress](/react-component-patterns/feedback/progress-indicators/progress) - Progress indicators
+- [Skeleton](/react-component-patterns/feedback/progress-indicators/skeleton) - Loading states
 
 ### Overlay
 
-- [Modal](./overlay/modal.md) - Modal dialogs
-- [Drawer](./overlay/drawer.md) - Slide-out panels
-- [Popover](./overlay/popover.md) - Contextual overlays
-- [Tooltip](./overlay/tooltip.md) - Hover tooltips
+- [Modal](/react-component-patterns/overlay/modal) - Modal dialogs
+- [Drawer](/react-component-patterns/overlay/drawer) - Slide-out panels
+- [Popover](/react-component-patterns/overlay/popover) - Contextual overlays
+- [Tooltip](/react-component-patterns/overlay/tooltip) - Hover tooltips
 
 ### Data Display
 
-- [Table](./data/table.md) - Data tables
-- [List](./data/list.md) - List components
-- [Card](./data/card.md) - Card layouts
-- [Badge](./data/badge.md) - Status badges
+- [Table](/react-component-patterns/data/table) - Data tables
+- [List](/react-component-patterns/data/list) - List components
+- [Card](/react-component-patterns/data/card) - Card layouts
+- [Badge](/react-component-patterns/data/badge) - Status badges
 
 ## Best Practices
 
@@ -303,6 +303,64 @@ Our React component library is organized into the following categories:
     </button>
   );
   ```
+
+:::
+
+- Implement pipe patterns for data transformation
+  - Create composable transformation functions
+  - Use TypeScript for type safety
+  - Implement memoization for performance
+  - Example:
+
+::: code-with-tooltips
+
+```tsx
+// Pipe function type and utility
+type PipeFn<T> = (value: T) => T;
+
+const pipe = <T>(...fns: PipeFn<T>[]) => (value: T): T => {
+  return fns.reduce((acc, fn) => fn(acc), value);
+};
+
+// Example transformation functions
+const capitalize = (str: string): string => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
+const truncate = (length: number) => (str: string): string => {
+  return str.length > length ? str.slice(0, length) + '...' : str;
+};
+
+// React component using pipes
+const TextDisplay = ({ text }: { text: string }) => {
+  // Memoize the pipe function to prevent recreating on each render
+  const transformText = useMemo(() => 
+    pipe(
+      capitalize,
+      truncate(20)
+    ),
+    []
+  );
+
+  return <div>{transformText(text)}</div>;
+};
+
+// Custom hook for reusable transformations
+const useTextTransform = (text: string, ...transforms: PipeFn<string>[]) => {
+  return useMemo(() => pipe(...transforms)(text), [text, ...transforms]);
+};
+
+// Usage with hook
+const TransformedText = ({ text }: { text: string }) => {
+  const transformedText = useTextTransform(
+    text,
+    capitalize,
+    truncate(20)
+  );
+
+  return <div>{transformedText}</div>;
+};
+```
 
 :::
 

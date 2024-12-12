@@ -1,8 +1,11 @@
 ---
 title: Table Component
 description: Feature-rich data table component with sorting, filtering, and pagination
+category: Data
+subcategory: Tables
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
   - Data Display
   - Table
@@ -15,83 +18,168 @@ tags:
 
 The Table component provides a powerful way to display and interact with tabular data. It supports sorting, filtering, pagination, and row selection.
 
-## Usage
+## Key Features
 
-### Basic Table
+- Column sorting and filtering
+- Row selection
+- Pagination support
+- Custom cell rendering
+- Keyboard navigation
+- Responsive layout
+- Accessible by default
+
+## Component API
+
+### Props Interface
 
 ::: code-with-tooltips
-
 ```tsx
-import { Table } from '@/components/data';
+import { ReactNode } from 'react';
 
-const data = [
-  { id: 1, name: 'John Doe', age: 30 },
-  { id: 2, name: 'Jane Smith', age: 25 },
-];
-
-const columns = [
-  { key: 'name', title: 'Name' },
-  { key: 'age', title: 'Age' },
-];
-
-<Table
-  data={data}
-  columns={columns}
-  onRowClick={(row) => console.log('clicked:', row)}
-/>
-```
-
-:::
-
-### API Reference
-
-```tsx
-interface TableColumn<T> {
+export interface TableColumn<T> {
   /** Unique key for the column */
   key: string;
   /** Column header text */
   title: string;
   /** Custom render function */
-  render?: (value: any, row: T) => React.ReactNode;
+  render?: (_value: unknown, _row: T) => ReactNode;
   /** Whether column is sortable */
   sortable?: boolean;
   /** Column width */
   width?: number | string;
+  /** Column filter configuration */
+  filter?: {
+    type: 'text' | 'number' | 'select';
+    operators?: string[];
+    options?: { label: string; value: unknown }[];
+  };
 }
 
-interface TableProps<T> {
+export interface TableProps<T> {
   /** Data array */
   data: T[];
   /** Column definitions */
   columns: TableColumn<T>[];
   /** Row click handler */
-  onRowClick?: (row: T) => void;
+  onRowClick?: (_row: T) => void;
   /** Selected rows */
   selectedRows?: T[];
   /** Selection change handler */
-  onSelectionChange?: (rows: T[]) => void;
+  onSelectionChange?: (_rows: T[]) => void;
   /** Whether to show pagination */
   pagination?: boolean;
   /** Items per page */
   pageSize?: number;
+  /** Loading state */
+  loading?: boolean;
+  /** Error state */
+  error?: string;
+  /** Empty state message */
+  emptyMessage?: string;
 }
 ```
+:::
 
-### Examples
+### Props Table
 
-#### With Sorting and Filtering
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `data` | T[] | - | Data array |
+| `columns` | TableColumn<T>[] | - | Column definitions |
+| `onRowClick` | function | - | Row click handler |
+| `selectedRows` | T[] | [] | Selected rows |
+| `onSelectionChange` | function | - | Selection change handler |
+| `pagination` | boolean | false | Whether to show pagination |
+| `pageSize` | number | 10 | Items per page |
+| `loading` | boolean | false | Loading state |
+| `error` | string | - | Error state |
+| `emptyMessage` | string | 'No data' | Empty state message |
+
+## Usage
 
 ::: code-with-tooltips
-
 ```tsx
-<Table
-  data={data}
-  columns={[
+import { Table } from '@/components/data';
+import { useState } from 'react';
+
+export const TableExample = () => {
+  const [selectedRows, setSelectedRows] = useState<Record<string, unknown>[]>([]);
+
+  const data = [
+    { id: 1, name: 'John Doe', age: 30 },
+    { id: 2, name: 'Jane Smith', age: 25 },
+  ];
+
+  const columns = [
+    { key: 'name', title: 'Name', sortable: true },
+    { key: 'age', title: 'Age', sortable: true },
+  ];
+
+  return (
+    <Table
+      data={data}
+      columns={columns}
+      selectedRows={selectedRows}
+      onSelectionChange={setSelectedRows}
+      pagination
+      pageSize={10}
+    />
+  );
+};
+```
+:::
+
+## Examples
+
+### Basic Table
+
+::: code-with-tooltips
+```tsx
+import { Table } from '@/components/data';
+
+export const BasicTableExample = () => {
+  const data = [
+    { id: 1, name: 'John Doe', email: 'john@example.com' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
+  ];
+
+  const columns = [
+    { key: 'name', title: 'Name' },
+    { key: 'email', title: 'Email' },
+  ];
+
+  return (
+    <Table
+      data={data}
+      columns={columns}
+    />
+  );
+};
+```
+:::
+
+### With Sorting and Filtering
+
+::: code-with-tooltips
+```tsx
+import { Table } from '@/components/data';
+import { UserName } from '@/components/user';
+
+export const SortableTableExample = () => {
+  const data = [
+    { id: 1, name: 'John Doe', age: 30, role: 'Admin' },
+    { id: 2, name: 'Jane Smith', age: 25, role: 'User' },
+  ];
+
+  const columns = [
     {
       key: 'name',
       title: 'Name',
       sortable: true,
-      render: (value) => <UserName>{value}</UserName>
+      render: (value) => <UserName>{value as string}</UserName>,
+      filter: {
+        type: 'text'
+      }
     },
     {
       key: 'age',
@@ -101,83 +189,124 @@ interface TableProps<T> {
         type: 'number',
         operators: ['equals', 'greaterThan', 'lessThan']
       }
+    },
+    {
+      key: 'role',
+      title: 'Role',
+      filter: {
+        type: 'select',
+        options: [
+          { label: 'Admin', value: 'Admin' },
+          { label: 'User', value: 'User' }
+        ]
+      }
     }
-  ]}
-  defaultSort={{ key: 'name', direction: 'asc' }}
-/>
-```
+  ];
 
+  return (
+    <Table
+      data={data}
+      columns={columns}
+      defaultSort={{ key: 'name', direction: 'asc' }}
+    />
+  );
+};
+```
+:::
+
+### With Selection and Pagination
+
+::: code-with-tooltips
+```tsx
+import { Table } from '@/components/data';
+import { useState } from 'react';
+
+export const SelectableTableExample = () => {
+  const [selectedRows, setSelectedRows] = useState<Record<string, unknown>[]>([]);
+
+  const data = Array.from({ length: 100 }, (_, i) => ({
+    id: i + 1,
+    name: `User ${i + 1}`,
+    status: i % 2 === 0 ? 'Active' : 'Inactive'
+  }));
+
+  const columns = [
+    { key: 'name', title: 'Name', sortable: true },
+    { key: 'status', title: 'Status' }
+  ];
+
+  return (
+    <Table
+      data={data}
+      columns={columns}
+      selectedRows={selectedRows}
+      onSelectionChange={setSelectedRows}
+      pagination
+      pageSize={10}
+    />
+  );
+};
+```
 :::
 
 ## Best Practices
 
-- Use consistent column widths
-- Implement proper loading states
-- Handle empty states gracefully
-- Support keyboard navigation
-- Optimize for large datasets
+### Usage Guidelines
 
-## Accessibility
+1. **Data Organization**
+   - Use consistent column widths
+   - Order columns logically
+   - Group related columns
+   - Handle long content
 
-- Use semantic table markup
-- Support keyboard navigation
-- Provide sort indicators
-- Include proper ARIA attributes
-- Handle focus management
+2. **Interaction Design**
+   - Provide clear sorting indicators
+   - Show filter states
+   - Handle selection feedback
+   - Support keyboard shortcuts
 
-## Implementation
+3. **Loading States**
+   - Show loading indicators
+   - Maintain layout stability
+   - Handle partial loading
+   - Preserve user interactions
 
-::: code-with-tooltips
+### Accessibility
 
-```tsx
-export const Table = <T extends Record<string, any>>({
-  data,
-  columns,
-  onRowClick,
-  selectedRows = [],
-  onSelectionChange,
-  pagination = false,
-  pageSize = 10,
-}: TableProps<T>) => {
-  return (
-    <div className="table-container">
-      <table role="grid">
-        <thead>
-          <tr>
-            {columns.map(column => (
-              <th key={column.key} role="columnheader">
-                {column.title}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(row => (
-            <tr
-              key={row.id}
-              onClick={() => onRowClick?.(row)}
-              role="row"
-            >
-              {columns.map(column => (
-                <td key={column.key} role="gridcell">
-                  {column.render
-                    ? column.render(row[column.key], row)
-                    : row[column.key]}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
-```
+1. **Semantic Structure**
+   - Use proper table markup
+   - Include table headers
+   - Set column scope
+   - Handle row headers
 
-:::
+2. **Keyboard Navigation**
+   - Support arrow keys
+   - Enable cell focus
+   - Handle selection
+   - Support sorting/filtering
+
+3. **Screen Readers**
+   - Announce sort changes
+   - Describe selection state
+   - Provide row context
+   - Handle dynamic updates
+
+### Performance
+
+1. **Data Management**
+   - Implement virtualization
+   - Optimize sorting
+   - Handle filtering efficiently
+   - Cache results
+
+2. **Rendering**
+   - Minimize re-renders
+   - Optimize cell updates
+   - Handle large datasets
+   - Clean up listeners
 
 ## Related Components
 
-- [DataGrid](./data-grid.md)
-- [List](./list.md)
-- [Pagination](../navigation/pagination.md)
+- [DataGrid](./data-grid.md) - For advanced data grid features
+- [TreeTable](./tree-table.md) - For hierarchical data
+- [List](../lists-and-cards/list.md) - For simpler data display

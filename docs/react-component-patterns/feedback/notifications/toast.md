@@ -1,8 +1,11 @@
 ---
 title: Toast Component
-description: Temporary notifications for brief updates and feedback
+description: Temporary notifications for brief updates and feedback messages
+category: Feedback
+subcategory: Notifications
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
   - Feedback
   - Notifications
@@ -14,13 +17,27 @@ tags:
 
 ## Overview
 
-The Toast component displays brief, temporary notifications that automatically dismiss themselves. It's ideal for providing non-intrusive feedback about operations, updates, and system events.
+The Toast component displays brief, temporary notifications that automatically dismiss themselves. It's designed for providing non-intrusive feedback about operations, updates, and system events without interrupting the user's workflow.
 
-## TypeScript Interface
+## Key Features
 
+- Multiple severity levels (info, success, warning, error)
+- Automatic dismissal with configurable duration
+- Optional action buttons
+- Customizable positioning
+- Queue management for multiple toasts
+- Accessible by default
+
+## Component API
+
+### Props Interface
+
+::: code-with-tooltips
 ```tsx
-interface ToastProps {
-  /** Unique ID for the toast */
+import { ReactNode } from 'react';
+
+export interface ToastProps {
+  /** Unique toast identifier */
   id: string;
   /** Toast message content */
   message: string;
@@ -33,7 +50,7 @@ interface ToastProps {
   /** Close handler */
   onClose?: () => void;
   /** Optional action element */
-  action?: React.ReactNode;
+  action?: ReactNode;
   /** Toast position */
   position?: {
     vertical: 'top' | 'bottom';
@@ -43,7 +60,7 @@ interface ToastProps {
   className?: string;
 }
 
-interface ToastContextValue {
+export interface ToastContextValue {
   /** Show a new toast */
   showToast: (toast: Omit<ToastProps, 'id'>) => string;
   /** Close a specific toast */
@@ -52,13 +69,30 @@ interface ToastContextValue {
   closeAll: () => void;
 }
 ```
+:::
+
+### Props Table
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `id` | string | - | Unique toast identifier |
+| `message` | string | - | Toast message content |
+| `type` | 'info' \| 'success' \| 'warning' \| 'error' | 'info' | Toast type |
+| `duration` | number | 5000 | Display duration in ms |
+| `dismissible` | boolean | true | Whether toast can be dismissed |
+| `onClose` | function | - | Close handler |
+| `action` | ReactNode | - | Optional action element |
+| `position` | object | { vertical: 'top', horizontal: 'right' } | Toast position |
+| `className` | string | - | Additional CSS class |
 
 ## Usage
 
+::: code-with-tooltips
 ```tsx
-import { useToast } from '@underwood/components';
+import { useState } from 'react';
+import { useToast, Button } from '@underwood/components';
 
-function MyComponent() {
+export const ToastExample = () => {
   const { showToast } = useToast();
 
   const handleSuccess = () => {
@@ -79,134 +113,139 @@ function MyComponent() {
       Perform Action
     </Button>
   );
-}
+};
 ```
-
-## Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `id` | string | - | Unique toast identifier |
-| `message` | string | - | Toast message content |
-| `type` | 'info' \| 'success' \| 'warning' \| 'error' | 'info' | Toast type |
-| `duration` | number | 5000 | Display duration in ms |
-| `dismissible` | boolean | true | Whether toast can be dismissed |
-| `onClose` | function | - | Close handler |
-| `action` | ReactNode | - | Optional action element |
-| `position` | object | { vertical: 'top', horizontal: 'right' } | Toast position |
-| `className` | string | - | Additional CSS class |
+:::
 
 ## Examples
 
-### Basic Toast
+### Basic Success Toast
 
+::: code-with-tooltips
 ```tsx
-showToast({
-  message: 'File uploaded successfully',
-  type: 'success'
-});
+import { useToast } from '@underwood/components';
+
+export const BasicToastExample = () => {
+  const { showToast } = useToast();
+
+  const showSuccessToast = () => {
+    showToast({
+      message: 'File uploaded successfully',
+      type: 'success'
+    });
+  };
+
+  return <Button onClick={showSuccessToast}>Upload File</Button>;
+};
 ```
+:::
 
-### With Action
+### Toast with Action
 
+::: code-with-tooltips
 ```tsx
-showToast({
-  message: 'Message archived',
-  type: 'info',
-  action: (
-    <Button variant="text" size="small" onClick={handleUndo}>
-      Undo
-    </Button>
-  )
-});
+import { useToast, Button } from '@underwood/components';
+
+export const ActionToastExample = () => {
+  const { showToast } = useToast();
+
+  const showActionToast = () => {
+    showToast({
+      message: 'Message archived',
+      type: 'info',
+      action: (
+        <Button variant="text" size="small" onClick={handleUndo}>
+          Undo
+        </Button>
+      )
+    });
+  };
+
+  return <Button onClick={showActionToast}>Archive Message</Button>;
+};
 ```
+:::
 
-### Custom Position
+### Custom Positioned Toast
 
+::: code-with-tooltips
 ```tsx
-showToast({
-  message: 'Network error occurred',
-  type: 'error',
-  position: {
-    vertical: 'bottom',
-    horizontal: 'center'
-  }
-});
+import { useToast, Button } from '@underwood/components';
+
+export const PositionedToastExample = () => {
+  const { showToast } = useToast();
+
+  const showErrorToast = () => {
+    showToast({
+      message: 'Network error occurred',
+      type: 'error',
+      position: {
+        vertical: 'bottom',
+        horizontal: 'center'
+      }
+    });
+  };
+
+  return <Button onClick={showErrorToast}>Test Connection</Button>;
+};
 ```
-
-### With Custom Duration
-
-```tsx
-showToast({
-  message: 'Changes saved',
-  type: 'success',
-  duration: 2000,
-  dismissible: false
-});
-```
-
-## Accessibility
-
-### ARIA Attributes
-
-The Toast component uses the following ARIA attributes:
-
-```tsx
-<div
-  role="alert"
-  aria-live={type === 'error' ? 'assertive' : 'polite'}
-  aria-atomic="true"
->
-  {message}
-</div>
-```
-
-### Keyboard Navigation
-
-- `Tab` - Focuses interactive elements
-- `Enter/Space` - Triggers focused action
-- `Escape` - Dismisses active toast
-
-### Screen Reader Considerations
-
-- Messages are announced when they appear
-- Type/severity is conveyed through aria-label
-- Actions have descriptive labels
-- Auto-dismiss timing considers reading speed
+:::
 
 ## Best Practices
 
-### Usage
+### Usage Guidelines
 
-- Keep messages brief and clear
-- Use appropriate toast types
-- Set reasonable durations
-- Limit concurrent toasts
-- Position consistently
+1. **Message Content**
+   - Keep messages brief and clear
+   - Use appropriate severity levels
+   - Include relevant context
+   - Avoid technical jargon
 
-### Content
+2. **Timing and Duration**
+   - Set appropriate display durations
+   - Consider reading time
+   - Handle quick sequences
+   - Manage multiple toasts
 
-- Write actionable messages
-- Include relevant details
-- Use consistent terminology
-- Avoid technical jargon
-- Consider message length
+3. **Visual Design**
+   - Maintain consistent styling
+   - Use clear hierarchy
+   - Consider stacking order
+   - Support RTL layouts
 
-### Visual Design
+### Accessibility
 
-- Use consistent styling
-- Maintain sufficient contrast
-- Consider animation timing
-- Handle stacking properly
-- Support RTL layouts
+1. **ARIA Attributes**
+   - Use `role="alert"` for important messages
+   - Set appropriate `aria-live` regions
+   - Include descriptive labels
+   - Handle focus management
+
+2. **Keyboard Navigation**
+   - Support Escape to dismiss
+   - Make actions focusable
+   - Maintain focus order
+   - Handle keyboard shortcuts
+
+3. **Screen Readers**
+   - Announce new toasts appropriately
+   - Convey message importance
+   - Describe available actions
+   - Handle toast updates
 
 ### Performance
 
-- Clean up timers on unmount
-- Manage toast queue efficiently
-- Optimize animations
-- Consider bundle size
-- Handle multiple instances
+1. **Rendering**
+   - Optimize animations
+   - Clean up timers
+   - Handle unmounting
+   - Manage toast queue
+
+2. **State Management**
+   - Handle concurrent toasts
+   - Manage toast lifecycle
+   - Clean up resources
+   - Prevent memory leaks
 
 ## Troubleshooting
 
@@ -216,19 +255,23 @@ The Toast component uses the following ARIA attributes:
    - Adjust duration setting
    - Check auto-dismiss logic
    - Consider user reading time
+   - Validate timer cleanup
 
 2. **Multiple toasts overlap**
    - Implement proper stacking
    - Use toast queue manager
-   - Limit maximum toasts
+   - Set maximum visible count
+   - Handle positioning
 
 3. **Actions not responding**
    - Verify event handlers
    - Check action rendering
-   - Ensure proper focus management
+   - Ensure proper focus
+   - Test keyboard access
 
 ## Related Components
 
-- [Alert](./alert.md) - For important messages
-- [Snackbar](./snackbar.md) - For brief feedback messages
-- [Banner](./banner.md) - For prominent announcements 
+- [Alert](./alert.md) - For persistent important messages
+- [Snackbar](./snackbar.md) - For action-oriented feedback
+- [Banner](./banner.md) - For system-wide announcements
+- [Dialog](../modals/dialog.md) - For important messages requiring user action

@@ -103,6 +103,14 @@ export function processTooltips(code: string, lang: string) {
   // Process tokens
   parseResult.tokens.forEach((tokenInfo) => {
     if (!tokenInfo?.text) return;
+    
+    // Skip variable signature tokens entirely
+    if (tokenInfo.text.startsWith('( variable)') || 
+        tokenInfo.info?.type === 'variable' || 
+        tokenInfo.info?.signature?.startsWith('( variable)')) {
+      return;
+    }
+
     const term = tokenInfo.text;
     
     // Get type info from our definitions
@@ -110,6 +118,12 @@ export function processTooltips(code: string, lang: string) {
     const info = tokenInfo.info || typeInfo;
 
     if (!info) return;
+
+    // Skip if this is a variable signature
+    if (info.type === 'variable' || 
+        (info.signature && typeof info.signature === 'string' && info.signature.includes('( variable)'))) {
+      return;
+    }
 
     if (!tooltipMap.has(term)) {
       tooltipMap.set(term, { errors: new Set(), info: new Set() });
@@ -138,20 +152,18 @@ export function processTooltips(code: string, lang: string) {
       .info.add(`info:::${info.type}\ntype:${tooltipContent}`);
   });
 
-  // Add parser info
-  const parserInfo = createParserTooltip(lang);
-  const content =
-    typeof parserInfo.content === 'object' && !('$' in parserInfo.content)
-      ? parserInfo.content
-      : { title: '', type: 'info', description: String(parserInfo.content) };
-
-  return { parseResult, tooltipMap, parserInfo: content };
+  return { parseResult, tooltipMap, parserInfo: createParserTooltip(lang) };
 }
 
 export function applyTooltipsToCode(code: string, tooltipMap: Map<string, TooltipData>) {
   let processedCode = code;
   
   tooltipMap.forEach(({ errors, info }, term) => {
+    // Skip if the term is a variable signature
+    if (term.includes('( variable)')) {
+      return;
+    }
+
     const termPattern = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const regex = new RegExp(
       `(<span[^>]*?>)([^<]*?\\b)(${termPattern})\\b([^<]*?)(</span>)`,
@@ -159,6 +171,12 @@ export function applyTooltipsToCode(code: string, tooltipMap: Map<string, Toolti
     );
 
     const combinedContent = Array.from(info).join('|||');
+    
+    // Skip if the content includes variable signature
+    if (combinedContent.includes('( variable)')) {
+      return;
+    }
+
     processedCode = processedCode.replace(
       regex,
       (match, spanStart, before, term, after, spanEnd) =>

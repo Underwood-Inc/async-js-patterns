@@ -1,8 +1,11 @@
 ---
 title: Alert Component
 description: Status and message alerts for important information
+category: Feedback
+subcategory: Notifications
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
   - Feedback
   - Notifications
@@ -14,12 +17,27 @@ tags:
 
 ## Overview
 
-The Alert component displays important messages and notifications to users. It supports different severity levels, can be dismissible, and optionally includes actions.
+The Alert component displays important messages and notifications to users. It provides a consistent way to communicate status, warnings, errors, and success messages with appropriate visual styling and accessibility features.
 
-## TypeScript Interface
+## Key Features
 
+- Multiple severity levels (info, success, warning, error)
+- Optional titles and actions
+- Dismissible alerts
+- Auto-dismiss capability
+- Filled and outlined variants
+- Custom icon support
+- Accessible by default
+
+## Component API
+
+### Props Interface
+
+::: code-with-tooltips
 ```tsx
-interface AlertProps {
+import { ReactNode } from 'react';
+
+export interface AlertProps {
   /** Alert severity level */
   severity?: 'info' | 'success' | 'warning' | 'error';
   /** Alert title */
@@ -29,40 +47,22 @@ interface AlertProps {
   /** Close handler */
   onClose?: () => void;
   /** Additional actions */
-  actions?: React.ReactNode;
+  actions?: ReactNode;
   /** Alert content */
-  children: React.ReactNode;
+  children: ReactNode;
   /** Additional CSS class */
   className?: string;
   /** Whether alert should be outlined */
   variant?: 'filled' | 'outlined';
   /** Icon override */
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   /** Auto-hide duration in milliseconds */
   autoHideDuration?: number;
 }
 ```
+:::
 
-## Usage
-
-```tsx
-import { Alert } from '@underwood/components';
-
-function MyComponent() {
-  return (
-    <Alert 
-      severity="success"
-      title="Operation Successful"
-      dismissible
-      onClose={() => console.log('Alert closed')}
-    >
-      Your changes have been saved successfully.
-    </Alert>
-  );
-}
-```
-
-## Props
+### Props Table
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -77,141 +77,165 @@ function MyComponent() {
 | `icon` | ReactNode | - | Custom icon |
 | `autoHideDuration` | number | - | Auto-hide duration in ms |
 
+## Usage
+
+::: code-with-tooltips
+```tsx
+import { Alert } from '@underwood/components';
+
+export const AlertExample = () => {
+  return (
+    <Alert 
+      severity="success"
+      title="Operation Successful"
+      dismissible
+      onClose={() => console.log('Alert closed')}
+    >
+      Your changes have been saved successfully.
+    </Alert>
+  );
+};
+```
+:::
+
 ## Examples
 
 ### Basic Alert
 
+::: code-with-tooltips
 ```tsx
-<Alert severity="info">
-  This is an informational message.
-</Alert>
+import { Alert } from '@underwood/components';
+
+export const BasicAlertExample = () => (
+  <Alert severity="info">
+    This is an informational message.
+  </Alert>
+);
 ```
+:::
 
 ### With Title and Actions
 
+::: code-with-tooltips
 ```tsx
-<Alert
-  severity="warning"
-  title="Unsaved Changes"
-  actions={
-    <>
-      <Button onClick={handleSave}>Save</Button>
-      <Button onClick={handleDiscard}>Discard</Button>
-    </>
-  }
->
-  You have unsaved changes that will be lost.
-</Alert>
+import { Alert, Button } from '@underwood/components';
+
+export const ActionAlertExample = () => (
+  <Alert
+    severity="warning"
+    title="Unsaved Changes"
+    actions={
+      <>
+        <Button onClick={handleSave}>Save</Button>
+        <Button onClick={handleDiscard}>Discard</Button>
+      </>
+    }
+  >
+    You have unsaved changes that will be lost.
+  </Alert>
+);
 ```
+:::
 
 ### Outlined Variant
 
+::: code-with-tooltips
 ```tsx
-<Alert
-  severity="error"
-  variant="outlined"
-  title="Connection Error"
->
-  Unable to connect to the server. Please try again.
-</Alert>
+import { Alert } from '@underwood/components';
+
+export const OutlinedAlertExample = () => (
+  <Alert
+    severity="error"
+    variant="outlined"
+    title="Connection Error"
+  >
+    Unable to connect to the server. Please try again.
+  </Alert>
+);
 ```
-
-### Auto-dismissible Alert
-
-```tsx
-<Alert
-  severity="success"
-  autoHideDuration={5000}
-  onClose={() => console.log('Alert closed')}
->
-  Settings updated successfully.
-</Alert>
-```
-
-## Accessibility
-
-### ARIA Attributes
-
-The Alert component uses the following ARIA attributes:
-
-```tsx
-<div
-  role="alert"
-  aria-live={severity === 'error' ? 'assertive' : 'polite'}
-  aria-atomic="true"
->
-  {children}
-</div>
-```
-
-### Keyboard Navigation
-
-- `Tab` - Focuses interactive elements within the alert
-- `Enter/Space` - Triggers focused action
-- `Escape` - Closes dismissible alerts
-
-### Screen Reader Considerations
-
-- Alert messages are announced when they appear
-- Severity is conveyed through aria-label
-- Close button has clear, descriptive label
-- Actions have meaningful labels
+:::
 
 ## Best Practices
 
-### Usage
+### Usage Guidelines
 
-- Use appropriate severity levels
-- Keep messages clear and concise
-- Include helpful actions when needed
-- Consider auto-dismiss for success messages
-- Limit number of concurrent alerts
+1. **Message Content**
+   - Use appropriate severity levels
+   - Keep messages clear and concise
+   - Include helpful actions when needed
+   - Avoid technical jargon
 
-### Content
+2. **Visual Design**
+   - Use consistent colors for severities
+   - Maintain sufficient contrast
+   - Consider icon usage
+   - Handle long content gracefully
 
-- Write clear, actionable messages
-- Include error codes when relevant
-- Provide recovery instructions
-- Use consistent terminology
-- Avoid technical jargon
+3. **Interaction Design**
+   - Consider auto-dismiss timing
+   - Make dismissal obvious
+   - Handle multiple alerts properly
+   - Support touch interactions
 
-### Visual Design
+### Accessibility
 
-- Use consistent colors for severities
-- Maintain sufficient contrast
-- Consider icon usage
-- Handle long content gracefully
-- Support RTL layouts
+1. **ARIA Attributes**
+   - Use `role="alert"` appropriately
+   - Set `aria-live` based on severity
+   - Include descriptive labels
+   - Handle focus management
+
+2. **Keyboard Navigation**
+   - Support Tab for interactive elements
+   - Enable Enter/Space for actions
+   - Allow Escape for dismissal
+   - Maintain focus order
+
+3. **Screen Readers**
+   - Announce alerts appropriately
+   - Convey severity through aria-label
+   - Provide action context
+   - Consider reading duration
 
 ### Performance
 
-- Clean up timers on unmount
-- Handle multiple alerts efficiently
-- Optimize animations
-- Consider bundle size
-- Manage alert queue
+1. **Rendering**
+   - Optimize animations
+   - Clean up timers
+   - Handle unmounting
+   - Manage alert queue
+
+2. **State Management**
+   - Handle concurrent alerts
+   - Manage lifecycle properly
+   - Clean up resources
+   - Prevent memory leaks
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Alert doesn't auto-dismiss**
-   - Check if `autoHideDuration` is set
-   - Verify `onClose` handler is working
-   - Check for focus interrupting auto-dismiss
+1. **Auto-dismiss not working**
+   - Verify `autoHideDuration` setting
+   - Check `onClose` handler
+   - Consider focus interference
+   - Validate timer cleanup
 
-2. **Alert styling inconsistent**
-   - Verify severity prop is correct
-   - Check variant prop value
-   - Ensure theme is properly applied
+2. **Styling inconsistencies**
+   - Verify severity prop
+   - Check variant value
+   - Ensure theme application
+   - Test RTL support
 
-3. **Actions not working**
+3. **Actions not responding**
    - Verify event handlers
-   - Check action button rendering
-   - Ensure proper focus management
+   - Check action rendering
+   - Ensure proper focus
+   - Test keyboard access
 
 ## Related Components
 
-- [Toast](./toast.md) - For temporary notifications
+- [Toast](./toast.md) - For temporary, auto-dismissing notifications
 - [Snackbar](./snackbar.md) - For brief feedback messages
-- [Banner](./banner.md) - For prominent announcements
+- [Banner](./banner.md) - For system-wide announcements
+- [Dialog](../modals/dialog.md) - For important messages requiring user action

@@ -1,13 +1,13 @@
 ---
 title: Status Component
 description: Visual indicators for representing status states
-category: Feedback
-subcategory: Status Indicators
+category: Data
+subcategory: Status & Metadata
 date: 2024-01-01
 author: Underwood Inc
 status: Stable
 tags:
-  - Feedback
+  - Data Display
   - Status
   - React
 ---
@@ -57,24 +57,13 @@ export interface StatusProps {
 ```
 :::
 
-### Props Table
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `state` | 'online' \| 'offline' \| 'processing' \| 'error' \| 'warning' | - | Current status state |
-| `label` | string | - | Accessible label for the status |
-| `size` | 'small' \| 'medium' \| 'large' | 'medium' | Size of the status indicator |
-| `showLabel` | boolean | false | Whether to show the label text |
-| `className` | string | - | Additional CSS class |
-| `style` | object | - | Additional CSS styles |
-| `pulseAnimation` | boolean | true | Whether to show pulse animation |
-| `onClick` | function | - | Click handler for interactive status |
-
 ## Usage
+
+### Basic Status
 
 ::: code-with-tooltips
 ```tsx
-import { Status } from '@underwood/components';
+import { Status } from '@/components/data';
 
 export const StatusExample = () => {
   return (
@@ -88,29 +77,13 @@ export const StatusExample = () => {
 ```
 :::
 
-## Examples
+### Examples
 
-### Basic Status
-
-::: code-with-tooltips
-```tsx
-import { Status } from '@underwood/components';
-
-export const BasicStatusExample = () => (
-  <Status
-    state="online"
-    label="Server Status"
-    showLabel
-  />
-);
-```
-:::
-
-### With Custom Styling
+#### With Custom Styling
 
 ::: code-with-tooltips
 ```tsx
-import { Status } from '@underwood/components';
+import { Status } from '@/components/data';
 
 export const CustomStatusExample = () => (
   <Status
@@ -123,11 +96,11 @@ export const CustomStatusExample = () => (
 ```
 :::
 
-### Status Group
+#### Status Group
 
 ::: code-with-tooltips
 ```tsx
-import { Status } from '@underwood/components';
+import { Status } from '@/components/data';
 
 export const StatusGroupExample = () => (
   <div style={{ display: 'flex', gap: 16 }}>
@@ -139,19 +112,15 @@ export const StatusGroupExample = () => (
 ```
 :::
 
-### Interactive Status
+#### Interactive Status
 
 ::: code-with-tooltips
 ```tsx
-import { Status, Modal } from '@underwood/components';
+import { Status } from '@/components/data';
 import { useState } from 'react';
 
 export const InteractiveStatusExample = () => {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-
-  const showDetails = () => {
-    setIsDetailsOpen(true);
-  };
 
   return (
     <>
@@ -159,20 +128,16 @@ export const InteractiveStatusExample = () => {
         state="online"
         label="Click for details"
         showLabel
-        onClick={showDetails}
+        onClick={() => setIsDetailsOpen(true)}
         style={{ cursor: 'pointer' }}
       />
-      <Modal
-        open={isDetailsOpen}
-        onClose={() => setIsDetailsOpen(false)}
-        title="Status Details"
-      >
+      {isDetailsOpen && (
         <div>
           <h3>System Status: Online</h3>
           <p>Last updated: 2 minutes ago</p>
           <p>Uptime: 99.9%</p>
         </div>
-      </Modal>
+      )}
     </>
   );
 };
@@ -237,7 +202,6 @@ export const InteractiveStatusExample = () => {
 
 ## Related Components
 
-- [Result](./result.md) - For displaying operation outcomes
-- [Empty](./empty.md) - For showing empty state messages
-- [Error](./error.md) - For error state displays
-- [Badge](../data/badge.md) - For status counts and indicators
+- [Badge](./badge.md) - For status counts and indicators
+- [Tag](./tag.md) - For labels and categories
+- [Indicator](./indicator.md) - For simple visual indicators

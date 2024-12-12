@@ -1,8 +1,11 @@
 ---
 title: Badge Component
 description: Component for displaying status indicators, counts, and labels
+category: Data
+subcategory: Status & Metadata
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
   - Data Display
   - Badge
@@ -14,32 +17,28 @@ tags:
 
 ## Overview
 
-The Badge component is used to display status indicators, counts, and labels. It supports various styles, colors, and positioning options.
+The Badge component is used to display status indicators, numerical counts, and labels. It supports various styles, colors, and positioning options, making it versatile for showing notifications, status indicators, and counters.
 
-## Usage
+## Key Features
 
-### Basic Badge
+- Multiple display variants (dot, numeric, text)
+- Customizable positioning
+- Maximum count handling
+- Color variations
+- Size options
+- Visibility control
+- Accessibility support
+
+## Component API
+
+### Props Interface
 
 ::: code-with-tooltips
 
 ```tsx
-import { Badge } from '@/components/data';
+import React from 'react';
 
-<Badge>New</Badge>
-
-<Badge count={5}>
-  <Icon name="notifications" />
-</Badge>
-
-<Badge status="success">Active</Badge>
-```
-
-:::
-
-### API Reference
-
-```tsx
-interface BadgeProps {
+export interface BadgeProps {
   /** Badge content */
   children?: React.ReactNode;
   /** Numerical value to display */
@@ -65,313 +64,110 @@ interface BadgeProps {
 }
 ```
 
+:::
+
+## Usage
+
+### Basic Badge
+
+::: code-with-tooltips
+
+```tsx
+import React from 'react';
+import { Badge } from '@/components/data';
+import { Icon } from '@/components/core';
+
+const BasicBadgeExample = () => (
+  <div>
+    {/* Simple text badge */}
+    <Badge>New</Badge>
+
+    {/* Numeric badge */}
+    <Badge count={5}>
+      <Icon name="notifications" />
+    </Badge>
+
+    {/* Status badge */}
+    <Badge variant="dot" color="success">Active</Badge>
+  </div>
+);
+
+export default BasicBadgeExample;
+```
+
+:::
+
 ### Examples
 
-#### Status Badges
+#### Status Indicators
 
 ::: code-with-tooltips
 
 ```tsx
-<Badge variant="dot" color="success">Active</Badge>
-<Badge variant="dot" color="error">Offline</Badge>
-<Badge variant="dot" color="warning">Away</Badge>
+import React from 'react';
+import { Badge } from '@/components/data';
+
+const StatusIndicatorsExample = () => (
+  <div>
+    <Badge variant="dot" color="success">Online</Badge>
+    <Badge variant="dot" color="error">Offline</Badge>
+    <Badge variant="dot" color="warning">Away</Badge>
+  </div>
+);
+
+export default StatusIndicatorsExample;
 ```
 
 :::
 
-#### Counter Badge
+#### Notification Counters
 
 ::: code-with-tooltips
 
 ```tsx
-<Badge count={99} maxCount={99}>
-  <Button>Messages</Button>
-</Badge>
+import React from 'react';
+import { Badge } from '@/components/data';
+import { Button } from '@/components/core';
 
-<Badge count={1000} maxCount={999}>
-  <Icon name="notifications" />
-</Badge>
+const NotificationCountersExample = () => (
+  <div>
+    <Badge count={99} maxCount={99}>
+      <Button>Messages</Button>
+    </Badge>
+
+    <Badge count={1000} maxCount={999}>
+      <Icon name="notifications" />
+    </Badge>
+  </div>
+);
+
+export default NotificationCountersExample;
 ```
 
 :::
 
-## Implementation
-
-### Core Component
+#### Custom Placement
 
 ::: code-with-tooltips
 
 ```tsx
-export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(({
-  children,
-  count,
-  maxCount = 99,
-  variant = 'filled',
-  color = 'default',
-  size = 'md',
-  visible = true,
-  showZero = false,
-  offset = [0, 0],
-  placement = 'top-right',
-  className,
-  ...props
-}, ref) => {
-  const showBadge = visible && (
-    typeof count === 'number' ? (count > 0 || showZero) : true
-  );
-  
-  const content = typeof count === 'number'
-    ? count > maxCount
-      ? `${maxCount}+`
-      : count.toString()
-    : children;
-  
-  return (
-    <span
-      ref={ref}
-      className={clsx(
-        'badge',
-        `badge--${variant}`,
-        `badge--${color}`,
-        `badge--${size}`,
-        `badge--${placement}`,
-        { 'badge--standalone': !children },
-        className
-      )}
-      style={{
-        '--badge-offset-x': `${offset[0]}px`,
-        '--badge-offset-y': `${offset[1]}px`
-      } as React.CSSProperties}
-      {...props}
+import React from 'react';
+import { Badge } from '@/components/data';
+import { Avatar } from '@/components/core';
+
+const CustomPlacementExample = () => (
+  <div>
+    <Badge 
+      count={5} 
+      placement="bottom-right"
+      offset={[5, 5]}
     >
-      {children}
-      {showBadge && (
-        <span className="badge__content">
-          {content}
-        </span>
-      )}
-    </span>
-  );
-});
-```
+      <Avatar src="/user.jpg" />
+    </Badge>
+  </div>
+);
 
-:::
-
-## Styling
-
-### Base Styles
-
-::: code-with-tooltips
-
-```scss
-.badge {
-  position: relative;
-  display: inline-flex;
-  vertical-align: middle;
-  
-  // Content styles
-  &__content {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: var(--badge-min-width);
-    height: var(--badge-height);
-    padding: 0 var(--badge-padding);
-    border-radius: var(--badge-border-radius);
-    font-size: var(--badge-font-size);
-    font-weight: var(--badge-font-weight);
-    line-height: 1;
-    white-space: nowrap;
-    transform: translate(
-      var(--badge-offset-x, 0),
-      var(--badge-offset-y, 0)
-    );
-    
-    // Placement variations
-    .badge--top-right & {
-      top: 0;
-      right: 0;
-      transform: translate(50%, -50%);
-    }
-    
-    .badge--top-left & {
-      top: 0;
-      left: 0;
-      transform: translate(-50%, -50%);
-    }
-    
-    .badge--bottom-right & {
-      bottom: 0;
-      right: 0;
-      transform: translate(50%, 50%);
-    }
-    
-    .badge--bottom-left & {
-      bottom: 0;
-      left: 0;
-      transform: translate(-50%, 50%);
-    }
-  }
-  
-  // Variant styles
-  &--filled {
-    .badge__content {
-      color: var(--badge-text-color);
-      background: var(--badge-bg-color);
-    }
-  }
-  
-  &--outlined {
-    .badge__content {
-      color: var(--badge-bg-color);
-      background: transparent;
-      border: 1px solid var(--badge-bg-color);
-    }
-  }
-  
-  &--dot {
-    .badge__content {
-      min-width: var(--badge-dot-size);
-      height: var(--badge-dot-size);
-      padding: 0;
-      border-radius: 50%;
-    }
-  }
-  
-  // Color variations
-  &--primary { --badge-bg-color: var(--primary-color); }
-  &--success { --badge-bg-color: var(--success-color); }
-  &--warning { --badge-bg-color: var(--warning-color); }
-  &--error { --badge-bg-color: var(--error-color); }
-  
-  // Size variations
-  &--sm {
-    --badge-min-width: 16px;
-    --badge-height: 16px;
-    --badge-padding: 4px;
-    --badge-font-size: 12px;
-    --badge-dot-size: 8px;
-  }
-  
-  &--md {
-    --badge-min-width: 20px;
-    --badge-height: 20px;
-    --badge-padding: 6px;
-    --badge-font-size: 14px;
-    --badge-dot-size: 10px;
-  }
-  
-  &--lg {
-    --badge-min-width: 24px;
-    --badge-height: 24px;
-    --badge-padding: 8px;
-    --badge-font-size: 16px;
-    --badge-dot-size: 12px;
-  }
-}
-```
-
-:::
-
-## Testing
-
-### Unit Tests
-
-::: code-with-tooltips
-
-```tsx
-import { render, screen } from '@testing-library/react';
-import { Badge } from './Badge';
-
-describe('Badge', () => {
-  it('renders content correctly', () => {
-    render(<Badge>New</Badge>);
-    expect(screen.getByText('New')).toBeInTheDocument();
-  });
-
-  it('handles count display', () => {
-    render(<Badge count={5}>
-      <div>Content</div>
-    </Badge>);
-    
-    expect(screen.getByText('5')).toBeInTheDocument();
-  });
-
-  it('respects maxCount', () => {
-    render(<Badge count={100} maxCount={99}>
-      <div>Content</div>
-    </Badge>);
-    
-    expect(screen.getByText('99+')).toBeInTheDocument();
-  });
-
-  it('handles visibility', () => {
-    const { rerender } = render(
-      <Badge count={5} visible={false}>
-        <div>Content</div>
-      </Badge>
-    );
-    
-    expect(screen.queryByText('5')).not.toBeInTheDocument();
-    
-    rerender(
-      <Badge count={5} visible={true}>
-        <div>Content</div>
-      </Badge>
-    );
-    
-    expect(screen.getByText('5')).toBeInTheDocument();
-  });
-
-  it('applies correct classes', () => {
-    const { container } = render(
-      <Badge
-        variant="dot"
-        color="success"
-        size="sm"
-        placement="top-right"
-      >
-        Content
-      </Badge>
-    );
-    
-    expect(container.firstChild).toHaveClass(
-      'badge',
-      'badge--dot',
-      'badge--success',
-      'badge--sm',
-      'badge--top-right'
-    );
-  });
-});
-```
-
-:::
-
-## Accessibility
-
-### ARIA Attributes
-
-::: code-with-tooltips
-
-```tsx
-const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(({
-  count,
-  children,
-  ...props
-}, ref) => {
-  return (
-    <span
-      ref={ref}
-      role="status"
-      aria-label={typeof count === 'number' ? `${count} notifications` : undefined}
-      {...props}
-    >
-      {children}
-    </span>
-  );
-});
+export default CustomPlacementExample;
 ```
 
 :::
@@ -380,45 +176,54 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(({
 
 ### Usage Guidelines
 
-::: code-with-tooltips
+1. **Visual Design**
+   - Use consistent colors for states
+   - Keep badges proportional to content
+   - Maintain clear visibility
+   - Consider badge placement
 
-```tsx
-// DO: Use appropriate colors for status
-<Badge color="success">Active</Badge>
-<Badge color="error">Error</Badge>
+2. **Content Display**
+   - Keep text concise
+   - Handle overflow gracefully
+   - Use appropriate max counts
+   - Consider mobile viewports
 
-// DON'T: Mix status colors with count
-<Badge color="success" count={5}> {/* Confusing! */}
-  <Icon name="check" />
-</Badge>
+3. **Interaction States**
+   - Handle hover states
+   - Support focus states
+   - Manage visibility
+   - Consider animations
 
-// DO: Use consistent sizing
-<Badge size="sm">
-  <Icon size="sm" />
-</Badge>
+### Accessibility
 
-// DON'T: Mix sizes
-<Badge size="lg">
-  <Icon size="sm" /> {/* Inconsistent! */}
-</Badge>
-```
+1. **ARIA Support**
+   - Use proper roles
+   - Provide descriptive labels
+   - Support screen readers
+   - Handle focus management
 
-:::
+2. **Visual Accessibility**
+   - Ensure color contrast
+   - Support high contrast modes
+   - Consider color blindness
+   - Maintain readability
 
-### Performance Considerations
+### Performance
 
-::: code-with-tooltips
+1. **Rendering**
+   - Optimize badge updates
+   - Handle count changes
+   - Manage visibility
+   - Clean up listeners
 
-```tsx
-// DO: Memoize dynamic content
-const DynamicBadge = memo(({ count, children }) => (
-  <Badge count={count}>{children}</Badge>
-));
+2. **Animation**
+   - Use CSS transitions
+   - Optimize transforms
+   - Handle unmounting
+   - Consider reduced motion
 
-// DON'T: Create new styles inline
-<Badge style={{ margin: '8px' }}> {/* Avoid! */}
-  Content
-</Badge>
-```
+## Related Components
 
-:::
+- [Status](./status.md) - For status indicators
+- [Tag](./tag.md) - For labels and categories
+- [Chip](./chip.md) - For interactive filters

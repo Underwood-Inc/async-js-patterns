@@ -1,8 +1,11 @@
 ---
-title: Error
+title: Error Component
 description: Display error states and error handling interfaces
+category: Feedback
+subcategory: Status Indicators
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
   - Feedback
   - Error
@@ -15,79 +18,46 @@ tags:
 
 The Error component displays error states and provides error handling interfaces. It helps users understand what went wrong and offers ways to recover or get help.
 
-## Usage
+## Key Features
 
+- Multiple error state types
+- Primary and secondary actions
+- Custom error icons
+- Technical details support
+- Flexible styling options
+- Accessible by default
+- Clear error messaging
+
+## Component API
+
+### Props Interface
+
+::: code-with-tooltips
 ```tsx
-import { Error, Button } from '@underwood/components';
-import { LockIcon } from '@underwood/icons';
+import { ReactNode, CSSProperties } from 'react';
 
-// Basic error example
-function ErrorExample() {
-  const retry = () => {
-    // Retry logic
-  };
-
-  return (
-    <Error
-      title="Connection Error"
-      message="Please check your internet connection"
-      action={
-        <Button variant="primary" onClick={retry}>
-          Retry Connection
-        </Button>
-      }
-    />
-  );
+export interface ErrorProps {
+  /** Main error message */
+  title: string;
+  /** Detailed error description */
+  message: string;
+  /** Primary action button */
+  action?: ReactNode;
+  /** Secondary action button */
+  secondaryAction?: ReactNode;
+  /** Custom error icon */
+  icon?: ReactNode;
+  /** Additional CSS class */
+  className?: string;
+  /** Additional CSS styles */
+  style?: CSSProperties;
+  /** Technical error details */
+  details?: string;
 }
-
-// Multiple actions example
-<Error
-  title="Failed to Save Changes"
-  message="Your changes could not be saved due to a server error"
-  action={
-    <Button variant="primary">
-      Try Again
-    </Button>
-  }
-  secondaryAction={
-    <Button variant="text">
-      Discard Changes
-    </Button>
-  }
-/>
-
-// With technical details
-<Error
-  title="API Error"
-  message="Failed to fetch user data"
-  details="Error: 404 Not Found - /api/users/123"
-  action={
-    <Button variant="primary">
-      Refresh
-    </Button>
-  }
-  secondaryAction={
-    <Button variant="secondary">
-      Contact Support
-    </Button>
-  }
-/>
-
-// Custom styled error
-<Error
-  title="Authentication Failed"
-  message="Your session has expired"
-  icon={<LockIcon style={{ fontSize: 48 }} />}
-  style={{ backgroundColor: '#fff3f3', padding: 32 }}
-  action={
-    <Button variant="primary">
-      Sign In Again
-    </Button>
-  }
-/>
 ```
+:::
 
-## Props
+### Props Table
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -98,100 +68,217 @@ function ErrorExample() {
 | `icon` | ReactNode | - | Custom error icon |
 | `className` | string | - | Additional CSS class |
 | `style` | object | - | Additional CSS styles |
-| `details` | string | - | Technical error details (optional) |
+| `details` | string | - | Technical error details |
+
+## Usage
+
+::: code-with-tooltips
+```tsx
+import { Error, Button } from '@underwood/components';
+
+export const ErrorExample = () => {
+  const handleRetry = () => {
+    // Retry logic
+  };
+
+  return (
+    <Error
+      title="Connection Error"
+      message="Please check your internet connection"
+      action={
+        <Button variant="primary" onClick={handleRetry}>
+          Retry Connection
+        </Button>
+      }
+    />
+  );
+};
+```
+:::
 
 ## Examples
 
 ### Basic Error
 
+::: code-with-tooltips
 ```tsx
-<Error
-  title="Connection Error"
-  message="Please check your internet connection"
-  action={
-    <Button variant="primary">
-      Retry Connection
-    </Button>
-  }
-/>
+import { Error, Button } from '@underwood/components';
+
+export const BasicErrorExample = () => {
+  const handleRetry = () => {
+    // Retry logic
+  };
+
+  return (
+    <Error
+      title="Connection Error"
+      message="Please check your internet connection"
+      action={
+        <Button variant="primary" onClick={handleRetry}>
+          Retry Connection
+        </Button>
+      }
+    />
+  );
+};
 ```
+:::
 
 ### With Multiple Actions
 
+::: code-with-tooltips
 ```tsx
-<Error
-  title="Failed to Save Changes"
-  message="Your changes could not be saved due to a server error"
-  action={
-    <Button variant="primary">
-      Try Again
-    </Button>
-  }
-  secondaryAction={
-    <Button variant="text">
-      Discard Changes
-    </Button>
-  }
-/>
+import { Error, Button } from '@underwood/components';
+
+export const MultiActionErrorExample = () => {
+  const handleRetry = () => {
+    // Retry logic
+  };
+
+  const handleDiscard = () => {
+    // Discard changes logic
+  };
+
+  return (
+    <Error
+      title="Failed to Save Changes"
+      message="Your changes could not be saved due to a server error"
+      action={
+        <Button variant="primary" onClick={handleRetry}>
+          Try Again
+        </Button>
+      }
+      secondaryAction={
+        <Button variant="text" onClick={handleDiscard}>
+          Discard Changes
+        </Button>
+      }
+    />
+  );
+};
 ```
+:::
 
 ### With Technical Details
 
+::: code-with-tooltips
 ```tsx
-<Error
-  title="API Error"
-  message="Failed to fetch user data"
-  details="Error: 404 Not Found - /api/users/123"
-  action={
-    <Button variant="primary">
-      Refresh
-    </Button>
-  }
-  secondaryAction={
-    <Button variant="secondary">
-      Contact Support
-    </Button>
-  }
-/>
+import { Error, Button } from '@underwood/components';
+
+export const TechnicalErrorExample = () => {
+  const handleRefresh = () => {
+    // Refresh logic
+  };
+
+  const handleSupport = () => {
+    // Contact support logic
+  };
+
+  return (
+    <Error
+      title="API Error"
+      message="Failed to fetch user data"
+      details="Error: 404 Not Found - /api/users/123"
+      action={
+        <Button variant="primary" onClick={handleRefresh}>
+          Refresh
+        </Button>
+      }
+      secondaryAction={
+        <Button variant="secondary" onClick={handleSupport}>
+          Contact Support
+        </Button>
+      }
+    />
+  );
+};
 ```
+:::
 
 ### Custom Styled Error
 
+::: code-with-tooltips
 ```tsx
-<Error
-  title="Authentication Failed"
-  message="Your session has expired"
-  icon={<LockIcon style={{ fontSize: 48 }} />}
-  style={{ backgroundColor: '#fff3f3', padding: 32 }}
-  action={
-    <Button variant="primary">
-      Sign In Again
-    </Button>
-  }
-/>
+import { Error, Button } from '@underwood/components';
+import { LockIcon } from '@underwood/icons';
+
+export const StyledErrorExample = () => {
+  const handleSignIn = () => {
+    // Sign in logic
+  };
+
+  return (
+    <Error
+      title="Authentication Failed"
+      message="Your session has expired"
+      icon={<LockIcon style={{ fontSize: 48 }} />}
+      style={{ backgroundColor: '#fff3f3', padding: 32 }}
+      action={
+        <Button variant="primary" onClick={handleSignIn}>
+          Sign In Again
+        </Button>
+      }
+    />
+  );
+};
 ```
+:::
 
 ## Best Practices
 
-1. **Messages**
+### Usage Guidelines
+
+1. **Error Messages**
    - Use clear error messages
    - Explain what went wrong
    - Suggest recovery actions
+   - Keep messages user-friendly
 
 2. **Actions**
    - Provide clear recovery paths
    - Include fallback options
    - Make actions obvious
+   - Consider user context
 
 3. **Visual Design**
    - Use appropriate error colors
    - Keep layout clean
    - Make messages prominent
+   - Handle responsive layouts
 
-4. **Error Handling**
+### Accessibility
+
+1. **ARIA Attributes**
+   - Use `role="alert"` appropriately
+   - Include descriptive labels
+   - Handle focus management
+   - Support keyboard navigation
+
+2. **Screen Readers**
+   - Announce error states
+   - Provide error context
+   - Include action descriptions
+   - Consider error updates
+
+3. **Keyboard Navigation**
+   - Make actions focusable
+   - Maintain focus order
+   - Support keyboard shortcuts
+   - Handle focus trapping
+
+### Performance
+
+1. **Error Handling**
    - Handle different error types
-   - Provide appropriate context
-   - Log errors for debugging
+   - Log errors appropriately
+   - Clean up error states
+   - Handle retries efficiently
+
+2. **State Management**
+   - Handle state changes efficiently
+   - Clean up event listeners
+   - Optimize re-renders
+   - Handle unmounting
 
 ## Related Components
 

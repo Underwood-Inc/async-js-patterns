@@ -1,8 +1,11 @@
 ---
 title: Data Components
 description: Components for displaying and managing data in tables, lists, and other formats
+category: Components
+subcategory: Data
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
   - Data Display
   - Tables
@@ -16,7 +19,7 @@ tags:
 
 Data components provide structured ways to display and interact with data collections. These components handle common data display patterns like tables, lists, cards, and badges.
 
-## Components
+## Component Categories
 
 ### Tables
 
@@ -46,39 +49,117 @@ Data components provide structured ways to display and interact with data collec
 - [Tag](./status-and-metadata/tag.md) - Metadata and category labels
 - [Chip](./status-and-metadata/chip.md) - Interactive tags and filters
 
-## Best Practices
+## Implementation Guidelines
 
-### Data Loading
+### Component Selection Guide
 
-- Implement proper loading states
-- Handle empty states gracefully
-- Show error states clearly
-- Support pagination or infinite scroll
-- Cache data when appropriate
+#### Tables
+- Use **Table** for basic data tables with sorting and filtering
+- Use **DataGrid** for complex data manipulation and large datasets
+- Use **TreeTable** for hierarchical data with parent-child relationships
 
-### Performance
+#### Lists & Cards
+- Use **List** for simple vertical or horizontal lists
+- Use **VirtualList** for lists with many items (100+)
+- Use **InfiniteList** for dynamically loading content
+- Use **Card** for rich content display
+- Use **CardGrid/CardList** for collections of cards
 
-- Use virtualization for large datasets
-- Implement efficient sorting and filtering
-- Optimize render performance
-- Handle data updates efficiently
+#### Navigation & Controls
+- Use **Pagination** for page-based navigation
+- Use **Carousel** for cycling through content
+- Use **Timeline** for time-based data display
 
-### Accessibility
+#### Status & Metadata
+- Use **Badge** for counts and status indicators
+- Use **Tag** for categorization and labeling
+- Use **Chip** for interactive filtering and selection
 
-- Use semantic HTML structure
-- Provide proper ARIA attributes
-- Support keyboard navigation
-- Maintain focus management
+### Best Practices
+
+#### Data Management
+
+1. **Loading States**
+   - Implement skeleton loading
+   - Show progress indicators
+   - Handle partial loading
+   - Maintain layout stability
+
+2. **Error Handling**
+   - Show clear error messages
+   - Provide retry options
+   - Handle partial failures
+   - Log errors appropriately
+
+3. **Empty States**
+   - Display helpful messages
+   - Suggest next actions
+   - Maintain consistent layout
+   - Consider first-time users
+
+#### Performance Optimization
+
+1. **Data Virtualization**
+   - Implement windowing
+   - Optimize scroll performance
+   - Handle dynamic heights
+   - Cache rendered items
+
+2. **State Management**
+   - Batch state updates
+   - Optimize re-renders
+   - Handle large datasets
+   - Implement memoization
+
+3. **Data Updates**
+   - Handle real-time updates
+   - Optimize sorting/filtering
+   - Manage data mutations
+   - Support optimistic updates
+
+### Accessibility Guidelines
+
+1. **Semantic Structure**
+   - Use proper HTML elements
+   - Implement ARIA roles
+   - Maintain heading hierarchy
+   - Support screen readers
+
+2. **Keyboard Navigation**
+   - Support all interactions
+   - Implement focus management
+   - Handle keyboard shortcuts
+   - Provide visual indicators
+
+3. **Screen Reader Support**
+   - Announce state changes
+   - Describe relationships
+   - Handle dynamic content
+   - Support assistive tech
 
 ### Responsive Design
 
-- Adapt layouts for different screen sizes
-- Handle touch interactions
-- Maintain usability on mobile devices
-- Consider data density vs readability
+1. **Layout Adaptation**
+   - Handle different screens
+   - Support touch devices
+   - Maintain readability
+   - Consider orientation
+
+2. **Content Display**
+   - Prioritize content
+   - Handle truncation
+   - Support zooming
+   - Optimize for mobile
+
+3. **Interaction Patterns**
+   - Handle touch gestures
+   - Support hover states
+   - Consider thumb zones
+   - Maintain usability
 
 ## Related Sections
 
-- [Form Controls](../form/index.md) - Input components
+- [Form](../form/index.md) - Form components
 - [Layout](../layout/index.md) - Layout components
 - [Navigation](../navigation/index.md) - Navigation components
+- [Feedback](../feedback/index.md) - Feedback components
