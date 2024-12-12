@@ -87,32 +87,38 @@ class PerformanceLogger {
 
   startProcess(tooltipCount: number) {
     if (!this.isProcessing) {
-      this.isProcessing = true
-      this.processStartTime = Date.now()
-      this.metrics.timing.start = Date.now()
+      this.isProcessing = true;
+      this.processStartTime = Date.now();
+      this.metrics.timing.start = Date.now();
     }
 
-    this.fileCount++
+    this.fileCount++;
 
-    const now = Date.now()
+    const now = Date.now();
     if (now - this.lastProgressUpdate > this.progressUpdateInterval) {
-      const elapsedTime = (now - this.processStartTime) / 1000
-      const rate = this.metrics.processedTooltips / elapsedTime
+      const elapsedTime = (now - this.processStartTime) / 1000;
+      const rate = this.metrics.processedTooltips / elapsedTime;
       
-      // Single line status update with colors
-      process.stdout.write('\r\x1b[K') // Clear line
-      process.stdout.write(
-        `${this.colors.bold}${this.colors.blue}Tooltips:${this.colors.reset} ` +
+      // Format the status line
+      const statusLine = `${this.colors.bold}${this.colors.blue}Tooltips:${this.colors.reset} ` +
         `${this.colors.cyan}${this.metrics.processedTooltips.toLocaleString()}${this.colors.reset} | ` +
         `${this.colors.bold}${this.colors.blue}Files:${this.colors.reset} ` +
         `${this.colors.cyan}${this.fileCount.toLocaleString()}${this.colors.reset} | ` +
         `${this.colors.bold}${this.colors.blue}Rate:${this.colors.reset} ` +
         `${this.colors.green}${rate.toFixed(1)}/s${this.colors.reset} | ` +
         `${this.colors.bold}${this.colors.blue}Time:${this.colors.reset} ` +
-        `${this.colors.yellow}${elapsedTime.toFixed(1)}s${this.colors.reset}`
-      )
+        `${this.colors.yellow}${elapsedTime.toFixed(1)}s${this.colors.reset}`;
+
+      // Use process.stdout in Node.js environment, console.log in browser
+      if (typeof process !== 'undefined' && process.stdout) {
+        process.stdout.write('\r\x1b[K'); // Clear line
+        process.stdout.write(statusLine);
+      } else {
+        // In browser, use console.log with a special prefix for dev tools filtering
+        console.log('[Tooltip Processing] ' + statusLine.replace(/\x1b\[[0-9;]*m/g, ''));
+      }
       
-      this.lastProgressUpdate = now
+      this.lastProgressUpdate = now;
     }
   }
 

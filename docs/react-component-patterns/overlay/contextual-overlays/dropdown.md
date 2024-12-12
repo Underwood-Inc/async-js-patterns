@@ -78,20 +78,19 @@ export interface DropdownOption<T> {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `value` | T \| T[] | - | Selected value(s) |
-| `options` | DropdownOption<T>[] | - | Available options |
-| `onChange` | function | - | Change handler |
-| `multiple` | boolean | false | Whether multiple selection is allowed |
-| `searchable` | boolean | false | Whether to show search input |
-| `placeholder` | string | 'Select...' | Placeholder text |
-| `disabled` | boolean | false | Whether dropdown is disabled |
-| `renderOption` | function | - | Custom option render function |
-| `className` | string | - | Additional CSS class |
-| `style` | object | - | Additional CSS styles |
+| `value` | `T \| T[]` | - | Selected value(s) |
+| `options` | `DropdownOption<T>[]` | - | Available options |
+| `onChange` | `function` | - | Change handler |
+| `multiple` | `boolean` | `false` | Whether multiple selection is allowed |
+| `searchable` | `boolean` | `false` | Whether to show search input |
+| `placeholder` | `string` | 'Select...' | Placeholder text |
+| `disabled` | `boolean` | `false` | Whether dropdown is disabled |
+| `renderOption` | `function` | - | Custom option render function |
+| `className` | `string` | - | Additional CSS class |
+| `style` | `object` | - | Additional CSS styles |
 
 ## Usage
 
-::: code-with-tooltips
 ```tsx
 import { Dropdown } from '@underwood/components';
 import { useState } from 'react';
@@ -115,13 +114,11 @@ export const DropdownExample = () => {
   );
 };
 ```
-:::
 
 ## Examples
 
 ### Basic Dropdown
 
-::: code-with-tooltips
 ```tsx
 import { Dropdown } from '@underwood/components';
 import { useState } from 'react';
@@ -145,11 +142,9 @@ export const BasicDropdownExample = () => {
   );
 };
 ```
-:::
 
 ### Multiple Selection
 
-::: code-with-tooltips
 ```tsx
 import { Dropdown } from '@underwood/components';
 import { useState } from 'react';
@@ -174,11 +169,9 @@ export const MultipleDropdownExample = () => {
   );
 };
 ```
-:::
 
 ### With Groups and Search
 
-::: code-with-tooltips
 ```tsx
 import { Dropdown } from '@underwood/components';
 import { useState } from 'react';
@@ -204,7 +197,6 @@ export const GroupedDropdownExample = () => {
   );
 };
 ```
-:::
 
 ## Best Practices
 
@@ -267,4 +259,3 @@ export const GroupedDropdownExample = () => {
 - [Select](../form/select.md) - For form select inputs
 - [Combobox](../form/combobox.md) - For searchable selections
 - [ContextMenu](./context-menu.md) - For context menus
-</code_block_to_apply_changes_from> 

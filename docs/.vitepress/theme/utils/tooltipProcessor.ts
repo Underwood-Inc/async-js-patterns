@@ -1,6 +1,8 @@
 import { typeColors, typeScriptKeywords, primitiveTypes, builtInObjects } from './typeDefinitions';
 import { parseCode } from './parsers';
 import { createParserTooltip } from './tooltips/parserInfo';
+import { performanceLogger } from './performanceLogger';
+import { debugLog } from '../markdown/codePreview';
 
 interface ParseError {
   text: string;
@@ -122,6 +124,11 @@ export function processTooltips(code: string, lang: string) {
   const parseResult = parseCode(code, lang);
   const tooltipMap = new Map<string, TooltipData>();
 
+  // Start processing and log progress
+  if (process.env.NODE_ENV === 'development') {
+    performanceLogger.startProcess(parseResult.tokens?.length || 0);
+  }
+
   // Process errors first
   parseResult.errors?.forEach((error: any) => {
     if (!error || typeof error === 'string' || !('text' in error)) return;
@@ -133,6 +140,11 @@ export function processTooltips(code: string, lang: string) {
       tooltipMap.set(term, { errors: new Set(), info: new Set() });
     }
     tooltipMap.get(term)!.errors.add(`error:::${escapedError}`);
+    
+    // Log errors in development
+    if (process.env.NODE_ENV === 'development') {
+      debugLog('ERROR', { term, error: escapedError });
+    }
   });
 
   // Process tokens
@@ -185,6 +197,11 @@ export function processTooltips(code: string, lang: string) {
     tooltipMap
       .get(term)!
       .info.add(`info:::${info.type}\ntype:${tooltipContent}`);
+      
+    // Log processing in development
+    if (process.env.NODE_ENV === 'development') {
+      performanceLogger.logTooltip(term, info.type || 'identifier');
+    }
   });
 
   return { parseResult, tooltipMap, parserInfo: createParserTooltip(lang) };

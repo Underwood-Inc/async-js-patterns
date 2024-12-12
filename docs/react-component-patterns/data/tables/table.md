@@ -84,16 +84,16 @@ export interface TableProps<T> {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `data` | T[] | - | Data array |
-| `columns` | TableColumn<T>[] | - | Column definitions |
-| `onRowClick` | function | - | Row click handler |
-| `selectedRows` | T[] | [] | Selected rows |
-| `onSelectionChange` | function | - | Selection change handler |
-| `pagination` | boolean | false | Whether to show pagination |
-| `pageSize` | number | 10 | Items per page |
-| `loading` | boolean | false | Loading state |
-| `error` | string | - | Error state |
-| `emptyMessage` | string | 'No data' | Empty state message |
+| `data` | `T[]` | - | Data array |
+| `columns` | `TableColumn<T>[]` | - | Column definitions |
+| `onRowClick` | `function` | - | Row click handler |
+| `selectedRows` | `T[]` | `[]` | Selected rows |
+| `onSelectionChange` | `function` | - | Selection change handler |
+| `pagination` | `boolean` | `false` | Whether to show pagination |
+| `pageSize` | `number` | `10` | Items per page |
+| `loading` | `boolean` | `false` | Loading state |
+| `error` | `string` | - | Error state |
+| `emptyMessage` | `string` | `'No data'` | Empty state message |
 
 ## Usage
 
@@ -253,60 +253,61 @@ export const SelectableTableExample = () => {
 
 ### Usage Guidelines
 
-1. **Data Organization**
-   - Use consistent column widths
-   - Order columns logically
-   - Group related columns
-   - Handle long content
+1. **Data Structure**
+   - Keep data consistent
+   - Handle empty states
+   - Validate data types
+   - Consider performance
 
-2. **Interaction Design**
-   - Provide clear sorting indicators
-   - Show filter states
-   - Handle selection feedback
-   - Support keyboard shortcuts
+2. **Interaction**
+   - Use clear sorting indicators
+   - Provide filter feedback
+   - Support keyboard navigation
+   - Handle large datasets
 
-3. **Loading States**
-   - Show loading indicators
-   - Maintain layout stability
-   - Handle partial loading
-   - Preserve user interactions
+3. **Visual Design**
+   - Maintain consistent spacing
+   - Use clear typography
+   - Show loading states
+   - Handle overflow
 
 ### Accessibility
 
-1. **Semantic Structure**
-   - Use proper table markup
-   - Include table headers
-   - Set column scope
-   - Handle row headers
+1. **ARIA Attributes**
+   - Use proper table roles
+   - Label interactive elements
+   - Announce sort changes
+   - Handle focus management
 
 2. **Keyboard Navigation**
    - Support arrow keys
-   - Enable cell focus
+   - Enable cell focusing
    - Handle selection
-   - Support sorting/filtering
+   - Support shortcuts
 
 3. **Screen Readers**
-   - Announce sort changes
-   - Describe selection state
-   - Provide row context
-   - Handle dynamic updates
+   - Announce state changes
+   - Provide context
+   - Label columns
+   - Handle updates
 
 ### Performance
 
-1. **Data Management**
-   - Implement virtualization
+1. **Rendering**
+   - Virtualize large tables
    - Optimize sorting
-   - Handle filtering efficiently
-   - Cache results
+   - Handle filtering
+   - Manage updates
 
-2. **Rendering**
-   - Minimize re-renders
-   - Optimize cell updates
-   - Handle large datasets
+2. **State Management**
+   - Handle selection efficiently
+   - Manage sort state
+   - Cache filter results
    - Clean up listeners
 
 ## Related Components
 
-- [DataGrid](./data-grid.md) - For advanced data grid features
+- [DataGrid](./data-grid.md) - For complex data grids
 - [TreeTable](./tree-table.md) - For hierarchical data
 - [List](../lists-and-cards/list.md) - For simpler data display
+- [Card](../lists-and-cards/card.md) - For grid-based layouts

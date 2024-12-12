@@ -2,7 +2,7 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { fileURLToPath, URL } from 'node:url';
 import { resolve } from 'path';
-import { getHighlighter } from 'shiki';
+import { getHighlighter, Highlighter } from 'shiki';
 import { defineConfig } from 'vitepress';
 import { readingTime } from './plugins/readingTime';
 import { typescriptPlugin } from './plugins/typescript';
@@ -28,18 +28,36 @@ const defaultImage = '/web-patterns/social-preview.png';
 const twitterHandle = 'tetrawhispers';
 const siteImage = defaultImage;
 
-const languages = [
-  'typescript',
-  'javascript',
-  'json',
-  'bash',
-  'markdown',
-  'tsx',
-  'scss',
-  'css',
-  'html',
-  'python'
-];
+// Create a singleton highlighter instance
+let highlighterInstance: Highlighter | null = null;
+async function getHighlighterInstance() {
+  if (!highlighterInstance) {
+    highlighterInstance = await getHighlighter({
+      themes: ['github-dark', 'github-light'],
+      langs: [
+        'typescript',
+        'javascript',
+        'json',
+        'bash',
+        'markdown',
+        'tsx',
+        'scss',
+        'css',
+        'html',
+        'python',
+      ],
+    });
+  }
+  return highlighterInstance;
+}
+
+// Cleanup function for the highlighter
+function disposeHighlighter() {
+  if (highlighterInstance) {
+    highlighterInstance.dispose();
+    highlighterInstance = null;
+  }
+}
 
 // Function to extract content preview from markdown
 function extractContentPreview(filePath: string, maxLength = 200): string {
@@ -265,23 +283,16 @@ export default withMermaid(
     lineNumbers: true,
     languages: languages,
     config: async (md) => {
+      // Enable debug logging in development
+      if (process.env.NODE_ENV === 'development') {
+        debugLog('SETUP', 'Enabling debug logging for development');
+        toggleDebugLogging(true);
+      }
+
       codeTooltipsPlugin(md);
 
-      const highlighter = await getHighlighter({
-        themes: ['github-dark', 'github-light'],
-        langs: [
-          'typescript',
-          'javascript',
-          'json',
-          'bash',
-          'markdown',
-          'tsx',
-          'scss',
-          'css',
-          'html',
-          'python',
-        ],
-      });
+      // Use the singleton highlighter instance
+      const highlighter = await getHighlighterInstance();
 
       const originalFence = md.renderer.rules.fence!;
       md.renderer.rules.fence = (tokens, idx, options, env, self) => {
@@ -297,33 +308,47 @@ export default withMermaid(
         if (!isInTooltipContainer) {
           debugLog('SKIPPING', {
             reason: 'not in tooltip container',
-            file: filePath
+            file: filePath,
           });
           return originalFence(tokens, idx, options, env, self);
         }
 
         try {
           // Process template variables with error handling
-          token.content = token.content.replace(/\${([^}]+)}/g, (match, expr) => {
-            try {
-              const value = expr.split('.').reduce((obj, prop) => obj?.[prop], env);
-              return value ?? match; // Return original match if value is null/undefined
-            } catch (e) {
-              console.warn(`Template expression error: ${expr}`, e);
-              return match;
+          token.content = token.content.replace(
+            /\${([^}]+)}/g,
+            (match, expr) => {
+              try {
+                const value = expr
+                  .split('.')
+                  .reduce((obj, prop) => obj?.[prop], env);
+                return value ?? match; // Return original match if value is null/undefined
+              } catch (e) {
+                console.warn(`Template expression error: ${expr}`, e);
+                return match;
+              }
             }
-          });
-          
-          const highlightedCode = originalFence(tokens, idx, options, env, self);
-          
+          );
+
+          const highlightedCode = originalFence(
+            tokens,
+            idx,
+            options,
+            env,
+            self
+          );
+
           debugLog('TOOLTIP_PROCESSING', {
             file: filePath,
             tokenType: token.type,
-            inContainer: isInTooltipContainer
+            inContainer: isInTooltipContainer,
           });
 
           // Process tooltips
-          const { parseResult, tooltipMap, parserInfo } = processTooltips(token.content, token.info);
+          const { parseResult, tooltipMap, parserInfo } = processTooltips(
+            token.content,
+            token.info
+          );
 
           let modifiedCode = highlightedCode;
 
@@ -337,7 +362,7 @@ export default withMermaid(
           debugLog('ERROR', {
             file: filePath,
             line: token.map?.[0],
-            error: error.message
+            error: error.message,
           });
           token.content = originalContent; // Restore original content on error
           return originalFence(tokens, idx, options, env, self);
@@ -346,22 +371,23 @@ export default withMermaid(
 
       // Combine the originalRender logic
       const originalRender = md.render;
-      const originalTextRender = md.renderer.rules.text || ((tokens, idx) => tokens[idx].content);
-      
+      const originalTextRender =
+        md.renderer.rules.text || ((tokens, idx) => tokens[idx].content);
+
       md.render = function (src, env) {
         // Process template syntax before rendering
         const processed = src
-          .replace(/```[\s\S]*?```/g, match => match)
-          .replace(/`[^`]*`/g, match => match)
+          .replace(/```[\s\S]*?```/g, (match) => match)
+          .replace(/`[^`]*`/g, (match) => match)
           .replace(/\${(?!\{)/g, '\\${')
           .replace(/{{\s*([^}]*)}}/g, '\\{{ $1 }}');
-        
+
         return originalRender.call(this, processed, env);
       };
 
       md.renderer.rules.text = (tokens, idx, options, env, self) => {
         let content = tokens[idx].content;
-        
+
         // Only process if not inside code blocks
         if (!env.inCode) {
           content = content
@@ -370,15 +396,15 @@ export default withMermaid(
             // Escape Vue interpolation
             .replace(/{{\s*([^}]*)}}/g, '@{{$1}}');
         }
-        
+
         tokens[idx].content = content;
         return originalTextRender(tokens, idx, options, env, self);
       };
 
       // Track code block state
-      md.core.ruler.push('track_code_blocks', state => {
+      md.core.ruler.push('track_code_blocks', (state) => {
         let inCode = false;
-        state.tokens.forEach(token => {
+        state.tokens.forEach((token) => {
           if (token.type === 'fence' || token.type === 'code_block') {
             inCode = true;
           }
@@ -389,7 +415,7 @@ export default withMermaid(
 
       // Add custom container for Vue templates
       md.use(container, 'vue', {
-        validate: function(params) {
+        validate: function (params) {
           return params.trim().match(/^vue\s*(.*)$/);
         },
         render: function (tokens, idx) {
@@ -398,7 +424,7 @@ export default withMermaid(
           } else {
             return '</div>\n';
           }
-        }
+        },
       });
     },
     breaks: true,
@@ -411,8 +437,8 @@ export default withMermaid(
         compilerOptions: {
           isCustomElement: () => false,
           whitespace: 'preserve',
-          delimiters: ['@{{', '}}']  // Use different delimiters for Vue
-        }
+          delimiters: ['@{{', '}}'], // Use different delimiters for Vue
+        },
       },
     },
   },
@@ -420,6 +446,8 @@ export default withMermaid(
     const { buildSearchIndex } = await import('./buildSearchIndex.js');
     await buildSearchIndex();
     performanceLogger.finalize();
+    // Cleanup the highlighter when build ends
+    disposeHighlighter();
   },
   vite: {
     build: {
@@ -465,11 +493,14 @@ export default withMermaid(
 
             // Then handle inline code
             const inlineCode: string[] = [];
-            preservedCode = preservedCode.replace(/`[^`]*`/g, (match, offset) => {
-              const placeholder = `___INLINE_CODE_${inlineCode.length}___`;
-              inlineCode.push(match);
-              return placeholder;
-            });
+            preservedCode = preservedCode.replace(
+              /`[^`]*`/g,
+              (match, offset) => {
+                const placeholder = `___INLINE_CODE_${inlineCode.length}___`;
+                inlineCode.push(match);
+                return placeholder;
+              }
+            );
 
             // Process template syntax
             preservedCode = preservedCode
@@ -486,31 +517,29 @@ export default withMermaid(
 
             return result;
           }
-        }
+        },
       },
       {
         name: 'react-component-patterns-handler',
         enforce: 'pre',
         transform(code, id) {
-          if (id.endsWith('.md') && (
-            id.includes('react-component-patterns') || 
-            id.includes('/form/')
-          )) {
+          if (
+            id.endsWith('.md') &&
+            (id.includes('react-component-patterns') || id.includes('/form/'))
+          ) {
             // For React files, escape all Vue-style interpolation
-            return code
-              .replace(/{{/g, '\\{{')
-              .replace(/}}/g, '}}');
+            return code.replace(/{{/g, '\\{{').replace(/}}/g, '}}');
           }
-        }
-      }
+        },
+      },
     ],
     vue: {
       template: {
         compilerOptions: {
-          isCustomElement: tag => tag.includes('-'),
-          whitespace: 'preserve'
-        }
-      }
+          isCustomElement: (tag) => tag.includes('-'),
+          whitespace: 'preserve',
+        },
+      },
     },
     css: {
       preprocessorOptions: {
@@ -798,32 +827,18 @@ export default withMermaid(
         {
           text: 'Foundation',
           items: [
-            {
-              text: 'Typography',
-              link: '/react-component-patterns/foundation/typography',
-            },
-            {
-              text: 'Colors',
-              link: '/react-component-patterns/foundation/colors',
-            },
-            {
-              text: 'Spacing',
-              link: '/react-component-patterns/foundation/spacing',
-            },
-            {
-              text: 'Icons',
-              link: '/react-component-patterns/foundation/icons',
-            },
+            { text: 'Typography', link: '/react-component-patterns/foundation/typography' },
+            { text: 'Colors', link: '/react-component-patterns/foundation/colors' },
+            { text: 'Spacing', link: '/react-component-patterns/foundation/spacing' },
+            { text: 'Icons', link: '/react-component-patterns/foundation/icons' },
+            { text: 'Semantic HTML', link: '/react-component-patterns/foundation/semantic-html' },
           ],
         },
         {
           text: 'Layout',
           items: [
-            {
-              text: 'Container',
-              link: '/react-component-patterns/layout/container',
-            },
-            { text: 'Grid', link: '/react-component-patterns/layout/grid' },
+            { text: 'Container', link: '/react-component-patterns/layout/container' },
+            { text: 'Grid System', link: '/react-component-patterns/layout/grid' },
             { text: 'Stack', link: '/react-component-patterns/layout/stack' },
             { text: 'Flex', link: '/react-component-patterns/layout/flex' },
           ],
@@ -834,10 +849,7 @@ export default withMermaid(
             { text: 'Button', link: '/react-component-patterns/form/button' },
             { text: 'Input', link: '/react-component-patterns/form/input' },
             { text: 'Select', link: '/react-component-patterns/form/select' },
-            {
-              text: 'Checkbox',
-              link: '/react-component-patterns/form/checkbox',
-            },
+            { text: 'Checkbox', link: '/react-component-patterns/form/checkbox' },
             { text: 'Radio', link: '/react-component-patterns/form/radio' },
             { text: 'Switch', link: '/react-component-patterns/form/switch' },
           ],
@@ -852,6 +864,10 @@ export default withMermaid(
               link: '/react-component-patterns/navigation/breadcrumb',
             },
             {
+              text: 'Timeline',
+              link: '/react-component-patterns/navigation/components/timeline',
+            },
+            {
               text: 'Pagination',
               link: '/react-component-patterns/navigation/pagination',
             },
@@ -861,59 +877,97 @@ export default withMermaid(
           text: 'Feedback',
           items: [
             {
-              text: 'Alert',
-              link: '/react-component-patterns/feedback/notifications/alert',
+              text: 'Notifications',
+              items: [
+                { text: 'Alert', link: '/react-component-patterns/feedback/notifications/alert' },
+                { text: 'Toast', link: '/react-component-patterns/feedback/notifications/toast' },
+                { text: 'Banner', link: '/react-component-patterns/feedback/notifications/banner' },
+                { text: 'Snackbar', link: '/react-component-patterns/feedback/notifications/snackbar' },
+              ],
             },
             {
-              text: 'Toast',
-              link: '/react-component-patterns/feedback/notifications/toast',
+              text: 'Progress Indicators',
+              items: [
+                { text: 'Progress', link: '/react-component-patterns/feedback/progress-indicators/progress' },
+                { text: 'Loading Bar', link: '/react-component-patterns/feedback/progress-indicators/loading-bar' },
+                { text: 'Spinner', link: '/react-component-patterns/feedback/progress-indicators/spinner' },
+                { text: 'Skeleton', link: '/react-component-patterns/feedback/progress-indicators/skeleton' },
+              ],
             },
             {
-              text: 'Banner',
-              link: '/react-component-patterns/feedback/notifications/banner',
-            },
-            {
-              text: 'Snackbar',
-              link: '/react-component-patterns/feedback/notifications/snackbar',
-            },
-            {
-              text: 'Progress',
-              link: '/react-component-patterns/feedback/progress-indicators/progress',
-            },
-            {
-              text: 'Skeleton',
-              link: '/react-component-patterns/feedback/status-indicators/skeleton',
-            },
-          ],
-        },
-        {
-          text: 'Overlay',
-          items: [
-            {
-              text: 'Popover',
-              link: '/react-component-patterns/overlay/contextual-overlays/popover',
-            },
-            {
-              text: 'Tooltip',
-              link: '/react-component-patterns/overlay/contextual-overlays/tooltip',
-            },
-            {
-              text: 'Dropdown',
-              link: '/react-component-patterns/overlay/contextual-overlays/dropdown',
-            },
-            {
-              text: 'Context Menu',
-              link: '/react-component-patterns/overlay/contextual-overlays/context-menu',
+              text: 'Status Indicators',
+              items: [
+                { text: 'Status', link: '/react-component-patterns/feedback/status-indicators/status' },
+                { text: 'Result', link: '/react-component-patterns/feedback/status-indicators/result' },
+                { text: 'Error', link: '/react-component-patterns/feedback/status-indicators/error' },
+                { text: 'Empty', link: '/react-component-patterns/feedback/status-indicators/empty' },
+              ],
             },
           ],
         },
         {
           text: 'Data Display',
           items: [
-            { text: 'Table', link: '/react-component-patterns/data/table' },
-            { text: 'List', link: '/react-component-patterns/data/list' },
-            { text: 'Card', link: '/react-component-patterns/data/card' },
-            { text: 'Badge', link: '/react-component-patterns/data/badge' },
+            {
+              text: 'Tables',
+              items: [
+                {
+                  text: 'Table',
+                  link: '/react-component-patterns/data/tables/table',
+                },
+                {
+                  text: 'Data Grid',
+                  link: '/react-component-patterns/data/tables/data-grid',
+                },
+              ],
+            },
+            {
+              text: 'Lists & Cards',
+              items: [
+                {
+                  text: 'List',
+                  link: '/react-component-patterns/data/lists-and-cards/list',
+                },
+                {
+                  text: 'Card List',
+                  link: '/react-component-patterns/data/lists-and-cards/card-list',
+                },
+                {
+                  text: 'Virtual List',
+                  link: '/react-component-patterns/data/lists-and-cards/virtual-list',
+                },
+                {
+                  text: 'Infinite List',
+                  link: '/react-component-patterns/data/lists-and-cards/infinite-list',
+                },
+              ],
+            },
+            {
+              text: 'Navigation & Controls',
+              items: [
+                {
+                  text: 'Pagination',
+                  link: '/react-component-patterns/data/navigation-and-controls/pagination',
+                },
+              ],
+            },
+            {
+              text: 'Status & Metadata',
+              items: [
+                {
+                  text: 'Badge',
+                  link: '/react-component-patterns/data/status-and-metadata/badge',
+                },
+                {
+                  text: 'Tag',
+                  link: '/react-component-patterns/data/status-and-metadata/tag',
+                },
+                {
+                  text: 'Status',
+                  link: '/react-component-patterns/data/status-and-metadata/status',
+                },
+              ],
+            },
           ],
         },
       ],
@@ -937,8 +991,8 @@ export default withMermaid(
     search: {
       provider: 'local',
       options: {
-        detailedView: true
-      }
+        detailedView: true,
+      },
     },
   },
   locales: {

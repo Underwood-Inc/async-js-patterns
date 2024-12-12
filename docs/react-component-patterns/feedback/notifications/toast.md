@@ -82,7 +82,7 @@ export interface ToastContextValue {
 | `dismissible` | boolean | true | Whether toast can be dismissed |
 | `onClose` | function | - | Close handler |
 | `action` | ReactNode | - | Optional action element |
-| `position` | object | { vertical: 'top', horizontal: 'right' } | Toast position |
+| `position` | object | `vertical: 'top'; horizontal: 'right'` | Toast position |
 | `className` | string | - | Additional CSS class |
 
 ## Usage

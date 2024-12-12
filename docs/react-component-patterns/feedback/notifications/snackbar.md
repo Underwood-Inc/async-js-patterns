@@ -63,12 +63,12 @@ export interface SnackbarProps {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `open` | boolean | false | Controls the visibility of the snackbar |
-| `message` | string | - | The message to display |
-| `action` | ReactNode | - | Optional action button or element |
-| `autoHideDuration` | number | 6000 | Time in milliseconds before auto-hiding |
-| `onClose` | function | - | Callback fired when snackbar closes |
-| `anchorOrigin` | object | { vertical: 'bottom', horizontal: 'left' } | Position of the snackbar |
+| `open` | boolean | false | Whether snackbar is visible |
+| `message` | string | - | Snackbar message content |
+| `action` | ReactNode | - | Optional action element |
+| `autoHideDuration` | number | 6000 | Auto-hide duration in ms |
+| `onClose` | function | - | Close handler |
+| `anchorOrigin` | object | bottom-left | Position of the snackbar |
 | `severity` | 'success' \| 'error' \| 'warning' \| 'info' | - | Optional severity level |
 | `className` | string | - | Additional CSS class |
 
@@ -147,7 +147,10 @@ export const PositionedSnackbarExample = () => (
   <Snackbar
     open={true}
     message="Settings saved"
-    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+    anchorOrigin={{
+      vertical: 'top',
+      horizontal: 'center'
+    }}
   />
 );
 ```
@@ -237,4 +240,3 @@ export const PositionedSnackbarExample = () => (
 - [Alert](./alert.md) - For persistent important messages
 - [Banner](./banner.md) - For system-wide announcements
 - [Dialog](../modals/dialog.md) - For important messages requiring user action
-``` 
