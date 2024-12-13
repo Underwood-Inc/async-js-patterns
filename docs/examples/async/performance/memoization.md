@@ -1,7 +1,7 @@
 ---
 title: Memoization Pattern Implementation
 description: Learn advanced memoization patterns for optimizing async operations. Master caching strategies, cache invalidation, and memory management.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Memoization

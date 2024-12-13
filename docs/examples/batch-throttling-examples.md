@@ -1,7 +1,7 @@
 ---
 title: Batch Throttling Examples
 description: Explore batch processing and throttling techniques in JavaScript. Learn how to optimize performance with batched operations and rate limiting.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

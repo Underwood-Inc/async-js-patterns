@@ -1,7 +1,7 @@
 ---
 title: TypeScript Conditional Types Guide
 description: Master conditional types in TypeScript. Learn about type inference, distributive types, and advanced type system features.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - TypeScript

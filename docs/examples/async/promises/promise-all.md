@@ -1,7 +1,7 @@
 ---
 title: Promise.all Pattern Examples
 description: Master parallel execution patterns with Promise.all. Learn how to handle multiple async operations efficiently with TypeScript.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Promise.all

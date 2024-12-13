@@ -1,7 +1,7 @@
 ---
 title: Async Error Handling Guide
 description: Master error handling in asynchronous JavaScript. Learn about error patterns, recovery strategies, and robust error management.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

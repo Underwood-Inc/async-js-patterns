@@ -1,7 +1,7 @@
 ---
 title: Debouncing Pattern Implementation
 description: Master debouncing patterns for handling high-frequency events. Learn about event throttling, timing control, and performance optimization.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Debouncing

@@ -1,7 +1,7 @@
 ---
 title: Debouncing Examples
 description: Master debouncing techniques in JavaScript. Learn how to optimize event handling and control function execution frequency.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

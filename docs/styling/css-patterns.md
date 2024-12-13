@@ -1,7 +1,7 @@
 ---
 title: CSS Patterns Guide
 description: Explore modern CSS patterns and techniques. Learn about layouts, responsive design, animations, and advanced CSS features.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - CSS

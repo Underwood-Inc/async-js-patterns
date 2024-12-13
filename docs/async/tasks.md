@@ -1,7 +1,7 @@
 ---
 title: Task Management in JavaScript
 description: Learn effective patterns for managing multiple asynchronous tasks. Master parallel execution, sequential processing, and task coordination strategies.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Task Management

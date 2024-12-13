@@ -1,7 +1,7 @@
 ---
 title: JavaScript Timer Patterns
 description: Master JavaScript timers with advanced patterns and best practices. Learn about setTimeout, setInterval, and custom timer implementations.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Timers

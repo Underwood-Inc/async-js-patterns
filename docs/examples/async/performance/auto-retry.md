@@ -1,7 +1,7 @@
 ---
 title: Auto-Retry Pattern Implementation
 description: Build robust retry mechanisms for async operations. Learn exponential backoff, retry strategies, and error recovery patterns.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Retry Patterns

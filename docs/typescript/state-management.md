@@ -1,7 +1,7 @@
 ---
 title: TypeScript State Management Guide
 description: Master state management patterns in TypeScript. Learn about state containers, reducers, and advanced state handling techniques.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - TypeScript

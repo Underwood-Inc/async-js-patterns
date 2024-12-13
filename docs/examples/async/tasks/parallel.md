@@ -1,7 +1,7 @@
 ---
 title: Parallel Task Execution Patterns
 description: Learn how to implement efficient parallel task execution patterns in TypeScript. Master concurrency control and resource management.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Parallel Processing

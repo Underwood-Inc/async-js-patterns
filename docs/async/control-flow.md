@@ -1,7 +1,7 @@
 ---
 title: Async Control Flow Guide
 description: Master asynchronous control flow patterns in JavaScript. Learn about timers, intervals, and advanced flow control techniques.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

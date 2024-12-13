@@ -1,7 +1,7 @@
 ---
 title: Sequential Task Execution Patterns
 description: Learn how to implement sequential task execution patterns in TypeScript. Master ordered processing, dependencies, and workflow management.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Sequential Processing

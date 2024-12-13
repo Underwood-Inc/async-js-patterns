@@ -1,7 +1,7 @@
 ---
 title: Markdown Linting Examples
 description: Learn markdown linting patterns and best practices. Master document formatting and style consistency checks.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Markdown

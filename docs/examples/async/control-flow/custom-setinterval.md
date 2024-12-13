@@ -1,7 +1,7 @@
 ---
 title: Custom setInterval Implementation
 description: Create your own setInterval implementation in TypeScript. Master recurring timer patterns, drift compensation, and advanced interval management.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - setInterval

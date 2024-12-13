@@ -1,7 +1,7 @@
 ---
 title: Promise.allSettled Pattern Examples
 description: Explore Promise.allSettled patterns for handling multiple async operations with comprehensive result tracking. Learn TypeScript implementations and error handling strategies.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Promise.allSettled

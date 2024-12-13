@@ -1,7 +1,7 @@
 ---
 title: Timer Management Patterns
 description: Learn advanced timer management patterns in TypeScript. Master timer coordination, cleanup, and resource management strategies.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Timer Management

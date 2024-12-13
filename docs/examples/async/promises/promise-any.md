@@ -1,7 +1,7 @@
 ---
 title: Promise.any Pattern Examples
 description: Learn how to use Promise.any for handling multiple async operations and selecting the first successful result. Includes TypeScript examples and best practices.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Promise.any

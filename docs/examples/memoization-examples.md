@@ -1,7 +1,7 @@
 ---
 title: Memoization Examples
 description: Explore memoization techniques in JavaScript. Learn how to optimize performance with caching and function result memoization.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

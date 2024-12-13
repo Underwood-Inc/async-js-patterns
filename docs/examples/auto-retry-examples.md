@@ -1,7 +1,7 @@
 ---
 title: Auto-Retry Examples
 description: Learn how to implement automatic retry mechanisms in JavaScript. Explore exponential backoff, retry strategies, and error handling patterns.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

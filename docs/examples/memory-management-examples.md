@@ -1,7 +1,7 @@
 ---
 title: Memory Management Examples
 description: Master memory management techniques in JavaScript. Learn about memory leaks, garbage collection, and efficient resource handling.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript
