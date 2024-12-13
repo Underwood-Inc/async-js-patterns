@@ -33,6 +33,7 @@ The ContextMenu component displays a menu of actions when users right-click on a
 ### Props Interface
 
 ::: code-with-tooltips
+
 ```tsx
 import { ReactNode, CSSProperties, MouseEvent as ReactMouseEvent } from 'react';
 
@@ -68,6 +69,7 @@ export interface ContextMenuItem {
   type?: 'item' | 'separator';
 }
 ```
+
 :::
 
 ### Props Table
@@ -84,6 +86,7 @@ export interface ContextMenuItem {
 ## Usage
 
 ::: code-with-tooltips
+
 ```tsx
 import { ContextMenu } from '@underwood/components';
 
@@ -121,6 +124,7 @@ export const ContextMenuExample = () => {
   );
 };
 ```
+
 :::
 
 ## Examples
@@ -128,6 +132,7 @@ export const ContextMenuExample = () => {
 ### Basic Context Menu
 
 ::: code-with-tooltips
+
 ```tsx
 import { ContextMenu } from '@underwood/components';
 
@@ -161,11 +166,13 @@ export const BasicContextMenuExample = () => {
   );
 };
 ```
+
 :::
 
 ### With Icons and Shortcuts
 
 ::: code-with-tooltips
+
 ```tsx
 import { ContextMenu } from '@underwood/components';
 import { EditIcon, DeleteIcon, ShareIcon } from '@underwood/icons';
@@ -206,11 +213,13 @@ export const IconContextMenuExample = () => {
   );
 };
 ```
+
 :::
 
 ### Nested Menu
 
 ::: code-with-tooltips
+
 ```tsx
 import { ContextMenu } from '@underwood/components';
 
@@ -271,6 +280,7 @@ export const NestedContextMenuExample = () => {
   );
 };
 ```
+
 :::
 
 ## Best Practices
@@ -333,5 +343,4 @@ export const NestedContextMenuExample = () => {
 
 - [Dropdown](./dropdown.md) - For selection menus
 - [Popover](./popover.md) - For general overlays
-- [Menu](../navigation/menu.md) - For navigation menus
-</code_block_to_apply_changes_from> 
+- [Menu](../../navigation/menu.md) - For navigation menus

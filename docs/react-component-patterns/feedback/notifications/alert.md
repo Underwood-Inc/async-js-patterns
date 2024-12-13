@@ -84,12 +84,17 @@ export interface AlertProps {
 import { Alert } from '@underwood/components';
 
 export const AlertExample = () => {
+  const handleClose = () => {
+    // Handle alert close
+    console.log('Alert closed');
+  };
+
   return (
     <Alert 
       severity="success"
       title="Operation Successful"
       dismissible
-      onClose={() => console.log('Alert closed')}
+      onClose={handleClose}
     >
       Your changes have been saved successfully.
     </Alert>
@@ -120,20 +125,32 @@ export const BasicAlertExample = () => (
 ```tsx
 import { Alert, Button } from '@underwood/components';
 
-export const ActionAlertExample = () => (
-  <Alert
-    severity="warning"
-    title="Unsaved Changes"
-    actions={
-      <>
-        <Button onClick={handleSave}>Save</Button>
-        <Button onClick={handleDiscard}>Discard</Button>
-      </>
-    }
-  >
-    You have unsaved changes that will be lost.
-  </Alert>
-);
+export const ActionAlertExample = () => {
+  const handleSave = () => {
+    // Handle save action
+    console.log('Changes saved');
+  };
+
+  const handleDiscard = () => {
+    // Handle discard action
+    console.log('Changes discarded');
+  };
+
+  return (
+    <Alert
+      severity="warning"
+      title="Unsaved Changes"
+      actions={
+        <>
+          <Button onClick={handleSave}>Save</Button>
+          <Button onClick={handleDiscard}>Discard</Button>
+        </>
+      }
+    >
+      You have unsaved changes that will be lost.
+    </Alert>
+  );
+};
 ```
 :::
 
@@ -235,7 +252,7 @@ export const OutlinedAlertExample = () => (
 
 ## Related Components
 
-- [Toast](./toast.md) - For temporary, auto-dismissing notifications
-- [Snackbar](./snackbar.md) - For brief feedback messages
-- [Banner](./banner.md) - For system-wide announcements
-- [Dialog](../modals/dialog.md) - For important messages requiring user action
+- [Toast](/react-component-patterns/feedback/notifications/toast.md) - For temporary, auto-dismissing notifications
+- [Snackbar](/react-component-patterns/feedback/notifications/snackbar.md) - For brief feedback messages
+- [Banner](/react-component-patterns/feedback/notifications/banner.md) - For system-wide announcements
+- [Dialog](/react-component-patterns/overlay/modals/dialog.md) - For important messages requiring user action

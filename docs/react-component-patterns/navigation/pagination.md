@@ -170,6 +170,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 
 ## Related Components
 
-- [Table](../data/table.md)
-- [List](../data/list.md)
-- [DataGrid](../data/data-grid.md) 
+- [Table](/react-component-patterns/data/tables/table.md) - For paginated tables
+- [List](/react-component-patterns/data/lists-and-cards/list.md) - For paginated lists
+- [DataGrid](/react-component-patterns/data/tables/data-grid.md) - For advanced data grids
+- [InfiniteScroll](/react-component-patterns/data/lists-and-cards/infinite-scroll.md) - For infinite scrolling 

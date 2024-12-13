@@ -239,7 +239,7 @@ export const StickyBannerExample = () => {
 
 ## Related Components
 
-- [Alert](./alert.md) - For contextual feedback messages
-- [Toast](./toast.md) - For brief, auto-dismissing notifications
-- [Snackbar](./snackbar.md) - For temporary feedback about operations
-- [Dialog](../modals/dialog.md) - For important messages requiring user action
+- [Alert](/react-component-patterns/feedback/notifications/alert.md) - For contextual feedback messages
+- [Toast](/react-component-patterns/feedback/notifications/toast.md) - For brief, auto-dismissing notifications
+- [Snackbar](/react-component-patterns/feedback/notifications/snackbar.md) - For temporary feedback about operations
+- [Dialog](/react-component-patterns/overlay/modals/dialog.md) - For important messages requiring user action

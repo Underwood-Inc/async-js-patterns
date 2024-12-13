@@ -1,711 +1,295 @@
 ---
-title: Input Components
-description: Flexible and accessible input components for React applications with comprehensive validation and state management
+title: Input Component
+description: Single-line text input component for forms with support for various input types, validation states, and additional features
+category: Components
+subcategory: Form
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
-  - React
-  - Form Controls
+  - Form
   - Input
-  - Validation
-  - Accessibility
+  - Text
+  - React
 ---
 
-# Input Components
+# Input Component
 
 ## Overview
 
-A comprehensive set of input components that handle various text input scenarios, form validation, and accessibility requirements. These components are built with TypeScript and follow modern React patterns.
+The Input component provides a versatile single-line text input field for forms. It supports various input types, validation states, and additional features like prefix/suffix elements and clear button functionality. This component is fundamental for collecting user input in a consistent and accessible way.
 
-## Components
+## Key Features
 
-### Base Input
+A comprehensive set of features for text input handling:
 
-The foundation input component with validation and state management:
+- Multiple input types (text, password, email, number, etc.)
+- Validation states with error messages
+- Prefix/suffix elements for additional context
+- Clear button for quick input clearing
+- Password visibility toggle
+- Character limit with counter
+- Custom styling support
 
-::: code-with-tooltips
+## Usage Guidelines
+
+This section demonstrates how to implement the Input component, from basic usage to advanced scenarios.
+
+### Basic Usage
+
+The simplest implementation of the Input component:
 
 ```tsx
-import React, { forwardRef } from 'react';
-import clsx from 'clsx';
-import type { InputHTMLAttributes, ReactNode, Ref } from 'react';
+import * as React from 'react';
+import { Input } from '@/components/form';
 
-interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
-  /** Input label */
-  label?: string;
-  /** Helper text below input */
-  helperText?: string;
-  /** Error message */
-  error?: string;
-  /** Success message */
-  success?: string;
-  /** Input size variant */
-  size?: 'sm' | 'md' | 'lg';
-  /** Left addon (icon, text, etc.) */
-  leftAddon?: ReactNode;
-  /** Right addon (icon, text, etc.) */
-  rightAddon?: ReactNode;
-  /** Whether the input is loading */
-  isLoading?: boolean;
-  /** Whether the input spans full width */
-  isFullWidth?: boolean;
-  /** Additional classes for the wrapper */
-  wrapperClassName?: string;
-  /** Additional classes for the input */
-  inputClassName?: string;
-}
-
-export const Input = forwardRef(({
-  label,
-  helperText,
-  error,
-  success,
-  size = 'md',
-  leftAddon,
-  rightAddon,
-  isLoading = false,
-  isFullWidth = false,
-  disabled = false,
-  required = false,
-  wrapperClassName,
-  inputClassName,
-  id,
-  ...props
-}: InputProps, ref: Ref<HTMLInputElement>) => {
-  // Generate unique ID if not provided
-  const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
-  const helperTextId = `${inputId}-helper`;
-  const errorId = `${inputId}-error`;
-  const successId = `${inputId}-success`;
-
-  const hasError = !!error;
-  const hasSuccess = !!success;
-  const hasHelperText = !!helperText;
-  const hasAddon = !!(leftAddon || rightAddon);
-
+function BasicInputExample() {
   return (
-    <div
-      className={clsx(
-        'input-wrapper',
-        `input-wrapper--${size}`,
-        isFullWidth && 'input-wrapper--full-width',
-        hasError && 'input-wrapper--error',
-        hasSuccess && 'input-wrapper--success',
-        disabled && 'input-wrapper--disabled',
-        wrapperClassName
-      )}
-    >
-      {label && (
-        <label
-          htmlFor={inputId}
-          className="input__label"
-        >
-          {label}
-          {required && (
-            <>
-              <span aria-hidden="true" className="input__required-indicator">
-                *
-              </span>
-              <span className="sr-only">(required)</span>
-            </>
-          )}
-        </label>
-      )}
-
-      <div
-        className={clsx(
-          'input__field-wrapper',
-          hasAddon && 'input__field-wrapper--with-addon'
-        )}
-      >
-        {leftAddon && (
-          <span className="input__addon input__addon--left">
-            {leftAddon}
-          </span>
-        )}
-
-        <input
-          ref={ref}
-          id={inputId}
-          className={clsx(
-            'input__field',
-            hasError && 'input__field--error',
-            hasSuccess && 'input__field--success',
-            inputClassName
-          )}
-          disabled={disabled || isLoading}
-          required={required}
-          aria-invalid={hasError}
-          aria-describedby={clsx(
-            hasHelperText && helperTextId,
-            hasError && errorId,
-            hasSuccess && successId
-          )}
-          {...props}
-        />
-
-        {rightAddon && (
-          <span className="input__addon input__addon--right">
-            {rightAddon}
-          </span>
-        )}
-
-        {isLoading && (
-          <span
-            className="input__spinner"
-            aria-hidden="true"
-          >
-            {/* Spinner SVG */}
-          </span>
-        )}
-      </div>
-
-      {helperText && (
-        <span
-          id={helperTextId}
-          className="input__helper-text"
-        >
-          {helperText}
-        </span>
-      )}
-
-      {error && (
-        <span
-          id={errorId}
-          className="input__error"
-          role="alert"
-        >
-          {error}
-        </span>
-      )}
-
-      {success && (
-        <span
-          id={successId}
-          className="input__success"
-          role="status"
-        >
-          {success}
-        </span>
-      )}
-    </div>
+    <Input
+      label="Username"
+      placeholder="Enter username"
+      onChange={(e) => console.log(e.target.value)}
+    />
   );
-});
-
-Input.displayName = 'Input';
-```
-
-:::
-
-::: code-with-tooltips
-
-```scss
-.input-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  &--full-width {
-    width: 100%;
-  }
-
-  &--disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  // Sizes
-  &--sm {
-    font-size: 0.875rem;
-
-    .input__field {
-      height: 32px;
-      padding: 0 0.75rem;
-    }
-
-    .input__addon {
-      padding: 0 0.5rem;
-    }
-  }
-
-  &--md {
-    font-size: 1rem;
-
-    .input__field {
-      height: 40px;
-      padding: 0 1rem;
-    }
-
-    .input__addon {
-      padding: 0 0.75rem;
-    }
-  }
-
-  &--lg {
-    font-size: 1.125rem;
-
-    .input__field {
-      height: 48px;
-      padding: 0 1.25rem;
-    }
-
-    .input__addon {
-      padding: 0 1rem;
-    }
-  }
-}
-
-.input__label {
-  color: var(--vp-c-text-1);
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.input__required-indicator {
-  color: var(--vp-c-danger);
-  margin-left: 0.25rem;
-}
-
-.input__field-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-
-  &--with-addon {
-    .input__field {
-      &:not(:first-child) {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-
-      &:not(:last-child) {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-    }
-  }
-}
-
-.input__field {
-  width: 100%;
-  border: 2px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-1);
-  font: inherit;
-  transition: all 0.2s ease;
-
-  &::placeholder {
-    color: var(--vp-c-text-3);
-  }
-
-  &:hover:not(:disabled) {
-    border-color: var(--vp-c-brand);
-  }
-
-  &:focus {
-    outline: none;
-    border-color: var(--vp-c-brand);
-    box-shadow: 0 0 0 3px color.adjust(colors.$purple-brand, $alpha: -0.8);
-  }
-
-  &:disabled {
-    background: var(--vp-c-bg-mute);
-    cursor: not-allowed;
-  }
-
-  &--error {
-    border-color: var(--vp-c-danger) !important;
-
-    &:focus {
-      box-shadow: 0 0 0 3px color.adjust(colors.$red-500, $alpha: -0.8);
-    }
-  }
-
-  &--success {
-    border-color: var(--vp-c-success) !important;
-
-    &:focus {
-      box-shadow: 0 0 0 3px color.adjust(colors.$green-500, $alpha: -0.8);
-    }
-  }
-}
-
-.input__addon {
-  display: flex;
-  align-items: center;
-  background: var(--vp-c-bg-mute);
-  border: 2px solid var(--vp-c-divider);
-  color: var(--vp-c-text-2);
-
-  &--left {
-    border-right: 0;
-    border-radius: 8px 0 0 8px;
-  }
-
-  &--right {
-    border-left: 0;
-    border-radius: 0 8px 8px 0;
-  }
-
-  svg {
-    width: 1em;
-    height: 1em;
-  }
-}
-
-.input__spinner {
-  position: absolute;
-  right: 1rem;
-  color: var(--vp-c-brand);
-  animation: spin 1s linear infinite;
-}
-
-.input__helper-text {
-  color: var(--vp-c-text-2);
-  font-size: 0.875em;
-}
-
-.input__error {
-  color: var(--vp-c-danger);
-  font-size: 0.875em;
-}
-
-.input__success {
-  color: var(--vp-c-success);
-  font-size: 0.875em;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-// Dark mode adjustments
-.dark {
-  .input__field {
-    background: color.adjust(colors.$purple-dark, $lightness: 5%);
-
-    &:disabled {
-      background: color.adjust(colors.$purple-dark, $lightness: -3%);
-    }
-  }
-
-  .input__addon {
-    background: color.adjust(colors.$purple-dark, $lightness: -3%);
-  }
 }
 ```
 
-:::
+### Advanced Usage
 
-### Password Input
-
-A specialized input component for password fields with show/hide functionality:
-
-::: code-with-tooltips
+Examples of more complex implementations:
 
 ```tsx
-import { useState } from 'react';
-import { EyeIcon, EyeOffIcon } from './icons';
+function AdvancedInputExample() {
+  const [value, setValue] = React.useState('');
+  const [isValid, setIsValid] = React.useState(true);
 
-export const PasswordInput = forwardRef<HTMLInputElement, Omit<InputProps, 'type'>>((props, ref) => {
-  const [showPassword, setShowPassword] = useState(false);
-
-  const togglePassword = () => {
-    setShowPassword(prev => !prev);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setValue(newValue);
+    setIsValid(validateInput(newValue));
   };
 
   return (
     <Input
-      {...props}
-      ref={ref}
-      type={showPassword ? 'text' : 'password'}
-      rightAddon={
-        <button
-          type="button"
-          onClick={togglePassword}
-          className="password-toggle"
-          aria-label={showPassword ? 'Hide password' : 'Show password'}
-        >
-          {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-        </button>
-      }
+      type="email"
+      label="Email Address"
+      value={value}
+      onChange={handleChange}
+      error={!isValid}
+      errorMessage="Please enter a valid email address"
+      prefix={<EmailIcon />}
+      clearable
+      required
     />
   );
-});
-
-PasswordInput.displayName = 'PasswordInput';
-```
-
-:::
-
-::: code-with-tooltips
-
-```scss
-.password-toggle {
-  background: none;
-  border: none;
-  padding: 0.5rem;
-  cursor: pointer;
-  color: var(--vp-c-text-2);
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: var(--vp-c-text-1);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--vp-c-brand);
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
 }
 ```
 
-:::
+## Props
 
-## Usage Examples
+A comprehensive list of available props:
 
-### Basic Input
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| type | `'text' \| 'password' \| 'email' \| 'number' \| 'tel' \| 'url' \| 'search'` | `'text'` | Input type |
+| value | `string \| number` | - | Input value |
+| onChange | `(event: React.ChangeEvent<HTMLInputElement>) => void` | - | Change handler |
+| prefix | `React.ReactNode` | - | Element to show before input |
+| suffix | `React.ReactNode` | - | Element to show after input |
+| clearable | `boolean` | `false` | Whether to show clear button |
+| error | `boolean` | `false` | Error state |
+| errorMessage | `string` | - | Error message text |
+| label | `string` | - | Input label |
+| required | `boolean` | `false` | Whether field is required |
 
-::: code-with-tooltips
+## Accessibility
 
-```tsx
-<Input
-  label="Username"
-  placeholder="Enter your username"
-  helperText="Choose a unique username"
-/>
-```
+Ensuring the Input component is accessible to all users.
 
-:::
+### Keyboard Navigation
 
-### Required Input with Validation
+How users can interact with the input using a keyboard:
 
-::: code-with-tooltips
+- Tab to focus the input
+- Enter/Space to trigger clear button
+- Escape to clear input value
+- Arrow keys for number inputs
 
-```tsx
-<Input
-  label="Email"
-  type="email"
-  required
-  placeholder="Enter your email"
-  error="Please enter a valid email address"
-/>
-```
+### Screen Readers
 
-:::
+How the component communicates with assistive technologies:
 
-### Input with Icons
+- Proper input labeling
+- Error state announcements
+- Required field indication
+- Clear button description
 
-::: code-with-tooltips
+### Best Practices
 
-```tsx
-<Input
-  label="Search"
-  placeholder="Search..."
-  leftAddon={<SearchIcon />}
-  rightAddon={<XIcon />}
-/>
-```
+Guidelines for maintaining accessibility:
 
-:::
+- Always provide visible labels
+- Use proper error messaging
+- Maintain sufficient color contrast
+- Support keyboard interactions
 
-### Input Sizes
+## Testing
 
-::: code-with-tooltips
+A comprehensive testing strategy to ensure reliability.
 
-```tsx
-<div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-  <Input size="sm" placeholder="Small input" />
-  <Input size="md" placeholder="Medium input" />
-  <Input size="lg" placeholder="Large input" />
-</div>
-```
+### Unit Tests
 
-:::
-
-### Input States
-
-::: code-with-tooltips
+Testing individual input functionality:
 
 ```tsx
-<div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-  <Input
-    label="Success"
-    value="Valid input"
-    success="Input is valid"
-  />
-  <Input
-    label="Error"
-    value="Invalid input"
-    error="Please correct this field"
-  />
-  <Input
-    label="Disabled"
-    value="Disabled input"
-    disabled
-  />
-  <Input
-    label="Loading"
-    value="Loading..."
-    isLoading
-  />
-</div>
-```
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Input } from './Input';
+import '@testing-library/jest-dom';
 
-:::
-
-### Password Input
-
-::: code-with-tooltips
-
-```tsx
-<PasswordInput
-  label="Password"
-  placeholder="Enter your password"
-  helperText="Must be at least 8 characters"
-/>
-```
-
-:::
-
-## Form Integration Example
-
-::: code-with-tooltips
-
-```tsx
-const LoginForm = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+describe('Input', () => {
+  it('renders correctly', () => {
+    render(<Input label="Test Input" />);
+    expect(screen.getByLabelText('Test Input')).toBeInTheDocument();
   });
-  const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Validation logic here
-  };
+  it('handles user input', async () => {
+    const handleChange = jest.fn();
+    render(<Input label="Test" onChange={handleChange} />);
+    
+    const input = screen.getByLabelText('Test');
+    await userEvent.type(input, 'Hello');
+    expect(handleChange).toHaveBeenCalledTimes(5);
+  });
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <Input
+  it('shows error state', () => {
+    render(
+      <Input 
+        label="Test" 
+        error 
+        errorMessage="Invalid input" 
+      />
+    );
+    expect(screen.getByText('Invalid input')).toBeInTheDocument();
+  });
+});
+```
+
+### Integration Tests
+
+Testing input behavior with form validation:
+
+```tsx
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Form, Input } from './components';
+import '@testing-library/jest-dom';
+
+describe('Input Integration', () => {
+  it('works with form validation', async () => {
+    render(
+      <Form onSubmit={jest.fn()}>
+        <Input 
           label="Email"
           type="email"
           required
-          value={formData.email}
-          onChange={(e) => setFormData(prev => ({
-            ...prev,
-            email: e.target.value
-          }))}
-          error={errors.email}
         />
-
-        <PasswordInput
-          label="Password"
-          required
-          value={formData.password}
-          onChange={(e) => setFormData(prev => ({
-            ...prev,
-            password: e.target.value
-          }))}
-          error={errors.password}
-        />
-
-        <Button type="submit" isFullWidth>
-          Sign In
-        </Button>
-      </div>
-    </form>
-  );
-};
+      </Form>
+    );
+    
+    const input = screen.getByLabelText('Email');
+    await userEvent.type(input, 'invalid-email');
+    await userEvent.tab();
+    
+    expect(screen.getByText('Please enter a valid email')).toBeInTheDocument();
+  });
+});
 ```
 
-:::
+### E2E Tests
 
-## Best Practices
+Testing input behavior in a real browser environment:
 
-### 1. Accessibility
+```typescript
+import { test, expect } from '@playwright/test';
 
-- Use proper ARIA attributes
-- Provide clear error messages
-- Support keyboard navigation
-- Maintain visible focus states
-- Use semantic HTML elements
+test.describe('Input', () => {
+  test('handles user input and validation', async ({ page }) => {
+    await page.goto('/input-demo');
+    
+    // Test basic input
+    const input = page.getByLabel('Email');
+    await input.fill('test@example.com');
+    await expect(input).toHaveValue('test@example.com');
+    
+    // Test validation
+    await input.fill('invalid-email');
+    await input.blur();
+    await expect(page.getByText('Please enter a valid email')).toBeVisible();
+    
+    // Test clear button
+    await page.getByRole('button', { name: 'Clear' }).click();
+    await expect(input).toHaveValue('');
+  });
 
-### 2. Validation
-
-- Implement client-side validation
-- Show clear error messages
-- Provide real-time feedback
-- Handle different input types
-- Support custom validation
-
-### 3. User Experience
-
-- Show password strength
-- Provide clear feedback
-- Handle loading states
-- Support autocomplete
-- Implement proper masking
-
-### 4. Performance
-
-- Debounce input events
-- Optimize re-renders
-- Lazy load components
-- Handle large forms efficiently
-- Cache validation results
-
-### 5. Security
-
-- Sanitize input data
-- Prevent XSS attacks
-- Handle sensitive data
-- Implement rate limiting
-- Use proper encryption
-
-## Composition
-
-The Input components are designed to be composed with other form controls:
-
-::: code-with-tooltips
-
-```tsx
-const FormField = ({
-  label,
-  error,
-  required,
-  children
-}: {
-  label: string;
-  error?: string;
-  required?: boolean;
-  children: ReactNode;
-}) => (
-  <div className="form-field">
-    <label className="form-field__label">
-      {label}
-      {required && <span className="form-field__required">*</span>}
-    </label>
-    {children}
-    {error && (
-      <span className="form-field__error">{error}</span>
-    )}
-  </div>
-);
-
-// Usage
-<FormField label="Email" required error="Invalid email">
-  <Input type="email" />
-</FormField>
+  test('supports keyboard navigation', async ({ page }) => {
+    await page.goto('/input-demo');
+    
+    await page.keyboard.press('Tab');
+    await expect(page.getByLabel('Email')).toBeFocused();
+    
+    await page.keyboard.type('test');
+    await page.keyboard.press('Escape');
+    await expect(page.getByLabel('Email')).toHaveValue('');
+  });
+});
 ```
 
-:::
+## Design Guidelines
+
+Best practices for implementing the Input component.
+
+### Visual Design
+
+Core visual principles:
+
+- Consistent height and padding
+- Clear focus states
+- Visible placeholder text
+- Error state styling
+- Prefix/suffix alignment
+
+### Layout Considerations
+
+How to handle different layout scenarios:
+
+- Full-width vs. fixed-width inputs
+- Input groups and alignment
+- Label placement options
+- Error message positioning
+
+## Performance Considerations
+
+Guidelines for optimal input performance:
+
+- Debounce change handlers for search inputs
+- Optimize validation timing
+- Handle large datasets efficiently
+- Clean up event listeners
+
+## Related Components
+
+Components commonly used with Input:
+
+- [FormField](/react-component-patterns/form/form-field.md) - Wrapper for form inputs
+- [FormLabel](/react-component-patterns/form/form-label.md) - Label component
+- [FormHelperText](/react-component-patterns/form/form-helper-text.md) - Helper text
+- [Textarea](/react-component-patterns/form/textarea.md) - Multi-line input
+
+## Resources
+
+Additional documentation and references:
+
+- [Form Design Guidelines](#)
+- [Accessibility Best Practices](#)
+- [Input Validation Patterns](#)

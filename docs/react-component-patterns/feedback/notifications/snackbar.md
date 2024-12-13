@@ -32,6 +32,7 @@ The Snackbar component displays brief feedback messages at the bottom of the scr
 ### Props Interface
 
 ::: code-with-tooltips
+
 ```tsx
 import { ReactNode } from 'react';
 
@@ -57,6 +58,7 @@ export interface SnackbarProps {
   className?: string;
 }
 ```
+
 :::
 
 ### Props Table
@@ -75,6 +77,7 @@ export interface SnackbarProps {
 ## Usage
 
 ::: code-with-tooltips
+
 ```tsx
 import { useState } from 'react';
 import { Snackbar, Button } from '@underwood/components';
@@ -97,6 +100,7 @@ export const SnackbarExample = () => {
   );
 };
 ```
+
 :::
 
 ## Examples
@@ -104,6 +108,7 @@ export const SnackbarExample = () => {
 ### Basic Snackbar
 
 ::: code-with-tooltips
+
 ```tsx
 import { Snackbar } from '@underwood/components';
 
@@ -115,11 +120,13 @@ export const BasicSnackbarExample = () => (
   />
 );
 ```
+
 :::
 
 ### With Action Button
 
 ::: code-with-tooltips
+
 ```tsx
 import { Snackbar, Button } from '@underwood/components';
 
@@ -135,11 +142,13 @@ export const ActionSnackbarExample = () => (
   />
 );
 ```
+
 :::
 
 ### With Custom Position
 
 ::: code-with-tooltips
+
 ```tsx
 import { Snackbar } from '@underwood/components';
 
@@ -154,6 +163,7 @@ export const PositionedSnackbarExample = () => (
   />
 );
 ```
+
 :::
 
 ## Best Practices
@@ -236,7 +246,7 @@ export const PositionedSnackbarExample = () => (
 
 ## Related Components
 
-- [Toast](./toast.md) - For temporary, auto-dismissing notifications
-- [Alert](./alert.md) - For persistent important messages
-- [Banner](./banner.md) - For system-wide announcements
-- [Dialog](../modals/dialog.md) - For important messages requiring user action
+- [Toast](/react-component-patterns/feedback/notifications/toast.md) - For temporary notifications
+- [Alert](/react-component-patterns/feedback/notifications/alert.md) - For persistent important messages
+- [Banner](/react-component-patterns/feedback/notifications/banner.md) - For system-wide announcements
+- [Dialog](/react-component-patterns/overlay/modals/dialog.md) - For important messages requiring user action

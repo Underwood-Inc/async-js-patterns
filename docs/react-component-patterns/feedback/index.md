@@ -34,6 +34,9 @@ Feedback components provide visual cues and information to users about system st
 - [Spinner](./progress-indicators/spinner.md) - Loading spinners for async operations
 - [Skeleton](./progress-indicators/skeleton.md) - Placeholder loading states
 - [LoadingBar](./progress-indicators/loading-bar.md) - Page-level loading indicators
+- [CircularProgress](./progress-indicators/circular-progress.md) - Circular progress indicator
+- [Shimmer](./progress-indicators/shimmer.md) - Loading state animation
+- [TopProgressBar](./progress-indicators/top-progress-bar.md) - Page-level progress indicator
 
 ### Status Indicators
 
@@ -47,54 +50,41 @@ Feedback components provide visual cues and information to users about system st
 ### Component Selection Guide
 
 #### Notifications
-- Use **Alerts** for important messages requiring immediate attention
-- Use **Toasts** for temporary, auto-dismissing success/error notifications
-- Use **Snackbars** for brief, action-oriented feedback
-- Use **Banners** for persistent, system-wide announcements
+- Use **Alert** for important messages requiring immediate attention
+- Use **Toast** for temporary, auto-dismissing success/error notifications
+- Use **Snackbar** for brief, action-oriented feedback
+- Use **Banner** for persistent, system-wide announcements
 
 #### Progress Indicators
-- Use **Progress** bars for operations with known completion status
-- Use **Spinners** for indeterminate loading states
-- Use **Skeletons** for content placeholder loading states
-- Use **LoadingBar** for page-level navigation feedback
+- Use **Progress** for determinate progress tracking
+- Use **Spinner** for indeterminate loading states
+- Use **Skeleton** for content placeholders
+- Use **LoadingBar** for page-level loading
+- Use **CircularProgress** for compact progress indicators
+- Use **Shimmer** for content loading animations
+- Use **TopProgressBar** for navigation progress
 
 #### Status Indicators
-- Use **Status** for simple state representation (online/offline)
-- Use **Result** for operation outcome displays
-- Use **Empty** for zero-state scenarios
-- Use **Error** for detailed error state handling
+- Use **Status** for simple state representation
+- Use **Result** for operation outcomes
+- Use **Empty** for no-content states
+- Use **Error** for error states
 
-### Best Practices
+### Visual Design
 
-#### Timing & Duration
-
-1. **Response Time**
-   - Show immediate feedback for user actions
-   - Use appropriate animation durations
-   - Consider perceived performance
-   - Handle loading states gracefully
-
-2. **Display Duration**
-   - Set appropriate timeouts for temporary messages
-   - Allow manual dismissal when needed
-   - Consider reading time for longer messages
-   - Handle stacked notifications properly
-
-#### Visual Design
-
-1. **Consistency**
-   - Use consistent colors for similar states
-   - Maintain uniform spacing and sizing
-   - Follow design system guidelines
-   - Ensure visual hierarchy
+1. **Color Usage**
+   - Use semantic colors
+   - Maintain consistency
+   - Consider accessibility
+   - Support themes
 
 2. **State Representation**
-   - Use appropriate icons for different states
-   - Maintain clear visual distinctions
+   - Use appropriate icons
+   - Clear visual distinctions
    - Consider color-blind users
    - Support dark/light themes
 
-#### Interaction Design
+### Interaction Design
 
 1. **User Control**
    - Allow dismissal of notifications
@@ -136,21 +126,20 @@ Feedback components provide visual cues and information to users about system st
    - Handle multiple instances
    - Optimize re-renders
 
-2. **Resource Management**
-   - Clean up timers and listeners
-   - Handle component unmounting
-   - Manage memory usage
-   - Consider bundle size
+2. **State Management**
+   - Batch updates
+   - Clean up timers
+   - Handle unmounting
+   - Manage queues
 
-3. **Animation Performance**
-   - Use CSS transitions when possible
-   - Optimize JavaScript animations
-   - Consider reduced motion
-   - Handle mobile performance
+3. **Resource Usage**
+   - Minimize DOM updates
+   - Optimize animations
+   - Clean up listeners
+   - Handle memory leaks
 
 ## Related Sections
 
-- [Overlay](../overlay/index.md) - Modal and popup components
-- [Data](../data/index.md) - Data display components
 - [Form](../form/index.md) - Form components
-- [Layout](../layout/index.md) - Layout components 
+- [Data](../data/index.md) - Data display components
+- [Overlay](../overlay/index.md) - Overlay components 

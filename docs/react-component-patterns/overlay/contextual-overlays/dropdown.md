@@ -256,6 +256,7 @@ export const GroupedDropdownExample = () => {
 
 ## Related Components
 
-- [Select](../form/select.md) - For form select inputs
-- [Combobox](../form/combobox.md) - For searchable selections
-- [ContextMenu](./context-menu.md) - For context menus
+- [Select](/react-component-patterns/form/select.md) - For simple selection
+- [Combobox](/react-component-patterns/form/combobox.md) - For searchable selection
+- [Menu](/react-component-patterns/navigation/menu.md) - For navigation menus
+- [Popover](/react-component-patterns/overlay/contextual-overlays/popover.md) - For custom content

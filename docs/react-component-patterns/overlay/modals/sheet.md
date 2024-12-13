@@ -198,4 +198,4 @@ function SheetExample() {
 
 - [Modal](./modal.md) - For standard modal dialogs
 - [Dialog](./dialog.md) - For simple dialogs
-- [Drawer](../drawers/drawer.md) - For slide-out panels 
+- [Drawer](../drawer/drawer.md) - For slide-out panels 

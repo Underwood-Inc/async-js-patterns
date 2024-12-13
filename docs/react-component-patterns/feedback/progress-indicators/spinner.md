@@ -141,17 +141,38 @@ export const CustomSpinnerExample = () => (
 ::: code-with-tooltips
 ```tsx
 import { Spinner } from '@underwood/components';
+import { useState, useEffect } from 'react';
 
-export const WrappedSpinnerExample = () => (
-  <div style={{ position: 'relative', minHeight: '200px' }}>
-    <Spinner
-      overlay
-      label="Loading content..."
-      variant="pulse"
-    />
-    {content}
-  </div>
-);
+export const WrappedSpinnerExample = () => {
+  const [loading, setLoading] = useState(true);
+  const [content, setContent] = useState<string>('');
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        // Simulated content loading
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        setContent('Content loaded successfully!');
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadContent();
+  }, []);
+
+  return (
+    <div style={{ position: 'relative', minHeight: '200px' }}>
+      {loading && (
+        <Spinner
+          overlay
+          label="Loading content..."
+          variant="pulse"
+        />
+      )}
+      {content && <div>{content}</div>}
+    </div>
+  );
+};
 ```
 :::
 
@@ -213,7 +234,7 @@ export const WrappedSpinnerExample = () => (
 
 ## Related Components
 
-- [Progress](./progress.md) - For showing determinate progress
-- [LoadingBar](./loading-bar.md) - For page-level loading indicators
-- [Skeleton](./skeleton.md) - For content loading placeholders
-- [CircularProgress](./circular-progress.md) - For circular progress indicators
+- [Progress](/react-component-patterns/feedback/progress-indicators/progress.md) - For showing determinate progress
+- [LoadingBar](/react-component-patterns/feedback/progress-indicators/loading-bar.md) - For page-level loading indicators
+- [Skeleton](/react-component-patterns/feedback/progress-indicators/skeleton.md) - For content loading placeholders
+- [CircularProgress](/react-component-patterns/feedback/progress-indicators/circular-progress.md) - For circular progress indicators

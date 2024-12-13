@@ -265,7 +265,7 @@ export const AutoFitGridExample = () => {
 
 ## Related Components
 
-- [Card](./card.md) - Card component
-- [CardList](./card-list.md) - List layout
-- [Grid](../layout/grid.md) - Base grid
-- [VirtualGrid](./virtual-grid.md) - For large grids
+- [Grid](/react-component-patterns/layout/grid.md) - Base grid layout system
+- [VirtualGrid](/react-component-patterns/data/lists-and-cards/virtual-grid.md) - For large datasets
+- [Card](/react-component-patterns/data/lists-and-cards/card.md) - Individual card component
+- [List](/react-component-patterns/data/lists-and-cards/list.md) - List layout component

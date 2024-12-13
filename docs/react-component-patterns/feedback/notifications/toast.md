@@ -33,6 +33,7 @@ The Toast component displays brief, temporary notifications that automatically d
 ### Props Interface
 
 ::: code-with-tooltips
+
 ```tsx
 import { ReactNode } from 'react';
 
@@ -69,6 +70,7 @@ export interface ToastContextValue {
   closeAll: () => void;
 }
 ```
+
 :::
 
 ### Props Table
@@ -88,6 +90,7 @@ export interface ToastContextValue {
 ## Usage
 
 ::: code-with-tooltips
+
 ```tsx
 import { useState } from 'react';
 import { useToast, Button } from '@underwood/components';
@@ -115,6 +118,7 @@ export const ToastExample = () => {
   );
 };
 ```
+
 :::
 
 ## Examples
@@ -122,6 +126,7 @@ export const ToastExample = () => {
 ### Basic Success Toast
 
 ::: code-with-tooltips
+
 ```tsx
 import { useToast } from '@underwood/components';
 
@@ -138,11 +143,13 @@ export const BasicToastExample = () => {
   return <Button onClick={showSuccessToast}>Upload File</Button>;
 };
 ```
+
 :::
 
 ### Toast with Action
 
 ::: code-with-tooltips
+
 ```tsx
 import { useToast, Button } from '@underwood/components';
 
@@ -164,11 +171,13 @@ export const ActionToastExample = () => {
   return <Button onClick={showActionToast}>Archive Message</Button>;
 };
 ```
+
 :::
 
 ### Custom Positioned Toast
 
 ::: code-with-tooltips
+
 ```tsx
 import { useToast, Button } from '@underwood/components';
 
@@ -189,6 +198,7 @@ export const PositionedToastExample = () => {
   return <Button onClick={showErrorToast}>Test Connection</Button>;
 };
 ```
+
 :::
 
 ## Best Practices
@@ -274,4 +284,4 @@ export const PositionedToastExample = () => {
 - [Alert](./alert.md) - For persistent important messages
 - [Snackbar](./snackbar.md) - For action-oriented feedback
 - [Banner](./banner.md) - For system-wide announcements
-- [Dialog](../modals/dialog.md) - For important messages requiring user action
+- [Dialog](../../overlay/modals/dialog.md) - For important messages requiring user action

@@ -33,6 +33,7 @@ The Tooltip component displays brief, informative text when users hover over or 
 ### Props Interface
 
 ::: code-with-tooltips
+
 ```tsx
 import { ReactNode, CSSProperties } from 'react';
 
@@ -57,6 +58,7 @@ export interface TooltipProps {
   disabled?: boolean;
 }
 ```
+
 :::
 
 ### Props Table
@@ -76,6 +78,7 @@ export interface TooltipProps {
 ## Usage
 
 ::: code-with-tooltips
+
 ```tsx
 import { Tooltip, Button } from '@underwood/components';
 
@@ -87,6 +90,7 @@ export const TooltipExample = () => (
   </Tooltip>
 );
 ```
+
 :::
 
 ## Examples
@@ -94,6 +98,7 @@ export const TooltipExample = () => (
 ### Basic Tooltip
 
 ::: code-with-tooltips
+
 ```tsx
 import { Tooltip, IconButton } from '@underwood/components';
 
@@ -105,11 +110,13 @@ export const BasicTooltipExample = () => (
   </Tooltip>
 );
 ```
+
 :::
 
 ### Custom Placement
 
 ::: code-with-tooltips
+
 ```tsx
 import { Tooltip, Button } from '@underwood/components';
 
@@ -124,11 +131,13 @@ export const PlacementTooltipExample = () => (
   </Tooltip>
 );
 ```
+
 :::
 
 ### With Custom Delays
 
 ::: code-with-tooltips
+
 ```tsx
 import { Tooltip, Link } from '@underwood/components';
 
@@ -148,6 +157,7 @@ export const DelayedTooltipExample = () => (
   </Tooltip>
 );
 ```
+
 :::
 
 ## Best Practices
@@ -211,4 +221,3 @@ export const DelayedTooltipExample = () => (
 - [Popover](./popover.md) - For more complex overlays
 - [ContextMenu](./context-menu.md) - For right-click menus
 - [Dropdown](./dropdown.md) - For selection menus
-</code_block_to_apply_changes_from> 

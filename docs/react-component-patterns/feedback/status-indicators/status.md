@@ -240,4 +240,4 @@ export const InteractiveStatusExample = () => {
 - [Result](./result.md) - For displaying operation outcomes
 - [Empty](./empty.md) - For showing empty state messages
 - [Error](./error.md) - For error state displays
-- [Badge](../data/badge.md) - For status counts and indicators
+- [Badge](../../data/status-and-metadata/badge.md) - For status counts and indicators

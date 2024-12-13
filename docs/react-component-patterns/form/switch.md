@@ -1,576 +1,308 @@
 ---
-title: Switch Components
-description: Toggle switch components for React applications with smooth animations and customizable styles
+title: Switch Component
+description: Toggle switch component for binary state selection with animated transitions
+category: Components
+subcategory: Form
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
-  - React
-  - Form Controls
+  - Form
+  - Input
   - Switch
-  - Design System
-  - Accessibility
+  - Toggle
+  - React
 ---
 
-# Switch Components
+# Switch Component
 
 ## Overview
 
-Our switch components provide an intuitive way to toggle between two states. They feature smooth animations, accessible controls, and customizable styles.
+The Switch component provides a toggle switch control for binary settings. It is ideal for enabling/disabling features or toggling between two states, offering a more visual alternative to checkboxes. The component includes smooth animations and clear visual feedback.
 
-## Components
+## Key Features
 
-### Switch
+A comprehensive set of features for toggle switch interactions:
 
-The base switch component with toggle functionality:
+- Animated state transitions
+- Custom label placement
+- Custom icons support
+- Size variants
+- Color variants
+- Loading states
+- Disabled states
+- Form integration
 
-::: code-with-tooltips
+## Usage Guidelines
+
+This section demonstrates how to implement the Switch component, from basic usage to advanced scenarios.
+
+### Basic Usage
+
+The simplest implementation of the Switch component:
 
 ```tsx
-import React from 'react';
-import clsx from 'clsx';
+import * as React from 'react';
+import { Switch } from '@/components/form';
 
-interface SwitchProps {
-  /** Switch label */
-  label: string;
-  /** Whether the switch is checked */
-  checked?: boolean;
-  /** Change handler */
-  onChange?: (checked: boolean) => void;
-  /** Whether the switch is disabled */
-  disabled?: boolean;
-  /** Description text */
-  description?: string;
-  /** Size variant */
-  size?: 'sm' | 'md' | 'lg';
-  /** Color variant */
-  color?: 'brand' | 'success' | 'warning' | 'error';
-  /** Name for the input */
-  name?: string;
-  /** Value for the input */
-  value?: string;
-  /** Additional CSS classes */
-  className?: string;
+function BasicSwitchExample() {
+  return (
+    <Switch
+      label="Enable notifications"
+      onChange={(checked) => console.log('Notifications:', checked)}
+    />
+  );
 }
+```
 
-export const Switch = ({
-  label,
-  checked = false,
-  onChange,
-  disabled = false,
-  description,
-  size = 'md',
-  color = 'brand',
-  name,
-  value,
-  className,
-  ...props
-}: SwitchProps) => {
-  const id = React.useId();
-  const descriptionId = description ? `${id}-description` : undefined;
+### Advanced Usage
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === ' ' || event.key === 'Enter') {
-      event.preventDefault();
-      onChange?.(!checked);
+Examples of more complex implementations:
+
+```tsx
+function AdvancedSwitchExample() {
+  const [enabled, setEnabled] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+
+  const handleChange = async (checked: boolean) => {
+    setLoading(true);
+    try {
+      await updateFeatureFlag('darkMode', checked);
+      setEnabled(checked);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div
-      className={clsx(
-        'switch',
-        `switch--${size}`,
-        `switch--${color}`,
-        checked && 'switch--checked',
-        disabled && 'switch--disabled',
-        className
-      )}
-    >
-      <input
-        id={id}
-        type="checkbox"
-        role="switch"
-        name={name}
-        value={value}
-        checked={checked}
-        disabled={disabled}
-        onChange={(e) => onChange?.(e.target.checked)}
-        className="switch__input"
-        aria-checked={checked}
-        aria-describedby={descriptionId}
-        aria-disabled={disabled}
-        onKeyDown={handleKeyDown}
-        {...props}
-      />
-
-      <label
-        htmlFor={id}
-        className="switch__label"
-      >
-        <span className="switch__text">{label}</span>
-        <div className="switch__control" aria-hidden="true">
-          <div className="switch__track" />
-          <div className="switch__thumb" />
+    <Switch
+      label={
+        <div className="switch-label">
+          <span>Dark Mode</span>
+          <small>{enabled ? 'On' : 'Off'}</small>
         </div>
-      </label>
-
-      {description && (
-        <div
-          id={descriptionId}
-          className="switch__description"
-        >
-          {description}
-        </div>
-      )}
-    </div>
+      }
+      checked={enabled}
+      loading={loading}
+      onChange={handleChange}
+      size="large"
+      color="primary"
+      icons={{
+        checked: <SunIcon />,
+        unchecked: <MoonIcon />
+      }}
+    />
   );
-};
-```
-
-:::
-
-::: code-with-tooltips
-
-```scss
-.switch {
-  display: inline-flex;
-  align-items: flex-start;
-  gap: var(--spacing-3);
-  cursor: pointer;
-  padding: var(--spacing-2);
-  border-radius: 8px;
-  transition: background-color 0.2s ease;
-
-  &:hover:not(&--disabled) {
-    background-color: var(--vp-c-bg-soft);
-
-    .switch__track {
-      background-color: color.adjust(colors.$purple-brand, $alpha: -0.8);
-    }
-  }
-
-  // Input
-  &__input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-
-    &:focus-visible + .switch__control {
-      box-shadow: 0 0 0 2px color.adjust(colors.$purple-brand, $alpha: -0.8);
-    }
-  }
-
-  // Control
-  &__control {
-    position: relative;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  &__track {
-    width: 36px;
-    height: 20px;
-    background-color: var(--vp-c-divider);
-    border-radius: 10px;
-    transition: all 0.2s ease;
-  }
-
-  &__thumb {
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 16px;
-    height: 16px;
-    background-color: white;
-    border-radius: 50%;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
-  }
-
-  // Content
-  &__content {
-    flex: 1;
-  }
-
-  &__label {
-    color: var(--vp-c-text-1);
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  &__description {
-    color: var(--vp-c-text-2);
-    font-size: 0.875rem;
-    margin-top: var(--spacing-1);
-  }
-
-  // States
-  &--checked {
-    .switch__track {
-      background-color: var(--vp-c-brand);
-    }
-
-    .switch__thumb {
-      transform: translateX(16px);
-    }
-  }
-
-  &--disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-
-    .switch__track {
-      background-color: var(--vp-c-divider);
-    }
-  }
-
-  // Sizes
-  &--sm {
-    .switch__track {
-      width: 28px;
-      height: 16px;
-    }
-
-    .switch__thumb {
-      width: 12px;
-      height: 12px;
-    }
-
-    &.switch--checked .switch__thumb {
-      transform: translateX(12px);
-    }
-  }
-
-  &--lg {
-    .switch__track {
-      width: 48px;
-      height: 24px;
-    }
-
-    .switch__thumb {
-      width: 20px;
-      height: 20px;
-    }
-
-    &.switch--checked .switch__thumb {
-      transform: translateX(24px);
-    }
-  }
-
-  // Colors
-  &--success {
-    &.switch--checked .switch__track {
-      background-color: var(--color-success);
-    }
-
-    &:hover:not(&--disabled) .switch__track {
-      background-color: color.adjust(colors.$success, $alpha: -0.8);
-    }
-  }
-
-  &--warning {
-    &.switch--checked .switch__track {
-      background-color: var(--color-warning);
-    }
-
-    &:hover:not(&--disabled) .switch__track {
-      background-color: color.adjust(colors.$warning, $alpha: -0.8);
-    }
-  }
-
-  &--error {
-    &.switch--checked .switch__track {
-      background-color: var(--color-error);
-    }
-
-    &:hover:not(&--disabled) .switch__track {
-      background-color: color.adjust(colors.$error, $alpha: -0.8);
-    }
-  }
 }
 ```
 
-:::
+## Props
 
-## Usage Examples
+A comprehensive list of available props:
 
-### Basic Switch
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| checked | `boolean` | `false` | Switch state |
+| onChange | `(checked: boolean) => void` | - | Change handler |
+| label | `ReactNode` | - | Switch label |
+| loading | `boolean` | `false` | Loading state |
+| disabled | `boolean` | `false` | Disabled state |
+| size | `'small' \| 'medium' \| 'large'` | `'medium'` | Switch size |
+| color | `'primary' \| 'secondary' \| string` | `'primary'` | Switch color |
+| icons | `{ checked?: ReactNode, unchecked?: ReactNode }` | - | Custom icons |
+| labelPlacement | `'start' \| 'end' \| 'top' \| 'bottom'` | `'end'` | Label position |
 
-::: code-with-tooltips
+## Accessibility
 
-```tsx
-const [enabled, setEnabled] = React.useState(false);
+Ensuring the Switch component is accessible to all users.
 
-return (
-  <Switch
-    label="Notifications"
-    checked={enabled}
-    onChange={setEnabled}
-  />
-);
-```
+### Keyboard Navigation
 
-:::
+How users can interact with the switch using a keyboard:
 
-### With Description
+- Space/Enter to toggle
+- Tab to focus
+- Arrow keys for groups
+- Escape to blur
 
-::: code-with-tooltips
+### Screen Readers
 
-```tsx
-<Switch
-  label="Airplane mode"
-  description="Disable all wireless connections"
-/>
-```
+How the component communicates with assistive technologies:
 
-:::
+- State announcements
+- Label association
+- Loading indication
+- Error messages
 
-### Different Sizes
+### Best Practices
 
-::: code-with-tooltips
+Guidelines for maintaining accessibility:
 
-```tsx
-<div className="flex flex-col gap-4">
-  <Switch
-    size="sm"
-    label="Small switch"
-  />
-  <Switch
-    size="md"
-    label="Medium switch"
-  />
-  <Switch
-    size="lg"
-    label="Large switch"
-  />
-</div>
-```
+- Clear labeling
+- Proper ARIA roles
+- Focus management
+- Loading states
 
-:::
+## Testing
 
-### Color Variants
+A comprehensive testing strategy to ensure reliability.
 
-::: code-with-tooltips
+### Unit Tests
+
+Testing individual switch functionality:
 
 ```tsx
-<div className="flex flex-col gap-4">
-  <Switch
-    color="brand"
-    label="Brand color"
-    checked
-  />
-  <Switch
-    color="success"
-    label="Success color"
-    checked
-  />
-  <Switch
-    color="warning"
-    label="Warning color"
-    checked
-  />
-  <Switch
-    color="error"
-    label="Error color"
-    checked
-  />
-</div>
-```
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Switch } from './Switch';
+import '@testing-library/jest-dom';
 
-:::
-
-### Disabled State
-
-::: code-with-tooltips
-
-```tsx
-<div className="flex flex-col gap-4">
-  <Switch
-    label="Disabled unchecked"
-    disabled
-  />
-  <Switch
-    label="Disabled checked"
-    checked
-    disabled
-  />
-</div>
-```
-
-:::
-
-## Best Practices
-
-### 1. Accessibility
-
-- Use proper ARIA attributes
-- Support keyboard navigation
-- Maintain focus states
-- Provide clear labels
-- Handle screen readers
-
-### 2. UX Guidelines
-
-- Clear visual feedback
-- Smooth animations
-- Instant response
-- Logical grouping
-- Error handling
-
-### 3. Performance
-
-- Optimize animations
-- Minimize re-renders
-- Use efficient selectors
-- Cache calculations
-- Handle transitions
-
-### 4. Implementation
-
-Example of using switches in forms:
-
-::: code-with-tooltips
-
-```tsx
-// Settings form example
-const SettingsForm = () => {
-  const [settings, setSettings] = React.useState({
-    notifications: true,
-    marketing: false,
-    darkMode: false,
-    autoUpdate: true,
+describe('Switch', () => {
+  it('renders correctly', () => {
+    render(<Switch label="Test Switch" />);
+    expect(screen.getByLabelText('Test Switch')).toBeInTheDocument();
   });
 
-  const handleChange = (key: keyof typeof settings) => (checked: boolean) => {
-    setSettings(prev => ({
-      ...prev,
-      [key]: checked,
+  it('handles toggle', async () => {
+    const handleChange = jest.fn();
+    render(
+      <Switch 
+        label="Test" 
+        onChange={handleChange}
+      />
+    );
+    
+    const switchElement = screen.getByLabelText('Test');
+    await userEvent.click(switchElement);
+    expect(handleChange).toHaveBeenCalledWith(true);
+  });
+
+  it('supports keyboard interaction', async () => {
+    render(<Switch label="Test" />);
+    
+    const switchElement = screen.getByLabelText('Test');
+    switchElement.focus();
+    await userEvent.keyboard('[Space]');
+    expect(switchElement).toBeChecked();
+  });
+});
+```
+
+### Integration Tests
+
+Testing switch behavior in forms:
+
+```tsx
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Form, Switch } from './components';
+import '@testing-library/jest-dom';
+
+describe('Switch Integration', () => {
+  it('works with form submission', async () => {
+    const handleSubmit = jest.fn();
+    render(
+      <Form onSubmit={handleSubmit}>
+        <Switch 
+          label="Accept Terms"
+          name="terms"
+        />
+      </Form>
+    );
+    
+    await userEvent.click(screen.getByLabelText('Accept Terms'));
+    await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+    expect(handleSubmit).toHaveBeenCalledWith(expect.objectContaining({
+      terms: true
     }));
-  };
-
-  return (
-    <form className="settings-form">
-      <div className="space-y-6">
-        <Switch
-          label="Push notifications"
-          description="Receive notifications when someone mentions you"
-          checked={settings.notifications}
-          onChange={handleChange('notifications')}
-        />
-
-        <Switch
-          label="Marketing emails"
-          description="Receive emails about new features and special offers"
-          checked={settings.marketing}
-          onChange={handleChange('marketing')}
-        />
-
-        <Switch
-          label="Dark mode"
-          description="Use dark theme across the application"
-          checked={settings.darkMode}
-          onChange={handleChange('darkMode')}
-        />
-
-        <Switch
-          label="Auto updates"
-          description="Automatically install updates when available"
-          checked={settings.autoUpdate}
-          onChange={handleChange('autoUpdate')}
-        />
-      </div>
-
-      <div className="mt-8">
-        <button type="submit">
-          Save changes
-        </button>
-      </div>
-    </form>
-  );
-};
+  });
+});
 ```
 
-:::
+### E2E Tests
 
-### 5. Customization
+Testing switch behavior in a real browser environment:
 
-Example of extending switch styles:
+```typescript
+import { test, expect } from '@playwright/test';
 
-::: code-with-tooltips
+test.describe('Switch', () => {
+  test('handles toggle interaction', async ({ page }) => {
+    await page.goto('/switch-demo');
+    
+    // Test basic toggle
+    const switchElement = page.getByLabel('Enable Feature');
+    await switchElement.click();
+    await expect(switchElement).toBeChecked();
+    
+    // Test visual feedback
+    await expect(page.getByTestId('switch-thumb')).toHaveClass(/active/);
+    
+    // Test keyboard interaction
+    await switchElement.press('Space');
+    await expect(switchElement).not.toBeChecked();
+  });
 
-```scss
-// Custom switch variants
-.switch {
-  // Card style
-  &--card {
-    border: 1px solid var(--vp-c-divider);
-    border-radius: 12px;
-    padding: var(--spacing-4);
-
-    &:hover:not(.switch--disabled) {
-      border-color: var(--vp-c-brand);
-    }
-
-    &.switch--checked {
-      border-color: var(--vp-c-brand);
-      background-color: color.adjust(colors.$purple-brand, $alpha: -0.9);
-    }
-  }
-
-  // Icon support
-  &--icon {
-    .switch__thumb {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--vp-c-text-2);
-
-      &::before {
-        font-size: 12px;
-      }
-    }
-
-    &.switch--checked .switch__thumb {
-      color: var(--vp-c-brand);
-    }
-  }
-
-  // Reverse layout
-  &--reverse {
-    flex-direction: row-reverse;
-
-    .switch__content {
-      text-align: right;
-    }
-  }
-}
-
-// Custom animations
-@keyframes switchThumb {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(0.9);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.switch {
-  &--animate {
-    .switch__thumb {
-      animation: switchThumb 0.2s ease;
-    }
-  }
-}
+  test('handles loading state', async ({ page }) => {
+    await page.goto('/switch-demo');
+    
+    const switchElement = page.getByLabel('Auto-save');
+    await switchElement.click();
+    
+    // Verify loading state
+    await expect(page.getByTestId('loading-indicator')).toBeVisible();
+    await expect(switchElement).toBeDisabled();
+  });
+});
 ```
 
-:::
+## Design Guidelines
+
+Best practices for implementing the Switch component.
+
+### Visual Design
+
+Core visual principles:
+
+- Smooth animations
+- Clear state indication
+- Loading feedback
+- Proper sizing
+- Color contrast
+
+### Layout Considerations
+
+How to handle different layout scenarios:
+
+- Label placement options
+- Mobile touch targets
+- Spacing and alignment
+- Icon placement
+- Group organization
+
+## Performance Considerations
+
+Guidelines for optimal switch performance:
+
+- Animation optimization
+- State management
+- Event handler cleanup
+- Loading state handling
+- Memory management
+
+## Related Components
+
+Components commonly used with Switch:
+
+- [Checkbox](/react-component-patterns/form/checkbox.md) - For checkboxes
+- [Radio](/react-component-patterns/form/radio.md) - For radio buttons
+- [FormField](/react-component-patterns/form/form-field.md) - For form field wrapper
+- [FormGroup](/react-component-patterns/form/form-group.md) - For switch groups
+
+## Resources
+
+Additional documentation and references:
+
+- [Form Design Guidelines](#)
+- [Accessibility Best Practices](#)
+- [Toggle Pattern Guidelines](#)

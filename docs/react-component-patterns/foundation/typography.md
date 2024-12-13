@@ -1,8 +1,11 @@
 ---
 title: Typography Components
 description: Typography components and utilities for consistent text styling across your React application
+category: Foundation
+subcategory: Design System
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
   - React
   - Typography
@@ -15,6 +18,14 @@ tags:
 ## Overview
 
 A comprehensive set of typography components that provide consistent text styling across your application. These components follow modern design principles and are fully accessible.
+
+## Key Features
+
+- Flexible text and heading components
+- Consistent typography scale
+- Theme integration with CSS custom properties
+- Full accessibility support
+- Responsive typography
 
 ## Components
 
@@ -211,9 +222,9 @@ export const Heading = ({
 
 :::
 
-## Usage Examples
+## Usage Guidelines
 
-### Basic Text Styles
+### Basic Usage
 
 ::: code-with-tooltips
 
@@ -234,7 +245,7 @@ export const Heading = ({
 
 :::
 
-### Article Layout
+### Advanced Usage
 
 ::: code-with-tooltips
 
@@ -263,7 +274,17 @@ export const Heading = ({
 
 :::
 
-## Best Practices
+## Props
+
+| Component | Prop | Type | Default | Description |
+|-----------|------|------|---------|-------------|
+| Text | variant | `'body' \| 'lead' \| 'small' \| 'tiny'` | `'body'` | Typography variant |
+| Text | color | `'default' \| 'muted' \| 'brand' \| 'error'` | `'default'` | Text color |
+| Text | as | `keyof JSX.IntrinsicElements` | `'p'` | HTML element to render as |
+| Heading | level | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | `2` | Heading level |
+| Heading | size | `'xl' \| 'lg' \| 'md' \| 'sm' \| 'xs'` | - | Optional size override |
+
+## Accessibility
 
 ### 1. Accessibility
 
@@ -292,6 +313,55 @@ export const Heading = ({
 - Document component props
 - Implement proper TypeScript types
 - Write comprehensive tests
+
+## Testing
+
+### Unit Tests
+
+```tsx
+import { render, screen } from '@testing-library/react';
+import { Text, Heading } from './Typography';
+
+describe('Typography Components', () => {
+  describe('Text', () => {
+    it('renders with correct variant', () => {
+      render(<Text variant="lead">Lead text</Text>);
+      const text = screen.getByText('Lead text');
+      expect(text).toHaveClass('text--lead');
+    });
+  });
+
+  describe('Heading', () => {
+    it('renders correct heading level', () => {
+      render(<Heading level={1}>Title</Heading>);
+      expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
+    });
+  });
+});
+```
+
+## Design Guidelines
+
+### Visual Design
+
+- Use semantic heading levels (h1-h6)
+- Maintain proper heading hierarchy
+- Ensure sufficient color contrast
+- Support user font size preferences
+
+### Layout Considerations
+
+- Use relative units (rem/em)
+- Implement fluid typography
+- Test at different viewport sizes
+- Consider line length limits
+
+### Performance Considerations
+
+- Implement proper font loading
+- Use font subsetting when possible
+- Consider system font stacks
+- Optimize for Core Web Vitals
 
 ## Theme Integration
 

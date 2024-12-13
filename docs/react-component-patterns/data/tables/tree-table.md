@@ -35,6 +35,7 @@ The TreeTable component combines table functionality with hierarchical data disp
 ### Props Interface
 
 ::: code-with-tooltips
+
 ```tsx
 import { ReactNode } from 'react';
 
@@ -90,6 +91,7 @@ export interface TreeTableProps<T = unknown> {
   className?: string;
 }
 ```
+
 :::
 
 ### Props Table
@@ -115,6 +117,7 @@ export interface TreeTableProps<T = unknown> {
 ### Basic TreeTable
 
 ::: code-with-tooltips
+
 ```tsx
 import { TreeTable } from '@/components/data';
 
@@ -164,11 +167,13 @@ export const BasicTreeTableExample = () => {
   );
 };
 ```
+
 :::
 
 ### With Custom Expansion Control
 
 ::: code-with-tooltips
+
 ```tsx
 import { TreeTable } from '@/components/data';
 import { Icon } from '@/components/core';
@@ -219,11 +224,13 @@ export const CustomExpansionExample = () => {
   );
 };
 ```
+
 :::
 
 ### With Selection and Loading
 
 ::: code-with-tooltips
+
 ```tsx
 import { TreeTable } from '@/components/data';
 import { useState, useEffect } from 'react';
@@ -263,6 +270,7 @@ export const SelectableTreeTableExample = () => {
   );
 };
 ```
+
 :::
 
 ## Best Practices
@@ -329,7 +337,5 @@ export const SelectableTreeTableExample = () => {
 
 ## Related Components
 
-- [Table](./table.md) - For flat data structures
-- [DataGrid](./data-grid.md) - For advanced data features
-- [Tree](../navigation/tree.md) - For pure tree navigation
-- [List](../lists-and-cards/list.md) - For simple data display
+- [Tree](/react-component-patterns/navigation/tree.md) - For tree navigation
+- [Table](/react-component-patterns/data/tables/table.md) - For basic table functionality

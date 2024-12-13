@@ -1,804 +1,335 @@
 ---
-title: Select Components
-description: Flexible and accessible select components for React applications with support for single and multiple selection
+title: Select Component
+description: Dropdown selection component with support for single and multiple selection, option groups, and custom rendering
+category: Components
+subcategory: Form
 date: 2024-01-01
 author: Underwood Inc
+status: Stable
 tags:
-  - React
-  - Form Controls
+  - Form
   - Select
   - Dropdown
-  - Accessibility
+  - React
 ---
 
-# Select Components
+# Select Component
 
 ## Overview
 
-A comprehensive set of select components that handle both single and multiple selection scenarios. These components are built with TypeScript, support keyboard navigation, and follow WAI-ARIA practices.
+The Select component provides a powerful dropdown selection interface for forms. It supports both single and multiple selection modes, option grouping, custom option rendering, and advanced features like search/filtering. This component is essential for handling selection from predefined options while maintaining accessibility and usability.
 
-## Components
+## Key Features
 
-### Base Select
+A comprehensive set of features for dropdown selection:
 
-The foundation select component with support for single selection:
+- Single and multiple selection modes
+- Option grouping support
+- Custom option rendering
+- Search/filter functionality
+- Keyboard navigation
+- Validation states
+- Custom styling options
+- Accessibility support
 
-::: code-with-tooltips
+## Usage Guidelines
+
+This section demonstrates how to implement the Select component, from basic usage to advanced scenarios.
+
+### Basic Usage
+
+The simplest implementation of the Select component:
 
 ```tsx
-import React, { forwardRef, useState, useRef, useEffect } from 'react';
-import clsx from 'clsx';
-import type { ReactNode, Ref } from 'react';
-
-interface SelectOption {
-  value: string;
-  label: string;
-  disabled?: boolean;
-}
-
-interface SelectProps {
-  /** Select options */
-  options: SelectOption[];
-  /** Selected value */
-  value?: string;
-  /** Default value */
-  defaultValue?: string;
-  /** Placeholder text */
-  placeholder?: string;
-  /** Select label */
-  label?: string;
-  /** Helper text */
-  helperText?: string;
-  /** Error message */
-  error?: string;
-  /** Success message */
-  success?: string;
-  /** Select size */
-  size?: 'sm' | 'md' | 'lg';
-  /** Whether the select is disabled */
-  disabled?: boolean;
-  /** Whether the select is required */
-  required?: boolean;
-  /** Whether the select spans full width */
-  isFullWidth?: boolean;
-  /** Left icon */
-  leftIcon?: ReactNode;
-  /** Custom classes for the wrapper */
-  wrapperClassName?: string;
-  /** Change handler */
-  onChange?: (value: string) => void;
-  /** Focus handler */
-  onFocus?: () => void;
-  /** Blur handler */
-  onBlur?: () => void;
-}
-
-export const Select = forwardRef(({
-  options,
-  value,
-  defaultValue,
-  placeholder = 'Select an option',
-  label,
-  helperText,
-  error,
-  success,
-  size = 'md',
-  disabled = false,
-  required = false,
-  isFullWidth = false,
-  leftIcon,
-  wrapperClassName,
-  onChange,
-  onFocus,
-  onBlur,
-}: SelectProps, ref: Ref<HTMLDivElement>) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(value || defaultValue || '');
-  const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const selectRef = useRef<HTMLDivElement>(null);
-  const listboxRef = useRef<HTMLUListElement>(null);
-
-  const selectedOption = options.find(opt => opt.value === selectedValue);
-  const hasError = !!error;
-  const hasSuccess = !!success;
-
-  useEffect(() => {
-    if (value !== undefined) {
-      setSelectedValue(value);
-    }
-  }, [value]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    switch (event.key) {
-      case 'ArrowDown':
-        event.preventDefault();
-        if (!isOpen) {
-          setIsOpen(true);
-        } else {
-          setHighlightedIndex(prev =>
-            prev < options.length - 1 ? prev + 1 : prev
-          );
-        }
-        break;
-      case 'ArrowUp':
-        event.preventDefault();
-        if (!isOpen) {
-          setIsOpen(true);
-        } else {
-          setHighlightedIndex(prev =>
-            prev > 0 ? prev - 1 : prev
-          );
-        }
-        break;
-      case 'Enter':
-      case ' ':
-        event.preventDefault();
-        if (isOpen && highlightedIndex >= 0) {
-          const option = options[highlightedIndex];
-          if (!option.disabled) {
-            handleSelect(option.value);
-          }
-        } else {
-          setIsOpen(true);
-        }
-        break;
-      case 'Escape':
-        event.preventDefault();
-        setIsOpen(false);
-        break;
-      case 'Tab':
-        setIsOpen(false);
-        break;
-    }
-  };
-
-  const handleSelect = (value: string) => {
-    setSelectedValue(value);
-    setIsOpen(false);
-    onChange?.(value);
-  };
-
-  const selectId = `select-${Math.random().toString(36).substr(2, 9)}`;
-  const labelId = `${selectId}-label`;
-  const listboxId = `${selectId}-listbox`;
-
-  return (
-    <div
-      ref={selectRef}
-      className={clsx(
-        'select-wrapper',
-        `select-wrapper--${size}`,
-        isFullWidth && 'select-wrapper--full-width',
-        hasError && 'select-wrapper--error',
-        hasSuccess && 'select-wrapper--success',
-        disabled && 'select-wrapper--disabled',
-        wrapperClassName
-      )}
-    >
-      {label && (
-        <label
-          id={labelId}
-          className="select__label"
-        >
-          {label}
-          {required && (
-            <>
-              <span aria-hidden="true" className="select__required-indicator">
-                *
-              </span>
-              <span className="sr-only">(required)</span>
-            </>
-          )}
-        </label>
-      )}
-
-      <div
-        ref={ref}
-        className="select__control"
-        role="combobox"
-        aria-expanded={isOpen}
-        aria-haspopup="listbox"
-        aria-controls={listboxId}
-        aria-labelledby={labelId}
-        aria-required={required}
-        aria-invalid={hasError}
-        tabIndex={disabled ? -1 : 0}
-        onClick={() => !disabled && setIsOpen(!isOpen)}
-        onKeyDown={handleKeyDown}
-        onFocus={onFocus}
-        onBlur={onBlur}
-      >
-        {leftIcon && (
-          <span className="select__icon select__icon--left">
-            {leftIcon}
-          </span>
-        )}
-
-        <span className="select__value">
-          {selectedOption ? selectedOption.label : placeholder}
-        </span>
-
-        <span className="select__icon select__icon--right">
-          <ChevronDownIcon />
-        </span>
-      </div>
-
-      {isOpen && (
-        <ul
-          ref={listboxRef}
-          id={listboxId}
-          role="listbox"
-          className="select__options"
-          aria-labelledby={labelId}
-        >
-          {options.map((option, index) => (
-            <li
-              key={option.value}
-              role="option"
-              className={clsx(
-                'select__option',
-                option.disabled && 'select__option--disabled',
-                option.value === selectedValue && 'select__option--selected',
-                index === highlightedIndex && 'select__option--highlighted'
-              )}
-              aria-selected={option.value === selectedValue}
-              aria-disabled={option.disabled}
-              onClick={() => !option.disabled && handleSelect(option.value)}
-            >
-              {option.label}
-              {option.value === selectedValue && (
-                <span className="select__check">
-                  <CheckIcon />
-                </span>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {helperText && (
-        <span className="select__helper-text">
-          {helperText}
-        </span>
-      )}
-
-      {error && (
-        <span
-          className="select__error"
-          role="alert"
-        >
-          {error}
-        </span>
-      )}
-
-      {success && (
-        <span
-          className="select__success"
-          role="status"
-        >
-          {success}
-        </span>
-      )}
-    </div>
-  );
-});
-
-Select.displayName = 'Select';
-```
-
-:::
-
-::: code-with-tooltips
-
-```scss
-.select-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  position: relative;
-
-  &--full-width {
-    width: 100%;
-  }
-
-  &--disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-
-    .select__control {
-      pointer-events: none;
-    }
-  }
-
-  // Sizes
-  &--sm {
-    font-size: 0.875rem;
-
-    .select__control {
-      height: 32px;
-      padding: 0 0.75rem;
-    }
-
-    .select__option {
-      padding: 0.5rem 0.75rem;
-    }
-  }
-
-  &--md {
-    font-size: 1rem;
-
-    .select__control {
-      height: 40px;
-      padding: 0 1rem;
-    }
-
-    .select__option {
-      padding: 0.625rem 1rem;
-    }
-  }
-
-  &--lg {
-    font-size: 1.125rem;
-
-    .select__control {
-      height: 48px;
-      padding: 0 1.25rem;
-    }
-
-    .select__option {
-      padding: 0.75rem 1.25rem;
-    }
-  }
-}
-
-.select__label {
-  color: var(--vp-c-text-1);
-  font-weight: 500;
-}
-
-.select__required-indicator {
-  color: var(--vp-c-danger);
-  margin-left: 0.25rem;
-}
-
-.select__control {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  background: var(--vp-c-bg-soft);
-  border: 2px solid var(--vp-c-divider);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    border-color: var(--vp-c-brand);
-  }
-
-  &:focus {
-    outline: none;
-    border-color: var(--vp-c-brand);
-    box-shadow: 0 0 0 3px color.adjust(colors.$purple-brand, $alpha: -0.8);
-  }
-}
-
-.select__value {
-  flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--vp-c-text-1);
-
-  &:empty::before {
-    content: attr(data-placeholder);
-    color: var(--vp-c-text-3);
-  }
-}
-
-.select__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1em;
-  height: 1em;
-  color: var(--vp-c-text-2);
-
-  svg {
-    width: 100%;
-    height: 100%;
-  }
-
-  &--right {
-    transition: transform 0.2s ease;
-    [aria-expanded="true"] & {
-      transform: rotate(180deg);
-    }
-  }
-}
-
-.select__options {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  margin: 0.5rem 0 0;
-  padding: 0.5rem 0;
-  list-style: none;
-  background: var(--vp-c-bg-soft);
-  border: 2px solid var(--vp-c-divider);
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.select__option {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover:not(.select__option--disabled) {
-    background: color.adjust(colors.$purple-brand, $alpha: -0.9);
-  }
-
-  &--disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  &--selected {
-    background: color.adjust(colors.$purple-brand, $alpha: -0.8);
-    color: var(--vp-c-brand);
-    font-weight: 500;
-  }
-
-  &--highlighted {
-    background: color.adjust(colors.$purple-brand, $alpha: -0.85);
-  }
-}
-
-.select__check {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1em;
-  height: 1em;
-  color: var(--vp-c-brand);
-}
-
-.select__helper-text {
-  color: var(--vp-c-text-2);
-  font-size: 0.875em;
-}
-
-.select__error {
-  color: var(--vp-c-danger);
-  font-size: 0.875em;
-}
-
-.select__success {
-  color: var(--vp-c-success);
-  font-size: 0.875em;
-}
-
-// Dark mode adjustments
-.dark {
-  .select__control {
-    background: color.adjust(colors.$purple-dark, $lightness: 5%);
-  }
-
-  .select__options {
-    background: color.adjust(colors.$purple-dark, $lightness: 5%);
-    border-color: var(--vp-c-divider);
-  }
-
-  .select__option {
-    &:hover:not(.select__option--disabled) {
-      background: color.adjust(colors.$purple-dark, $lightness: 10%);
-    }
-
-    &--selected {
-      background: color.adjust(colors.$purple-dark, $lightness: 8%);
-    }
-
-    &--highlighted {
-      background: color.adjust(colors.$purple-dark, $lightness: 12%);
-    }
-  }
-}
-```
-
-:::
-
-### MultiSelect Component
-
-A select component that supports multiple selection:
-
-::: code-with-tooltips
-
-```tsx
-interface MultiSelectProps extends Omit<SelectProps, 'value' | 'defaultValue' | 'onChange'> {
-  /** Selected values */
-  value?: string[];
-  /** Default values */
-  defaultValue?: string[];
-  /** Change handler */
-  onChange?: (values: string[]) => void;
-  /** Maximum number of selections allowed */
-  maxSelections?: number;
-}
-
-export const MultiSelect = forwardRef(({
-  value,
-  defaultValue = [],
-  maxSelections,
-  onChange,
-  ...props
-}: MultiSelectProps, ref: Ref<HTMLDivElement>) => {
-  const [selectedValues, setSelectedValues] = useState<string[]>(value || defaultValue);
-
-  useEffect(() => {
-    if (value !== undefined) {
-      setSelectedValues(value);
-    }
-  }, [value]);
-
-  const handleSelect = (optionValue: string) => {
-    const newValues = selectedValues.includes(optionValue)
-      ? selectedValues.filter(v => v !== optionValue)
-      : maxSelections && selectedValues.length >= maxSelections
-        ? selectedValues
-        : [...selectedValues, optionValue];
-
-    setSelectedValues(newValues);
-    onChange?.(newValues);
-  };
-
-  const selectedLabels = props.options
-    .filter(opt => selectedValues.includes(opt.value))
-    .map(opt => opt.label)
-    .join(', ');
+import * as React from 'react';
+import { Select } from '@/components/form';
+
+function BasicSelectExample() {
+  const options = [
+    { value: 'apple', label: 'Apple' },
+    { value: 'banana', label: 'Banana' },
+    { value: 'orange', label: 'Orange' }
+  ];
 
   return (
     <Select
-      {...props}
-      ref={ref}
-      value={undefined}
-      selectedDisplay={selectedLabels || props.placeholder}
-      onOptionSelect={handleSelect}
-      isMulti
-      selectedValues={selectedValues}
+      label="Fruit"
+      options={options}
+      placeholder="Select a fruit"
+      onChange={(value) => console.log(value)}
     />
   );
+}
+```
+
+### Advanced Usage
+
+Examples of more complex implementations:
+
+```tsx
+function AdvancedSelectExample() {
+  const [selectedValues, setSelectedValues] = React.useState<string[]>([]);
+
+  const options = [
+    { value: 'sedan', label: 'Sedan', group: 'Cars' },
+    { value: 'suv', label: 'SUV', group: 'Cars' },
+    { value: 'cruiser', label: 'Cruiser', group: 'Motorcycles' },
+    { value: 'sport', label: 'Sport', group: 'Motorcycles' }
+  ];
+
+  return (
+    <Select
+      label="Vehicles"
+      options={options}
+      multiple
+      searchable
+      value={selectedValues}
+      onChange={setSelectedValues}
+      renderOption={(option) => (
+        <div className="option-container">
+          <span className="option-label">{option.label}</span>
+          <span className="option-group">{option.group}</span>
+        </div>
+      )}
+      error={selectedValues.length === 0}
+      errorMessage="Please select at least one vehicle"
+      required
+    />
+  );
+}
+```
+
+## Props
+
+A comprehensive list of available props:
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| options | `SelectOption[]` | Required | Array of options to display |
+| value | `string \| string[]` | - | Selected value(s) |
+| onChange | `(value: string \| string[]) => void` | - | Selection change handler |
+| multiple | `boolean` | `false` | Enable multiple selection |
+| searchable | `boolean` | `false` | Enable search functionality |
+| renderOption | `(option: SelectOption) => ReactNode` | - | Custom option renderer |
+| error | `boolean` | `false` | Error state |
+| errorMessage | `string` | - | Error message text |
+| label | `string` | - | Select label |
+| required | `boolean` | `false` | Whether field is required |
+
+## Accessibility
+
+Ensuring the Select component is accessible to all users.
+
+### Keyboard Navigation
+
+How users can interact with the select using a keyboard:
+
+- Enter/Space to open dropdown
+- Arrow keys to navigate options
+- Enter to select option
+- Escape to close dropdown
+- Type to search (when enabled)
+
+### Screen Readers
+
+How the component communicates with assistive technologies:
+
+- Proper ARIA roles (listbox/option)
+- Selection state announcements
+- Group labels for nested options
+- Search status updates
+
+### Best Practices
+
+Guidelines for maintaining accessibility:
+
+- Clear option labeling
+- Proper group structure
+- Keyboard focus management
+- Clear selection indicators
+
+## Testing
+
+A comprehensive testing strategy to ensure reliability.
+
+### Unit Tests
+
+Testing individual select functionality:
+
+```tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Select } from './Select';
+import '@testing-library/jest-dom';
+
+describe('Select', () => {
+  const options = [
+    { value: 'a', label: 'Option A' },
+    { value: 'b', label: 'Option B' }
+  ];
+
+  it('renders correctly', () => {
+    render(<Select label="Test Select" options={options} />);
+    expect(screen.getByLabelText('Test Select')).toBeInTheDocument();
+  });
+
+  it('handles selection', async () => {
+    const handleChange = jest.fn();
+    render(
+      <Select 
+        label="Test" 
+        options={options} 
+        onChange={handleChange}
+      />
+    );
+    
+    await userEvent.click(screen.getByLabelText('Test'));
+    await userEvent.click(screen.getByText('Option A'));
+    expect(handleChange).toHaveBeenCalledWith('a');
+  });
+
+  it('supports multiple selection', async () => {
+    const handleChange = jest.fn();
+    render(
+      <Select 
+        label="Test" 
+        options={options} 
+        multiple 
+        onChange={handleChange}
+      />
+    );
+    
+    await userEvent.click(screen.getByLabelText('Test'));
+    await userEvent.click(screen.getByText('Option A'));
+    await userEvent.click(screen.getByText('Option B'));
+    expect(handleChange).toHaveBeenCalledWith(['a', 'b']);
+  });
 });
-
-MultiSelect.displayName = 'MultiSelect';
 ```
 
-:::
+### Integration Tests
 
-## Usage Examples
-
-### Basic Select
-
-::: code-with-tooltips
+Testing select behavior with form validation:
 
 ```tsx
-<Select
-  label="Country"
-  placeholder="Select a country"
-  options={[
-    { value: 'us', label: 'United States' },
-    { value: 'uk', label: 'United Kingdom' },
-    { value: 'ca', label: 'Canada' },
-    { value: 'au', label: 'Australia' },
-  ]}
-/>
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Form, Select } from './components';
+import '@testing-library/jest-dom';
+
+describe('Select Integration', () => {
+  it('works with form validation', async () => {
+    render(
+      <Form onSubmit={jest.fn()}>
+        <Select 
+          label="Category"
+          options={[
+            { value: 'a', label: 'Category A' },
+            { value: 'b', label: 'Category B' }
+          ]}
+          required
+        />
+      </Form>
+    );
+    
+    await userEvent.click(screen.getByLabelText('Category'));
+    await userEvent.tab();
+    
+    expect(screen.getByText('This field is required')).toBeInTheDocument();
+  });
+});
 ```
 
-:::
+### E2E Tests
 
-### Required Select with Validation
+Testing select behavior in a real browser environment:
 
-::: code-with-tooltips
+```typescript
+import { test, expect } from '@playwright/test';
 
-```tsx
-<Select
-  label="Category"
-  required
-  error="Please select a category"
-  options={[
-    { value: 'tech', label: 'Technology' },
-    { value: 'design', label: 'Design' },
-    { value: 'marketing', label: 'Marketing' },
-  ]}
-/>
+test.describe('Select', () => {
+  test('handles selection and search', async ({ page }) => {
+    await page.goto('/select-demo');
+    
+    // Test basic selection
+    const select = page.getByLabel('Category');
+    await select.click();
+    await page.getByText('Option A').click();
+    await expect(select).toHaveValue('a');
+    
+    // Test search functionality
+    await select.click();
+    await page.keyboard.type('Option B');
+    await expect(page.getByText('Option B')).toBeVisible();
+    await expect(page.getByText('Option A')).not.toBeVisible();
+    
+    // Test keyboard navigation
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('Enter');
+    await expect(select).toHaveValue('b');
+  });
+
+  test('handles multiple selection', async ({ page }) => {
+    await page.goto('/select-demo');
+    
+    const select = page.getByLabel('Categories');
+    await select.click();
+    
+    await page.getByText('Option A').click();
+    await page.getByText('Option B').click();
+    
+    await expect(page.getByText('2 items selected')).toBeVisible();
+  });
+});
 ```
 
-:::
+## Design Guidelines
 
-### Select with Icon
+Best practices for implementing the Select component.
 
-::: code-with-tooltips
+### Visual Design
 
-```tsx
-<Select
-  label="Sort by"
-  leftIcon={<SortIcon />}
-  options={[
-    { value: 'name', label: 'Name' },
-    { value: 'date', label: 'Date' },
-    { value: 'price', label: 'Price' },
-  ]}
-/>
-```
+Core visual principles:
 
-:::
+- Clear dropdown indicators
+- Visible selection state
+- Proper option spacing
+- Group separators
+- Search input styling
 
-### Select Sizes
+### Layout Considerations
 
-::: code-with-tooltips
+How to handle different layout scenarios:
 
-```tsx
-<div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-  <Select
-    size="sm"
-    placeholder="Small select"
-    options={[
-      { value: '1', label: 'Option 1' },
-      { value: '2', label: 'Option 2' },
-    ]}
-  />
-  <Select
-    size="md"
-    placeholder="Medium select"
-    options={[
-      { value: '1', label: 'Option 1' },
-      { value: '2', label: 'Option 2' },
-    ]}
-  />
-  <Select
-    size="lg"
-    placeholder="Large select"
-    options={[
-      { value: '1', label: 'Option 1' },
-      { value: '2', label: 'Option 2' },
-    ]}
-  />
-</div>
-```
+- Dropdown positioning
+- Option list height
+- Multiple selection layout
+- Group indentation
+- Mobile optimization
 
-:::
+## Performance Considerations
 
-### MultiSelect Example
+Guidelines for optimal select performance:
 
-::: code-with-tooltips
-
-```tsx
-<MultiSelect
-  label="Skills"
-  placeholder="Select skills"
-  maxSelections={3}
-  helperText="Select up to 3 skills"
-  options={[
-    { value: 'react', label: 'React' },
-    { value: 'typescript', label: 'TypeScript' },
-    { value: 'node', label: 'Node.js' },
-    { value: 'python', label: 'Python' },
-    { value: 'java', label: 'Java' },
-  ]}
-/>
-```
-
-:::
-
-### Disabled Options
-
-::: code-with-tooltips
-
-```tsx
-<Select
-  label="Plan"
-  options={[
-    { value: 'free', label: 'Free Plan' },
-    { value: 'pro', label: 'Pro Plan' },
-    { value: 'enterprise', label: 'Enterprise Plan', disabled: true },
-  ]}
-  helperText="Some plans may be unavailable"
-/>
-```
-
-:::
-
-## Best Practices
-
-### 1. Accessibility
-
-- Use proper ARIA attributes
-- Support keyboard navigation
-- Provide clear labels
-- Handle focus management
-- Announce selection changes
-
-### 2. User Experience
-
-- Show clear selection state
-- Provide visual feedback
-- Handle loading states
-- Support search/filtering
-- Clear error messages
-
-### 3. Performance
-
-- Virtualize long lists
-- Optimize re-renders
+- Virtualize large option lists
+- Debounce search input
+- Optimize option rendering
 - Handle large datasets
-- Cache option data
-- Debounce search
+- Clean up event listeners
 
-### 4. Maintainability
+## Related Components
 
-- Type all props
-- Document components
-- Write unit tests
-- Handle edge cases
-- Follow conventions
+Components commonly used with Select:
 
-### 5. Composition
+- [MultiSelect](/react-component-patterns/form/multi-select.md) - For complex multiple selection
+- [Combobox](/react-component-patterns/form/combobox.md) - For searchable selection
+- [FormField](/react-component-patterns/form/form-field.md) - For form field wrapper
+- [Dropdown](/react-component-patterns/overlay/contextual-overlays/dropdown.md) - For custom dropdowns
 
-The Select components can be composed with other form controls:
+## Resources
 
-::: code-with-tooltips
+Additional documentation and references:
 
-```tsx
-const FormField = ({
-  label,
-  error,
-  required,
-  children
-}: {
-  label: string;
-  error?: string;
-  required?: boolean;
-  children: ReactNode;
-}) => (
-  <div className="form-field">
-    <label className="form-field__label">
-      {label}
-      {required && <span className="form-field__required">*</span>}
-    </label>
-    {children}
-    {error && (
-      <span className="form-field__error">{error}</span>
-    )}
-  </div>
-);
-
-// Usage
-<FormField label="Category" required error="Please select a category">
-  <Select
-    options={[
-      { value: '1', label: 'Option 1' },
-      { value: '2', label: 'Option 2' },
-    ]}
-  />
-</FormField>
-```
-
-:::
+- [Form Design Guidelines](#)
+- [Accessibility Best Practices](#)
+- [Selection Pattern Guidelines](#)

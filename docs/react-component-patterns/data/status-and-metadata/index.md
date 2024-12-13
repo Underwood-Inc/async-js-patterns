@@ -23,15 +23,15 @@ Status and metadata components provide visual indicators and labels to represent
 
 ### Status Indicators
 
-- [Badge](./badge.md) - For displaying status indicators and counts
-- [Status](./status.md) - For showing state indicators
-- [Indicator](./indicator.md) - For simple visual indicators
+- [Badge](/react-component-patterns/data/status-and-metadata/badge.md) - For displaying status indicators and counts
+- [Status](/react-component-patterns/data/status-and-metadata/status.md) - For showing state indicators
+- [Indicator](/react-component-patterns/data/status-and-metadata/indicator.md) - For simple visual indicators
 
 ### Labels and Tags
 
-- [Tag](./tag.md) - For displaying categories and labels
-- [Chip](./chip.md) - For interactive filters and selections
-- [Label](./label.md) - For text labels and captions
+- [Tag](/react-component-patterns/data/status-and-metadata/tag.md) - For displaying categories and labels
+- [Chip](/react-component-patterns/data/status-and-metadata/chip.md) - For interactive filters and selections
+- [Label](/react-component-patterns/data/status-and-metadata/label.md) - For text labels and captions
 
 ## Implementation Guidelines
 
@@ -133,6 +133,6 @@ Status and metadata components provide visual indicators and labels to represent
 
 ## Related Sections
 
-- [Feedback](../feedback/index.md) - For feedback components
-- [Data Display](../data/index.md) - For data display components
-- [Navigation](../navigation/index.md) - For navigation components 
+- [Feedback](/react-component-patterns/feedback/index.md) - For feedback components
+- [Data Display](/react-component-patterns/data/index.md) - For data display components
+- [Navigation](/react-component-patterns/navigation/index.md) - For navigation components
