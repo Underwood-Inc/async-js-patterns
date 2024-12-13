@@ -21,7 +21,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /async/
+      link: /guide/getting-started/
     - theme: alt
       text: View Examples
       link: /examples/
