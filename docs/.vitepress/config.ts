@@ -866,10 +866,10 @@ export default withMermaid(
               text: 'Breadcrumb',
               link: '/react-component-patterns/navigation/breadcrumb',
             },
-            {
-              text: 'Timeline',
-              link: '/react-component-patterns/navigation/components/timeline',
-            },
+            // {
+            //   text: 'Timeline',
+            //   link: '/react-component-patterns/navigation/components/timeline',
+            // },
             {
               text: 'Pagination',
               link: '/react-component-patterns/navigation/pagination',
