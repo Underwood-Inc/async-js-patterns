@@ -26,20 +26,20 @@ Navigation components provide the essential tools for users to move through your
 - [Menu](./menu.md) - Main navigation menu component
 - [Tabs](./tabs.md) - Tab-based navigation
 - [Breadcrumb](./breadcrumb.md) - Hierarchical page navigation
-- [Tree](./tree.md) - Hierarchical navigation structure
+- Tree - Hierarchical navigation structure
 
 ### Content Navigation
 
 - [Pagination](./pagination.md) - Page-based content navigation
-- [Stepper](./stepper.md) - Step-by-step process navigation
-- [Carousel](./carousel.md) - Slideshow navigation
-- [Timeline](./timeline.md) - Time-based navigation
+- Stepper - Step-by-step process navigation
+- Carousel - Slideshow navigation
+- Timeline - Time-based navigation
 
 ### Auxiliary Navigation
 
-- [SkipLink](./skip-link.md) - Accessibility navigation
-- [BackToTop](./back-to-top.md) - Page scroll navigation
-- [Anchor](./anchor.md) - In-page section navigation
+- Skip Link - Accessibility navigation
+- Back to Top - Page scroll navigation
+- Anchor - In-page section navigation
 
 ## Implementation Guidelines
 

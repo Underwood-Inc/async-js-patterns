@@ -100,6 +100,9 @@ export default withMermaid(
       // Ignore all react-component-patterns links
       /\/react-component-patterns\/.*/,
       /\.\/component-[a-z]/,
+      /^\.\/component-a/,
+      /^\.\/component-b/,
+      /^\.\/component-c/
     ],
 
     transformPageData(pageData) {

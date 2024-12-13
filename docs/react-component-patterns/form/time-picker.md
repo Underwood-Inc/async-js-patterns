@@ -393,10 +393,10 @@ Guidelines for optimal time picker performance:
 
 Components commonly used with TimePicker:
 
-- [DatePicker](/react-component-patterns/form/date-picker.md) - For date selection
-- [TimeRangePicker](/react-component-patterns/form/time-range-picker.md) - For time range selection
+- Time Range Picker - For time range selection
+- Clock - For visual time selection
 - [FormField](/react-component-patterns/form/form-field.md) - For field wrapper
-- [Clock](/react-component-patterns/data/clock.md) - For clock display
+- [Input](/react-component-patterns/form/input.md) - For manual time input
 
 ## Resources
 

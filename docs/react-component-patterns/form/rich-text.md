@@ -453,10 +453,11 @@ Guidelines for optimal editor performance:
 
 Components commonly used with RichText:
 
+- Toolbar - For formatting controls
+- Image Upload - For image handling
+- Markdown Preview - For content preview
 - [FormField](/react-component-patterns/form/form-field.md) - For field wrapper
-- [Toolbar](/react-component-patterns/navigation/toolbar.md) - For formatting tools
-- [ImageUpload](/react-component-patterns/form/image-upload.md) - For image handling
-- [MarkdownPreview](/react-component-patterns/data/markdown-preview.md) - For content preview
+- [Input](/react-component-patterns/form/input.md) - For text input
 
 ## Resources
 

@@ -440,10 +440,10 @@ Guidelines for optimal select performance:
 
 Components commonly used with MultiSelect:
 
+- Chip - For selected items
+- Menu - For dropdown menu
 - [FormField](/react-component-patterns/form/form-field.md) - For field wrapper
-- [Select](/react-component-patterns/form/select.md) - For single selection
-- [Chip](/react-component-patterns/data/chip.md) - For selected items
-- [Menu](/react-component-patterns/overlay/menu.md) - For options menu
+- [Input](/react-component-patterns/form/input.md) - For text input
 
 ## Resources
 

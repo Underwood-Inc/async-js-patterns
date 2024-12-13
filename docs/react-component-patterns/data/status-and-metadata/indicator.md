@@ -161,7 +161,7 @@ export const CustomColorIndicatorExample = () => (
 ## Related Components
 
 - [Label](/react-component-patterns/data/status-and-metadata/label.md) - For text labels
-- [Badge](/react-component-patterns/data/badge.md) - For numeric indicators
+- Badge - For numeric indicators
 - [Status](/react-component-patterns/data/status-and-metadata/status.md) - For status displays
 
 ## Testing Examples

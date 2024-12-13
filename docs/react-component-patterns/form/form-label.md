@@ -286,10 +286,9 @@ Guidelines for optimal label performance:
 
 Components commonly used with FormLabel:
 
-- [FormField](/react-component-patterns/form/form-field.md) - For field wrappers
-- [FormGroup](/react-component-patterns/form/form-group.md) - For field groups
-- [FormHelperText](/react-component-patterns/form/form-helper-text.md) - For helper text
-- [Tooltip](/react-component-patterns/overlay/tooltip.md) - For tooltips
+- Tooltip - For label tooltips
+- [FormField](/react-component-patterns/form/form-field.md) - For field wrapper
+- [FormHelperText](/react-component-patterns/form/form-helper-text.md) - For help text
 
 ## Resources
 

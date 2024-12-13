@@ -181,7 +181,7 @@ export const TruncatedLabelExample = () => (
 ## Related Components
 
 - [Indicator](/react-component-patterns/data/status-and-metadata/indicator.md) - For status indicators
-- [Badge](/react-component-patterns/data/badge.md) - For numeric indicators
+- Badge - For numeric indicators
 - [Tag](/react-component-patterns/data/status-and-metadata/tag.md) - For tag elements
 
 ## Testing Examples

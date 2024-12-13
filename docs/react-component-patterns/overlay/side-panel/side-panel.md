@@ -182,4 +182,4 @@ function SidePanelExample() {
 
 - [Drawer](/react-component-patterns/overlay/drawer/drawer.md) - For temporary sliding panels
 - [Sheet](/react-component-patterns/overlay/modals/sheet.md) - For full-screen overlays
-- [Split](/react-component-patterns/layout/split.md) - For resizable split views
+- Split - For resizable split views

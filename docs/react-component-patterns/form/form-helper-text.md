@@ -312,10 +312,9 @@ Guidelines for optimal helper text performance:
 
 Components commonly used with FormHelperText:
 
-- [FormField](/react-component-patterns/form/form-field.md) - For field wrappers
+- Icon - For helper icons
+- [FormField](/react-component-patterns/form/form-field.md) - For field wrapper
 - [FormLabel](/react-component-patterns/form/form-label.md) - For field labels
-- [FormErrorMessage](/react-component-patterns/form/form-error-message.md) - For error messages
-- [Icon](/react-component-patterns/data/icon.md) - For status icons
 
 ## Resources
 

@@ -27,19 +27,19 @@ Layout components provide the foundational structure for organizing and arrangin
 - [Grid](./grid.md) - CSS Grid-based layout system
 - [Flex](./flex.md) - Flexbox-based layout component
 - [Stack](./stack.md) - Vertical or horizontal stacking
-- [Split](./split.md) - Two-column layout with adjustable split
+- Split - Two-column layout with adjustable split
 
 ### Spacing
 
-- [Box](./box.md) - Basic layout primitive with spacing props
-- [Divider](./divider.md) - Visual separator component
-- [Spacer](./spacer.md) - Empty space component
+- Box - Basic layout primitive with spacing props
+- Divider - Visual separator component
+- Spacer - Empty space component
 
 ### Responsive
 
-- [Show](./show.md) - Conditionally show content based on breakpoint
-- [Hide](./hide.md) - Conditionally hide content based on breakpoint
-- [AspectRatio](./aspect-ratio.md) - Maintain aspect ratio for content
+- Show - Conditionally show content based on breakpoint
+- Hide - Conditionally hide content based on breakpoint
+- AspectRatio - Maintain aspect ratio for content
 
 ## Implementation Guidelines
 

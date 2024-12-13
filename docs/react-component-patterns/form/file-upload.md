@@ -440,10 +440,11 @@ Guidelines for optimal upload performance:
 
 Components commonly used with FileUpload:
 
+- Progress Bar - For upload progress
+- Image Cropper - For image editing
+- File List - For file management
 - [FormField](/react-component-patterns/form/form-field.md) - For field wrapper
-- [ProgressBar](/react-component-patterns/feedback/progress-bar.md) - For upload progress
-- [ImageCropper](/react-component-patterns/media/image-cropper.md) - For image cropping
-- [FileList](/react-component-patterns/data/file-list.md) - For file listing
+- [Input](/react-component-patterns/form/input.md) - For file input
 
 ## Resources
 

@@ -26,7 +26,7 @@ Data components provide structured ways to display and interact with data collec
 - [Table](./tables/table.md) - Feature-rich data table component
 - [DataGrid](./tables/data-grid.md) - Advanced grid for large datasets
 - [TreeTable](./tables/tree-table.md) - Hierarchical data display with expandable rows
-- [VirtualTable](./tables/virtual-table.md) - Virtualized table for large datasets
+- VirtualTable - Virtualized table for large datasets
 
 ### Lists & Cards
 

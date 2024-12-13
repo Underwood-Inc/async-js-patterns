@@ -402,12 +402,8 @@ Guidelines for optimal color picker performance:
 
 ## Related Components
 
-Components commonly used with ColorPicker:
-
-- [FormField](/react-component-patterns/form/form-field.md) - For field wrapper
-- [ColorSwatch](/react-component-patterns/data/color-swatch.md) - For color display
-- [ColorPalette](/react-component-patterns/data/color-palette.md) - For color sets
-- [Input](/react-component-patterns/form/input.md) - For manual color input
+- Color Swatch - Component for displaying color swatches
+- Color Palette - Component for displaying color palettes
 
 ## Resources
 

@@ -337,5 +337,6 @@ export const SelectableTreeTableExample = () => {
 
 ## Related Components
 
-- [Tree](/react-component-patterns/navigation/tree.md) - For tree navigation
-- [Table](/react-component-patterns/data/tables/table.md) - For basic table functionality
+- Tree - For hierarchical data display
+- [Table](/react-component-patterns/data/tables/table.md) - For tabular data
+- [DataGrid](/react-component-patterns/data/tables/data-grid.md) - For advanced data grids

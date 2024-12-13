@@ -320,10 +320,10 @@ Guidelines for optimal error message performance:
 
 Components commonly used with FormErrorMessage:
 
-- [FormField](/react-component-patterns/form/form-field.md) - For field wrappers
-- [FormHelperText](/react-component-patterns/form/form-helper-text.md) - For helper text
-- [FormValidation](/react-component-patterns/form/form-validation.md) - For validation logic
-- [Icon](/react-component-patterns/data/icon.md) - For error icons
+- Form Validation - For validation logic
+- Icon - For error icons
+- [FormField](/react-component-patterns/form/form-field.md) - For field wrapper
+- [FormHelperText](/react-component-patterns/form/form-helper-text.md) - For help text
 
 ## Resources
 

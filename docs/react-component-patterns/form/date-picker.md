@@ -397,10 +397,11 @@ Guidelines for optimal date picker performance:
 
 Components commonly used with DatePicker:
 
-- [TimeRangePicker](/react-component-patterns/form/time-range-picker.md) - For time range selection
-- [DateRangePicker](/react-component-patterns/form/date-range-picker.md) - For date range selection
+- Time Range Picker - For time range selection
+- Date Range Picker - For date range selection
+- Calendar - For calendar display
 - [FormField](/react-component-patterns/form/form-field.md) - For field wrapper
-- [Calendar](/react-component-patterns/data/calendar.md) - For calendar display
+- [Input](/react-component-patterns/form/input.md) - For manual date input
 
 ## Resources
 
