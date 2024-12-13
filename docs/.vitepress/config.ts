@@ -295,12 +295,13 @@ export default defineConfig({
       { text: 'Examples', link: '/examples/' },
     ],
     sidebar: {
-      '/guide/': [
+      '/': [
         {
           text: 'Getting Started',
           items: [
             { text: 'Introduction', link: '/guide/getting-started' },
             { text: 'Configuration', link: '/guide/configuration' },
+            { text: 'Common Gotchas', link: '/guide/common-gotchas' },
           ],
         },
         {
