@@ -1,7 +1,7 @@
 ---
 title: Async Performance Guide
 description: Master performance optimization in asynchronous JavaScript. Learn about throttling, debouncing, caching, and performance best practices.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

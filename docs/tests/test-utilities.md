@@ -1,7 +1,7 @@
 ---
 title: TypeScript Test Utilities Guide
 description: Explore comprehensive test utilities and patterns in TypeScript. Learn about test factories, mock data generation, and testing best practices.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - TypeScript

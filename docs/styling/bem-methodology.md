@@ -1,7 +1,7 @@
 ---
 title: BEM Methodology Guide
 description: Learn the Block Element Modifier methodology for writing maintainable and scalable CSS. Master BEM naming conventions and best practices.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - CSS

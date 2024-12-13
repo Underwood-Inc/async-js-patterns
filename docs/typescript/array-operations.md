@@ -1,7 +1,7 @@
 ---
 title: TypeScript Array Operations Guide
 description: Master type-safe array operations in TypeScript. Learn about array manipulation, transformation patterns, and advanced array type utilities.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - TypeScript

@@ -1,7 +1,7 @@
 ---
 title: Parallel Tasks Examples
 description: Master parallel task execution in JavaScript. Learn about concurrent processing, task coordination, and performance optimization.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

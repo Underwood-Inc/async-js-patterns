@@ -1,7 +1,7 @@
 ---
 title: Promise.all Examples
 description: Master Promise.all usage in JavaScript. Learn about parallel promise execution, error handling, and performance optimization.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

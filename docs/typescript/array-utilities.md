@@ -1,7 +1,7 @@
 ---
 title: TypeScript Array Utilities Guide
 description: Explore comprehensive array utility functions and patterns in TypeScript. Learn about array manipulation, transformations, and advanced operations.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - TypeScript

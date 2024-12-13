@@ -1,7 +1,7 @@
 ---
 title: Batch Throttling Pattern Implementation
 description: Learn advanced batch throttling patterns for optimizing bulk operations. Master request batching, rate limiting, and efficient resource utilization.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Batch Processing

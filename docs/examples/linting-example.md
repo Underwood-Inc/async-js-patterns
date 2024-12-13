@@ -1,7 +1,7 @@
 ---
 title: Linting Examples
 description: Master code linting practices and configurations. Learn about code style enforcement and quality control automation.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

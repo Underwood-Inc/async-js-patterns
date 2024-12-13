@@ -1,7 +1,7 @@
 ---
 title: Node.js Optimization Examples
 description: Learn Node.js optimization techniques and patterns. Master performance tuning, memory management, and server-side optimizations.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Node.js

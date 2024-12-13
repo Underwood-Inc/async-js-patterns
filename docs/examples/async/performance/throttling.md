@@ -1,7 +1,7 @@
 ---
 title: Throttling Pattern Implementation
 description: Master throttling techniques for rate-limiting async operations. Learn how to control execution frequency and optimize performance.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Throttling

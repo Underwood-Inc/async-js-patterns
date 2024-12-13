@@ -1,7 +1,7 @@
 ---
 title: Custom Promise Usage Examples
 description: Learn how to create and use custom Promise implementations. Explore advanced Promise patterns and custom async behavior.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

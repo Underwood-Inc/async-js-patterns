@@ -1,7 +1,7 @@
 ---
 title: Async JavaScript Patterns
 description: Master asynchronous programming in JavaScript with comprehensive patterns and examples. Learn about Promises, async/await, error handling, and performance optimization.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Async JavaScript

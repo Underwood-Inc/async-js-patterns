@@ -1,7 +1,7 @@
 ---
 title: Throttling Examples
 description: Master throttling techniques in JavaScript. Learn about rate limiting, performance optimization, and controlled execution.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

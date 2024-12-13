@@ -1,7 +1,7 @@
 ---
 title: Promise.allSettled Examples
 description: Learn Promise.allSettled patterns in JavaScript. Master handling multiple promises with mixed success and failure states.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

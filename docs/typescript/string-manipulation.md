@@ -1,7 +1,7 @@
 ---
 title: TypeScript String Manipulation Guide
 description: Learn advanced string manipulation techniques in TypeScript. Master string transformations, pattern matching, and text processing.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - TypeScript

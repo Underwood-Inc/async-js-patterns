@@ -1,7 +1,7 @@
 ---
 title: Promise.any Examples
 description: Master Promise.any patterns in JavaScript. Learn about racing promises and handling the first successful resolution.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

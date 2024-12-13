@@ -1,7 +1,7 @@
 ---
 title: JavaScript Promise Patterns
 description: Deep dive into Promise patterns and best practices. Learn about Promise chaining, error handling, and advanced Promise combinators with practical examples.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - Promises

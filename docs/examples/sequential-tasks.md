@@ -1,7 +1,7 @@
 ---
 title: Sequential Tasks Examples
 description: Learn sequential task execution patterns in JavaScript. Master ordered task processing and dependency management.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - JavaScript

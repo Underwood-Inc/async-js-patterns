@@ -1,7 +1,7 @@
 ---
 title: TypeScript Template Literals Guide
 description: Master template literal types in TypeScript. Learn about type-safe string patterns, string manipulation, and advanced type system features.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - TypeScript

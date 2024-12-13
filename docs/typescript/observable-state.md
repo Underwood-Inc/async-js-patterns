@@ -1,7 +1,7 @@
 ---
 title: TypeScript Observable State Guide
 description: Learn how to implement observable state patterns in TypeScript. Master reactive programming, state observation, and change detection.
-date: 2024-01-01
+date: 2024-12-01
 author: Underwood Inc
 tags:
   - TypeScript
