@@ -48,7 +48,7 @@ function extractContentPreview(filePath: string, maxLength = 200): string {
   }
 }
 
-export default withMermaid(
+const config = withMermaid(
   defineConfig({
     title: siteName,
     description: siteDescription,
@@ -602,3 +602,6 @@ export default withMermaid(
     appearance: true,
   })
 );
+
+export { extractContentPreview };
+export default config;

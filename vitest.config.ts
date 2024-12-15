@@ -5,12 +5,14 @@ export default defineConfig({
   plugins: [vue()],
   test: {
     globals: true,
-    environment: 'happy-dom',
+    environment: 'node',
     include: [
       'src/**/*.{test,spec}.{js,ts}',
       'docs/.vitepress/theme/__tests__/**/*.{test,spec}.{js,ts}',
+      'docs/.vitepress/**/*.test.ts',
     ],
     coverage: {
+      provider: 'v8',
       reporter: ['text', 'json', 'html'],
       exclude: [
         'node_modules/',
