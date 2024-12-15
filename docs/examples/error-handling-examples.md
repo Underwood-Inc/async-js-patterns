@@ -19,7 +19,9 @@ This page demonstrates practical examples of implementing and using error handli
 
 ## Basic Error Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic error handling with custom errors
 class ApplicationError extends Error {
   constructor(
@@ -83,9 +85,13 @@ async function fetchUserData(userId: string): Promise<User> {
 }
 ```
 
+:::
+
 ## Advanced Error Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ErrorBoundary {
   private errorHandlers: Map<
     string,
@@ -163,9 +169,13 @@ try {
 }
 ```
 
+:::
+
 ## Real-World Example: API Error Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ApiErrorHandler {
   private retryableStatusCodes = new Set([
     408, // Request Timeout
@@ -345,11 +355,13 @@ try {
 }
 ```
 
+:::
+
 ## Best Practices
 
 1. Error aggregation:
 
-   ```typescript:preview
+   ```typescript
    class ErrorAggregator {
      private errors: ApplicationError[] = [];
 
@@ -396,7 +408,7 @@ try {
 
 2. Context preservation:
 
-   ```typescript:preview
+   ```typescript
    class ErrorContext {
      private context: Map<string, any> = new Map();
 
@@ -426,7 +438,7 @@ try {
 
 3. Error recovery:
 
-   ```typescript:preview
+   ```typescript
    class ErrorRecovery {
      private recoveryStrategies: Map<
        string,
@@ -468,7 +480,7 @@ try {
 
 4. Error monitoring:
 
-   ```typescript:preview
+   ```typescript
    class ErrorMonitor {
      private errorCounts: Map<string, number> = new Map();
      private errorThresholds: Map<string, number> = new Map();

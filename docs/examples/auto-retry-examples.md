@@ -19,7 +19,9 @@ This page demonstrates practical examples of implementing and using auto-retry p
 
 ## Basic Retry Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic retry with exponential backoff
 async function withRetry<T>(
   operation: () => Promise<T>,
@@ -89,9 +91,13 @@ try {
 }
 ```
 
+:::
+
 ## Advanced Retry Strategy
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class RetryStrategy {
   private attempts = 0;
   private totalDelay = 0;
@@ -206,9 +212,13 @@ try {
 }
 ```
 
+:::
+
 ## Real-World Example: Resilient API Client
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ResilientApiClient {
   private retryStrategies: Map<string, RetryStrategy> = new Map();
 
@@ -318,11 +328,13 @@ try {
 }
 ```
 
+:::
+
 ## Best Practices
 
 1. Circuit breaker pattern:
 
-   ```typescript:preview
+   ```typescript
    class CircuitBreaker {
      private failures = 0;
      private lastFailureTime = 0;
@@ -370,7 +382,7 @@ try {
 
 2. Retry with jitter:
 
-   ```typescript:preview
+   ```typescript
    function calculateDelay(attempt: number, options: RetryOptions): number {
      const baseDelay = Math.min(
        options.initialDelay * Math.pow(options.backoffFactor, attempt - 1),
@@ -385,7 +397,7 @@ try {
 
 3. Retry budget:
 
-   ```typescript:preview
+   ```typescript
    class RetryBudget {
      private retryCount = 0;
      private lastResetTime = Date.now();
@@ -417,7 +429,7 @@ try {
 
 4. Retry with fallback:
 
-   ```typescript:preview
+   ```typescript
    async function retryWithFallback<T>(
      primary: () => Promise<T>,
      fallback: () => Promise<T>,

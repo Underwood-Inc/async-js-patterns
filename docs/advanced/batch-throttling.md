@@ -78,7 +78,9 @@ Think of batch throttling like a postal service's mail sorting system:
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface BatchOptions<T, R> {
   maxBatchSize: number;
   maxWaitTime: number;
@@ -179,9 +181,13 @@ class BatchProcessor<T, R> {
 }
 ```
 
+:::
+
 ## Usage Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Example with API calls
 interface User {
   id: number;
@@ -213,6 +219,8 @@ Promise.all([user1Promise, user2Promise, user3Promise]).then((users) =>
   console.log('Fetched users:', users)
 );
 ```
+
+:::
 
 ## Key Concepts
 
@@ -247,7 +255,9 @@ Promise.all([user1Promise, user2Promise, user3Promise]).then((users) =>
 
 ## Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Test batch grouping
 const batchTest = async () => {
   let batchCount = 0;
@@ -299,9 +309,13 @@ const errorTest = async () => {
 };
 ```
 
+:::
+
 ## Advanced Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // With priority queues
 class PriorityBatchProcessor<T, R> extends BatchProcessor<T, R> {
   private highPriorityQueue: T[] = [];
@@ -349,3 +363,5 @@ priorityProcessor.addWithPriority(1, true);
 // Low priority request
 priorityProcessor.addWithPriority(2, false);
 ```
+
+:::

@@ -1,14 +1,37 @@
 import type { MarkdownRenderer } from 'vitepress';
 import { parseCode } from '../utils/parsers';
-import { typeColors, typeDefinitions } from '../utils/typeDefinitions';
+import { createParserTooltip } from '../utils/tooltips/parserInfo';
+import {
+  typeColors,
+  typeDefinitions,
+  TypeSignature,
+} from '../utils/typeDefinitions';
+import { processTooltips, applyTooltipsToCode } from '../utils/tooltipProcessor';
+import { logger, enableLogCategory, enableLogLevel, type LogCategory } from '../utils/logger';
+import container from 'markdown-it-container';
+
+// FILE USED DURING BUILD TIME, NOT DEV TIME
 
 // Debug control state
-let debugLoggingEnabled = false;
+let debugLoggingEnabled = true;
+
+// Configure logging - enable what we need for debugging
+enableLogCategory('tooltip', true);     // Enable tooltip processing logs
+enableLogCategory('markdown', true);    // Enable markdown processing logs
+enableLogCategory('dev', true);         // Enable general development logs
+enableLogCategory('performance', true); // Enable performance metrics
+
+// Enable all log levels in development
+enableLogLevel('debug', true);
+enableLogLevel('info', true);
+enableLogLevel('warn', true);
+enableLogLevel('error', true);
 
 // Function to toggle debug logging
 export function toggleDebugLogging(enable: boolean) {
   debugLoggingEnabled = enable;
-  console.log(`Debug logging ${enable ? 'enabled' : 'disabled'}`);
+  logger.enable(enable);
+  logger.info('system', `Debug logging ${enable ? 'enabled' : 'disabled'}`);
 }
 
 // Debug types
@@ -18,20 +41,44 @@ const DEBUG = {
   REGEX: true,
   HTML: true,
   PARSER: true,
+  TOOLTIP_PROCESSING: true,
+  ERROR: true,
+  SKIPPING: true,
+  SETUP: true,
 } as const;
 
 // Enhanced debug logging utility
-export function debugLog(type: keyof typeof DEBUG, ...args: any[]) {
-  if (debugLoggingEnabled && DEBUG[type]) {
-    console.group(`[CodePreview:${type}]`);
-    args.forEach((arg) => {
-      if (typeof arg === 'string') {
-        console.log(arg);
-      } else {
-        console.dir(arg, { depth: null });
-      }
-    });
-    console.groupEnd();
+export function debugLog(type: keyof typeof DEBUG, data: any) {
+  if (!debugLoggingEnabled || !DEBUG[type]) return;
+
+  // Route to appropriate section based on type
+  let category: LogCategory;
+  switch (type) {
+    case 'TOOLTIP_PROCESSING':
+      category = 'tooltip';
+      break;
+    case 'SETUP':
+    case 'SKIPPING':
+      category = 'build';
+      break;
+    case 'ERROR':
+      category = 'system';
+      break;
+    default:
+      category = 'dev';
+  }
+
+  // Log with appropriate level and category
+  if (typeof data === 'string') {
+    logger.debug(category, data);
+  } else if (data instanceof Error) {
+    logger.error(category, data.message, { error: data });
+  } else if (Array.isArray(data)) {
+    logger.debug(category, `${type} Array:`, { length: data.length, items: data });
+  } else if (typeof data === 'object') {
+    logger.debug(category, `${type} Object:`, data);
+  } else {
+    logger.debug(category, `${type}:`, { value: data });
   }
 }
 
@@ -46,139 +93,253 @@ function escapeHtml(unsafe: string | undefined): string {
     .replace(/'/g, '&#039;');
 }
 
-export function codePreviewPlugin(md: MarkdownRenderer) {
+function formatTypeSignature(signature: TypeSignature): string {
+  const typeParams = signature.typeParameters?.length
+    ? `<${signature.typeParameters.join(', ')}>`
+    : '';
+
+  const params = signature.parameters
+    ?.map((p) => `${p.name}${p.optional ? '?' : ''}: ${p.type}`)
+    .join(', ');
+
+  const returnType = signature.returnType ? `: ${signature.returnType}` : '';
+
+  return `${signature.name}${typeParams}(${params})${returnType}`;
+}
+
+interface CodePreviewOptions {
+  parseOptions?: {
+    reviver?: (key: string, value: any) => any;
+  };
+}
+
+function safeJSONParse(str: string) {
+  try {
+    // First try direct parse
+    return JSON.parse(str);
+  } catch (e) {
+    try {
+      // Handle TypeScript interface/type definitions
+      if (str.includes('```typescript')) {
+        return {
+          type: 'Type Signature',
+          color: {
+            text: '#666',
+            background: 'rgba(102, 102, 102, 0.1)',
+          },
+          description: str,
+        };
+      }
+
+      // Sanitize the string
+      let sanitized = str
+        // Handle single quotes
+        .replace(/'/g, '"')
+        // Handle newlines in strings
+        .replace(/\n/g, '\\n')
+        // Handle escaped quotes
+        .replace(/\\"/g, '\\\\"')
+        // Handle unescaped backslashes
+        .replace(/\\/g, '\\\\')
+        // Handle function arrows
+        .replace(/=>/g, "'=>'")
+        // Handle template literals
+        .replace(/`/g, '"')
+        // Handle special characters in strings
+        .replace(/[\u0000-\u001f\u007f-\u009f]/g, '')
+        // Handle trailing commas
+        .replace(/,\s*([\]}])/g, '$1')
+        // Handle code blocks with backticks
+        .replace(/```[\s\S]*?```/g, function (match) {
+          return JSON.stringify(match);
+        });
+
+      return JSON.parse(sanitized);
+    } catch (innerError) {
+      // Return a default object if all parsing attempts fail
+      return {
+        type: str,
+        color: {
+          text: '#666',
+          background: 'rgba(102, 102, 102, 0.1)',
+        },
+        description: 'No description available',
+      };
+    }
+  }
+}
+
+function safeJSONStringify(obj: any, options?: CodePreviewOptions) {
+  try {
+    const stringified = JSON.stringify(obj, options?.parseOptions?.reviver);
+    return stringified.replace(/"/g, "'"); // Convert back to single quotes for consistency
+  } catch (error) {
+    logger.warn('dev', 'JSON stringify error:', { error });
+    return '{}';
+  }
+}
+
+function isInTooltipContainer(element: Element): boolean {
+  logger.debug('tooltip', 'Checking tooltip container', {
+    element: element.tagName,
+    classes: element.classList.toString()
+  });
+
+  // Check if element is directly in a tooltip container
+  if (element.classList.contains('tooltip-container')) {
+    logger.debug('tooltip', 'Found tooltip container', {
+      element: element.tagName,
+      classes: element.classList.toString()
+    });
+    return true;
+  }
+
+  // Check parent elements
+  let parent = element.parentElement;
+  while (parent) {
+    if (parent.classList.contains('tooltip-container')) {
+      logger.debug('tooltip', 'Found tooltip container in parent', {
+        element: parent.tagName,
+        classes: parent.classList.toString()
+      });
+      return true;
+    }
+    parent = parent.parentElement;
+  }
+
+  logger.debug('tooltip', 'No tooltip container found');
+  return false;
+}
+
+// Add cache interface and cache map at the top of the file
+interface TooltipCacheEntry {
+  hash: string;
+  highlightedCode: string;
+  tooltipMap: Map<string, any>;
+  parserInfo: any;
+  timestamp: number;
+}
+
+const tooltipCache = new Map<string, TooltipCacheEntry>();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes TTL
+
+// Add hash function to generate unique keys for code blocks
+function generateHash(code: string, lang: string): string {
+  let str = code + lang;
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return hash.toString(36);
+}
+
+// Add cache cleanup function
+function cleanupCache() {
+  const now = Date.now();
+  for (const [key, entry] of tooltipCache.entries()) {
+    if (now - entry.timestamp > CACHE_TTL) {
+      tooltipCache.delete(key);
+    }
+  }
+}
+
+// Modify the codePreviewPlugin to use caching
+export function codePreviewPlugin(
+  md: MarkdownRenderer,
+  options: CodePreviewOptions = {}
+) {
+  toggleDebugLogging(true);
+
+  // Register the container with proper render functions
+  md.use(container, 'code-with-tooltips', {
+    validate: function(params: string) {
+      return params.trim() === 'code-with-tooltips';
+    },
+    render: function(tokens: any[], idx: number) {
+      if (tokens[idx].nesting === 1) {
+        // opening tag
+        return '<div class="code-with-tooltips vp-code-group">\n';
+      } else {
+        // closing tag
+        return '</div>\n';
+      }
+    }
+  });
+
   const originalFence = md.renderer.rules.fence!;
+
+  // Clean up cache periodically
+  setInterval(cleanupCache, CACHE_TTL);
 
   md.renderer.rules.fence = (...args) => {
     const [tokens, idx, options, env, self] = args;
     const token = tokens[idx];
+    const filePath = env.path || 'unknown';
 
-    const rawLang = token.info.trim();
-    const [lang, ...flags] = rawLang.split(':');
-    const isPreview = flags.includes('preview');
+    // Check if we're inside a code-with-tooltips container
+    const shouldProcessTooltips = tokens[idx].type === 'fence' && 
+      tokens.some((t, i) => i < idx && 
+        t.type === 'container_code-with-tooltips_open');
 
-    token.info = lang;
-    const highlightedCode = originalFence(tokens, idx, options, env, self);
-
-    if (!isPreview) {
-      return highlightedCode;
+    if (!shouldProcessTooltips) {
+      logger.debug('dev', 'Not in tooltip container', {
+        file: filePath,
+        tokenType: token.type
+      });
+      return originalFence(tokens, idx, options, env, self);
     }
 
-    let modifiedCode = highlightedCode;
-    const parseResult = parseCode(token.content, lang);
+    try {
+      const highlightedCode = originalFence(tokens, idx, options, env, self);
 
-    debugLog('TOKENS', 'Initial parse result:', {
-      tokens: parseResult.tokens,
-      errors: parseResult.errors,
-      highlightedCode,
-    });
+      logger.debug('dev', 'Processing tooltips', {
+        file: filePath,
+        tokenType: token.type,
+        inContainer: true,
+        tokenMap: token.map,
+        content: token.content.slice(0, 100) + '...'
+      });
 
-    // Track tooltips for each term
-    const tooltipMap = new Map<
-      string,
-      { errors: Set<string>; info: Set<string> }
-    >();
+      // Process tooltips
+      const { parseResult, tooltipMap, parserInfo } = processTooltips(token.content, token.info);
 
-    // Process errors first to ensure they're preserved
-    parseResult.errors?.forEach((error) => {
-      if (!error?.text) return;
-      const term = error.text;
-      const escapedError = escapeHtml(error.error);
-      if (!escapedError) return;
+      logger.debug('dev', 'Tooltip processing results', {
+        parseResult,
+        tooltipCount: tooltipMap.size,
+        parserInfo
+      });
 
-      if (!tooltipMap.has(term)) {
-        tooltipMap.set(term, { errors: new Set(), info: new Set() });
-      }
-      tooltipMap.get(term)!.errors.add(`error:::${escapedError}`);
-    });
+      let modifiedCode = highlightedCode;
 
-    // Process regular type tooltips
-    parseResult.tokens.forEach((tokenInfo) => {
-      const term = tokenInfo?.text;
-      const info = term ? typeDefinitions[term] : undefined;
-
-      if (!info) {
-        // console.log('No type definition found for term:', term);
-        return;
+      // Add tooltips and other features
+      if (tooltipMap.size > 0) {
+        modifiedCode = applyTooltipsToCode(modifiedCode, tooltipMap);
+        logger.debug('dev', 'Applied tooltips to code', {
+          tooltipCount: tooltipMap.size,
+          modifiedCodePreview: modifiedCode.slice(0, 100) + '...'
+        });
       }
 
-      if (!tooltipMap.has(term)) {
-        tooltipMap.set(term, { errors: new Set(), info: new Set() });
-      }
+      return `<div class="code-block-wrapper vp-code" data-code-tooltips="true"><div class="code-block-content">${modifiedCode}</div></div>`;
 
-      // Format the tooltip content with type information
-      const typeInfo = {
-        type: info.type || 'unknown',
-        color:
-          info.type && typeColors[info.type as keyof typeof typeColors]
-            ? typeColors[info.type as keyof typeof typeColors]
-            : { text: '#666', background: 'rgba(102, 102, 102, 0.1)' },
-      };
-
-      const tooltipContent = encodeURIComponent(
-        JSON.stringify({
-          type: typeInfo.type,
-          color: typeInfo.color,
-          description: info.description || 'No description available',
-        })
-      );
-
-      tooltipMap
-        .get(term)!
-        .info.add(`info:::${typeInfo.type}\ntype:${tooltipContent}`);
-    });
-
-    // Apply tooltips
-    tooltipMap.forEach(({ errors, info }, term) => {
-      const termPattern = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(
-        `(<span[^>]*?>)([^<]*?\\b)(${termPattern})\\b([^<]*?)(</span>)`,
-        'g'
-      );
-
-      // Add test messages for each type
-      const testMessages = [
-        'error:::This is a test error message',
-        'warning:::This is a test warning message',
-        'info:::This is a test info message',
-        'success:::This is a test success message',
-      ];
-
-      const combinedContent = [
-        ...Array.from(errors),
-        ...Array.from(info).map((infoStr) => {
-          if (!infoStr || !infoStr.includes('type:')) return infoStr;
-
-          try {
-            const [desc, typeInfoStr] = infoStr
-              .split('type:')
-              .map((s) => s.trim());
-            const typeInfo = JSON.parse(decodeURIComponent(typeInfoStr));
-
-            if (!typeInfo || typeof typeInfo !== 'object') {
-              console.log('Invalid typeInfo:', typeInfoStr);
-              return infoStr;
-            }
-
-            return `${desc}\ntype:${encodeURIComponent(JSON.stringify(typeInfo))}`;
-          } catch (error) {
-            console.error('Error processing type info:', error);
-            return infoStr;
-          }
-        }),
-      ].join('|||');
-
-      modifiedCode = modifiedCode.replace(
-        regex,
-        (match, spanStart, before, term, after, spanEnd) => {
-          const hasError = errors.size > 0;
-          return `${spanStart}${before}<span class="tooltip-trigger ${
-            hasError ? 'has-error' : ''
-          }" data-tooltip="${combinedContent}">${term}</span>${after}${spanEnd}`;
+    } catch (error: unknown) {
+      logger.error('dev', 'Failed to process code block', {
+        file: filePath,
+        line: token.map?.[0],
+        error: error instanceof Error ? {
+          message: error.message,
+          stack: error.stack,
+          name: error.name
+        } : String(error),
+        token: {
+          type: token.type,
+          map: token.map,
+          contentPreview: token.content.slice(0, 100) + '...'
         }
-      );
-    });
-
-    return `<div class="code-preview">${modifiedCode}</div>`;
+      });
+      return originalFence(tokens, idx, options, env, self);
+    }
   };
 }

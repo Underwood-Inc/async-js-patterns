@@ -20,7 +20,9 @@ Learn how to use `Promise.allSettled` for handling multiple promises regardless 
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic usage with mixed results
 async function fetchMultipleUrlsSafely(urls: string[]) {
   const results = await Promise.allSettled(urls.map((url) => fetch(url)));
@@ -51,11 +53,15 @@ async function processItemsWithStatus<T, R>(
 }
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### Batch Processing with Results Analysis
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface ProcessingResult<T, R> {
   successful: { input: T; output: R }[];
   failed: { input: T; error: Error }[];
@@ -109,9 +115,13 @@ async function processBatchWithAnalysis<T, R>(
 }
 ```
 
+:::
+
 ### Retry Failed Operations
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 async function retryFailedOperations<T, R>(
   items: T[],
   processor: (item: T) => Promise<R>,
@@ -161,9 +171,13 @@ async function retryFailedOperations<T, R>(
 }
 ```
 
+:::
+
 ### Progress Tracking
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface ProgressUpdate<T> {
   completed: number;
   total: number;
@@ -213,3 +227,5 @@ async function processWithProgress<T, R>(
   };
 }
 ```
+
+:::

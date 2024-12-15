@@ -25,7 +25,9 @@ Type-safe arrays ensure that array operations maintain type safety and prevent r
 
 ### Array Type Declarations
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Array type syntax
 const numbers: number[] = [1, 2, 3];
 const strings: Array<string> = ['a', 'b', 'c'];
@@ -39,9 +41,13 @@ const tuple: [string, number] = ['age', 25];
 const namedTuple: [name: string, age: number] = ['John', 30];
 ```
 
+:::
+
 ### Array Type Inference
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Inferred array types
 const inferredNumbers = [1, 2, 3]; // number[]
 const inferredStrings = ['a', 'b', 'c']; // string[]
@@ -52,11 +58,15 @@ const constArray = [1, 2, 3] as const; // readonly [1, 2, 3]
 const constTuple = ['name', 42] as const; // readonly ['name', 42]
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### Type-Safe Array Operations
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Type-safe array methods
 function typeSafeMap<T, U>(
   array: ReadonlyArray<T>,
@@ -81,9 +91,13 @@ function typeSafeReduce<T, U>(
 }
 ```
 
+:::
+
 ### Array Type Guards
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function isNonEmpty<T>(arr: T[]): arr is [T, ...T[]] {
   return arr.length > 0;
 }
@@ -105,9 +119,13 @@ function processNumbers(arr: unknown) {
 }
 ```
 
+:::
+
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Domain types
 interface Task {
   id: string;
@@ -267,6 +285,8 @@ const taskTitles = taskList.map((task) => task.title);
 const incompleteTasks = taskList.filter((task) => !task.completed);
 const tagCount = taskList.reduce((acc, task) => acc + task.tags.length, 0);
 ```
+
+:::
 
 ## Best Practices
 

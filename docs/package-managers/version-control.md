@@ -20,7 +20,9 @@ Lock files ensure dependency tree consistency across different environments by:
 
 ### Lock Files by Package Manager
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # npm
 package-lock.json
 
@@ -34,11 +36,15 @@ pnpm-lock.yaml
 bun.lockb
 ```
 
+:::
+
 ## Git Configuration
 
 ### .gitignore
 
-```gitignore:preview
+::: code-with-tooltips
+
+```plaintext
 # Dependencies
 node_modules/
 .pnp.*
@@ -69,9 +75,13 @@ dist/
 build/
 ```
 
+:::
+
 ### What to Commit
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Always commit
 package.json
 package-lock.json
@@ -87,11 +97,15 @@ node_modules/
 .env
 ```
 
+:::
+
 ## Version Control Strategies
 
 ### Semantic Versioning
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "version": "MAJOR.MINOR.PATCH",
   "dependencies": {
@@ -103,9 +117,13 @@ node_modules/
 }
 ```
 
+:::
+
 ### Version Constraints
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "engines": {
     "node": ">=14.0.0",
@@ -115,11 +133,15 @@ node_modules/
 }
 ```
 
+:::
+
 ## Monorepo Strategies
 
 ### Workspace Configuration
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # pnpm-workspace.yaml
 packages:
   - 'packages/*'
@@ -127,16 +149,24 @@ packages:
   - '!**/test/**'
 ```
 
-```json:preview
+:::
+
+::: code-with-tooltips
+
+```json
 // package.json (Yarn/npm)
 {
   "workspaces": ["packages/*", "apps/*"]
 }
 ```
 
+:::
+
 ### Version Management
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "private": true,
   "workspaces": ["packages/*"],
@@ -147,13 +177,17 @@ packages:
 }
 ```
 
+:::
+
 ## CI/CD Integration
 
 ### Cache Configuration
 
 #### GitHub Actions
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 - uses: actions/cache@v3
   with:
     path: |
@@ -164,9 +198,13 @@ packages:
     key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
 ```
 
+:::
+
 #### GitLab CI
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 cache:
   key:
     files:
@@ -178,9 +216,13 @@ cache:
     - .yarn/cache/
 ```
 
+:::
+
 ### Clean Installs
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # npm
 npm ci
 
@@ -193,6 +235,8 @@ pnpm install --frozen-lockfile
 # bun
 bun install --frozen-lockfile
 ```
+
+:::
 
 ## Best Practices
 
@@ -228,7 +272,9 @@ bun install --frozen-lockfile
 
 ### Package Updates
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # 1. Create branch
 git checkout -b update-dependencies
 
@@ -246,9 +292,13 @@ git commit -m "chore: update dependencies"
 git push origin update-dependencies
 ```
 
+:::
+
 ### Breaking Changes
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # 1. Document changes
 git checkout -b breaking-change
 
@@ -265,11 +315,15 @@ git commit -m "feat!: upgrade package-name to v2"
 git push origin breaking-change
 ```
 
+:::
+
 ## Troubleshooting
 
 ### Lock File Conflicts
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Reset lock file
 rm package-lock.json
 npm install
@@ -278,9 +332,13 @@ npm install
 npm install --force
 ```
 
+:::
+
 ### Workspace Issues
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Clean install
 rm -rf node_modules
 npm install
@@ -290,11 +348,49 @@ npm run clean
 npm install
 ```
 
+:::
+
 ### Cache Problems
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Clear all caches
 npm cache clean --force
 yarn cache clean
 pnpm store prune
 ```
+
+:::
+
+<script setup>
+import { ref, computed } from 'vue';
+
+// Provide default values
+const defaultOs = {
+  type: 'unknown',
+  version: 'unknown'
+};
+
+// Safely compute OS information
+const os = computed(() => {
+  try {
+    return window?.navigator?.platform ? {
+      type: window.navigator.platform,
+      version: window.navigator.userAgent
+    } : defaultOs;
+  } catch {
+    return defaultOs;
+  }
+});
+</script>
+
+<template>
+  <div class="version-control">
+    <!-- Use optional chaining and provide fallbacks -->
+    <div class="os-info">
+      Operating System: {{ os?.type || 'Unknown' }}
+    </div>
+    <!-- Rest of your content -->
+  </div>
+</template>

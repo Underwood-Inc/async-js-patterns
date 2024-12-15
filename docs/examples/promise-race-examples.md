@@ -19,7 +19,9 @@ This page demonstrates practical examples of using `Promise.race` for competitiv
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic timeout example
 async function fetchWithTimeout<T>(url: string, timeout: number): Promise<T> {
   return Promise.race([
@@ -43,9 +45,13 @@ try {
 }
 ```
 
+:::
+
 ## Multiple Data Sources
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Fetching from multiple sources, using the fastest response
 async function fetchFromMirrors<T>(urls: string[]): Promise<T> {
   const fetchPromises = urls.map(async (url) => {
@@ -84,9 +90,13 @@ try {
 }
 ```
 
+:::
+
 ## Resource Management
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Managing resource allocation with timeouts
 class ResourcePool {
   private resources: Set<Resource> = new Set();
@@ -131,9 +141,13 @@ class ResourcePool {
 }
 ```
 
+:::
+
 ## User Interaction Timeouts
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Handling user interaction with timeouts
 class UserInteractionHandler {
   async waitForUserAction(prompt: string, timeoutMs: number): Promise<boolean> {
@@ -167,9 +181,13 @@ class UserInteractionHandler {
 }
 ```
 
+:::
+
 ## Real-World Example: Service Discovery
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ServiceDiscovery {
   private registries: string[];
   private cache: Map<string, ServiceInfo> = new Map();
@@ -249,11 +267,13 @@ try {
 }
 ```
 
+:::
+
 ## Best Practices
 
 1. Always include timeouts:
 
-   ```typescript:preview
+   ```typescript
    function withTimeout<T>(
      promise: Promise<T>,
      ms: number,
@@ -268,7 +288,7 @@ try {
 
 2. Handle errors appropriately:
 
-   ```typescript:preview
+   ```typescript
    Promise.race(promises)
      .then(handleSuccess)
      .catch((error) => {
@@ -282,7 +302,7 @@ try {
 
 3. Clean up resources:
 
-   ```typescript:preview
+   ```typescript
    let cleanup: (() => void) | null = null;
 
    try {
@@ -301,7 +321,7 @@ try {
 
 4. Consider cancellation:
 
-   ```typescript:preview
+   ```typescript
    class CancellableOperation {
      private abortController = new AbortController();
 

@@ -23,16 +23,22 @@ This guide covers modern SCSS patterns and best practices for maintainable and s
 
 ### Module System
 
-```scss:preview
+::: code-with-tooltips
+
+```scss
 // Modern @use instead of @import
 @use 'sass:color';
 @use 'sass:math';
 @use './variables' as *;
 ```
 
+:::
+
 ### Variables and Maps
 
-```scss:preview
+::: code-with-tooltips
+
+```scss
 // _variables.scss
 $colors: (
   'primary': #9d8cd6,
@@ -48,9 +54,13 @@ $breakpoints: (
 );
 ```
 
+:::
+
 ### Color Functions
 
-```scss:preview
+::: code-with-tooltips
+
+```scss
 // Modern color manipulation
 .element {
   // Instead of darken()
@@ -64,9 +74,13 @@ $breakpoints: (
 }
 ```
 
+:::
+
 ### Mixins and Functions
 
-```scss:preview
+::: code-with-tooltips
+
+```scss
 // Responsive mixins
 @mixin respond-to($breakpoint) {
   @if map.has-key($breakpoints, $breakpoint) {
@@ -91,11 +105,15 @@ $breakpoints: (
 }
 ```
 
+:::
+
 ## Architecture Patterns
 
 ### 7-1 Pattern
 
-```plaintext:preview
+::: code-with-tooltips
+
+```plaintext
 styles/
 |– abstracts/
 |   |– _variables.scss    # Variables
@@ -131,11 +149,15 @@ styles/
 |– main.scss             # Main file
 ```
 
+:::
+
 ## Best Practices
 
 ### 1. Use Modern Module System
 
-```scss:preview
+::: code-with-tooltips
+
+```scss
 // ❌ Avoid @import
 @import 'variables';
 
@@ -143,9 +165,13 @@ styles/
 @use 'variables' as *;
 ```
 
+:::
+
 ### 2. Namespace Variables
 
-```scss:preview
+::: code-with-tooltips
+
+```scss
 // ❌ Global variables
 $color: blue;
 
@@ -156,9 +182,13 @@ $button: (
 );
 ```
 
+:::
+
 ### 3. BEM Naming Convention
 
-```scss:preview
+::: code-with-tooltips
+
+```scss
 // Block
 .card {
   // Element
@@ -171,9 +201,13 @@ $button: (
 }
 ```
 
+:::
+
 ### 4. Mobile-First Approach
 
-```scss:preview
+::: code-with-tooltips
+
+```scss
 .container {
   width: 100%; // Mobile first
 
@@ -187,9 +221,13 @@ $button: (
 }
 ```
 
+:::
+
 ### 5. CSS Custom Properties Integration
 
-```scss:preview
+::: code-with-tooltips
+
+```scss
 :root {
   --color-primary: #{$primary-color};
   --spacing-unit: #{$spacing};
@@ -201,9 +239,13 @@ $button: (
 }
 ```
 
+:::
+
 ### 6. Performance Considerations
 
-```scss:preview
+::: code-with-tooltips
+
+```scss
 // ❌ Avoid deep nesting
 .header {
   .nav {
@@ -226,11 +268,15 @@ $button: (
 }
 ```
 
+:::
+
 ## Tools and Linting
 
 ### Stylelint Configuration
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "extends": "stylelint-config-standard-scss",
   "rules": {
@@ -240,6 +286,8 @@ $button: (
   }
 }
 ```
+
+:::
 
 ## References
 

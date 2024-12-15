@@ -40,7 +40,9 @@ Common causes of memory leaks include:
 
 Consider a web application that processes large datasets. Proper memory management ensures that memory is released after processing, preventing leaks.
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class DataProcessor {
   private data: any[];
 
@@ -55,11 +57,15 @@ class DataProcessor {
 }
 ```
 
+:::
+
 ### Common Pitfalls
 
 1. **Unintentional Global Variables**
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // ❌ Bad: Creates a global variable
 function processData() {
   data = fetchData();
@@ -71,15 +77,21 @@ function processData() {
 }
 ```
 
+:::
+
 2. **Forgotten Event Listeners**
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // ❌ Bad: Event listener not removed
 element.addEventListener('click', handler);
 
 // ✅ Good: Remove event listener when no longer needed
 element.removeEventListener('click', handler);
 ```
+
+:::
 
 ## Best Practices
 

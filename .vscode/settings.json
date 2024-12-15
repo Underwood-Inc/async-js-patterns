@@ -1,5 +1,5 @@
 {
-  "editor.formatOnSave": true,
+    "terminal.integrated.scrollback": 10000,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.fixAll.markdownlint": "explicit"
@@ -21,15 +21,14 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "jest.autoRun": "off",
   "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit",
-      "source.fixAll.markdownlint": "explicit"
+      "source.fixAll.eslint": "never",
+      "source.fixAll.markdownlint": "never"
     }
   },
   "markdownlint.config": {
     "default": true,
     "MD013": { "line_length": 250, "code_blocks": false, "tables": false }
-  }
+  },
+  "cSpell.words": ["shiki"]
 }

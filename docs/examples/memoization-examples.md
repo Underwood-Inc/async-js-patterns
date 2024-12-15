@@ -19,7 +19,9 @@ This page demonstrates practical examples of implementing and using memoization 
 
 ## Basic Memoization
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic memoize implementation
 function memoize<T extends (...args: any[]) => any>(
   func: T,
@@ -78,9 +80,13 @@ console.log(expensiveOperation(5)); // Computes
 console.log(expensiveOperation(5)); // Uses cache
 ```
 
+:::
+
 ## Advanced Memoization
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class MemoizedFunction<T extends (...args: any[]) => any> {
   private cache: Map<
     string,
@@ -195,9 +201,13 @@ console.log(memoizedFib.execute(10));
 console.log(memoizedFib.getCacheStats());
 ```
 
+:::
+
 ## Real-World Example: API Response Caching
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class CachedApiClient {
   private memoizedRequests: Map<string, MemoizedFunction<any>> = new Map();
 
@@ -324,11 +334,13 @@ const freshUsers = await apiClient.request<User[]>('/users', {
 console.log('Cache stats:', apiClient.getCacheStats());
 ```
 
+:::
+
 ## Best Practices
 
 1. Async memoization:
 
-   ```typescript:preview
+   ```typescript
    class AsyncMemoized<T extends (...args: any[]) => Promise<any>> {
      private cache = new Map<string, Promise<ReturnType<T>>>();
      private pending = new Set<string>();
@@ -370,7 +382,7 @@ console.log('Cache stats:', apiClient.getCacheStats());
 
 2. Weak reference caching:
 
-   ```typescript:preview
+   ```typescript
    class WeakMemoized<T extends (...args: any[]) => any> {
      private cache = new WeakMap<object, ReturnType<T>>();
 
@@ -388,7 +400,7 @@ console.log('Cache stats:', apiClient.getCacheStats());
 
 3. Composite key generation:
 
-   ```typescript:preview
+   ```typescript
    class CompositeKeyMemoized<T extends (...args: any[]) => any> {
      private cache = new Map<string, ReturnType<T>>();
 
@@ -415,7 +427,7 @@ console.log('Cache stats:', apiClient.getCacheStats());
 
 4. Selective caching:
 
-   ```typescript:preview
+   ```typescript
    class SelectiveMemoized<T extends (...args: any[]) => any> {
      private cache = new Map<string, ReturnType<T>>();
 

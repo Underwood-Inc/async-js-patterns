@@ -19,7 +19,9 @@ This page demonstrates practical examples of using our custom Promise implementa
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Creating and using a custom Promise
 const myPromise = new CustomPromise<string>((resolve, reject) => {
   setTimeout(() => {
@@ -37,9 +39,13 @@ myPromise
   .catch((error) => console.error(error));
 ```
 
+:::
+
 ## Chaining Operations
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Example of promise chaining
 const fetchUserData = (userId: string) =>
   new CustomPromise<User>((resolve) => {
@@ -65,9 +71,13 @@ fetchUserData('123')
   .catch((error) => console.error('Error:', error));
 ```
 
+:::
+
 ## Error Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Demonstrating error propagation
 const validateUser = (user: User) =>
   new CustomPromise<User>((resolve, reject) => {
@@ -92,9 +102,13 @@ const processUser = (user: User) =>
     });
 ```
 
+:::
+
 ## Async/Await Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Using custom Promise with async/await
 async function processUserData(userId: string) {
   try {
@@ -109,9 +123,13 @@ async function processUserData(userId: string) {
 }
 ```
 
+:::
+
 ## Real-World Example: API Client
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class APIClient {
   private baseUrl: string;
 
@@ -166,9 +184,13 @@ async function example() {
 }
 ```
 
+:::
+
 ## Testing Custom Promises
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Example of testing promise behavior
 describe('CustomPromise', () => {
   it('should resolve with correct value', (done) => {
@@ -196,17 +218,19 @@ describe('CustomPromise', () => {
 });
 ```
 
+:::
+
 ## Best Practices
 
 1. Always handle rejections:
 
-   ```typescript:preview
+   ```typescript
    myPromise.then(handleSuccess).catch(handleError).finally(cleanup);
    ```
 
 2. Use TypeScript for better type safety:
 
-   ```typescript:preview
+   ```typescript
    const typedPromise = new CustomPromise<User>((resolve) => {
      resolve({ id: '1', name: 'John' });
    });
@@ -214,7 +238,7 @@ describe('CustomPromise', () => {
 
 3. Chain promises appropriately:
 
-   ```typescript:preview
+   ```typescript
    // Good
    return promise.then(transform1).then(transform2);
 
@@ -226,7 +250,7 @@ describe('CustomPromise', () => {
 
 4. Proper error propagation:
 
-   ```typescript:preview
+   ```typescript
    promise
      .then((value) => {
        if (!value) throw new Error('Invalid value');

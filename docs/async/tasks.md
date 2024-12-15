@@ -22,7 +22,9 @@ Learn how to effectively manage multiple asynchronous tasks in JavaScript.
 
 Execute tasks one after another:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 async function runSequentially<T>(tasks: (() => Promise<T>)[]): Promise<T[]> {
   const results: T[] = [];
   for (const task of tasks) {
@@ -41,11 +43,15 @@ const tasks = [
 const results = await runSequentially(tasks);
 ```
 
+:::
+
 ## Parallel Tasks
 
 Execute tasks concurrently with control:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 async function runParallel<T>(
   tasks: (() => Promise<T>)[],
   maxConcurrent = Infinity
@@ -80,11 +86,15 @@ const tasks = urls.map(url => () => fetch(url));
 const results = await runParallel(tasks, 3); // Max 3 concurrent tasks
 ```
 
+:::
+
 ## Task Batching
 
 Process tasks in batches:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 async function processBatch<T, R>(
   items: T[],
   batchSize: number,
@@ -114,11 +124,15 @@ const users = await processBatch(
 );
 ```
 
+:::
+
 ## Task Cancellation
 
 Implement cancellable tasks:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface CancellableTask<T> {
   promise: Promise<T>;
   cancel: () => void;
@@ -167,11 +181,15 @@ const task = createCancellableTask(async () => {
 setTimeout(() => task.cancel(), 5000);
 ```
 
+:::
+
 ## Task Queue
 
 Implement a task queue with priorities:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface QueuedTask<T> {
   task: () => Promise<T>;
   priority: number;
@@ -226,6 +244,8 @@ queue.enqueue(
   0 // Normal priority
 );
 ```
+
+:::
 
 ## Best Practices
 

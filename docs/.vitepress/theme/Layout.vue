@@ -13,6 +13,7 @@
     </template>
     <template #layout-bottom>
       <CustomFooter />
+      <DebugControls />
     </template>
   </DefaultTheme.Layout>
 </template>
@@ -23,6 +24,7 @@ import { useData } from 'vitepress'
 import FavoriteButton from './components/FavoriteButton.vue'
 import AnimatedBackground from './components/AnimatedBackground.vue'
 import CustomFooter from './components/CustomFooter.vue'
+import DebugControls from './components/DebugControls.vue'
 import './styles/favorites.scss'
 
 const { page, frontmatter } = useData()

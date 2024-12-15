@@ -19,7 +19,9 @@ This page demonstrates practical examples of implementing and using batch thrott
 
 ## Basic Batch Processor
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic batch processor with throttling
 class BatchProcessor<T, R> {
   private queue: T[] = [];
@@ -105,9 +107,13 @@ const results = await Promise.all([
 ]);
 ```
 
+:::
+
 ## Advanced Batch Throttling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ThrottledBatchProcessor<T, R> {
   private queue: Array<{
     item: T;
@@ -225,9 +231,13 @@ const batchProcessor = new ThrottledBatchProcessor(
 );
 ```
 
+:::
+
 ## Real-World Example: Rate-Limited API Client
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class RateLimitedApiClient {
   private batchProcessor: ThrottledBatchProcessor<ApiRequest, ApiResponse>;
   private rateLimits: Map<string, RateLimit> = new Map();
@@ -392,11 +402,13 @@ const [users, posts] = await Promise.all([
 ]);
 ```
 
+:::
+
 ## Best Practices
 
 1. Dynamic batch sizing:
 
-   ```typescript:preview
+   ```typescript
    class DynamicBatchSizer {
      private successRates: number[] = [];
      private currentSize: number;
@@ -444,7 +456,7 @@ const [users, posts] = await Promise.all([
 
 2. Priority queuing:
 
-   ```typescript:preview
+   ```typescript
    class PriorityBatchProcessor<T> {
      private queues: Map<Priority, T[]> = new Map();
 
@@ -483,7 +495,7 @@ const [users, posts] = await Promise.all([
 
 3. Resource monitoring:
 
-   ```typescript:preview
+   ```typescript
    class ResourceAwareBatchProcessor<T> {
      private readonly monitor = new ResourceMonitor();
 
@@ -512,7 +524,7 @@ const [users, posts] = await Promise.all([
 
 4. Circuit breaking:
 
-   ```typescript:preview
+   ```typescript
    class BatchCircuitBreaker {
      private failures = 0;
      private lastFailureTime = 0;

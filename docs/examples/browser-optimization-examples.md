@@ -19,7 +19,9 @@ This page demonstrates practical examples of optimizing asynchronous operations 
 
 ## DOM Batch Processing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Efficient DOM batch updates
 class DOMBatchProcessor {
   private queue: Array<() => void> = [];
@@ -70,9 +72,13 @@ function updateElements(elements: HTMLElement[]): void {
 }
 ```
 
+:::
+
 ## Intersection Observer
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class LazyLoader {
   private observer: IntersectionObserver;
   private loadQueue: Map<Element, () => Promise<void>> = new Map();
@@ -158,9 +164,13 @@ document.querySelectorAll('[data-component]').forEach((element) => {
 });
 ```
 
+:::
+
 ## Web Worker Task Queue
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class WorkerTaskQueue {
   private worker: Worker;
   private tasks: Map<
@@ -274,9 +284,13 @@ const filteredData = await taskQueue.execute<ImageData>(
 );
 ```
 
+:::
+
 ## Real-World Example: Virtual Scrolling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class VirtualScroller {
   private container: HTMLElement;
   private itemHeight: number;
@@ -420,11 +434,13 @@ setTimeout(() => {
 }, 5000);
 ```
 
+:::
+
 ## Best Practices
 
 1. Frame timing:
 
-   ```typescript:preview
+   ```typescript
    class FrameScheduler {
      private callbacks = new Set<() => void>();
      private running = false;
@@ -461,7 +477,7 @@ setTimeout(() => {
 
 2. Memory management:
 
-   ```typescript:preview
+   ```typescript
    class DOMRecycler<T> {
      private pool: HTMLElement[] = [];
      private inUse = new Set<HTMLElement>();
@@ -508,7 +524,7 @@ setTimeout(() => {
 
 3. Event delegation:
 
-   ```typescript:preview
+   ```typescript
    class EventDelegator {
      private handlers: Map<string, Map<string, Set<EventListener>>> = new Map();
 
@@ -569,7 +585,7 @@ setTimeout(() => {
 
 4. Idle scheduling:
 
-   ```typescript:preview
+   ```typescript
    class IdleTaskScheduler {
      private tasks: Array<{
        task: () => void;

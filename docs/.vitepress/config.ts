@@ -2,11 +2,23 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { fileURLToPath, URL } from 'node:url';
 import { resolve } from 'path';
+import { getHighlighter, Highlighter, Lang } from 'shiki';
 import { defineConfig } from 'vitepress';
 import { readingTime } from './plugins/readingTime';
 import { typescriptPlugin } from './plugins/typescript';
 import { codePreviewPlugin } from './theme/markdown/codePreview';
 import { withMermaid } from 'vitepress-plugin-mermaid';
+import {
+  processTooltips,
+  applyTooltipsToCode,
+} from './theme/utils/tooltipProcessor';
+import container from 'markdown-it-container';
+import { debugLog, toggleDebugLogging } from './theme/markdown/codePreview';
+import { codeTooltipsPlugin } from './theme/markdown/codeTooltips';
+import { performanceLogger } from './theme/utils/performanceLogger';
+import type { MarkdownRenderer, MarkdownEnv } from 'vitepress';
+import type Token from 'markdown-it/lib/token';
+import { setupLogServer } from './theme/utils/logServer';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
@@ -18,6 +30,37 @@ const siteUrl = 'https://underwood-inc.github.io/web-patterns';
 const defaultImage = '/web-patterns/social-preview.png';
 const twitterHandle = 'tetrawhispers';
 const siteImage = defaultImage;
+
+// Create a singleton highlighter instance
+let highlighterInstance: Highlighter | null = null;
+async function getHighlighterInstance() {
+  if (!highlighterInstance) {
+    highlighterInstance = await getHighlighter({
+      themes: ['github-dark', 'github-light'],
+      langs: [
+        'typescript',
+        'javascript',
+        'json',
+        'bash',
+        'markdown',
+        'tsx',
+        'scss',
+        'css',
+        'html',
+        'python',
+      ],
+    });
+  }
+  return highlighterInstance;
+}
+
+// Cleanup function for the highlighter
+function disposeHighlighter() {
+  if (highlighterInstance) {
+    highlighterInstance.dispose();
+    highlighterInstance = null;
+  }
+}
 
 // Function to extract content preview from markdown
 function extractContentPreview(filePath: string, maxLength = 200): string {
@@ -48,6 +91,24 @@ function extractContentPreview(filePath: string, maxLength = 200): string {
   }
 }
 
+const languages: Lang[] = [
+  'typescript',
+  'javascript',
+  'json',
+  'bash',
+  'markdown',
+  'tsx',
+  'scss',
+  'css',
+  'html',
+  'python',
+];
+
+interface TokenWithEnv extends Token {
+  env?: Partial<MarkdownEnv> & { inCode?: boolean };
+  nesting: 1 | 0 | -1;
+}
+
 export default withMermaid(
   defineConfig({
     title: siteName,
@@ -60,6 +121,9 @@ export default withMermaid(
       // Ignore all react-component-patterns links
       /\/react-component-patterns\/.*/,
       /\.\/component-[a-z]/,
+      /^\.\/component-a/,
+      /^\.\/component-b/,
+      /^\.\/component-c/,
     ],
 
     transformPageData(pageData) {
@@ -241,28 +305,261 @@ export default withMermaid(
         dark: 'github-dark',
       },
       lineNumbers: true,
-      config: (md) => {
-        md.use(readingTime);
-        md.use(typescriptPlugin);
-        md.use(codePreviewPlugin);
+      languages: languages,
+      config: async (md) => {
+        // Enable debug logging in development
+        if (process.env.NODE_ENV === 'development') {
+          debugLog('SETUP', 'Enabling debug logging for development');
+          toggleDebugLogging(true);
+        }
+
+        codeTooltipsPlugin(md);
+
+        // Use the singleton highlighter instance
+        const highlighter = await getHighlighterInstance();
+
+        const originalFence = md.renderer.rules.fence!;
+        md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+          const token = tokens[idx];
+          const filePath = env.path || 'unknown';
+          const originalContent = token.content;
+
+          // Check if we're inside a code-with-tooltips container
+          const isInTooltipContainer = tokens.some(
+            (t, i) => i < idx && t.type === 'container_code-with-tooltips_open'
+          );
+
+          if (!isInTooltipContainer) {
+            debugLog('SKIPPING', {
+              reason: 'not in tooltip container',
+              file: filePath,
+            });
+            return originalFence(tokens, idx, options, env, self);
+          }
+
+          try {
+            // Process template variables with error handling
+            token.content = token.content.replace(
+              /\${([^}]+)}/g,
+              (match, expr) => {
+                try {
+                  const value = expr
+                    .split('.')
+                    .reduce(
+                      (obj: Record<string, any>, prop: string) => obj?.[prop],
+                      env
+                    );
+                  return value ?? match; // Return original match if value is null/undefined
+                } catch (e) {
+                  console.warn(`Template expression error: ${expr}`, e);
+                  return match;
+                }
+              }
+            );
+
+            const highlightedCode = originalFence(
+              tokens,
+              idx,
+              options,
+              env,
+              self
+            );
+
+            debugLog('TOOLTIP_PROCESSING', {
+              file: filePath,
+              tokenType: token.type,
+              inContainer: isInTooltipContainer,
+            });
+
+            // Process tooltips
+            const { parseResult, tooltipMap, parserInfo } = processTooltips(
+              token.content,
+              token.info
+            );
+
+            let modifiedCode = highlightedCode;
+
+            // Add tooltips and other features
+            if (tooltipMap.size > 0) {
+              modifiedCode = applyTooltipsToCode(modifiedCode, tooltipMap);
+            }
+
+            return `<div class="code-block-wrapper" data-code-tooltips="true">${modifiedCode}</div>`;
+          } catch (error: unknown) {
+            debugLog('ERROR', {
+              file: filePath,
+              line: token.map?.[0],
+              error: error instanceof Error ? error.message : String(error),
+            });
+            token.content = originalContent; // Restore original content on error
+            return originalFence(tokens, idx, options, env, self);
+          }
+        };
+
+        // Combine the originalRender logic
+        const originalRender = md.render;
+        const originalTextRender =
+          md.renderer.rules.text || ((tokens, idx) => tokens[idx].content);
+
+        md.render = function (src, env) {
+          // Process template syntax before rendering
+          const processed = src
+            .replace(/```[\s\S]*?```/g, (match) => match)
+            .replace(/`[^`]*`/g, (match) => match)
+            .replace(/\${(?!\{)/g, '\\${')
+            .replace(/{{\s*([^}]*)}}/g, '\\{{ $1 }}');
+
+          return originalRender.call(this, processed, env);
+        };
+
+        md.renderer.rules.text = (tokens, idx, options, env, self) => {
+          let content = tokens[idx].content;
+
+          // Only process if not inside code blocks
+          if (!env.inCode) {
+            content = content
+              // Escape template literals
+              .replace(/\${/g, '\\${')
+              // Escape Vue interpolation
+              .replace(/{{\s*([^}]*)}}/g, '@{{$1}}');
+          }
+
+          tokens[idx].content = content;
+          return originalTextRender(tokens, idx, options, env, self);
+        };
+
+        // Track code block state
+        md.core.ruler.push('track_code_blocks', (state) => {
+          let inCode = false;
+          state.tokens.forEach((token) => {
+            const tokenWithEnv = token as TokenWithEnv;
+            if (token.type === 'fence' || token.type === 'code_block') {
+              inCode = true;
+            }
+            tokenWithEnv.env = { ...tokenWithEnv.env, inCode };
+          });
+          return true;
+        });
+
+        // Add custom container for Vue templates
+        md.use(container, 'vue', {
+          validate: function (params: string) {
+            return params.trim().match(/^vue\s*(.*)$/);
+          },
+          render: function (tokens: TokenWithEnv[], idx: number) {
+            if (tokens[idx].nesting === 1) {
+              return '<div class="vue-template">\n';
+            } else {
+              return '</div>\n';
+            }
+          },
+        });
       },
+      breaks: true,
+      html: true,
+      linkify: true,
+      typographer: true,
     },
-    mermaid: {
-      theme: 'default',
-      securityLevel: 'strict',
-      logLevel: 1,
+    async buildEnd() {
+      const { buildSearchIndex } = await import('./buildSearchIndex.js');
+      await buildSearchIndex();
+      performanceLogger.finalize();
+      // Cleanup the highlighter when build ends
+      disposeHighlighter();
     },
     vite: {
       build: {
-        cssMinify: true,
-        cssCodeSplit: true,
+        chunkSizeWarningLimit: 1000,
         rollupOptions: {
           output: {
-            manualChunks: undefined,
+            manualChunks: {
+              // Remove manualChunks for vitepress
+            },
           },
         },
         minify: 'esbuild',
+        cssCodeSplit: true,
+        sourcemap: true,
       },
+      // vue: {
+      //   template: {
+      //     compilerOptions: {
+      //       isCustomElement: (tag) => tag.includes('-'),
+      //       whitespace: 'preserve',
+      //       delimiters: ['@{{', '}}']
+      //     }
+      //   }
+      // },
+      plugins: [
+        {
+          name: 'markdown-template-handler',
+          enforce: 'pre',
+          transform(code, id) {
+            if (id.endsWith('.md')) {
+              // First preserve Vue containers
+              const containers: string[] = [];
+              let preservedContainers = code.replace(
+                /::: [\s\S]*? :::/g,
+                (match, offset) => {
+                  const placeholder = `___CONTAINER_${containers.length}___`;
+                  containers.push(match);
+                  return placeholder;
+                }
+              );
+
+              // Then preserve code blocks
+              const codeBlocks: string[] = [];
+              let preservedCode = preservedContainers.replace(
+                /```[\s\S]*?```/g,
+                (match, offset) => {
+                  const placeholder = `___CODE_BLOCK_${codeBlocks.length}___`;
+                  codeBlocks.push(match);
+                  return placeholder;
+                }
+              );
+
+              // Then handle inline code
+              const inlineCode: string[] = [];
+              preservedCode = preservedCode.replace(
+                /`[^`]*`/g,
+                (match, offset) => {
+                  const placeholder = `___INLINE_CODE_${inlineCode.length}___`;
+                  inlineCode.push(match);
+                  return placeholder;
+                }
+              );
+
+              // Process template syntax
+              preservedCode = preservedCode
+                // Escape template literals
+                .replace(/\${/g, '\\${')
+                // Handle Vue interpolation
+                .replace(/{{\s*([^}]*)}}/g, '@{{$1}}');
+
+              // Restore everything in reverse order
+              const result = preservedCode
+                .replace(/___INLINE_CODE_(\d+)___/g, (_, i) => inlineCode[i])
+                .replace(/___CODE_BLOCK_(\d+)___/g, (_, i) => codeBlocks[i])
+                .replace(/___CONTAINER_(\d+)___/g, (_, i) => containers[i]);
+
+              return result;
+            }
+          },
+        },
+        {
+          name: 'react-component-patterns-handler',
+          enforce: 'pre',
+          transform(code, id) {
+            if (
+              id.endsWith('.md') &&
+              (id.includes('react-component-patterns') || id.includes('/form/'))
+            ) {
+              // For React files, escape all Vue-style interpolation
+              return code.replace(/{{/g, '\\{{').replace(/}}/g, '}}');
+            }
+          },
+        },
+      ],
       css: {
         preprocessorOptions: {
           scss: {
@@ -274,8 +571,26 @@ export default withMermaid(
         },
       },
       optimizeDeps: {
-        include: ['mermaid'],
+        entries: [
+          'theme/tooltipPortal.ts',
+          'theme/markdown/codePreview.ts',
+          'theme/components/CodePreview.vue',
+        ],
       },
+      server: {
+        fs: {
+          strict: false,
+        },
+      },
+      configureServer(server) {
+        return () => {
+          // Initialize log server
+          const cleanup = setupLogServer(server);
+          return () => {
+            cleanup();
+          };
+        };
+      }
     },
     themeConfig: {
       logo: '/logo.svg',
@@ -287,15 +602,22 @@ export default withMermaid(
         { text: 'Package Managers', link: '/package-managers/' },
         { text: 'Styling', link: '/styling/' },
         { text: 'Examples', link: '/examples/' },
+        {
+          text: 'React Component Patterns',
+          link: '/react-component-patterns/',
+        },
+        {
+          text: 'Logger',
+          link: '/logger-service/'
+        }
       ],
       sidebar: {
-        '/': [
+        '/guide/': [
           {
             text: 'Getting Started',
             items: [
               { text: 'Introduction', link: '/guide/getting-started' },
               { text: 'Configuration', link: '/guide/configuration' },
-              { text: 'Common Gotchas', link: '/guide/common-gotchas' },
             ],
           },
           {
@@ -555,6 +877,248 @@ export default withMermaid(
             ],
           },
         ],
+        '/react-component-patterns/': [
+          {
+            text: 'React Components',
+            items: [{ text: 'Overview', link: '/react-component-patterns/' }],
+          },
+          {
+            text: 'Foundation',
+            items: [
+              {
+                text: 'Typography',
+                link: '/react-component-patterns/foundation/typography',
+              },
+              {
+                text: 'Colors',
+                link: '/react-component-patterns/foundation/colors',
+              },
+              {
+                text: 'Spacing',
+                link: '/react-component-patterns/foundation/spacing',
+              },
+              {
+                text: 'Icons',
+                link: '/react-component-patterns/foundation/icons',
+              },
+              {
+                text: 'Semantic HTML',
+                link: '/react-component-patterns/foundation/semantic-html',
+              },
+            ],
+          },
+          {
+            text: 'Layout',
+            items: [
+              {
+                text: 'Container',
+                link: '/react-component-patterns/layout/container',
+              },
+              {
+                text: 'Grid System',
+                link: '/react-component-patterns/layout/grid',
+              },
+              { text: 'Stack', link: '/react-component-patterns/layout/stack' },
+              { text: 'Flex', link: '/react-component-patterns/layout/flex' },
+            ],
+          },
+          {
+            text: 'Form Controls',
+            items: [
+              { text: 'Button', link: '/react-component-patterns/form/button' },
+              { text: 'Input', link: '/react-component-patterns/form/input' },
+              { text: 'Select', link: '/react-component-patterns/form/select' },
+              {
+                text: 'Checkbox',
+                link: '/react-component-patterns/form/checkbox',
+              },
+              { text: 'Radio', link: '/react-component-patterns/form/radio' },
+              { text: 'Switch', link: '/react-component-patterns/form/switch' },
+            ],
+          },
+          {
+            text: 'Navigation',
+            items: [
+              {
+                text: 'Menu',
+                link: '/react-component-patterns/navigation/menu',
+              },
+              {
+                text: 'Tabs',
+                link: '/react-component-patterns/navigation/tabs',
+              },
+              {
+                text: 'Breadcrumb',
+                link: '/react-component-patterns/navigation/breadcrumb',
+              },
+              // {
+              //   text: 'Timeline',
+              //   link: '/react-component-patterns/navigation/components/timeline',
+              // },
+              {
+                text: 'Pagination',
+                link: '/react-component-patterns/navigation/pagination',
+              },
+            ],
+          },
+          {
+            text: 'Feedback',
+            items: [
+              {
+                text: 'Notifications',
+                items: [
+                  {
+                    text: 'Alert',
+                    link: '/react-component-patterns/feedback/notifications/alert',
+                  },
+                  {
+                    text: 'Toast',
+                    link: '/react-component-patterns/feedback/notifications/toast',
+                  },
+                  {
+                    text: 'Banner',
+                    link: '/react-component-patterns/feedback/notifications/banner',
+                  },
+                  {
+                    text: 'Snackbar',
+                    link: '/react-component-patterns/feedback/notifications/snackbar',
+                  },
+                ],
+              },
+              {
+                text: 'Progress Indicators',
+                items: [
+                  {
+                    text: 'Progress',
+                    link: '/react-component-patterns/feedback/progress-indicators/progress',
+                  },
+                  {
+                    text: 'Loading Bar',
+                    link: '/react-component-patterns/feedback/progress-indicators/loading-bar',
+                  },
+                  {
+                    text: 'Spinner',
+                    link: '/react-component-patterns/feedback/progress-indicators/spinner',
+                  },
+                  {
+                    text: 'Skeleton',
+                    link: '/react-component-patterns/feedback/progress-indicators/skeleton',
+                  },
+                ],
+              },
+              {
+                text: 'Status Indicators',
+                items: [
+                  {
+                    text: 'Status',
+                    link: '/react-component-patterns/feedback/status-indicators/status',
+                  },
+                  {
+                    text: 'Result',
+                    link: '/react-component-patterns/feedback/status-indicators/result',
+                  },
+                  {
+                    text: 'Error',
+                    link: '/react-component-patterns/feedback/status-indicators/error',
+                  },
+                  {
+                    text: 'Empty',
+                    link: '/react-component-patterns/feedback/status-indicators/empty',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            text: 'Data Display',
+            items: [
+              {
+                text: 'Tables',
+                items: [
+                  {
+                    text: 'Table',
+                    link: '/react-component-patterns/data/tables/table',
+                  },
+                  {
+                    text: 'Data Grid',
+                    link: '/react-component-patterns/data/tables/data-grid',
+                  },
+                ],
+              },
+              {
+                text: 'Lists & Cards',
+                items: [
+                  {
+                    text: 'List',
+                    link: '/react-component-patterns/data/lists-and-cards/list',
+                  },
+                  {
+                    text: 'Card List',
+                    link: '/react-component-patterns/data/lists-and-cards/card-list',
+                  },
+                  {
+                    text: 'Virtual List',
+                    link: '/react-component-patterns/data/lists-and-cards/virtual-list',
+                  },
+                  {
+                    text: 'Infinite List',
+                    link: '/react-component-patterns/data/lists-and-cards/infinite-list',
+                  },
+                ],
+              },
+              {
+                text: 'Navigation & Controls',
+                items: [
+                  {
+                    text: 'Pagination',
+                    link: '/react-component-patterns/data/navigation-and-controls/pagination',
+                  },
+                ],
+              },
+              {
+                text: 'Status & Metadata',
+                items: [
+                  {
+                    text: 'Badge',
+                    link: '/react-component-patterns/data/status-and-metadata/badge',
+                  },
+                  {
+                    text: 'Tag',
+                    link: '/react-component-patterns/data/status-and-metadata/tag',
+                  },
+                  {
+                    text: 'Status',
+                    link: '/react-component-patterns/data/status-and-metadata/status',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        '/logger-service/': [
+          {
+            text: 'Logger Service',
+            items: [
+              { text: 'Overview', link: '/logger-service/' },
+              { text: 'Architecture', link: '/logger-service/#architecture' },
+              { text: 'Integration Guide', link: '/logger-service/#integration-guide' },
+              { text: 'Web Viewer', link: '/logger-service/#web-viewer-interface' },
+              { text: 'CLI Viewer', link: '/logger-service/#cli-viewer-commands' },
+              { text: 'Best Practices', link: '/logger-service/#best-practices' },
+              { text: 'Troubleshooting', link: '/logger-service/#troubleshooting' }
+            ]
+          }
+        ]
+      },
+      footer: {
+        message: 'Released under the MIT License.',
+        copyright: 'Copyright © 2024-present Underwood Inc.',
+        links: [
+          {
+            text: 'Logger Docs',
+            link: '/logger-service/'
+          }
+        ]
       },
       socialLinks: [
         {
@@ -575,28 +1139,17 @@ export default withMermaid(
         provider: 'local',
         options: {
           detailedView: true,
-          miniSearch: {
-            searchOptions: {
-              fuzzy: 0.2,
-              prefix: true,
-              boost: {
-                title: 2,
-                text: 1,
-                titles: 1.5,
-              },
-            },
-          },
         },
+      },
+      docFooter: {
+        prev: 'Previous page',
+        next: 'Next page',
       },
     },
     locales: {
       root: {
         label: 'English',
         lang: 'en',
-        docFooter: {
-          prev: 'Previous page',
-          next: 'Next page',
-        },
       },
     },
     appearance: true,

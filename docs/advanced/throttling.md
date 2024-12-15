@@ -78,7 +78,9 @@ Think of throttling like a water faucet with a flow restrictor:
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface ThrottleOptions {
   leading?: boolean;
   trailing?: boolean;
@@ -204,9 +206,13 @@ function throttle<T extends (...args: any[]) => any>(
 }
 ```
 
+:::
+
 ## Usage Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic API rate limiting
 const throttledApi = throttle(
   async (data: any) => {
@@ -248,6 +254,8 @@ input.addEventListener('input', (e) => {
 });
 ```
 
+:::
+
 ## Key Concepts
 
 1. **Time Window**: Fixed interval between executions
@@ -281,7 +289,9 @@ input.addEventListener('input', (e) => {
 
 ## Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Test throttle timing
 const timingTest = async () => {
   let callCount = 0;
@@ -315,9 +325,13 @@ const promiseTest = async () => {
 };
 ```
 
+:::
+
 ## Advanced Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // With request queue
 class ThrottledQueue<T> {
   private queue: T[] = [];
@@ -364,3 +378,5 @@ const requestQueue = new ThrottledQueue(
 requestQueue.add(new Request('/api/endpoint1'));
 requestQueue.add(new Request('/api/endpoint2'));
 ```
+
+:::

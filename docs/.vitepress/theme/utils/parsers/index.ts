@@ -3,8 +3,12 @@ import type { CodeParser, ParserResult } from './types';
 import { parseTypeScript } from './typescript';
 
 // Define supported languages and their parsers
-const parsers: Record<string, CodeParser> = {
+export const parsers: Record<string, CodeParser> = {
   typescript: parseTypeScript,
+  tsx: (code: string) => parseTypeScript(code, { jsx: true }),
+  jsx: (code: string) => parseTypeScript(code, { jsx: true }),
+  css: parseCSSLike,
+  scss: parseCSSLike,
 };
 
 // Enhanced fallback parser that handles type definitions
@@ -32,6 +36,31 @@ function defaultParser(code: string): ParserResult {
     errors,
     isValid: true,
     usesFallback: true,
+  };
+}
+
+function parseCSSLike(code: string): ParserResult {
+  const tokens = [];
+  const errors = [];
+
+  const cssMatches = code.matchAll(
+    /([.#][\w-]+)|(@[\w-]+)|(:\w+)|({\s*})|([{};])/g
+  );
+
+  for (const match of cssMatches) {
+    tokens.push({
+      start: match.index!,
+      end: match.index! + match[0].length,
+      type: 'token',
+      text: match[0],
+    });
+  }
+
+  return {
+    tokens,
+    errors,
+    isValid: true,
+    usesFallback: false,
   };
 }
 

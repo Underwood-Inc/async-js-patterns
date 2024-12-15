@@ -19,7 +19,9 @@ This page demonstrates practical examples of implementing and using performance 
 
 ## Basic Performance Monitoring
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic performance monitoring
 class PerformanceMonitor {
   private metrics: Map<
@@ -88,9 +90,13 @@ const result = await monitor.measure('fetchUserData', async () => {
 console.log('Metrics:', monitor.getMetrics('fetchUserData'));
 ```
 
+:::
+
 ## Advanced Performance Monitoring
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class AdvancedPerformanceMonitor {
   private metrics: Map<string, OperationMetrics> = new Map();
   private thresholds: Map<string, number> = new Map();
@@ -298,9 +304,13 @@ try {
 }
 ```
 
+:::
+
 ## Real-World Example: API Performance Monitoring
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ApiPerformanceMonitor {
   private monitor: AdvancedPerformanceMonitor;
   private endpoints: Map<string, EndpointStats> = new Map();
@@ -473,11 +483,13 @@ const report = await apiMonitor.generateReport({
 console.log('Performance report:', report);
 ```
 
+:::
+
 ## Best Practices
 
 1. Memory monitoring:
 
-   ```typescript:preview
+   ```typescript
    class MemoryMonitor {
      private samples: number[] = [];
      private readonly maxSamples: number;
@@ -550,7 +562,7 @@ console.log('Performance report:', report);
 
 2. CPU profiling:
 
-   ```typescript:preview
+   ```typescript
    class CpuProfiler {
      private profiling = false;
      private profile: any = null;
@@ -594,7 +606,7 @@ console.log('Performance report:', report);
 
 3. Event loop monitoring:
 
-   ```typescript:preview
+   ```typescript
    class EventLoopMonitor {
      private samples: number[] = [];
      private timer?: NodeJS.Timer;
@@ -650,7 +662,7 @@ console.log('Performance report:', report);
 
 4. Resource utilization:
 
-   ```typescript:preview
+   ```typescript
    class ResourceMonitor {
      private readonly monitors: Map<string, Monitor> = new Map();
      private aggregator: MetricsAggregator;

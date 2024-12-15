@@ -78,7 +78,9 @@ Think of promisifying like modernizing an old factory:
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type Callback<T> = (error: Error | null, result?: T) => void;
 type AsyncFunction<T> = (callback: Callback<T>) => void;
 
@@ -114,9 +116,13 @@ function promisifyWithParams<T, P extends any[]>(
 }
 ```
 
+:::
+
 ## Usage Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Example with simple callback
 function readFileCallback(callback: Callback<string>) {
   setTimeout(() => {
@@ -150,6 +156,8 @@ queryDatabase('SELECT * FROM users WHERE id = ?', [1])
   .catch((error) => console.error(error));
 ```
 
+:::
+
 ## Key Concepts
 
 1. **Error-First Pattern**: Handles Node.js-style callbacks
@@ -182,7 +190,9 @@ queryDatabase('SELECT * FROM users WHERE id = ?', [1])
 
 ## Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Test successful case
 const successFn = (callback: Callback<number>) => {
   setTimeout(() => callback(null, 42), 100);
@@ -214,9 +224,13 @@ promiseParam(2, 3).then((result) => {
 });
 ```
 
+:::
+
 ## Advanced Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // With cancellation support
 interface CancellablePromise<T> extends Promise<T> {
   cancel: () => void;
@@ -266,9 +280,13 @@ setTimeout(() => {
 }, 2000);
 ```
 
+:::
+
 ## Utility Functions
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Promisify all methods of an object
 function promisifyAll<T extends object>(obj: T): PromisifiedObject<T> {
   const result: any = {};
@@ -291,3 +309,5 @@ type PromisifiedObject<T> = {
     : never;
 };
 ```
+
+:::

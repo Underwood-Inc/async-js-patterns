@@ -19,7 +19,9 @@ Effective dependency management is crucial for maintaining healthy JavaScript pr
 
 ### Version Ranges
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "dependencies": {
     "exact": "1.0.0", // Exact version
@@ -32,6 +34,8 @@ Effective dependency management is crucial for maintaining healthy JavaScript pr
 }
 ```
 
+:::
+
 ## Version Control
 
 ### Lock Files
@@ -41,15 +45,21 @@ Effective dependency management is crucial for maintaining healthy JavaScript pr
 - `pnpm-lock.yaml` (pnpm)
 - `bun.lockb` (Bun)
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Always commit lock files
 git add package-lock.json
 git commit -m "Update dependencies"
 ```
 
+:::
+
 ### Updating Dependencies
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Check outdated packages
 npm outdated
 yarn outdated
@@ -66,11 +76,15 @@ yarn upgrade --latest
 pnpm update --latest
 ```
 
+:::
+
 ## Security
 
 ### Auditing Dependencies
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Run security audit
 npm audit
 yarn audit
@@ -82,9 +96,13 @@ yarn audit fix
 pnpm audit fix
 ```
 
+:::
+
 ### Version Pinning
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "dependencies": {
     "critical-package": "1.2.3", // Pinned version
@@ -93,11 +111,15 @@ pnpm audit fix
 }
 ```
 
+:::
+
 ## Optimization Strategies
 
 ### Dependency Analysis
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Analyze dependencies
 npm ls
 yarn why package-name
@@ -109,9 +131,13 @@ yarn dedupe
 pnpm dedupe
 ```
 
+:::
+
 ### Bundle Size Optimization
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Analyze bundle size
 npm install -g source-map-explorer
 source-map-explorer dist/bundle.js
@@ -122,20 +148,28 @@ rollup-plugin-visualizer
 vite-bundle-visualizer
 ```
 
+:::
+
 ## Monorepo Management
 
 ### Workspace Configuration
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // package.json
 {
   "workspaces": ["packages/*"]
 }
 ```
 
+:::
+
 ### Shared Dependencies
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // packages/shared/package.json
 {
   "name": "@myorg/shared",
@@ -153,6 +187,8 @@ vite-bundle-visualizer
   }
 }
 ```
+
+:::
 
 ## Best Practices
 
@@ -188,7 +224,9 @@ vite-bundle-visualizer
 
 ### Peer Dependencies
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
@@ -197,9 +235,13 @@ vite-bundle-visualizer
 }
 ```
 
+:::
+
 ### Optional Dependencies
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "optionalDependencies": {
     "image-optimizer": "^2.0.0"
@@ -207,9 +249,13 @@ vite-bundle-visualizer
 }
 ```
 
+:::
+
 ### Development Tools
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "devDependencies": {
     "typescript": "^5.0.0",
@@ -220,13 +266,17 @@ vite-bundle-visualizer
 }
 ```
 
+:::
+
 ## Troubleshooting
 
 ### Common Issues
 
 1. **Version Conflicts**
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Clear dependency cache
 npm cache clean --force
 yarn cache clean
@@ -237,28 +287,40 @@ rm -rf node_modules
 npm install
 ```
 
+:::
+
 2. **Peer Dependency Issues**
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install peer dependencies
 npm install --legacy-peer-deps
 yarn install --ignore-peer-dependencies
 ```
 
+:::
+
 3. **Hoisting Problems**
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Flatten dependency tree
 npm dedupe
 yarn dedupe
 pnpm dedupe
 ```
 
+:::
+
 ### Resolution Strategies
 
 #### npm
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "overrides": {
     "dependency-name": "1.2.3"
@@ -266,9 +328,13 @@ pnpm dedupe
 }
 ```
 
+:::
+
 #### Yarn
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "resolutions": {
     "dependency-name": "1.2.3"
@@ -276,9 +342,13 @@ pnpm dedupe
 }
 ```
 
+:::
+
 #### pnpm
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "pnpm": {
     "overrides": {
@@ -287,3 +357,5 @@ pnpm dedupe
   }
 }
 ```
+
+:::

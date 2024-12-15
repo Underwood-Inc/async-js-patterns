@@ -19,7 +19,9 @@ This page demonstrates practical examples of using `Promise.allSettled` to handl
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic example with multiple API calls
 async function fetchAllUserData(userIds: string[]) {
   const promises = userIds.map((id) =>
@@ -49,9 +51,13 @@ console.log('Successful fetches:', results.successful);
 console.log('Failed fetches:', results.failed);
 ```
 
+:::
+
 ## Batch Processing with Status
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Processing items in batches with status tracking
 class BatchProcessor {
   async processBatch<T, R>(
@@ -110,9 +116,13 @@ const results = await processor.processBatch(items, async (item) => {
 });
 ```
 
+:::
+
 ## Data Validation System
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Validating multiple data sources
 class DataValidator {
   async validateDataSources(sources: DataSource[]) {
@@ -159,9 +169,13 @@ class DataValidator {
 }
 ```
 
+:::
+
 ## Real-World Example: System Health Check
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class SystemHealthChecker {
   private services: ServiceCheck[];
   private notifier: HealthNotifier;
@@ -291,11 +305,13 @@ const report = await healthChecker.performHealthCheck();
 console.log('Health Check Report:', JSON.stringify(report, null, 2));
 ```
 
+:::
+
 ## Best Practices
 
 1. Type handling:
 
-   ```typescript:preview
+   ```typescript
    function isPromiseFulfilled<T>(
      result: PromiseSettledResult<T>
    ): result is PromiseFulfilledResult<T> {
@@ -316,7 +332,7 @@ console.log('Health Check Report:', JSON.stringify(report, null, 2));
 
 2. Error aggregation:
 
-   ```typescript:preview
+   ```typescript
    function aggregateErrors(results: PromiseSettledResult<unknown>[]) {
      return results
        .filter(isPromiseRejected)
@@ -336,7 +352,7 @@ console.log('Health Check Report:', JSON.stringify(report, null, 2));
 
 3. Progress tracking:
 
-   ```typescript:preview
+   ```typescript
    async function trackProgress<T>(
      promises: Promise<T>[],
      onProgress: (progress: ProgressInfo) => void
@@ -372,7 +388,7 @@ console.log('Health Check Report:', JSON.stringify(report, null, 2));
 
 4. Cleanup handling:
 
-   ```typescript:preview
+   ```typescript
    async function withCleanup<T>(
      operations: Array<() => Promise<T>>,
      cleanup: (results: PromiseSettledResult<T>[]) => Promise<void>

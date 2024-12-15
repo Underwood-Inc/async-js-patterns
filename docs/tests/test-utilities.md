@@ -25,7 +25,9 @@ Test utilities help you write more maintainable and type-safe tests while reduci
 
 ### Type-Safe Test Factory
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type Factory<T> = {
   build(overrides?: Partial<T>): T;
   buildList(count: number, overrides?: Partial<T>): T[];
@@ -61,9 +63,13 @@ const user = userFactory.build({ role: 'admin' });
 const users = userFactory.buildList(3, { role: 'user' });
 ```
 
+:::
+
 ### Mock Data Generator
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class MockDataGenerator {
   private static counter = 0;
 
@@ -98,11 +104,15 @@ class MockDataGenerator {
 }
 ```
 
+:::
+
 ## Advanced Utilities
 
 ### Test Context Manager
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface TestContext<T> {
   setup(): Promise<T>;
   teardown(): Promise<void>;
@@ -159,9 +169,13 @@ describe('User Tests', () => {
 });
 ```
 
+:::
+
 ### Mock Service Generator
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type MockMethod<T> = T extends (...args: any[]) => any
   ? jest.Mock<ReturnType<T>, Parameters<T>>
   : T;
@@ -203,9 +217,13 @@ mockUserService.getUser.mockResolvedValue({
 });
 ```
 
+:::
+
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Test utilities for a full application
 class TestUtils {
   // Database utilities
@@ -377,6 +395,8 @@ describe('API Tests', () => {
   });
 });
 ```
+
+:::
 
 ## Best Practices
 

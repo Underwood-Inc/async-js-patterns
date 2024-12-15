@@ -19,7 +19,9 @@ This page demonstrates practical examples of managing memory efficiently in asyn
 
 ## Object Pool
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Generic object pool implementation
 class ObjectPool<T> {
   private available: T[] = [];
@@ -94,9 +96,13 @@ async function processData(data: Buffer): Promise<void> {
 }
 ```
 
+:::
+
 ## WeakRef Cache
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class WeakCache<K extends object, V> {
   private cache = new Map<
     WeakRef<K>,
@@ -160,9 +166,13 @@ async function processResource(
 }
 ```
 
+:::
+
 ## Real-World Example: Memory-Efficient Data Processing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class DataProcessor {
   private bufferPool: ObjectPool<Buffer>;
   private cache: WeakCache<DataChunk, ProcessedResult>;
@@ -272,11 +282,13 @@ const results = await processor.processChunks(chunks);
 console.log('Processing metrics:', processor.getMetrics());
 ```
 
+:::
+
 ## Best Practices
 
 1. Memory monitoring:
 
-   ```typescript:preview
+   ```typescript
    class MemoryMonitor {
      private samples: MemorySample[] = [];
      private readonly maxSamples: number;
@@ -364,7 +376,7 @@ console.log('Processing metrics:', processor.getMetrics());
 
 2. Garbage collection hooks:
 
-   ```typescript:preview
+   ```typescript
    class GCHooks {
      private listeners = new Set<(stats: GCStats) => void>();
 
@@ -418,7 +430,7 @@ console.log('Processing metrics:', processor.getMetrics());
 
 3. Memory leak detection:
 
-   ```typescript:preview
+   ```typescript
    class LeakDetector {
      private snapshots: HeapSnapshot[] = [];
      private growing = new Set<string>();
@@ -478,7 +490,7 @@ console.log('Processing metrics:', processor.getMetrics());
 
 4. Resource limits:
 
-   ```typescript:preview
+   ```typescript
    class ResourceLimiter {
      private limits: Map<string, number> = new Map();
      private usage: Map<string, number> = new Map();

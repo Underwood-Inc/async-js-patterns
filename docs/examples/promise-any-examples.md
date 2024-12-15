@@ -19,7 +19,9 @@ This page demonstrates practical examples of using `Promise.any` to handle multi
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic example with multiple API endpoints
 async function fetchFromAnyEndpoint<T>(endpoints: string[]): Promise<T> {
   try {
@@ -56,9 +58,13 @@ try {
 }
 ```
 
+:::
+
 ## Fallback Mechanisms
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Implementing fallback mechanisms
 class ServiceWithFallback {
   private primaryEndpoint: string;
@@ -108,9 +114,13 @@ class ServiceWithFallback {
 }
 ```
 
+:::
+
 ## Authentication System
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Multiple authentication providers
 class MultiAuthSystem {
   private providers: AuthProvider[];
@@ -160,9 +170,13 @@ try {
 }
 ```
 
+:::
+
 ## Resource Loading
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Loading resources from multiple sources
 class ResourceLoader {
   async loadResource(
@@ -219,9 +233,13 @@ class ResourceLoader {
 }
 ```
 
+:::
+
 ## Real-World Example: Service Discovery
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ServiceDiscoveryClient {
   private registries: string[];
   private cache: Map<string, ServiceInfo>;
@@ -300,11 +318,13 @@ try {
 }
 ```
 
+:::
+
 ## Best Practices
 
 1. Always handle AggregateError:
 
-   ```typescript:preview
+   ```typescript
    try {
      const result = await Promise.any(promises);
      return result;
@@ -320,7 +340,7 @@ try {
 
 2. Implement proper logging:
 
-   ```typescript:preview
+   ```typescript
    const promises = endpoints.map(async (endpoint, index) => {
      try {
        const result = await fetch(endpoint);
@@ -335,7 +355,7 @@ try {
 
 3. Consider timeouts:
 
-   ```typescript:preview
+   ```typescript
    function withTimeout(promise: Promise<any>, ms: number) {
      return Promise.race([
        promise,
@@ -351,7 +371,7 @@ try {
 
 4. Implement fallback mechanisms:
 
-   ```typescript:preview
+   ```typescript
    async function withFallback<T>(
      primary: Promise<T>,
      fallbacks: Promise<T>[]

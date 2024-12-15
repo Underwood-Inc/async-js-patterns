@@ -19,7 +19,9 @@ This page demonstrates practical examples of using `Promise.finally` for cleanup
 
 ## Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic loading state management
 class DataLoader {
   private loading = false;
@@ -49,9 +51,13 @@ try {
 }
 ```
 
+:::
+
 ## Resource Management
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Database connection management
 class DatabaseConnection {
   private connection: Connection | null = null;
@@ -79,9 +85,13 @@ class DatabaseConnection {
 }
 ```
 
+:::
+
 ## UI State Management
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class UIStateManager {
   private loadingStates = new Map<string, boolean>();
   private errorStates = new Map<string, Error | null>();
@@ -122,9 +132,13 @@ class UIStateManager {
 }
 ```
 
+:::
+
 ## File Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class FileProcessor {
   private tempFiles: Set<string> = new Set();
 
@@ -162,9 +176,13 @@ class FileProcessor {
 }
 ```
 
+:::
+
 ## Real-World Example: API Request Handler
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class APIRequestHandler {
   private metrics: MetricsCollector;
   private cache: Cache;
@@ -284,11 +302,13 @@ try {
 }
 ```
 
+:::
+
 ## Best Practices
 
 1. Always use finally for cleanup:
 
-   ```typescript:preview
+   ```typescript
    let resource;
    try {
      resource = await acquireResource();
@@ -305,7 +325,7 @@ try {
 
 2. Handle nested resources:
 
-   ```typescript:preview
+   ```typescript
    async function processWithResources() {
      const resources = [];
      try {
@@ -330,7 +350,7 @@ try {
 
 3. Combine with other Promise methods:
 
-   ```typescript:preview
+   ```typescript
    Promise.all(promises)
      .then(handleSuccess)
      .catch(handleError)
@@ -343,7 +363,7 @@ try {
 
 4. State management:
 
-   ```typescript:preview
+   ```typescript
    class StateManager {
      private states = new Map();
 

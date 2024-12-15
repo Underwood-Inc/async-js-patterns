@@ -11,7 +11,9 @@ This guide covers the process of migrating your project from Yarn to pnpm, inclu
 
 1. Install pnpm:
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Using npm
 npm install -g pnpm
 
@@ -22,17 +24,25 @@ curl -fsSL https://get.pnpm.io/install.sh | sh -
 iwr https://get.pnpm.io/install.ps1 -useb | iex
 ```
 
+:::
+
 2. Verify installation:
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 pnpm --version
 ```
+
+:::
 
 ## Migration Steps
 
 ### 1. Generate pnpm-lock.yaml
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Remove Yarn's lock file
 rm yarn.lock
 
@@ -43,11 +53,15 @@ pnpm import
 pnpm install
 ```
 
+:::
+
 ### 2. Update CI Configuration
 
 #### GitHub Actions
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # Before (Yarn)
 steps:
   - uses: actions/setup-node@v3
@@ -68,11 +82,15 @@ steps:
   - run: pnpm test
 ```
 
+:::
+
 ### 3. Update Scripts
 
 #### package.json
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "scripts": {
     // Before (Yarn)
@@ -85,6 +103,8 @@ steps:
   }
 }
 ```
+
+:::
 
 ## Command Mapping
 
@@ -114,16 +134,22 @@ steps:
 
 ### 1. Package Manager Settings
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // package.json
 {
   "packageManager": "pnpm@8.0.0"
 }
 ```
 
+:::
+
 ### 2. Workspace Configuration
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 # Before (.yarnrc.yml)
 nodeLinker: node-modules
 plugins:
@@ -136,9 +162,13 @@ packages:
   - '!**/test/**'
 ```
 
+:::
+
 ### 3. pnpm Configuration
 
-```ini:preview
+::: code-with-tooltips
+
+```ini
 # .npmrc
 strict-peer-dependencies=true
 auto-install-peers=true
@@ -147,9 +177,13 @@ shamefully-hoist=true
 registry=https://registry.npmjs.org/
 ```
 
+:::
+
 ### 4. Git Configuration
 
-```gitignore:preview
+::: code-with-tooltips
+
+```plaintext
 # .gitignore
 node_modules
 .pnpm-store/
@@ -160,11 +194,15 @@ node_modules
 .pnp.*
 ```
 
+:::
+
 ## Workspace Migration
 
 ### 1. Update Dependencies
 
-```json:preview
+::: code-with-tooltips
+
+```json
 // Before (Yarn workspace protocol)
 {
   "dependencies": {
@@ -180,9 +218,13 @@ node_modules
 }
 ```
 
+:::
+
 ### 2. Update Commands
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Before (Yarn)
 yarn workspace package-name add lodash
 yarn workspaces foreach run test
@@ -191,6 +233,8 @@ yarn workspaces foreach run test
 pnpm --filter package-name add lodash
 pnpm -r run test
 ```
+
+:::
 
 ## Feature Comparison
 
@@ -203,7 +247,9 @@ pnpm -r run test
 
 ### Workspace Features
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Yarn parallel execution
 yarn workspaces foreach -p run test
 
@@ -216,6 +262,8 @@ yarn workspace package-name build
 # pnpm filtering
 pnpm --filter package-name build
 ```
+
+:::
 
 ## Best Practices
 
@@ -251,15 +299,21 @@ pnpm --filter package-name build
 
 ### 1. Module Resolution
 
-```ini:preview
+::: code-with-tooltips
+
+```ini
 # .npmrc
 node-linker=hoisted
 shamefully-hoist=true
 ```
 
+:::
+
 ### 2. Workspace Protocol
 
-```json:preview
+::: code-with-tooltips
+
+```json
 {
   "dependencies": {
     // Both Yarn and pnpm support workspace:*
@@ -268,18 +322,26 @@ shamefully-hoist=true
 }
 ```
 
+:::
+
 ### 3. Peer Dependencies
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Handle peer dependencies
 pnpm install --no-strict-peer-dependencies
 ```
+
+:::
 
 ## Rollback Plan
 
 If migration issues occur:
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # 1. Remove pnpm files
 rm pnpm-lock.yaml
 rm -rf node_modules
@@ -293,9 +355,13 @@ git checkout yarn.lock
 yarn install --frozen-lockfile
 ```
 
+:::
+
 ## Verification Steps
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # 1. Clean install
 rm -rf node_modules
 pnpm install
@@ -312,3 +378,5 @@ pnpm -r exec pwd
 # 5. Verify dependencies
 pnpm why important-package
 ```
+
+:::

@@ -20,7 +20,9 @@ Nightwatch.js is an integrated framework for automated testing of web applicatio
 
 ## Getting Started
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install Nightwatch
 npm install nightwatch
 
@@ -28,11 +30,15 @@ npm install nightwatch
 npm install chromedriver geckodriver
 ```
 
+:::
+
 ## Core Concepts
 
 ### Configuration
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // nightwatch.conf.js
 module.exports = {
   src_folders: ['tests'],
@@ -54,9 +60,13 @@ module.exports = {
 };
 ```
 
+:::
+
 ### Basic Test Structure
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 module.exports = {
   'Basic test': (browser) => {
     browser
@@ -68,9 +78,13 @@ module.exports = {
 };
 ```
 
+:::
+
 ### Element Commands
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 module.exports = {
   'Element interactions': (browser) => {
     // Basic interactions
@@ -90,11 +104,15 @@ module.exports = {
 };
 ```
 
+:::
+
 ## Advanced Features
 
 ### Page Objects
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // pages/login.js
 const commands = {
   login(email, password) {
@@ -140,9 +158,13 @@ module.exports = {
 };
 ```
 
+:::
+
 ### Custom Commands
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // commands/customWait.js
 module.exports = class CustomWait {
   async command(selector, callback) {
@@ -164,9 +186,13 @@ module.exports = {
 };
 ```
 
+:::
+
 ### Assertions
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 module.exports = {
   'Assertion examples': (browser) => {
     // Element assertions
@@ -192,11 +218,15 @@ module.exports = {
 };
 ```
 
+:::
+
 ## Testing Patterns
 
 ### Visual Regression
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 module.exports = {
   'Visual regression': (browser) => {
     browser.saveScreenshot('tests/screenshots/baseline.png');
@@ -214,9 +244,13 @@ module.exports = {
 };
 ```
 
+:::
+
 ### API Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 const axios = require('axios');
 
 module.exports = {
@@ -239,9 +273,13 @@ module.exports = {
 };
 ```
 
+:::
+
 ### Mobile Testing
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 module.exports = {
   'Mobile tests': (browser) => {
     // Set mobile viewport
@@ -256,11 +294,15 @@ module.exports = {
 };
 ```
 
+:::
+
 ## Best Practices
 
 ### 1. Element Selection
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 module.exports = {
   'Selector best practices': (browser) => {
     // ❌ Avoid
@@ -275,9 +317,13 @@ module.exports = {
 };
 ```
 
+:::
+
 ### 2. Waiting Strategies
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 module.exports = {
   'Wait strategies': (browser) => {
     // ❌ Avoid
@@ -294,9 +340,13 @@ module.exports = {
 };
 ```
 
+:::
+
 ### 3. Error Handling
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 module.exports = {
   beforeEach: (browser) => {
     browser.windowMaximize();
@@ -324,9 +374,13 @@ module.exports = {
 };
 ```
 
+:::
+
 ### 4. Test Organization
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // globals.js
 module.exports = {
   beforeEach: (browser) => {
@@ -355,9 +409,13 @@ module.exports = {
 };
 ```
 
+:::
+
 ### 5. Configuration Best Practices
 
-```javascript:preview
+::: code-with-tooltips
+
+```javascript
 // nightwatch.conf.js
 const chromedriver = require('chromedriver');
 const geckodriver = require('geckodriver');
@@ -407,3 +465,5 @@ module.exports = {
   },
 };
 ```
+
+:::

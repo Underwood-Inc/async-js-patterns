@@ -19,7 +19,9 @@ This page demonstrates practical examples of implementing and using custom setIn
 
 ## Basic Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic custom setInterval with cleanup
 class IntervalTimer {
   private intervals: Map<string, NodeJS.Timeout> = new Map();
@@ -56,9 +58,13 @@ const cleanup = timer.setInterval(() => {
 cleanup();
 ```
 
+:::
+
 ## Pausable Interval
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class PausableInterval {
   private intervalId: NodeJS.Timeout | null = null;
   private lastExecutionTime: number = 0;
@@ -125,9 +131,13 @@ interval.resume(); // Resume from where it left off
 interval.stop(); // Stop completely
 ```
 
+:::
+
 ## Dynamic Interval
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class DynamicInterval {
   private intervalId: NodeJS.Timeout | null = null;
   private currentInterval: number;
@@ -191,9 +201,13 @@ setTimeout(() => {
 }, 5000);
 ```
 
+:::
+
 ## Real-World Example: Polling Service
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class PollingService {
   private interval: DynamicInterval;
   private retryCount: number = 0;
@@ -287,11 +301,13 @@ const pollingService = new PollingService('https://api.example.com/status', {
 pollingService.start();
 ```
 
+:::
+
 ## Best Practices
 
 1. Memory leak prevention:
 
-   ```typescript:preview
+   ```typescript
    class SafeInterval {
      private intervals = new WeakMap<object, NodeJS.Timeout>();
 
@@ -313,7 +329,7 @@ pollingService.start();
 
 2. Error handling:
 
-   ```typescript:preview
+   ```typescript
    class ResilientInterval {
      setInterval(
        callback: () => void,
@@ -335,7 +351,7 @@ pollingService.start();
 
 3. Performance monitoring:
 
-   ```typescript:preview
+   ```typescript
    class MonitoredInterval {
      private metrics = {
        executionCount: 0,
@@ -373,7 +389,7 @@ pollingService.start();
 
 4. Resource management:
 
-   ```typescript:preview
+   ```typescript
    class ResourceAwareInterval {
      private resources = new Set<Resource>();
 

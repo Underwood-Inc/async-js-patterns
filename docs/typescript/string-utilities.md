@@ -25,7 +25,9 @@ String utilities help you manipulate and validate strings in a type-safe manner 
 
 ### String Validation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function isNonEmpty(str: string): boolean {
   return str.length > 0;
 }
@@ -54,9 +56,13 @@ console.log(isEmail('user@example.com')); // true
 console.log(isURL('https://example.com')); // true
 ```
 
+:::
+
 ### String Transformation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -88,11 +94,15 @@ console.log(kebabCase('helloWorld')); // 'hello-world'
 console.log(snakeCase('helloWorld')); // 'hello_world'
 ```
 
+:::
+
 ## Advanced Utilities
 
 ### String Templates
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function template(
   str: string,
   params: Record<string, string | number>
@@ -115,9 +125,13 @@ const greeting = template('Hello, ${name}!', { name: 'John' });
 const message = interpolate`Hello, ${'John'}! You have ${2} messages.`;
 ```
 
+:::
+
 ### String Manipulation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 function truncate(str: string, length: number, suffix: string = '...'): string {
   if (str.length <= length) return str;
   return str.slice(0, length - suffix.length) + suffix;
@@ -152,9 +166,13 @@ console.log(wordWrap('Hello world, how are you?', 10));
 // you?
 ```
 
+:::
+
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // String utility class with common operations
 class StringUtils {
   // Validation methods
@@ -358,6 +376,8 @@ console.log(validationResult);
 const emailValidator = new StringValidator().email();
 console.log(emailValidator.validate('user@example.com'));
 ```
+
+:::
 
 ## Best Practices
 

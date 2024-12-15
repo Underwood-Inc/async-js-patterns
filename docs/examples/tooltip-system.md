@@ -15,17 +15,23 @@ Our tooltip system provides a flexible, performant way to add contextual informa
 
 The simplest way to add a tooltip is using the `has-tooltip` class:
 
-```html:preview
+::: code-with-tooltips
+
+```html
 <div class="has-tooltip">
   Hover over me
 </div>
 ```
 
+:::
+
 ### Ad-hoc Tooltips
 
 For more complex tooltips, use the `createAdHocTooltip` function:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { createAdHocTooltip } from '../tooltips/adhocTooltips';
 
 const tooltip = createAdHocTooltip({
@@ -38,6 +44,8 @@ const tooltip = createAdHocTooltip({
   },
 });
 ```
+
+:::
 
 ## System Architecture
 
@@ -64,7 +72,9 @@ const tooltip = createAdHocTooltip({
 
 ### Unit Tests
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { describe, it, expect, vi } from 'vitest';
 
 describe('Tooltip System', () => {
@@ -80,16 +90,22 @@ describe('Tooltip System', () => {
 });
 ```
 
+:::
+
 ### Debug Mode
 
 Enable debug mode during development:
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { toggleTooltipDebug } from '../tooltips/debug';
 
 // Enable debug logging
 toggleTooltipDebug(true);
 ```
+
+:::
 
 Debug features include:
 
@@ -121,7 +137,9 @@ Debug features include:
 
 ### CustomTooltip Interface
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface CustomTooltip {
   id: string;
   content: string | Component;
@@ -139,6 +157,8 @@ interface CustomTooltip {
   };
 }
 ```
+
+:::
 
 ## Troubleshooting
 

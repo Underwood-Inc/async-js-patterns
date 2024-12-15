@@ -94,3 +94,158 @@
     cursor: help !important;
   }
 }
+
+.code-preview {
+  position: relative;
+}
+
+.code-meta {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: auto;
+}
+
+.language-info {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85em;
+  color: var(--vp-c-text-2);
+}
+
+.parser-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.375rem;
+  background: var(--vp-c-bg-soft);
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  cursor: help;
+
+  &:hover {
+    background: var(--vp-c-bg-mute);
+  }
+}
+
+.language-label {
+  opacity: 0.8;
+}
+
+.code-block-wrapper[data-code-tooltips='true'] {
+  position: relative;
+  margin: 16px 0;
+  background-color: var(--vp-code-block-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: background-color 0.5s;
+  border: 2px solid var(--vp-c-brand) !important;
+
+  .code-block-content {
+    position: relative;
+    width: 100%;
+  }
+
+  pre.shiki {
+    margin: 0;
+    padding: 16px 24px;
+    background: transparent !important;
+    overflow-x: auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .line-numbers-wrapper {
+    border-right: 1px solid var(--vp-c-divider);
+    padding-right: 8px;
+  }
+
+  // Preserve VitePress line number styles
+  &.line-numbers-mode {
+    .line-numbers {
+      padding-left: 24px;
+    }
+  }
+
+  .tooltip-trigger {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: var(--vp-c-brand);
+    text-decoration-thickness: 1px;
+    cursor: help;
+    position: relative;
+  }
+
+  // Match legacy syntax highlighting colors
+  .shiki {
+    // Base text color
+    [style*="color:#24292E"] {
+      color: #24292E !important;
+    }
+    .dark & [style*="color:#24292E"] {
+      color: #E1E4E8 !important;
+    }
+
+    // String literals
+    [style*="color:#032F62"] { 
+      color: #032F62 !important;
+    }
+    .dark & [style*="color:#032F62"] {
+      color: #9ECBFF !important;
+    }
+    
+    // Keywords
+    [style*="color:#D73A49"] {
+      color: #D73A49 !important;
+    }
+    .dark & [style*="color:#D73A49"] {
+      color: #F97583 !important;
+    }
+    
+    // Comments
+    [style*="color:#6A737D"] {
+      color: #6A737D !important;
+    }
+
+    // Function calls
+    [style*="color:#6F42C1"] {
+      color: #6F42C1 !important;
+    }
+    .dark & [style*="color:#6F42C1"] {
+      color: #B392F0 !important;
+    }
+
+    // Numbers and constants
+    [style*="color:#005CC5"] {
+      color: #005CC5 !important;
+    }
+    .dark & [style*="color:#005CC5"] {
+      color: #79B8FF !important;
+    }
+  }
+}
+
+.tooltip-type-signature {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.9em;
+  
+  code {
+    display: block;
+    padding: 8px;
+    margin-bottom: 8px;
+    background: var(--vp-code-block-bg);
+    border-radius: 4px;
+    white-space: pre-wrap;
+    color: var(--vp-c-text-1);
+  }
+
+  .vp-doc {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--vp-c-divider);
+  }
+}

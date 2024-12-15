@@ -19,7 +19,9 @@ This page demonstrates practical examples of executing tasks in sequence, ensuri
 
 ## Basic Sequential Execution
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic sequential task execution
 async function executeSequentially<T>(
   tasks: Array<() => Promise<T>>
@@ -54,9 +56,13 @@ const results = await executeSequentially(tasks);
 console.log('Results:', results);
 ```
 
+:::
+
 ## Data Pipeline Processing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Sequential data pipeline
 class DataPipeline<T> {
   private steps: Array<(data: T) => Promise<T>> = [];
@@ -117,9 +123,13 @@ const enrichedUser = await pipeline.process({
 });
 ```
 
+:::
+
 ## Dependency Resolution
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Sequential dependency resolver
 class DependencyResolver {
   private dependencies = new Map<string, string[]>();
@@ -163,9 +173,13 @@ console.log('Load order:', loadOrder);
 // Output: ['config', 'database', 'auth', 'app']
 ```
 
+:::
+
 ## Real-World Example: User Registration Flow
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class UserRegistrationFlow {
   private steps: RegistrationStep[] = [];
   private rollbackSteps: Map<string, () => Promise<void>> = new Map();
@@ -283,11 +297,13 @@ try {
 }
 ```
 
+:::
+
 ## Best Practices
 
 1. Error handling with partial completion:
 
-   ```typescript:preview
+   ```typescript
    async function executeWithRollback<T>(
      tasks: Array<{
        execute: () => Promise<T>;
@@ -319,7 +335,7 @@ try {
 
 2. Progress tracking:
 
-   ```typescript:preview
+   ```typescript
    async function executeWithProgress<T>(
      tasks: Array<() => Promise<T>>,
      onProgress: (completed: number, total: number) => void
@@ -338,7 +354,7 @@ try {
 
 3. Timeout handling:
 
-   ```typescript:preview
+   ```typescript
    async function executeWithTimeout<T>(
      task: () => Promise<T>,
      timeout: number
@@ -362,7 +378,7 @@ try {
 
 4. Resource management:
 
-   ```typescript:preview
+   ```typescript
    class ResourceManager {
      private resources: Resource[] = [];
 

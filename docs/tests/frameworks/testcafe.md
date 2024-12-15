@@ -20,16 +20,22 @@ TestCafe is a Node.js tool to automate end-to-end web testing. It's easy to set 
 
 ## Getting Started
 
-```bash:preview
+::: code-with-tooltips
+
+```bash
 # Install TestCafe
 npm install --save-dev testcafe
 ```
+
+:::
 
 ## Core Concepts
 
 ### Test Structure
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { Selector, t } from 'testcafe';
 
 fixture('Example Tests')
@@ -48,9 +54,13 @@ test('Basic test', async (t) => {
 });
 ```
 
+:::
+
 ### Selectors
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic selectors
 const button = Selector('button');
 const input = Selector('#email');
@@ -71,9 +81,13 @@ const customSelector = Selector(() => {
 const reactComponent = Selector('MyComponent').withProps({ active: true });
 ```
 
+:::
+
 ### Actions
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Mouse actions
 await t
   .click(button)
@@ -92,11 +106,15 @@ await t
   .selectTextAreaContent(textarea);
 ```
 
+:::
+
 ## Advanced Features
 
 ### Page Model Pattern
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class LoginPage {
   private email = Selector('#email');
   private password = Selector('#password');
@@ -128,9 +146,13 @@ test('Login test', async (t) => {
 });
 ```
 
+:::
+
 ### Request Hooks
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { RequestHook, RequestLogger, RequestMock } from 'testcafe';
 
 // Logger
@@ -166,9 +188,13 @@ fixture('API Tests')
   .requestHooks(logger, mock, new AuthHook());
 ```
 
+:::
+
 ### Client Scripts
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Inject script
 fixture('Client Scripts').page('https://example.com').clientScripts({
   path: './scripts/helper.js',
@@ -187,11 +213,15 @@ test('with client script', async (t) => {
 });
 ```
 
+:::
+
 ## Testing Patterns
 
 ### Visual Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { takeSnapshot } from 'testcafe-blink-diff';
 
 fixture('Visual Tests').page('https://example.com');
@@ -212,9 +242,13 @@ test('visual regression', async (t) => {
 });
 ```
 
+:::
+
 ### Mobile Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 fixture('Mobile Tests')
   .page('https://example.com')
   .beforeEach(async (t) => {
@@ -235,9 +269,13 @@ test('mobile layout', async (t) => {
 });
 ```
 
+:::
+
 ### API Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { RequestLogger } from 'testcafe';
 
 const logger = RequestLogger();
@@ -250,11 +288,15 @@ test('API calls', async (t) => {
 });
 ```
 
+:::
+
 ## Best Practices
 
 ### 1. Selector Best Practices
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // ❌ Avoid
 const button = Selector('button').nth(2);
 const div = Selector('div.btn');
@@ -265,9 +307,13 @@ const input = Selector('input').withAttribute('name', 'email');
 const heading = Selector('h1').withText('Welcome');
 ```
 
+:::
+
 ### 2. Waiting Strategies
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // ❌ Avoid
 await t.wait(5000);
 
@@ -281,9 +327,13 @@ await t
   .contains('Loaded');
 ```
 
+:::
+
 ### 3. Error Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 test('with error handling', async (t) => {
   try {
     await t.click('.non-existent');
@@ -299,9 +349,13 @@ test('with error handling', async (t) => {
 });
 ```
 
+:::
+
 ### 4. Test Organization
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // roles.ts
 import { Role } from 'testcafe';
 
@@ -339,9 +393,13 @@ test('admin functionality', async (t) => {
 });
 ```
 
+:::
+
 ### 5. Configuration
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // .testcaferc.json
 {
     "browsers": ["chrome:headless", "firefox"],
@@ -361,3 +419,5 @@ test('admin functionality', async (t) => {
     "pageLoadTimeout": 30000
 }
 ```
+
+:::

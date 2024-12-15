@@ -19,10 +19,14 @@ The workflow consists of two main jobs:
 
 #### 1. Build Job
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 build:
   runs-on: ubuntu-latest
 ```
+
+:::
 
 This job:
 
@@ -35,11 +39,15 @@ This job:
 
 #### 2. Deploy Job
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 deploy:
   environment:
     name: github-pages
 ```
+
+:::
 
 This job:
 
@@ -49,12 +57,16 @@ This job:
 
 ### Required Permissions
 
-```yaml:preview
+::: code-with-tooltips
+
+```yaml
 permissions:
   contents: read
   pages: write
   id-token: write
 ```
+
+:::
 
 These permissions allow the workflow to:
 
@@ -73,7 +85,7 @@ To use this workflow:
 
 2. Ensure your VitePress configuration has the correct base URL:
 
-   ```js:preview
+   ```js
    import { defineConfig } from 'vitepress';
 
    export default defineConfig({

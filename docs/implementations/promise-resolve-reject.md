@@ -26,7 +26,9 @@ performance monitoring, proper error handling, and support for thenable objects.
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { AsyncOperationError } from '../advanced/error-handling';
 import { PerformanceMonitor } from '../advanced/performance-monitoring';
 
@@ -73,11 +75,15 @@ function promiseReject<T = never>(reason?: any): Promise<T> {
 }
 ```
 
+:::
+
 ## Usage Examples
 
 ### Basic Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Promise.resolve examples
 const immediate = Promise.resolve(42);
 const deferred = Promise.resolve(Promise.resolve('nested'));
@@ -92,9 +98,13 @@ const error = Promise.reject(new Error('Failed'));
 const reason = Promise.reject('Invalid input');
 ```
 
+:::
+
 ### Error Handling
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class ValidationError extends Error {
   constructor(
     message: string,
@@ -133,9 +143,13 @@ validateData(null)
   });
 ```
 
+:::
+
 ### Thenable Objects
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class AsyncResult<T> {
   constructor(
     private value: T,
@@ -157,6 +171,8 @@ class AsyncResult<T> {
 const result = new AsyncResult('Hello', 1000);
 Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' after 1 second
 ```
+
+:::
 
 ## Key Features
 
@@ -191,7 +207,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 1. **Error Creation**
 
-   ```typescript:preview
+   ```typescript
    // Create specific error types
    class DomainError extends Error {
      constructor(
@@ -211,7 +227,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 2. **Value Wrapping**
 
-   ```typescript:preview
+   ```typescript
    // Safe value wrapping
    function wrapValue<T>(value: T | PromiseLike<T>): Promise<T> {
      try {
@@ -224,7 +240,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 3. **Type Safety**
 
-   ```typescript:preview
+   ```typescript
    // Type-safe promise creation
    function createTypedPromise<T>(
      value: T,
@@ -240,7 +256,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 1. **Not Handling Thenable Errors**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Unsafe thenable handling
    const thenable = {
      then(resolve) {
@@ -262,7 +278,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 2. **Incorrect Error Types**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Using non-error objects
    Promise.reject('something went wrong');
 
@@ -272,7 +288,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 3. **Double Wrapping**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Unnecessary promise wrapping
    const promise = Promise.resolve(Promise.resolve(value));
 
@@ -282,7 +298,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 4. **Lost Error Context**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Error context lost
    Promise.reject(new Error('Failed')).catch(() => Promise.reject('Failed'));
 
@@ -292,7 +308,7 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 5. **Async Function Confusion**
 
-   ```typescript:preview
+   ```typescript
    // Bad: Mixing async/await with Promise.resolve
    async function getData() {
      return Promise.resolve(await fetchData());
@@ -335,7 +351,9 @@ Promise.resolve(result).then((value) => console.log(value)); // Logs 'Hello' aft
 
 ## Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 describe('Promise.resolve and Promise.reject', () => {
   describe('Promise.resolve', () => {
     it('should resolve with value', async () => {
@@ -383,3 +401,5 @@ describe('Promise.resolve and Promise.reject', () => {
   });
 });
 ```
+
+:::

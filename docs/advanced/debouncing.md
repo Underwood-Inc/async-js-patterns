@@ -78,7 +78,9 @@ Think of debouncing like an elevator:
 
 ## Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 interface DebounceOptions {
   wait: number;
   immediate?: boolean;
@@ -249,9 +251,13 @@ function debounce<T extends (...args: any[]) => any>(
 }
 ```
 
+:::
+
 ## Usage Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic usage
 const debouncedSearch = debounce(async (query: string) => {
   const response = await fetch(`/api/search?q=${query}`);
@@ -292,6 +298,8 @@ searchInput.addEventListener('input', async (e) => {
 });
 ```
 
+:::
+
 ## Key Concepts
 
 1. **Wait Time**: Delay between last call and execution
@@ -325,7 +333,9 @@ searchInput.addEventListener('input', async (e) => {
 
 ## Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Test basic debouncing
 const basicTest = async () => {
   let callCount = 0;
@@ -360,9 +370,13 @@ const immediateTest = async () => {
 };
 ```
 
+:::
+
 ## Advanced Usage
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // With TypeScript generics
 function createDebouncedApi<T, R>(
   apiCall: (data: T) => Promise<R>,
@@ -410,3 +424,5 @@ function useDebouncedCallback<T extends (...args: any[]) => any>(
   return debouncedFn;
 }
 ```
+
+:::

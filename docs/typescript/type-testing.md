@@ -25,7 +25,9 @@ Type testing verifies that your type definitions work as expected and catch type
 
 ### Type Assertions
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 import { expectType, expectError } from 'tsd';
 
 // Type to test
@@ -46,9 +48,13 @@ expectType<number>(identity(42));
 expectError(identity<string>(42));
 ```
 
+:::
+
 ### Type Equality Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type Assert<T, Expected> = T extends Expected
   ? Expected extends T
     ? true
@@ -69,11 +75,15 @@ type Exact1 = IsExact<{ a: string }, { a: string }>; // true
 type Exact2 = IsExact<{ a: string }, { a: string; b?: number }>; // false
 ```
 
+:::
+
 ## Advanced Type Testing
 
 ### Generic Type Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Generic type to test
 type Container<T> = {
   value: T;
@@ -98,9 +108,13 @@ type TestNonNullable1 = Assert<NonNullable<string>, string>; // true
 type TestNonNullable2 = Assert<NonNullable<null>, never>; // true
 ```
 
+:::
+
 ### Conditional Type Testing
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Conditional type to test
 type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 
@@ -135,9 +149,13 @@ type TestDeepPartial = Assert<
 >;
 ```
 
+:::
+
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Domain types
 interface User {
   id: string;
@@ -299,6 +317,8 @@ describe('Type Testing', () => {
   });
 });
 ```
+
+:::
 
 ## Best Practices
 

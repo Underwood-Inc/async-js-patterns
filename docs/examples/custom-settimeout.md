@@ -19,7 +19,9 @@ This page demonstrates practical examples of implementing and using custom setTi
 
 ## Basic Implementation
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // Basic custom setTimeout with cleanup
 class Timer {
   private timers: Map<string, NodeJS.Timeout> = new Map();
@@ -60,9 +62,13 @@ const cleanup = timer.setTimeout(() => {
 cleanup();
 ```
 
+:::
+
 ## Promise-based Timer
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class PromiseTimer {
   private timers: Map<
     string,
@@ -133,9 +139,13 @@ try {
 }
 ```
 
+:::
+
 ## Retry Timer
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class RetryTimer {
   async withRetry<T>(
     operation: () => Promise<T>,
@@ -201,9 +211,13 @@ try {
 }
 ```
 
+:::
+
 ## Real-World Example: Rate Limited API Client
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 class RateLimitedApiClient {
   private queue: Array<{
     operation: () => Promise<any>;
@@ -281,11 +295,13 @@ const userIds = ['1', '2', '3', '4', '5'];
 const results = await Promise.all(userIds.map((id) => fetchUserData(id)));
 ```
 
+:::
+
 ## Best Practices
 
 1. Cleanup handling:
 
-   ```typescript:preview
+   ```typescript
    class CleanupTimer {
      private cleanupFns: Set<() => void> = new Set();
 
@@ -325,7 +341,7 @@ const results = await Promise.all(userIds.map((id) => fetchUserData(id)));
 
 2. Error handling:
 
-   ```typescript:preview
+   ```typescript
    class SafeTimer {
      setTimeout<T>(
        operation: () => Promise<T>,
@@ -354,7 +370,7 @@ const results = await Promise.all(userIds.map((id) => fetchUserData(id)));
 
 3. Resource management:
 
-   ```typescript:preview
+   ```typescript
    class ResourceTimer {
      private resources: Set<Resource> = new Set();
 
@@ -382,7 +398,7 @@ const results = await Promise.all(userIds.map((id) => fetchUserData(id)));
 
 4. Debounce utility:
 
-   ```typescript:preview
+   ```typescript
    function createDebouncedTimer(delay: number) {
      let timeoutId: NodeJS.Timeout;
      let cleanup: (() => void) | null = null;

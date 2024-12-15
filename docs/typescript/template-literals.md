@@ -25,7 +25,9 @@ Template literal types combine literal types and string manipulation to create p
 
 ### String Literals
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type Greeting = 'Hello';
 type Name = 'World';
 type Message = `${Greeting}, ${Name}!`; // type is "Hello, World!"
@@ -39,9 +41,13 @@ let id: ID = 'user_123'; // OK
 let status: Status = 'true_status'; // OK
 ```
 
+:::
+
 ### Union Types in Template Literals
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type Color = 'red' | 'blue' | 'green';
 type Size = 'small' | 'medium' | 'large';
 type ColorSize = `${Color}-${Size}`; // All combinations
@@ -55,11 +61,15 @@ type Status = 'success' | 'error' | 'pending';
 type EventName = `on${Capitalize<Status>}`; // "onSuccess" | "onError" | "onPending"
 ```
 
+:::
+
 ## Advanced Patterns
 
 ### Intrinsic String Manipulation Types
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type Greeting = 'hello world';
 
 type Caps = Uppercase<Greeting>; // "HELLO WORLD"
@@ -74,9 +84,13 @@ type MouseHandlers = EventHandler<MouseEvents>;
 // "onClick" | "onMouseup" | "onMousedown"
 ```
 
+:::
+
 ### Pattern Matching with Template Literals
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 type PropEventSource<Type> = {
   on<Key extends string & keyof Type>(
     eventName: `${Key}Changed`,
@@ -109,9 +123,13 @@ person.on('ageChanged', (newAge) => {
 });
 ```
 
+:::
+
 ## Real-World Example
 
-```typescript:preview
+::: code-with-tooltips
+
+```typescript
 // API Route Type Generator
 type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 type Version = 'v1' | 'v2';
@@ -288,6 +306,8 @@ async function example() {
   }
 }
 ```
+
+:::
 
 ## Best Practices
 

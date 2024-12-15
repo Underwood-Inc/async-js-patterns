@@ -32,18 +32,42 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { isTooltipPinned } from '../setupTooltips';
+import { computed, ref, onMounted } from 'vue';
 import ShimmerEffect from './ShimmerEffect.vue';
+import MarkdownIt from 'markdown-it';
+import { logger } from '../utils/logger';
 
 const props = defineProps<{
   content: string;
-  position: 'above' | 'below';
-  maxWidth?: number;
+  position: { x: number; y: 'above' | 'below' };
+  type?: string;
 }>();
 
+// Debug logging for content
+logger.group('Tooltip Content Debug');
+
+// First decode the entire content string
+const decodedContent = computed(() => {
+  logger.debug('tooltip', 'Raw content:', { content: props.content });
+  
+  try {
+    const decoded = decodeURIComponent(props.content);
+    logger.debug('tooltip', 'First decode:', { decoded });
+    return decoded;
+  } catch (e) {
+    logger.error('tooltip', 'First decode failed:', { error: e });
+    return props.content;
+  }
+});
+
+const md = new MarkdownIt({
+  html: true,
+  breaks: true,
+  linkify: true,
+});
+
 const transformStyle = computed(() => {
-  return props.position === 'above'
+  return props.position.y === 'above'
     ? 'translate(-50%, -100%) translateY(-8px)'
     : 'translate(-50%, 0) translateY(8px)';
 });
@@ -52,9 +76,13 @@ const maxWidth = computed(() => {
   return props.maxWidth || Math.min(600, window.innerWidth * 0.5);
 });
 
-const isPositionBelow = computed(() => props.position === 'below');
+const isPositionBelow = computed(() => props.position.y === 'below');
 
-const messages = computed(() => props.content.split('|||'));
+const messages = computed(() => {
+  const msgs = decodedContent.value.split('|||');
+  logger.debug('tooltip', 'Split messages:', { messages: msgs });
+  return msgs;
+});
 
 function getMessageClass(message: string) {
   if (message.startsWith('error:::')) return 'message error-message';
@@ -84,30 +112,42 @@ function formatMessage(content: string) {
     .map((message) => {
       const [type, rawContent] = message.split(':::');
 
-      if (type === 'info' && rawContent.includes('type:')) {
-        const [desc, typeInfoStr] = rawContent
-          .split('type:')
-          .map((s) => s.trim());
+      // Skip variable signature processing
+      if (rawContent?.startsWith('( variable)')) {
+        return ''; // Return empty string to skip this tooltip
+      }
+
+      // Handle other info types
+      if (type === 'info' && rawContent?.includes('type:')) {
         try {
+          const typeInfoStr = rawContent.split('type:')[1]?.trim();
+          if (!typeInfoStr) return rawContent;
+
           const decodedTypeInfo = decodeURIComponent(typeInfoStr);
           const typeInfo = JSON.parse(decodedTypeInfo);
 
-          // Create a colored type span using the typeInfo colors
           const typeSpan = `<span class="type-text" style="color: ${typeInfo.color.text}; background: ${typeInfo.color.background}">${typeInfo.type}</span>`;
-
-          // Return formatted message without the type prefix
-          return `${typeSpan}${typeInfo.description ? `: ${typeInfo.description}` : ''}`;
+          return `${typeSpan}${
+            typeInfo.description
+              ? `: <div class="vp-doc">${md.render(typeInfo.description)}</div>`
+              : ''
+          }`;
         } catch (error) {
-          console.error('Error parsing tooltip content:', error);
+          logger.error('tooltip', 'Error parsing tooltip content:', { error });
           return rawContent;
         }
       }
 
-      // Remove the type prefix for other messages
-      return rawContent;
+      return rawContent || '';
     })
     .join('\n');
 }
+
+onMounted(() => {
+  logger.debug('tooltip', 'Tooltip mounted with content:', { content: props.content });
+});
+
+logger.groupEnd();
 
 const isErrorOnly = computed(() => {
   return (
@@ -115,11 +155,7 @@ const isErrorOnly = computed(() => {
   );
 });
 
-const isPinned = computed(() => isTooltipPinned());
-
-const emit = defineEmits<{
-  (e: 'close'): void;
-}>();
+const emit = defineEmits<(e: 'close') => void>();
 
 function handleClose(event: MouseEvent) {
   event.stopPropagation(); // Prevent event bubbling
@@ -154,10 +190,10 @@ const isHovered = ref(false);
 
 .tooltip-content {
   position: fixed;
-  padding: 12px 16px;
+  padding: 8px 12px;
   color: var(--vp-c-text-1);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 13px;
+  line-height: 1.4;
   pointer-events: auto;
   text-align: left;
   font-family: var(--vp-font-family-base);
@@ -168,12 +204,19 @@ const isHovered = ref(false);
   min-width: 200px;
   max-width: min(600px, 50vw);
   animation: float 3s ease-in-out infinite;
-  position: relative;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  position: relative;
   transform-style: preserve-3d;
   perspective: 1000px;
+  padding-right: 28px;
+
+  .type-text {
+    font-family: var(--vp-font-family-mono);
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-size: 0.85em;
+  }
 
   @media (max-width: 768px) {
     min-width: 160px;
@@ -220,13 +263,6 @@ const isHovered = ref(false);
     z-index: -1;
   }
 
-  .type-text {
-    font-family: var(--vp-font-family-mono);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.9em;
-  }
-
   &.position-below {
     .tooltip-pointer {
       top: -6px;
@@ -236,6 +272,33 @@ const isHovered = ref(false);
 
     animation: float-below 3s ease-in-out infinite;
   }
+
+  // Add specific styling for markdown-rendered content
+  .vp-doc {
+    // Remove default margins from paragraphs
+    p {
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    // Adjust other markdown elements if needed
+    p + p {
+      margin-top: 0.5em; // Small gap between multiple paragraphs if they exist
+    }
+
+    // Ensure inline code blocks stay compact
+    code {
+      padding: 2px 4px;
+      font-size: 0.9em;
+    }
+
+    // Keep lists compact
+    ul,
+    ol {
+      margin: 0;
+      padding-left: 1.2em;
+    }
+  }
 }
 
 .tooltip-content-inner {
@@ -243,28 +306,28 @@ const isHovered = ref(false);
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 
   .message {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 8px;
-    padding: 8px;
+    gap: 6px;
+    padding: 4px 6px;
     font-family: var(--vp-font-family-mono);
-    font-size: 0.9em;
+    font-size: 0.85em;
     border-radius: 4px;
     color: var(--vp-c-text-1);
 
     .message-icon {
       flex-shrink: 0;
-      line-height: 1.6;
+      line-height: 1.4;
       font-size: 1.1em;
       align-self: start;
       justify-self: center;
     }
 
     span:not(.message-icon) {
-      line-height: 1.6;
+      line-height: 1.4;
     }
   }
 
@@ -299,23 +362,23 @@ const isHovered = ref(false);
 
 .close-button {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 4px;
+  right: 4px;
   background: transparent;
   border: none;
   color: var(--vp-c-text-1);
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   pointer-events: auto;
-  padding: 4px;
+  padding: 2px;
   opacity: 0.6;
   transition: opacity 0.2s;
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border-radius: 4px;
   z-index: 10;
 
@@ -332,21 +395,6 @@ const isHovered = ref(false);
 :deep(.shimmer-container) {
   --shimmer-mask: linear-gradient(90deg, transparent, #fff 50%, transparent);
   border-radius: inherit;
-}
-
-// Type-specific colors
-.tooltip-content {
-  .type-text {
-    font-family: var(--vp-font-family-mono);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.9em;
-  }
-}
-
-// Ensure tooltip has enough padding
-.tooltip-content {
-  padding-right: 36px;
 }
 
 @keyframes float-below {
