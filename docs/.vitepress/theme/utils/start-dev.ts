@@ -4,6 +4,7 @@ import { resolve as pathResolve, dirname } from 'path';
 import chalk from 'chalk';
 import { createServer } from 'net';
 import { fileURLToPath } from 'url';
+import { LogClient } from './standalone-log-client';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,10 +16,52 @@ const childProcesses: ChildProcess[] = [];
 const LOG_SERVER_PORT = Number(process.env.LOG_SERVER_PORT) || 3333;
 const WEB_PORT = Number(process.env.LOG_WEB_PORT) || 3334;
 
+// Create log client for sending logs
+const logClient = new LogClient(`ws://localhost:${LOG_SERVER_PORT}`, 2000, 20);
+
 // Function to create a prefixed logger
 const createLogger = (prefix: string, color: 'blue' | 'yellow' | 'magenta' | 'green') => ({
-  log: (...args: any[]) => console.log(chalk[color](prefix), ...args),
-  error: (...args: any[]) => console.error(chalk[color](prefix), ...args)
+  log: (...args: any[]) => {
+    // Only log to terminal if it's a critical system message
+    if (prefix === '[System]' && args[0]?.includes('Starting') || args[0]?.includes('ready')) {
+      console.log(chalk[color](prefix), ...args);
+    }
+    // Always send to log server if connected
+    if (logClient) {
+      try {
+        logClient.sendLog('system', 'info', `${prefix} ${args.join(' ')}`);
+      } catch (error) {
+        // Fallback to console only if log server send fails
+        console.log(chalk[color](prefix), ...args);
+      }
+    }
+  },
+  info: (...args: any[]) => {
+    if (logClient) {
+      logClient.sendLog('system', 'info', `${prefix} ${args.join(' ')}`);
+    }
+  },
+  debug: (...args: any[]) => {
+    if (logClient) {
+      logClient.sendLog('system', 'debug', `${prefix} ${args.join(' ')}`);
+    }
+  },
+  warn: (...args: any[]) => {
+    // Show warnings in terminal only for critical system issues
+    if (prefix === '[System]') {
+      console.warn(chalk[color](prefix), ...args);
+    }
+    if (logClient) {
+      logClient.sendLog('system', 'warn', `${prefix} ${args.join(' ')}`);
+    }
+  },
+  error: (...args: any[]) => {
+    // Always show errors in terminal
+    console.error(chalk[color](prefix), ...args);
+    if (logClient) {
+      logClient.sendLog('system', 'error', `${prefix} ${args.join(' ')}`);
+    }
+  }
 });
 
 // Create loggers for each component
@@ -197,8 +240,11 @@ async function startWebViewer(): Promise<void> {
 
 // Start VitePress dev server
 async function startDevServer(): Promise<void> {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     try {
+      // Connect to log server first
+      await logClient.connect();
+      
       // Change directory to workspace root
       const workspaceRoot = pathResolve(__dirname, '../../../../');
       systemLogger.log(`Changing to workspace root: ${workspaceRoot}`);
@@ -206,41 +252,63 @@ async function startDevServer(): Promise<void> {
 
       systemLogger.log('Starting VitePress dev server...');
       const devServer = spawn('pnpm', ['run', 'docs:dev'], {
-        stdio: 'inherit',
+        // Redirect stdin to inherit for interactive mode, but capture stdout/stderr
+        stdio: ['inherit', 'pipe', 'pipe'],
         env: {
           ...process.env,
           FORCE_COLOR: 'true',
-          NODE_ENV: 'development'
+          NODE_ENV: 'development',
+          // Disable noisy npm logs
+          npm_config_loglevel: 'warn'
         },
         shell: true
       });
 
       childProcesses.push(devServer);
 
+      devServer.stdout?.on('data', (data) => {
+        const message = data.toString().trim();
+        if (message) {
+          // Only send to web viewer
+          logClient.sendLog('dev', 'info', message);
+        }
+      });
+
+      devServer.stderr?.on('data', (data) => {
+        const message = data.toString().trim();
+        if (message) {
+          // Only show errors in terminal if they're critical
+          if (message.includes('Error') || message.includes('error')) {
+            console.error(chalk.red('[Dev Server Error]'), message);
+          }
+          logClient.sendLog('dev', 'error', message);
+        }
+      });
+
       devServer.on('spawn', () => {
-        systemLogger.log('VitePress dev server process spawned');
+        logClient.sendLog('system', 'info', 'VitePress dev server process spawned');
       });
 
       devServer.on('error', (error) => {
-        devServerLogger.error('Failed to start dev server:', error);
+        logClient.sendLog('dev', 'error', `Failed to start dev server: ${error.message}`);
         reject(error);
       });
 
       devServer.on('exit', (code) => {
         if (code !== 0) {
           const error = new Error(`Dev server exited with code ${code}`);
-          devServerLogger.error('Dev server failed:', error);
+          logClient.sendLog('dev', 'error', `Dev server failed: ${error.message}`);
           reject(error);
         }
       });
 
       // Give VitePress a moment to start
       setTimeout(() => {
-        systemLogger.log('VitePress startup timeout completed');
+        logClient.sendLog('system', 'info', 'VitePress startup timeout completed');
         resolve();
       }, 3000);
     } catch (error) {
-      devServerLogger.error('Failed to start dev server:', error);
+      logClient.sendLog('dev', 'error', `Failed to start dev server: ${error.message}`);
       reject(error);
     }
   });

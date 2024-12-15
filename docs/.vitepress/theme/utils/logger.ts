@@ -65,6 +65,7 @@ class Logger {
     typeof process.versions.node === 'string';
   private terminalHeight: number = this.isNode && process.stdout ? process.stdout.rows : 40;
   private webSocketClient: WebSocket | null = null;
+  private isBrowserUI = false;
 
   private constructor() {
     // Enable logging by default in development mode
@@ -103,6 +104,9 @@ class Logger {
     if (this.isBrowser) {
       setTimeout(() => this.connectWebSocket(), 1000);
     }
+
+    // Check if we're in the browser UI for logs
+    this.isBrowserUI = this.isBrowser && window.location.pathname.includes('/logs');
   }
 
   private connectWebSocket() {
@@ -281,6 +285,11 @@ class Logger {
       return;
     }
 
+    // Skip only clear screen and cursor positioning commands
+    if (this.shouldSkipMessage(message)) {
+      return;
+    }
+
     const entry: LogEntry = {
       timestamp: Date.now(),
       level,
@@ -302,18 +311,21 @@ class Logger {
       ? this.formatNodeOutput(level, category, message, data)
       : this.formatOutput(level, category, message, data);
 
+    // Skip empty outputs
+    if (!formattedMessage) return;
+
+    // Handle browser environment
     if (this.isBrowser) {
-      // Use console methods in browser
-      const consoleMethod = {
-        debug: console.debug,
-        info: console.info,
-        warn: console.warn,
-        error: console.error
-      }[level] || console.log;
+      if (this.isBrowserUI) {
+        const method = {
+          debug: console.debug,
+          info: console.info,
+          warn: console.warn,
+          error: console.error
+        }[level] || console.log;
+        method(formattedMessage);
+      }
 
-      consoleMethod(`[${category.toUpperCase()}]`, message, data);
-
-      // Send to server via WebSocket if connected
       if (this.webSocketClient?.readyState === WebSocket.OPEN) {
         this.webSocketClient.send(JSON.stringify({
           type: 'log',
@@ -323,31 +335,115 @@ class Logger {
           }
         }));
       }
-    } else if (this.isNode) {
-      // Route to appropriate section
-      let sectionId: string;
-      switch (category) {
-        case 'build':
-          sectionId = 'build';
-          break;
-        case 'tooltip':
-          sectionId = 'tooltip';
-          break;
-        case 'performance':
-          sectionId = 'performance';
-          break;
-        case 'system':
-          sectionId = level === 'error' ? 'errors' : 'debug';
-          break;
-        default:
-          sectionId = 'debug';
+    } 
+    // Handle Node/terminal environment
+    else if (this.isNode) {
+      const cleanOutput = this.cleanTerminalOutput(formattedMessage);
+      if (cleanOutput) {
+        process.stdout.write(cleanOutput + '\n');
       }
 
-      const section = this.sections.get(sectionId);
-      if (section) {
-        section.lines.push(formattedMessage);
-        this.updateSection(sectionId, section.lines);
+      if (process.env.IS_LOG_SERVER) {
+        this.routeToSection(category, level, formattedMessage);
       }
+    }
+  }
+
+  private shouldSkipMessage(message: string): boolean {
+    // Only skip completely empty messages
+    return message.trim().length === 0;
+  }
+
+  private isStartupMessage(message: string): boolean {
+    return message.includes('vitepress') || 
+           message.includes('web-patterns') ||
+           message.includes('Local:') ||
+           message.includes('Network:') ||
+           message.includes('press h to show help');
+  }
+
+  private cleanTerminalOutput(message: string): string {
+    // First pass - clean up control sequences and formatting
+    let cleaned = message
+      .replace(/\u001b\[[0-9;]*[a-zA-Z]/g, '') // ANSI escape codes
+      .replace(/\[[\d;]*[A-Za-z]/g, '')        // Square bracket codes
+      .replace(/\[s\[\d+;\d+H/g, '')           // Cursor positioning
+      .replace(/\[u/g, '')                     // Cursor restore
+      .trim();
+
+    // Format npm commands nicely
+    if (cleaned.match(/^\s*>.*?(clear|vitepress)/)) {
+      cleaned = cleaned
+        .replace(/^\s*>\s*web-patterns@[\d.]+ /, '')  // Remove package version
+        .replace(/\/home\/.*?\/web-patterns\//, '')    // Simplify paths
+        .trim();
+    }
+
+    // Format VitePress messages nicely
+    if (cleaned.includes('vitepress v')) {
+      cleaned = cleaned
+        .replace(/vitepress v[\d.]+/, 'VitePress')
+        .replace(/Local:.*(:\d+\/.*?)\s+Network:.*$/, 'Server: http://localhost$1')
+        .replace(/press h to show help/, '')
+        .trim();
+    }
+
+    // Format tooltip messages nicely
+    if (cleaned.includes('Tooltips:')) {
+      const matches = message.match(/Tooltips: (\d+)\/(\d+) processed, (\d+) added \((.*?)\)/);
+      if (matches) {
+        const [_, current, total, added, types] = matches;
+        const typesList = types.split(', ')
+          .map(t => {
+            // Extract just the type and count
+            const [type, count] = t.split(':').map(s => s.trim());
+            return type && count ? `${type.replace(/[()]/g, '')}: ${count}` : null;
+          })
+          .filter(Boolean)
+          .join(', ');
+        
+        cleaned = `Processed ${current}/${total} tooltips, added ${added} (${typesList})`;
+      }
+    }
+
+    // Format Sass warnings consistently
+    if (cleaned.includes('DEPRECATION WARNING: The legacy JS API')) {
+      cleaned = 'Sass: Legacy JS API deprecation warning';
+    }
+
+    // Clean up any remaining formatting
+    cleaned = cleaned
+      .replace(/\s+/g, ' ')           // Collapse multiple spaces
+      .replace(/\n\s*\n+/g, '\n')     // Collapse multiple newlines
+      .replace(/^\s+|\s+$/gm, '')     // Trim each line
+      .trim();
+
+    return cleaned;
+  }
+
+  private routeToSection(category: LogCategory, level: LogLevel, message: string) {
+    let sectionId: string;
+    switch (category) {
+      case 'build':
+        sectionId = 'build';
+        break;
+      case 'tooltip':
+        sectionId = 'tooltip';
+        break;
+      case 'performance':
+        sectionId = 'performance';
+        break;
+      case 'system':
+        sectionId = level === 'error' ? 'errors' : 'debug';
+        break;
+      default:
+        sectionId = 'debug';
+    }
+
+    const section = this.sections.get(sectionId);
+    if (section) {
+      section.lines.push(message);
+      this.updateSection(sectionId, section.lines);
     }
   }
 
@@ -426,42 +522,129 @@ class Logger {
   }
 
   private formatOutput(level: LogLevel, category: LogCategory, message: string, data?: any): string {
-    const timestamp = new Date().toISOString();
-    const prefix = `[${timestamp}] [${level.toUpperCase()}] [${category}]`;
+    if (this.shouldSkipMessage(message)) {
+      return '';
+    }
+
+    const timestamp = this.formatTimestamp(new Date());
     const indent = this.groupLevel ? ' '.repeat(this.groupLevel * 2) : '';
+    const cleaned = this.cleanTerminalOutput(message);
     
-    let output = `${prefix}${indent} ${message}`;
+    if (!cleaned) return '';
+
+    let output = `${timestamp} ${level.toUpperCase().padEnd(5)} ${cleaned}`;
+
+    // Format data if present
     if (data) {
       try {
-        output += '\n' + JSON.stringify(data, null, 2);
+        const formattedData = this.formatData(data);
+        if (formattedData) {
+          if (category === 'performance' && data.duration !== undefined) {
+            output += ` (${data.duration}ms)`;
+          } else {
+            const dataLines = formattedData.split('\n')
+              .filter(line => line.trim().length > 0)
+              .map(line => indent + '  ' + line)
+              .join('\n');
+            if (dataLines) {
+              output += '\n' + dataLines;
+            }
+          }
+        }
       } catch (e) {
-        output += '\n[Complex Data]';
+        // Ignore formatting errors
       }
     }
+
     return output;
   }
 
   private formatNodeOutput(level: LogLevel, category: LogCategory, message: string, data?: any): string {
-    const timestamp = chalk.gray(new Date().toISOString());
+    const timestamp = this.formatTimestamp(new Date());
+    const cleaned = this.cleanTerminalOutput(message);
+    
+    if (!cleaned) return '';
+
+    // Use consistent coloring
     const levelColor = {
       debug: chalk.blue,
       info: chalk.green,
       warn: chalk.yellow,
       error: chalk.red
-    }[level];
-    
-    const prefix = `${timestamp} ${levelColor(`[${level.toUpperCase()}]`)} ${chalk.cyan(`[${category}]`)}`;
-    const indent = this.groupLevel ? ' '.repeat(this.groupLevel * 2) : '';
-    
-    let output = `${prefix}${indent} ${message}`;
+    }[level] || chalk.white;
+
+    let output = `${timestamp} ${levelColor(level.toUpperCase().padEnd(5))} ${cleaned}`;
+
+    // Add formatted data
     if (data) {
       try {
-        output += '\n' + JSON.stringify(data, null, 2);
+        const formattedData = this.formatData(data);
+        if (formattedData) {
+          if (category === 'performance' && data.duration !== undefined) {
+            output += chalk.gray(` (${data.duration}ms)`);
+          } else {
+            output += '\n  ' + chalk.gray(formattedData);
+          }
+        }
       } catch (e) {
-        output += '\n[Complex Data]';
+        // Ignore formatting errors
       }
     }
+
     return output;
+  }
+
+  private formatTimestamp(date: Date): string {
+    const time = date.toLocaleTimeString('en-US', {
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+    const ms = date.getMilliseconds().toString().padStart(3, '0');
+    return chalk.gray(`${time}.${ms}`);
+  }
+
+  private formatData(data: any): string | null {
+    if (!data) return null;
+
+    // Handle errors
+    if (data.error instanceof Error) {
+      return data.error.message;
+    }
+
+    // Handle objects
+    if (typeof data === 'object') {
+      // Filter out empty/null values
+      const cleaned = Object.fromEntries(
+        Object.entries(data).filter(([_, v]) => {
+          if (v === null || v === undefined) return false;
+          if (typeof v === 'object' && Object.keys(v).length === 0) return false;
+          if (Array.isArray(v) && v.length === 0) return false;
+          return true;
+        })
+      );
+
+      if (Object.keys(cleaned).length === 0) return null;
+
+      // Simplify file paths
+      if (cleaned.file) {
+        cleaned.file = cleaned.file.split('/').pop();
+      }
+
+      // Format as single line if simple object
+      if (Object.keys(cleaned).length === 1) {
+        const [key, value] = Object.entries(cleaned)[0];
+        return `${key}: ${value}`;
+      }
+
+      // Otherwise format as multi-line
+      return Object.entries(cleaned)
+        .map(([k, v]) => `${k}: ${v}`)
+        .join('\n');
+    }
+
+    return String(data);
   }
 
   debug(category: LogCategory, message: string, data?: any) {
