@@ -3,6 +3,7 @@ import { parseCode } from './parsers';
 import { createParserTooltip } from './tooltips/parserInfo';
 import { performanceLogger } from './performanceLogger';
 import { debugLog } from '../markdown/codePreview';
+import { logger } from './logger';
 
 interface ParseError {
   text: string;
@@ -120,14 +121,49 @@ function colorizeParam(param: string): string {
   return `<span style="color: #d19a66">${param}</span>`;
 }
 
+// Track tooltip metrics
+interface TooltipMetrics {
+  totalCandidates: number;
+  processedCount: number;
+  addedCount: number;
+  typeStats: Record<string, number>;
+  lastUpdate: number;
+}
+
+const metrics: TooltipMetrics = {
+  totalCandidates: 0,
+  processedCount: 0,
+  addedCount: 0,
+  typeStats: {},
+  lastUpdate: 0
+};
+
+function updateProgress(force: boolean = false) {
+  // Throttle updates to every 100ms unless forced
+  const now = Date.now();
+  if (!force && now - metrics.lastUpdate < 100) return;
+  metrics.lastUpdate = now;
+
+  const typeTable = Object.entries(metrics.typeStats)
+    .map(([type, count]) => `${type}: ${count}`)
+    .join(', ');
+
+  logger.debug('build', `Tooltips: ${metrics.processedCount}/${metrics.totalCandidates} processed, ${metrics.addedCount} added (${typeTable})`);
+}
+
 export function processTooltips(code: string, lang: string) {
   const parseResult = parseCode(code, lang);
   const tooltipMap = new Map<string, TooltipData>();
 
-  // Start processing and log progress
-  if (process.env.NODE_ENV === 'development') {
-    performanceLogger.startProcess(parseResult.tokens?.length || 0);
-  }
+  // Reset metrics for this processing run
+  metrics.totalCandidates = parseResult.tokens?.length || 0;
+  metrics.processedCount = 0;
+  metrics.addedCount = 0;
+  metrics.typeStats = {};
+  metrics.lastUpdate = 0;
+
+  // Initial progress update
+  updateProgress(true);
 
   // Process errors first
   parseResult.errors?.forEach((error: any) => {
@@ -143,12 +179,14 @@ export function processTooltips(code: string, lang: string) {
     
     // Log errors in development
     if (process.env.NODE_ENV === 'development') {
-      debugLog('ERROR', { term, error: escapedError });
+      logger.error('tooltip', `Error processing term: ${term}`, { error: escapedError });
     }
   });
 
   // Process tokens
   parseResult.tokens.forEach((tokenInfo: TokenInfo) => {
+    metrics.processedCount++;
+    
     if (!tokenInfo?.text) return;
     
     // Skip variable signature tokens entirely
@@ -174,6 +212,20 @@ export function processTooltips(code: string, lang: string) {
 
     if (!tooltipMap.has(term)) {
       tooltipMap.set(term, { errors: new Set(), info: new Set() });
+      metrics.addedCount++;
+      
+      // Update type statistics
+      const type = info.type || 'unknown';
+      metrics.typeStats[type] = (metrics.typeStats[type] || 0) + 1;
+
+      // Log new tooltip creation in development
+      if (process.env.NODE_ENV === 'development') {
+        logger.debug('tooltip', `Created tooltip for term: ${term}`, { 
+          type: info.type,
+          signature: info.signature,
+          description: info.description
+        });
+      }
     }
 
     let description = info.description || info.documentation || `Identifier: ${term}`;
@@ -200,9 +252,21 @@ export function processTooltips(code: string, lang: string) {
       
     // Log processing in development
     if (process.env.NODE_ENV === 'development') {
-      performanceLogger.logTooltip(term, info.type || 'identifier');
+      logger.mark('performance', `tooltip-${term}`, { type: info.type || 'identifier' });
+      logger.measure('performance', `tooltip-${term}`);
     }
+    
+    updateProgress();
   });
+
+  // Measure total processing time
+  if (process.env.NODE_ENV === 'development') {
+    logger.measure('performance', 'tooltip-processing');
+  }
+
+  // Final progress update and cleanup
+  updateProgress(true);
+  logger.endProgress('tooltip-progress');
 
   return { parseResult, tooltipMap, parserInfo: createParserTooltip(lang) };
 }

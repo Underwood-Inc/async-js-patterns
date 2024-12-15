@@ -138,18 +138,37 @@
 
 .code-block-wrapper[data-code-tooltips='true'] {
   position: relative;
-  // margin: 16px 0;
+  margin: 16px 0;
   background-color: var(--vp-code-block-bg);
   border-radius: 8px;
   overflow: hidden;
   transition: background-color 0.5s;
   border: 2px solid var(--vp-c-brand) !important;
 
+  .code-block-content {
+    position: relative;
+    width: 100%;
+  }
+
   pre.shiki {
     margin: 0;
-    padding: 16px;
+    padding: 16px 24px;
     background: transparent !important;
     overflow-x: auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .line-numbers-wrapper {
+    border-right: 1px solid var(--vp-c-divider);
+    padding-right: 8px;
+  }
+
+  // Preserve VitePress line number styles
+  &.line-numbers-mode {
+    .line-numbers {
+      padding-left: 24px;
+    }
   }
 
   .tooltip-trigger {

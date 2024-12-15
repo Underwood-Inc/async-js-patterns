@@ -32,29 +32,30 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted, watch } from 'vue';
-import { isTooltipPinned } from '../setupTooltips';
+import { computed, ref, onMounted } from 'vue';
 import ShimmerEffect from './ShimmerEffect.vue';
 import MarkdownIt from 'markdown-it';
+import { logger } from '../utils/logger';
 
 const props = defineProps<{
   content: string;
-  position: { x: number; y: number };
+  position: { x: number; y: 'above' | 'below' };
   type?: string;
 }>();
 
 // Debug logging for content
-console.group('Tooltip Content Debug');
-console.log('Raw content:', props.content);
+logger.group('Tooltip Content Debug');
 
 // First decode the entire content string
 const decodedContent = computed(() => {
+  logger.debug('tooltip', 'Raw content:', { content: props.content });
+  
   try {
     const decoded = decodeURIComponent(props.content);
-    console.log('First decode:', decoded);
+    logger.debug('tooltip', 'First decode:', { decoded });
     return decoded;
   } catch (e) {
-    console.error('First decode failed:', e);
+    logger.error('tooltip', 'First decode failed:', { error: e });
     return props.content;
   }
 });
@@ -79,7 +80,7 @@ const isPositionBelow = computed(() => props.position.y === 'below');
 
 const messages = computed(() => {
   const msgs = decodedContent.value.split('|||');
-  console.log('Split messages:', msgs);
+  logger.debug('tooltip', 'Split messages:', { messages: msgs });
   return msgs;
 });
 
@@ -132,7 +133,7 @@ function formatMessage(content: string) {
               : ''
           }`;
         } catch (error) {
-          console.error('Error parsing tooltip content:', error);
+          logger.error('tooltip', 'Error parsing tooltip content:', { error });
           return rawContent;
         }
       }
@@ -143,10 +144,10 @@ function formatMessage(content: string) {
 }
 
 onMounted(() => {
-  console.log('Tooltip mounted with content:', props.content);
+  logger.debug('tooltip', 'Tooltip mounted with content:', { content: props.content });
 });
 
-console.groupEnd();
+logger.groupEnd();
 
 const isErrorOnly = computed(() => {
   return (
@@ -154,11 +155,7 @@ const isErrorOnly = computed(() => {
   );
 });
 
-const isPinned = computed(() => isTooltipPinned());
-
-const emit = defineEmits<{
-  (e: 'close'): void;
-}>();
+const emit = defineEmits<(e: 'close') => void>();
 
 function handleClose(event: MouseEvent) {
   event.stopPropagation(); // Prevent event bubbling
@@ -207,12 +204,19 @@ const isHovered = ref(false);
   min-width: 200px;
   max-width: min(600px, 50vw);
   animation: float 3s ease-in-out infinite;
-  position: relative;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  position: relative;
   transform-style: preserve-3d;
   perspective: 1000px;
+  padding-right: 28px;
+
+  .type-text {
+    font-family: var(--vp-font-family-mono);
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-size: 0.85em;
+  }
 
   @media (max-width: 768px) {
     min-width: 160px;
@@ -257,13 +261,6 @@ const isHovered = ref(false);
     border-right: 2px solid var(--vp-c-brand);
     border-bottom: 2px solid var(--vp-c-brand);
     z-index: -1;
-  }
-
-  .type-text {
-    font-family: var(--vp-font-family-mono);
-    padding: 1px 4px;
-    border-radius: 4px;
-    font-size: 0.85em;
   }
 
   &.position-below {
@@ -398,21 +395,6 @@ const isHovered = ref(false);
 :deep(.shimmer-container) {
   --shimmer-mask: linear-gradient(90deg, transparent, #fff 50%, transparent);
   border-radius: inherit;
-}
-
-// Type-specific colors
-.tooltip-content {
-  .type-text {
-    font-family: var(--vp-font-family-mono);
-    padding: 1px 4px;
-    border-radius: 4px;
-    font-size: 0.85em;
-  }
-}
-
-// Ensure tooltip has enough padding
-.tooltip-content {
-  padding-right: 28px;
 }
 
 @keyframes float-below {
